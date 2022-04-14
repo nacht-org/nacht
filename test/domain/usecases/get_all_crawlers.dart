@@ -16,14 +16,14 @@ void main() {
     usecase = GetAllCrawlers(mockCrawlerRepository);
   });
 
-  final testCrawlers = crawlers;
+  const testCrawlers = crawlers;
 
   test('should get crawler factory from the repository', () async {
     when(mockCrawlerRepository.getAllCrawlers())
-        .thenAnswer((_) async => Right(testCrawlers));
+        .thenAnswer((_) => const Right(testCrawlers));
 
-    final result = await usecase.execute();
+    final result = usecase.execute();
 
-    expect(result, Right(testCrawlers));
+    expect(result, const Right(testCrawlers));
   });
 }

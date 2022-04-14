@@ -39,11 +39,9 @@ class MockCrawlerRepository extends _i1.Mock implements _i3.CrawlerRepository {
                       _FakeEither_0<_i5.Failure, _i6.CrawlerFactory>()))
           as _i4.Future<_i2.Either<_i5.Failure, _i6.CrawlerFactory>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.CrawlerFactory>>>
-      getAllCrawlers() => (super.noSuchMethod(
-              Invocation.method(#getAllCrawlers, []),
-              returnValue: Future<
-                      _i2.Either<_i5.Failure, List<_i6.CrawlerFactory>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i6.CrawlerFactory>>()))
-          as _i4.Future<_i2.Either<_i5.Failure, List<_i6.CrawlerFactory>>>);
+  _i2.Either<_i5.Failure, List<_i6.CrawlerFactory>> getAllCrawlers() =>
+      (super.noSuchMethod(Invocation.method(#getAllCrawlers, []),
+              returnValue:
+                  _FakeEither_0<_i5.Failure, List<_i6.CrawlerFactory>>())
+          as _i2.Either<_i5.Failure, List<_i6.CrawlerFactory>>);
 }

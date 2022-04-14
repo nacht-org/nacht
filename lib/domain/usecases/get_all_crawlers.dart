@@ -8,7 +8,7 @@ class GetAllCrawlers {
 
   GetAllCrawlers(this._crawlerRepository);
 
-  Future<Either<Failure, List<CrawlerFactory>>> execute() {
+  Either<Failure, List<CrawlerFactory>> execute() {
     return _crawlerRepository.getAllCrawlers();
   }
 }

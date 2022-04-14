@@ -20,17 +20,76 @@ class _$AppRouter extends RootStackRouter {
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const HomePage());
+    },
+    LibraryRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const LibraryPage());
+    },
+    UpdatesRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const UpdatesPage());
+    },
+    BrowseRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const BrowsePage());
+    },
+    MoreRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const MorePage());
     }
   };
 
   @override
-  List<RouteConfig> get routes => [RouteConfig(HomeRoute.name, path: '/')];
+  List<RouteConfig> get routes => [
+        RouteConfig(HomeRoute.name, path: '/', children: [
+          RouteConfig(LibraryRoute.name,
+              path: 'library-page', parent: HomeRoute.name),
+          RouteConfig(UpdatesRoute.name,
+              path: 'updates-page', parent: HomeRoute.name),
+          RouteConfig(BrowseRoute.name,
+              path: 'browse-page', parent: HomeRoute.name),
+          RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
+        ])
+      ];
 }
 
 /// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute() : super(HomeRoute.name, path: '/');
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(HomeRoute.name, path: '/', initialChildren: children);
 
   static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [LibraryPage]
+class LibraryRoute extends PageRouteInfo<void> {
+  const LibraryRoute() : super(LibraryRoute.name, path: 'library-page');
+
+  static const String name = 'LibraryRoute';
+}
+
+/// generated route for
+/// [UpdatesPage]
+class UpdatesRoute extends PageRouteInfo<void> {
+  const UpdatesRoute() : super(UpdatesRoute.name, path: 'updates-page');
+
+  static const String name = 'UpdatesRoute';
+}
+
+/// generated route for
+/// [BrowsePage]
+class BrowseRoute extends PageRouteInfo<void> {
+  const BrowseRoute() : super(BrowseRoute.name, path: 'browse-page');
+
+  static const String name = 'BrowseRoute';
+}
+
+/// generated route for
+/// [MorePage]
+class MoreRoute extends PageRouteInfo<void> {
+  const MoreRoute() : super(MoreRoute.name, path: 'more-page');
+
+  static const String name = 'MoreRoute';
 }

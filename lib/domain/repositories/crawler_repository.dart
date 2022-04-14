@@ -4,5 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class CrawlerRepository {
   Future<Either<Failure, CrawlerFactory>> crawlerFactoryFor(String url);
-  Future<Either<Failure, List<CrawlerFactory>>> getAllCrawlers();
+  Either<Failure, List<CrawlerFactory>> getAllCrawlers();
 }

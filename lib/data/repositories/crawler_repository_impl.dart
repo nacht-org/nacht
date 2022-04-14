@@ -16,7 +16,7 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
   }
 
   @override
-  Future<Either<Failure, List<CrawlerFactory>>> getAllCrawlers() async {
+  Either<Failure, List<CrawlerFactory>> getAllCrawlers() {
     return const Right(crawlers);
   }
 }

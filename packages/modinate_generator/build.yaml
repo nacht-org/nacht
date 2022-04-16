@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      modinate_generator:
+        enabled: true
+
+builders:
+  modinate_generator:
+    target: ":modinate_generator"
+    import: "package:modinate_generator/builder.dart"
+    builder_factories: ["migrationsBuilder"]
+    build_extensions: { "$lib$": [".g.dart"] }
+    auto_apply: dependents
+    build_to: source

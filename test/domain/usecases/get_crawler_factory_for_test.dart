@@ -19,11 +19,11 @@ void main() {
 
   const tUrl = 'https://site.my/place/item';
 
-  test('should get crawler factory from the repository', () async {
+  test('should get crawler factory from the repository', () {
     when(mockCrawlerRepository.crawlerFactoryFor(tUrl))
-        .thenAnswer((_) async => Right(testCrawlerFactory));
+        .thenAnswer((_) => Right(testCrawlerFactory));
 
-    final result = await usecase.execute(tUrl);
+    final result = usecase.execute(tUrl);
 
     expect(result, Right(testCrawlerFactory));
   });

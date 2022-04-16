@@ -21,6 +21,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const HomePage());
     },
+    ImportFromUrlRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const ImportFromUrlPage());
+    },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LibraryPage());
@@ -49,7 +53,8 @@ class _$AppRouter extends RootStackRouter {
           RouteConfig(BrowseRoute.name,
               path: 'browse-page', parent: HomeRoute.name),
           RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
-        ])
+        ]),
+        RouteConfig(ImportFromUrlRoute.name, path: 'import-from-url')
       ];
 }
 
@@ -60,6 +65,15 @@ class HomeRoute extends PageRouteInfo<void> {
       : super(HomeRoute.name, path: '/', initialChildren: children);
 
   static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [ImportFromUrlPage]
+class ImportFromUrlRoute extends PageRouteInfo<void> {
+  const ImportFromUrlRoute()
+      : super(ImportFromUrlRoute.name, path: 'import-from-url');
+
+  static const String name = 'ImportFromUrlRoute';
 }
 
 /// generated route for

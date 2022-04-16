@@ -4,8 +4,8 @@ abstract class Failure extends Equatable {
   const Failure();
 }
 
-class CrawlerFactoryNotFoundFailure extends Failure {
-  const CrawlerFactoryNotFoundFailure();
+class CrawlerNotFound extends Failure {
+  const CrawlerNotFound();
 
   @override
   List<Object?> get props => [];

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chapturn/presentation/widgets/app_navigation.dart';
+import 'package:chapturn/presentation/data/navigation.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,6 +8,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
+      lazyLoad: false,
+      homeIndex: 0,
       routes: navigationItems.map((item) => item.route).toList(),
       builder: (context, child, animation) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -29,7 +31,6 @@ class HomePage extends StatelessWidget {
           ),
         );
       },
-      lazyLoad: false,
     );
   }
 }

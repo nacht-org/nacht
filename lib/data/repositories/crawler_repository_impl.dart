@@ -6,10 +6,10 @@ import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 
 class CrawlerRepositoryImpl implements CrawlerRepository {
   @override
-  Future<Either<Failure, CrawlerFactory>> crawlerFactoryFor(String url) async {
+  Either<Failure, CrawlerFactory> crawlerFactoryFor(String url) {
     final crawler = sources.crawlerFactoryFor(url);
     if (crawler == null) {
-      return const Left(CrawlerFactoryNotFoundFailure());
+      return const Left(CrawlerNotFound());
     } else {
       return Right(crawler);
     }

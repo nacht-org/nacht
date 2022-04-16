@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/presentation/pages/home_page/browse_page.dart';
+import 'package:chapturn/presentation/pages/import_from_url_page.dart';
 import 'package:chapturn/presentation/pages/home_page/home_page.dart';
 import 'package:chapturn/presentation/pages/home_page/library_page.dart';
 import 'package:chapturn/presentation/pages/home_page/more_page.dart';
@@ -12,15 +13,17 @@ part 'app_router.gr.dart';
   replaceInRouteName: 'Page,Route',
   routes: [
     AutoRoute(
+      path: '/',
       page: HomePage,
+      initial: true,
       children: [
         AutoRoute(page: LibraryPage),
         AutoRoute(page: UpdatesPage),
         AutoRoute(page: BrowsePage),
         AutoRoute(page: MorePage),
       ],
-      initial: true,
     ),
+    AutoRoute(page: ImportFromUrlPage, path: 'import-from-url'),
   ],
 )
 class AppRouter extends _$AppRouter {}

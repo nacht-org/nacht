@@ -2,11 +2,9 @@
 // in chapturn/test/helpers/test_helper.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i4;
-
-import 'package:chapturn/data/failure.dart' as _i5;
+import 'package:chapturn/data/failure.dart' as _i4;
 import 'package:chapturn/domain/repositories/crawler_repository.dart' as _i3;
-import 'package:chapturn_sources/chapturn_sources.dart' as _i6;
+import 'package:chapturn_sources/chapturn_sources.dart' as _i5;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -31,17 +29,14 @@ class MockCrawlerRepository extends _i1.Mock implements _i3.CrawlerRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.CrawlerFactory>> crawlerFactoryFor(
-          String? url) =>
+  _i2.Either<_i4.Failure, _i5.CrawlerFactory> crawlerFactoryFor(String? url) =>
       (super.noSuchMethod(Invocation.method(#crawlerFactoryFor, [url]),
-              returnValue:
-                  Future<_i2.Either<_i5.Failure, _i6.CrawlerFactory>>.value(
-                      _FakeEither_0<_i5.Failure, _i6.CrawlerFactory>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.CrawlerFactory>>);
+              returnValue: _FakeEither_0<_i4.Failure, _i5.CrawlerFactory>())
+          as _i2.Either<_i4.Failure, _i5.CrawlerFactory>);
   @override
-  _i2.Either<_i5.Failure, List<_i6.CrawlerFactory>> getAllCrawlers() =>
+  _i2.Either<_i4.Failure, List<_i5.CrawlerFactory>> getAllCrawlers() =>
       (super.noSuchMethod(Invocation.method(#getAllCrawlers, []),
               returnValue:
-                  _FakeEither_0<_i5.Failure, List<_i6.CrawlerFactory>>())
-          as _i2.Either<_i5.Failure, List<_i6.CrawlerFactory>>);
+                  _FakeEither_0<_i4.Failure, List<_i5.CrawlerFactory>>())
+          as _i2.Either<_i4.Failure, List<_i5.CrawlerFactory>>);
 }

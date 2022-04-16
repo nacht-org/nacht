@@ -8,7 +8,7 @@ class GetCrawlerFactoryFor {
 
   GetCrawlerFactoryFor(this._crawlerRepository);
 
-  Future<Either<Failure, CrawlerFactory>> execute(String url) {
+  Either<Failure, CrawlerFactory> execute(String url) {
     return _crawlerRepository.crawlerFactoryFor(url);
   }
 }

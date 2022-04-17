@@ -8,9 +8,4 @@ Migration(
   name: "initial",
   path: "assets/migrations/v1__initial.sql",
 ),
-Migration(
-  number: 2,
-  name: "seed",
-  path: "assets/migrations/v2__seed.sql",
-),
 ];

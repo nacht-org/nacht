@@ -3,6 +3,8 @@ description: A database helper that extends sqflite with migrations.
 version: 0.0.1
 homepage:
 
+publish_to: none
+
 environment:
   sdk: ">=2.17.0-182.2.beta <3.0.0"
   flutter: ">=1.17.0"
@@ -11,6 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  modinate_core:
+    path: ../modinate_core
   sqflite: ^2.0.2+1
 
 dev_dependencies:

@@ -417,6 +417,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  modinate_core:
+    dependency: transitive
+    description:
+      path: "packages/modinate_core"
+      relative: true
+    source: path
+    version: "1.0.0"
   modinate_generator:
     dependency: "direct dev"
     description:

@@ -1,17 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:modinate_core/modinate_core.dart';
 
-class Migration {
-  const Migration({
-    required this.number,
-    required this.name,
-    required this.path,
-  });
-
-  final String name;
-  final int number;
-  final String path;
-
+extension Migrate on Migration {
   Future<void> apply(Database db) async {
     final data = await rootBundle.loadString(path, cache: false);
     await db.execute(data);

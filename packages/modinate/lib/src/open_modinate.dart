@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:modinate_core/modinate_core.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'models.dart';

@@ -4,7 +4,7 @@ import "package:modinate/modinate.dart";
 
 const migrations = <Migration>[
 Migration(
-  number: 1,
+  version: 1,
   name: "initial",
   path: "assets/migrations/v1__initial.sql",
 ),

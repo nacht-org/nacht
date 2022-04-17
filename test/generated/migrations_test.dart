@@ -17,7 +17,7 @@ void main() {
       migrations,
       migrationFromFiles,
       reason:
-          'Migration information is outdated.\nRun "flutter pub run build_runner build --delete-conflicting-outputs" to update generated migration information.',
+          'Migration information is outdated. Run "flutter pub run build_runner build --delete-conflicting-outputs" to update.',
     );
   });
 
@@ -28,7 +28,11 @@ void main() {
 
     int expectedVersion = 1;
     for (final migration in migrations) {
-      expect(migration.number, expectedVersion);
+      expect(
+        migration.version,
+        expectedVersion,
+        reason: 'Migrations are not incremental.',
+      );
       expectedVersion++;
     }
   });

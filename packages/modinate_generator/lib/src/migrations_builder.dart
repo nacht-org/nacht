@@ -18,7 +18,7 @@ class MigrationsBuilder extends Builder {
 
   void writeMigration(StringBuffer buffer, Migration info) {
     buffer.writeln('Migration(');
-    buffer.writeln('  number: ${info.number},');
+    buffer.writeln('  version: ${info.version},');
     buffer.writeln('  name: "${info.name}",');
     buffer.writeln('  path: "${info.path}",');
     buffer.writeln('),');
@@ -38,7 +38,7 @@ class MigrationsBuilder extends Builder {
       migrations.add(Migration.fromPath(input.path));
     }
 
-    migrations.sort((a, b) => a.number.compareTo(b.number));
+    migrations.sort((a, b) => a.version.compareTo(b.version));
 
     final output = _allFileOutput(buildStep);
 

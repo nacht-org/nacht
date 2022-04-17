@@ -3,17 +3,17 @@ import 'package:path/path.dart' as p;
 
 class Migration extends Equatable {
   const Migration({
-    required this.number,
+    required this.version,
     required this.name,
     required this.path,
   });
 
   final String name;
-  final int number;
+  final int version;
   final String path;
 
   @override
-  List<Object?> get props => [name, number, path];
+  List<Object?> get props => [name, version, path];
 
   static Migration fromPath(String filePath) {
     final fileName = p.basename(filePath);
@@ -24,7 +24,7 @@ class Migration extends Equatable {
         segments[1].substring(0, segments[1].length - 4).replaceAll('-', ' ');
 
     return Migration(
-      number: number,
+      version: number,
       name: name,
       path: filePath,
     );

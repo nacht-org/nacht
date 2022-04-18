@@ -1,4 +1,4 @@
-import 'package:chapturn/data/failure.dart';
+import 'package:chapturn/core/failure.dart';
 import 'package:chapturn/domain/providers.dart';
 import 'package:chapturn/presentation/controllers/import_from_url/searchbar_notifier.dart';
 import 'package:chapturn/utils/uri.dart';

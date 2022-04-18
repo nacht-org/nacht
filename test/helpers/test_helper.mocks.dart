@@ -2,7 +2,7 @@
 // in chapturn/test/helpers/test_helper.dart.
 // Do not manually edit this file.
 
-import 'package:chapturn/data/failure.dart' as _i4;
+import 'package:chapturn/core/failure.dart' as _i4;
 import 'package:chapturn/domain/repositories/crawler_repository.dart' as _i3;
 import 'package:chapturn_sources/chapturn_sources.dart' as _i5;
 import 'package:dartz/dartz.dart' as _i2;

@@ -1,4 +1,4 @@
-import 'package:chapturn/data/entities/novel.dart';
+import 'package:chapturn/data/models/novel.dart';
 import 'package:drift/drift.dart';
 
 @DataClassName('NovelCategory')

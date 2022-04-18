@@ -1,4 +1,4 @@
-import 'package:chapturn/data/entities/volume.dart';
+import 'package:chapturn/data/models/volume.dart';
 import 'package:drift/drift.dart';
 
 class Chapters extends Table {

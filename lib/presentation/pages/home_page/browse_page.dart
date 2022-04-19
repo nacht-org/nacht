@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chapturn/config/routes/app_router.dart';
-import 'package:chapturn/presentation/controllers/browse_notifier.dart';
-import 'package:chapturn/utils/iso_lang.dart';
-import 'package:chapturn/utils/string.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../config/routes/app_router.dart';
+import '../../../utils/iso_lang.dart';
+import '../../../utils/string.dart';
+import '../../controllers/browse_notifier.dart';
 
 class BrowsePage extends ConsumerWidget {
   const BrowsePage({Key? key}) : super(key: key);
@@ -45,7 +46,9 @@ class BrowsePage extends ConsumerWidget {
                   child: const Text('Latest'),
                   onPressed: () {},
                 ),
-                onTap: () {},
+                onTap: () => context.router.push(
+                  PopularRoute(crawlerFactory: crawlerFactories[index]),
+                ),
               );
             },
             childCount: crawlerFactories.length,

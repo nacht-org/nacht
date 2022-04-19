@@ -1,5 +1,5 @@
 import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/providers.dart';
+import 'package:chapturn/domain/providers/providers.dart';
 import 'package:chapturn/presentation/controllers/import_from_url/searchbar_notifier.dart';
 import 'package:chapturn/utils/uri.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';

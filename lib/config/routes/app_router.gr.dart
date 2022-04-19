@@ -25,6 +25,13 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const ImportFromUrlPage());
     },
+    PopularRoute.name: (routeData) {
+      final args = routeData.argsAs<PopularRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child:
+              PopularPage(key: args.key, crawlerFactory: args.crawlerFactory));
+    },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LibraryPage());
@@ -54,7 +61,8 @@ class _$AppRouter extends RootStackRouter {
               path: 'browse-page', parent: HomeRoute.name),
           RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
         ]),
-        RouteConfig(ImportFromUrlRoute.name, path: 'import-from-url')
+        RouteConfig(ImportFromUrlRoute.name, path: 'import-from-url'),
+        RouteConfig(PopularRoute.name, path: 'popular')
       ];
 }
 
@@ -74,6 +82,30 @@ class ImportFromUrlRoute extends PageRouteInfo<void> {
       : super(ImportFromUrlRoute.name, path: 'import-from-url');
 
   static const String name = 'ImportFromUrlRoute';
+}
+
+/// generated route for
+/// [PopularPage]
+class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
+  PopularRoute({Key? key, required CrawlerFactory crawlerFactory})
+      : super(PopularRoute.name,
+            path: 'popular',
+            args: PopularRouteArgs(key: key, crawlerFactory: crawlerFactory));
+
+  static const String name = 'PopularRoute';
+}
+
+class PopularRouteArgs {
+  const PopularRouteArgs({this.key, required this.crawlerFactory});
+
+  final Key? key;
+
+  final CrawlerFactory crawlerFactory;
+
+  @override
+  String toString() {
+    return 'PopularRouteArgs{key: $key, crawlerFactory: $crawlerFactory}';
+  }
 }
 
 /// generated route for

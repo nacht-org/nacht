@@ -2,7 +2,10 @@
 // in chapturn/test/helpers/test_helper.dart.
 // Do not manually edit this file.
 
+import 'dart:async' as _i6;
+
 import 'package:chapturn/core/failure.dart' as _i4;
+import 'package:chapturn/domain/entities/entities.dart' as _i7;
 import 'package:chapturn/domain/repositories/crawler_repository.dart' as _i3;
 import 'package:chapturn_sources/chapturn_sources.dart' as _i5;
 import 'package:dartz/dartz.dart' as _i2;
@@ -39,4 +42,27 @@ class MockCrawlerRepository extends _i1.Mock implements _i3.CrawlerRepository {
               returnValue:
                   _FakeEither_0<_i4.Failure, List<_i5.CrawlerFactory>>())
           as _i2.Either<_i4.Failure, List<_i5.CrawlerFactory>>);
+  @override
+  _i6.Future<_i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>
+      getPopularNovels(_i5.NovelPopular? parser) => (super.noSuchMethod(
+          Invocation.method(#getPopularNovels, [parser]),
+          returnValue: Future<
+                  _i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>.value(
+              _FakeEither_0<_i4.Failure, List<_i7.PartialNovelEntity>>())) as _i6
+          .Future<_i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>);
+}
+
+/// A class which mocks [NovelPopular].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNovelPopular extends _i1.Mock implements _i5.NovelPopular {
+  MockNovelPopular() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<List<_i5.Novel>> parsePopular(int? page) =>
+      (super.noSuchMethod(Invocation.method(#parsePopular, [page]),
+              returnValue: Future<List<_i5.Novel>>.value(<_i5.Novel>[]))
+          as _i6.Future<List<_i5.Novel>>);
 }

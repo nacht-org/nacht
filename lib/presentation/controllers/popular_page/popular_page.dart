@@ -41,7 +41,11 @@ final popularPageLoaderState =
 final popularPageState =
     StateNotifierProvider<PopularPageController, PopularPageState>(
   (ref) {
-    final controller = PopularPageController([]);
+    final initial = ref.watch(hasPopularFeatureProvider)
+        ? const PopularPageState.loading()
+        : const PopularPageState.unsupported();
+
+    final controller = PopularPageController(initial);
 
     ref.listen<PopularPageLoaderState>(
       popularPageLoaderState,
@@ -54,5 +58,5 @@ final popularPageState =
 
     return controller;
   },
-  dependencies: [popularPageLoaderState],
+  dependencies: [hasPopularFeatureProvider, popularPageLoaderState],
 );

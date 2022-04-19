@@ -3,12 +3,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/entities/partial_novel_entity.dart';
 
-typedef PopularPageState = List<PartialNovelEntity>;
+part 'popular_page_state.freezed.dart';
+
+@freezed
+class PopularPageState with _$PopularPageState {
+  const factory PopularPageState.loading() = _PopularPageLoading;
+  const factory PopularPageState.unsupported() = _PopularNovelUnsupported;
+  const factory PopularPageState.data(List<PartialNovelEntity> entities) =
+      _PopularNovelData;
+}
 
 class PopularPageController extends StateNotifier<PopularPageState> {
+  List<PartialNovelEntity> _novels = [];
+
   PopularPageController(super.state);
 
-  void add(PopularPageState entities) {
-    state = [...state, ...entities];
+  void add(List<PartialNovelEntity> novels) {
+    _novels = [..._novels, ...novels];
+    state = PopularPageState.data(_novels);
   }
 }

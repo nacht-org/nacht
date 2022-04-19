@@ -1,4 +1,4 @@
-export 'popular_page.dart';
+export 'popular_page/popular_page.dart';
 export 'import_from_url_page.dart';
 export 'home_page/home_page.dart';
 export 'home_page/browse_page.dart';

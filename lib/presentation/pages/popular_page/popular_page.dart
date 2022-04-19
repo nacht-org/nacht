@@ -1,0 +1,96 @@
+import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../controllers/popular_page/popular_page.dart';
+import 'widgets/novel_grid_card.dart';
+
+class PopularPage extends StatelessWidget {
+  const PopularPage({Key? key, required this.crawlerFactory}) : super(key: key);
+
+  final CrawlerFactory crawlerFactory;
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        crawlerFactoryProvider.overrideWithValue(crawlerFactory),
+      ],
+      child: const Scaffold(
+        body: PopularPageView(),
+      ),
+    );
+  }
+}
+
+class PopularPageView extends ConsumerWidget {
+  const PopularPageView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final meta = ref.watch(crawlerMetaProvider);
+    final pageState = ref.watch(popularPageState);
+
+    final slivers = pageState.when(
+      loading: () => [
+        const SliverFillRemaining(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      ],
+      unsupported: () => [
+        const SliverFillRemaining(
+          child: Center(
+            child: Text('This source has no support to fetch popular novels.'),
+          ),
+          hasScrollBody: false,
+        ),
+      ],
+      data: (novels) => [
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              final novel = novels[index];
+              return NovelGridCard(novel: novel);
+            },
+            childCount: novels.length,
+          ),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 2 / 3,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Center(
+            child: Consumer(builder: (context, ref, child) {
+              final loaderState = ref.watch(popularPageLoaderState);
+
+              return loaderState.when(
+                data: (_) {
+                  return TextButton(
+                    child: const Text('Load more'),
+                    onPressed: () {},
+                  );
+                },
+                loading: () => const CircularProgressIndicator(),
+              );
+            }),
+          ),
+        ),
+      ],
+    );
+
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: Text(meta.name),
+          floating: true,
+        ),
+        ...slivers,
+      ],
+    );
+  }
+}

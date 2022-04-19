@@ -29,6 +29,10 @@ class PopularPageLoaderController
   int _page = 1;
 
   Future<void> load() async {
+    if (!hasPopularFeature) {
+      return;
+    }
+
     state = const PopularPageLoaderState.loading();
     final result = await getPopularNovels.execute(crawler as NovelPopular);
     state = PopularPageLoaderState.data(result.fold(

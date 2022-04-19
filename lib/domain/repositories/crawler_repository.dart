@@ -8,5 +8,5 @@ abstract class CrawlerRepository {
   Either<Failure, CrawlerFactory> crawlerFactoryFor(String url);
   Either<Failure, List<CrawlerFactory>> getAllCrawlers();
   Future<Either<Failure, List<PartialNovelEntity>>> getPopularNovels(
-      NovelPopular parser);
+      NovelPopular parser, int page);
 }

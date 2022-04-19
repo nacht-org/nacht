@@ -44,8 +44,8 @@ class MockCrawlerRepository extends _i1.Mock implements _i3.CrawlerRepository {
           as _i2.Either<_i4.Failure, List<_i5.CrawlerFactory>>);
   @override
   _i6.Future<_i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>
-      getPopularNovels(_i5.NovelPopular? parser) => (super.noSuchMethod(
-          Invocation.method(#getPopularNovels, [parser]),
+      getPopularNovels(_i5.NovelPopular? parser, int? page) => (super.noSuchMethod(
+          Invocation.method(#getPopularNovels, [parser, page]),
           returnValue: Future<
                   _i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>.value(
               _FakeEither_0<_i4.Failure, List<_i7.PartialNovelEntity>>())) as _i6

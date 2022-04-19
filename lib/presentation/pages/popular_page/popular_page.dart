@@ -64,7 +64,9 @@ class PopularPageView extends ConsumerWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: Center(
+          child: Container(
+            height: 64,
+            alignment: Alignment.center,
             child: Consumer(builder: (context, ref, child) {
               final loaderState = ref.watch(popularPageLoaderState);
 
@@ -72,7 +74,8 @@ class PopularPageView extends ConsumerWidget {
                 data: (_) {
                   return TextButton(
                     child: const Text('Load more'),
-                    onPressed: () {},
+                    onPressed: () =>
+                        ref.read(popularPageLoaderState.notifier).loadNext(),
                   );
                 },
                 loading: () => const CircularProgressIndicator(),

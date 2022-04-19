@@ -29,7 +29,7 @@ final popularPageLoaderState =
       getPopularNovels: ref.watch(getPopularNovels),
       crawler: ref.watch(crawlerProvider),
       hasPopularFeature: ref.watch(hasPopularFeatureProvider),
-    )..load();
+    )..loadNext();
   },
   dependencies: [
     getPopularNovels,

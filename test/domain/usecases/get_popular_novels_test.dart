@@ -16,6 +16,7 @@ void main() {
   });
 
   final tParser = MockNovelPopular();
+  final tPage = 1;
   final tNovels = [
     PartialNovelEntity(
       title: 'novel_title',
@@ -26,10 +27,10 @@ void main() {
   ];
 
   test('should get novels from crawler repository', () async {
-    when(mockCrawlerRepository.getPopularNovels(tParser))
+    when(mockCrawlerRepository.getPopularNovels(tParser, tPage))
         .thenAnswer((_) async => Right(tNovels));
 
-    final result = await usecase.execute(tParser);
+    final result = await usecase.execute(tParser, tPage);
 
     expect(result, Right(tNovels));
   });

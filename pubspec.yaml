@@ -34,6 +34,7 @@ dependencies:
   chapturn_sources:
     path: ../chapturn_sources
   connectivity_plus: ^2.3.0
+  url_launcher: ^6.0.20
 
 dev_dependencies:
   flutter_test:

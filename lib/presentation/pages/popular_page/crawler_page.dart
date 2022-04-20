@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/config/routes/app_router.dart';
-import 'package:chapturn/presentation/widgets/searchable_view.dart';
+import 'package:chapturn/presentation/widgets/searchable_scroll_view.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../controllers/popular_page/popular_page.dart';
+import 'controllers/popular_page.dart';
 import 'widgets/novel_grid_card.dart';
 
 class PopularPage extends StatelessWidget {

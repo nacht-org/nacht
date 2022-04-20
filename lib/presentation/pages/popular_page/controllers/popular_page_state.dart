@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../domain/entities/partial_novel_entity.dart';
+import '../../../../domain/entities/partial_novel_entity.dart';
 
 part 'popular_page_state.freezed.dart';
 

@@ -1,8 +1,9 @@
-import 'package:chapturn/domain/providers/providers.dart';
-import 'package:chapturn/presentation/controllers/popular_page/popular_page_loader_state.dart';
-import 'package:chapturn/presentation/controllers/popular_page/popular_page_state.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../../domain/providers/providers.dart';
+import 'popular_page_loader_state.dart';
+import 'popular_page_state.dart';
 
 final crawlerFactoryProvider =
     Provider<CrawlerFactory>((ref) => throw UnimplementedError());

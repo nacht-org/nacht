@@ -25,12 +25,12 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const ImportFromUrlPage());
     },
-    PopularRoute.name: (routeData) {
-      final args = routeData.argsAs<PopularRouteArgs>();
+    CrawlerRoute.name: (routeData) {
+      final args = routeData.argsAs<CrawlerRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child:
-              PopularPage(key: args.key, crawlerFactory: args.crawlerFactory));
+              CrawlerPage(key: args.key, crawlerFactory: args.crawlerFactory));
     },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -47,6 +47,14 @@ class _$AppRouter extends RootStackRouter {
     MoreRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const MorePage());
+    },
+    PopularRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const EmptyRouterPage());
+    },
+    SearchRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const EmptyRouterPage());
     }
   };
 
@@ -62,7 +70,17 @@ class _$AppRouter extends RootStackRouter {
           RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
         ]),
         RouteConfig(ImportFromUrlRoute.name, path: 'import-from-url'),
-        RouteConfig(PopularRoute.name, path: 'popular')
+        RouteConfig(CrawlerRoute.name, path: 'crawler', children: [
+          RouteConfig('#redirect',
+              path: '',
+              parent: CrawlerRoute.name,
+              redirectTo: 'popular',
+              fullMatch: true),
+          RouteConfig(PopularRoute.name,
+              path: 'popular', parent: CrawlerRoute.name),
+          RouteConfig(SearchRoute.name,
+              path: 'search', parent: CrawlerRoute.name)
+        ])
       ];
 }
 
@@ -85,18 +103,22 @@ class ImportFromUrlRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PopularPage]
-class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
-  PopularRoute({Key? key, required CrawlerFactory crawlerFactory})
-      : super(PopularRoute.name,
-            path: 'popular',
-            args: PopularRouteArgs(key: key, crawlerFactory: crawlerFactory));
+/// [CrawlerPage]
+class CrawlerRoute extends PageRouteInfo<CrawlerRouteArgs> {
+  CrawlerRoute(
+      {Key? key,
+      required CrawlerFactory crawlerFactory,
+      List<PageRouteInfo>? children})
+      : super(CrawlerRoute.name,
+            path: 'crawler',
+            args: CrawlerRouteArgs(key: key, crawlerFactory: crawlerFactory),
+            initialChildren: children);
 
-  static const String name = 'PopularRoute';
+  static const String name = 'CrawlerRoute';
 }
 
-class PopularRouteArgs {
-  const PopularRouteArgs({this.key, required this.crawlerFactory});
+class CrawlerRouteArgs {
+  const CrawlerRouteArgs({this.key, required this.crawlerFactory});
 
   final Key? key;
 
@@ -104,7 +126,7 @@ class PopularRouteArgs {
 
   @override
   String toString() {
-    return 'PopularRouteArgs{key: $key, crawlerFactory: $crawlerFactory}';
+    return 'CrawlerRouteArgs{key: $key, crawlerFactory: $crawlerFactory}';
   }
 }
 
@@ -138,4 +160,20 @@ class MoreRoute extends PageRouteInfo<void> {
   const MoreRoute() : super(MoreRoute.name, path: 'more-page');
 
   static const String name = 'MoreRoute';
+}
+
+/// generated route for
+/// [EmptyRouterPage]
+class PopularRoute extends PageRouteInfo<void> {
+  const PopularRoute() : super(PopularRoute.name, path: 'popular');
+
+  static const String name = 'PopularRoute';
+}
+
+/// generated route for
+/// [EmptyRouterPage]
+class SearchRoute extends PageRouteInfo<void> {
+  const SearchRoute() : super(SearchRoute.name, path: 'search');
+
+  static const String name = 'SearchRoute';
 }

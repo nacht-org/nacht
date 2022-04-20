@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
+  replaceInRouteName: 'Page|Section,Route',
   routes: [
     AutoRoute(
       path: '/',
@@ -20,7 +20,19 @@ part 'app_router.gr.dart';
       ],
     ),
     AutoRoute(page: ImportFromUrlPage, path: 'import-from-url'),
-    AutoRoute(page: PopularPage, path: 'popular'),
+    AutoRoute(
+      page: CrawlerPage,
+      path: 'crawler',
+      children: [
+        AutoRoute(
+          name: 'PopularRoute',
+          page: EmptyRouterPage,
+          path: 'popular',
+          initial: true,
+        ),
+        AutoRoute(name: 'SearchRoute', page: EmptyRouterPage, path: 'search'),
+      ],
+    ),
   ],
 )
 class AppRouter extends _$AppRouter {}

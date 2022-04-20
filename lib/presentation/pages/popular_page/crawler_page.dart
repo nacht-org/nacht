@@ -1,3 +1,6 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:chapturn/config/routes/app_router.dart';
+import 'package:chapturn/presentation/pages/popular_page/widgets/appbar_section.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,8 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../controllers/popular_page/popular_page.dart';
 import 'widgets/novel_grid_card.dart';
 
-class PopularPage extends StatelessWidget {
-  const PopularPage({Key? key, required this.crawlerFactory}) : super(key: key);
+class CrawlerPage extends StatelessWidget {
+  const CrawlerPage({Key? key, required this.crawlerFactory}) : super(key: key);
 
   final CrawlerFactory crawlerFactory;
 
@@ -16,17 +19,44 @@ class PopularPage extends StatelessWidget {
       overrides: [
         crawlerFactoryProvider.overrideWithValue(crawlerFactory),
       ],
-      child: const Scaffold(
-        body: PopularPageView(),
+      child: Scaffold(
+        body: AutoTabsRouter(
+          homeIndex: 0,
+          routes: const [
+            PopularRoute(),
+            SearchRoute(),
+          ],
+          builder: (context, _, animation) {
+            final tabsRouter = AutoTabsRouter.of(context);
+
+            return CrawlerView(
+              child: appbar(context, tabsRouter.activeIndex),
+            );
+          },
+        ),
       ),
     );
   }
+
+  Widget appbar(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        return buildNormalAppbar(context);
+      case 1:
+        return buildSearchAppbar(context);
+      default:
+        throw Exception();
+    }
+  }
 }
 
-class PopularPageView extends ConsumerWidget {
-  const PopularPageView({
+class CrawlerView extends ConsumerWidget {
+  const CrawlerView({
     Key? key,
+    required this.child,
   }) : super(key: key);
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,6 +69,7 @@ class PopularPageView extends ConsumerWidget {
           child: Center(
             child: CircularProgressIndicator(),
           ),
+          hasScrollBody: false,
         ),
       ],
       unsupported: () => [
@@ -88,10 +119,7 @@ class PopularPageView extends ConsumerWidget {
 
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          title: Text(meta.name),
-          floating: true,
-        ),
+        child,
         ...slivers,
       ],
     );

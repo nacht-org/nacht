@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'controllers/popular_page.dart';
-import 'widgets/novel_grid_card.dart';
+import '../../widgets/novel_grid_card.dart';
 
 class PopularPage extends StatelessWidget {
   const PopularPage({Key? key, required this.crawlerFactory}) : super(key: key);

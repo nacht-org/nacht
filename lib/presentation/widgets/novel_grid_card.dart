@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/partial_novel_entity.dart';
+import '../../domain/entities/partial_novel_entity.dart';
 
 class NovelGridCard extends StatelessWidget {
   const NovelGridCard({

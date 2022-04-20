@@ -37,7 +37,7 @@ class PopularPageLoaderController
     _page++;
     state = const PopularPageLoaderState.loading();
     final result =
-        await getPopularNovels.execute(crawler as NovelPopular, _page);
+        await getPopularNovels.execute(crawler as ParsePopular, _page);
     state = PopularPageLoaderState.data(result.fold(
       (failure) => [], // TODO: handle failure
       (data) => data,

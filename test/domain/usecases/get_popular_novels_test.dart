@@ -15,7 +15,7 @@ void main() {
     usecase = GetPopularNovels(crawlerRepository: mockCrawlerRepository);
   });
 
-  final tParser = MockNovelPopular();
+  final tParser = MockParsePopular();
   final tPage = 1;
   final tNovels = [
     PartialNovelEntity(

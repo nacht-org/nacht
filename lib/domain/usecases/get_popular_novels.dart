@@ -11,7 +11,7 @@ class GetPopularNovels {
   final CrawlerRepository crawlerRepository;
 
   Future<Either<Failure, List<PartialNovelEntity>>> execute(
-      NovelPopular parser, int page) {
+      ParsePopular parser, int page) {
     return crawlerRepository.getPopularNovels(parser, page);
   }
 }

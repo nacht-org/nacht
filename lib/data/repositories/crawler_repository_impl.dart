@@ -28,7 +28,7 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
 
   @override
   Future<Either<Failure, List<PartialNovelEntity>>> getPopularNovels(
-    NovelPopular parser,
+    ParsePopular parser,
     int page,
   ) async {
     final novels = await parser.parsePopular(page);

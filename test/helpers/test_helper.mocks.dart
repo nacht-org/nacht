@@ -44,7 +44,7 @@ class MockCrawlerRepository extends _i1.Mock implements _i3.CrawlerRepository {
           as _i2.Either<_i4.Failure, List<_i5.CrawlerFactory>>);
   @override
   _i6.Future<_i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>
-      getPopularNovels(_i5.NovelPopular? parser, int? page) => (super.noSuchMethod(
+      getPopularNovels(_i5.ParsePopular? parser, int? page) => (super.noSuchMethod(
           Invocation.method(#getPopularNovels, [parser, page]),
           returnValue: Future<
                   _i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>.value(
@@ -52,11 +52,11 @@ class MockCrawlerRepository extends _i1.Mock implements _i3.CrawlerRepository {
           .Future<_i2.Either<_i4.Failure, List<_i7.PartialNovelEntity>>>);
 }
 
-/// A class which mocks [NovelPopular].
+/// A class which mocks [ParsePopular].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNovelPopular extends _i1.Mock implements _i5.NovelPopular {
-  MockNovelPopular() {
+class MockParsePopular extends _i1.Mock implements _i5.ParsePopular {
+  MockParsePopular() {
     _i1.throwOnMissingStub(this);
   }
 

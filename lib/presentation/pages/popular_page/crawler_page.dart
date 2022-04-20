@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/config/routes/app_router.dart';
-import 'package:chapturn/presentation/pages/popular_page/widgets/appbar_section.dart';
+import 'package:chapturn/presentation/widgets/searchable_view.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,8 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../controllers/popular_page/popular_page.dart';
 import 'widgets/novel_grid_card.dart';
 
-class CrawlerPage extends StatelessWidget {
-  const CrawlerPage({Key? key, required this.crawlerFactory}) : super(key: key);
+class PopularPage extends StatelessWidget {
+  const PopularPage({Key? key, required this.crawlerFactory}) : super(key: key);
 
   final CrawlerFactory crawlerFactory;
 
@@ -19,51 +19,63 @@ class CrawlerPage extends StatelessWidget {
       overrides: [
         crawlerFactoryProvider.overrideWithValue(crawlerFactory),
       ],
-      child: Scaffold(
-        body: AutoTabsRouter(
-          homeIndex: 0,
-          routes: const [
-            PopularRoute(),
-            SearchRoute(),
-          ],
-          builder: (context, _, animation) {
-            final tabsRouter = AutoTabsRouter.of(context);
-
-            return CrawlerView(
-              child: appbar(context, tabsRouter.activeIndex),
-            );
-          },
-        ),
+      child: const Scaffold(
+        body: PopularView(),
       ),
     );
   }
-
-  Widget appbar(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        return buildNormalAppbar(context);
-      case 1:
-        return buildSearchAppbar(context);
-      default:
-        throw Exception();
-    }
-  }
 }
 
-class CrawlerView extends ConsumerWidget {
-  const CrawlerView({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+final isSearchEnabled = StateProvider((ref) => false);
 
-  final Widget child;
+final searchTextProvider = StateProvider((ref) => '');
+
+class PopularView extends SearchableScrollView {
+  const PopularView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  StateProvider<bool> get isSearching => isSearchEnabled;
+
+  @override
+  StateProvider<String> get searchtext => searchTextProvider;
+
+  @override
+  Widget buildAppBar(
+      BuildContext context, bool innerBoxIsScrolled, WidgetRef ref) {
     final meta = ref.watch(crawlerMetaProvider);
+
+    return SliverAppBar(
+      title: Text(meta.name),
+      actions: [
+        getSearchAction(context, ref),
+      ],
+      floating: true,
+      snap: true,
+      forceElevated: innerBoxIsScrolled,
+    );
+  }
+
+  @override
+  Widget buildSearchBar(
+    BuildContext context,
+    bool innerBoxIsScrolled,
+    WidgetRef ref,
+    TextEditingController controller,
+  ) {
+    return buildDefaultSearchBar(
+      context,
+      innerBoxIsScrolled,
+      ref,
+      controller: controller,
+      onEditingComplete: () => print('search'),
+    );
+  }
+
+  @override
+  List<Widget> buildBody(BuildContext context, WidgetRef ref) {
     final pageState = ref.watch(popularPageState);
 
-    final slivers = pageState.when(
+    return pageState.when(
       loading: () => [
         const SliverFillRemaining(
           child: Center(
@@ -114,13 +126,6 @@ class CrawlerView extends ConsumerWidget {
             }),
           ),
         ),
-      ],
-    );
-
-    return CustomScrollView(
-      slivers: [
-        child,
-        ...slivers,
       ],
     );
   }

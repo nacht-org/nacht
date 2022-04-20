@@ -47,7 +47,7 @@ class BrowsePage extends ConsumerWidget {
                   onPressed: () {},
                 ),
                 onTap: () => context.router.push(
-                  CrawlerRoute(crawlerFactory: crawlerFactories[index]),
+                  PopularRoute(crawlerFactory: crawlerFactories[index]),
                 ),
               );
             },

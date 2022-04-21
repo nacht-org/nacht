@@ -21,7 +21,10 @@ class _MyAppState extends State<MyApp> {
     return ProviderScope(
       child: MaterialApp.router(
         title: 'Chapturn',
-        theme: ThemeData.dark(),
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          useMaterial3: true,
+        ),
         routeInformationParser: _router.defaultRouteParser(),
         routerDelegate: _router.delegate(),
         routeInformationProvider: _router.routeInfoProvider(),

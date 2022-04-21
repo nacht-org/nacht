@@ -32,6 +32,12 @@ class _$AppRouter extends RootStackRouter {
           child:
               PopularPage(key: args.key, crawlerFactory: args.crawlerFactory));
     },
+    NovelRoute.name: (routeData) {
+      final args = routeData.argsAs<NovelRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: NovelPage(key: args.key, novel: args.novel));
+    },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LibraryPage());
@@ -62,7 +68,8 @@ class _$AppRouter extends RootStackRouter {
           RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
         ]),
         RouteConfig(ImportFromUrlRoute.name, path: 'import-from-url'),
-        RouteConfig(PopularRoute.name, path: 'popular')
+        RouteConfig(PopularRoute.name, path: 'popular'),
+        RouteConfig(NovelRoute.name, path: 'novel')
       ];
 }
 
@@ -105,6 +112,29 @@ class PopularRouteArgs {
   @override
   String toString() {
     return 'PopularRouteArgs{key: $key, crawlerFactory: $crawlerFactory}';
+  }
+}
+
+/// generated route for
+/// [NovelPage]
+class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
+  NovelRoute({Key? key, required PartialNovelEntity novel})
+      : super(NovelRoute.name,
+            path: 'novel', args: NovelRouteArgs(key: key, novel: novel));
+
+  static const String name = 'NovelRoute';
+}
+
+class NovelRouteArgs {
+  const NovelRouteArgs({this.key, required this.novel});
+
+  final Key? key;
+
+  final PartialNovelEntity novel;
+
+  @override
+  String toString() {
+    return 'NovelRouteArgs{key: $key, novel: $novel}';
   }
 }
 

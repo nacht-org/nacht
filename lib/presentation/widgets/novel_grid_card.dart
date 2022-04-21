@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../config/routes/app_router.dart';
 import '../../domain/entities/partial_novel_entity.dart';
 
 class NovelGridCard extends StatelessWidget {
@@ -15,7 +17,7 @@ class NovelGridCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {},
+        onTap: () => context.router.push(NovelRoute(novel: novel)),
         child: Stack(
           children: [
             if (novel.thumbnailUrl != null)

@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chapturn/presentation/pages/pages.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
+
+import '../../domain/entities/partial_novel_entity.dart';
+import '../../presentation/pages/pages.dart';
 
 part 'app_router.gr.dart';
 
@@ -24,6 +26,10 @@ part 'app_router.gr.dart';
       page: PopularPage,
       path: 'popular',
     ),
+    AutoRoute(
+      page: NovelPage,
+      path: 'novel',
+    )
   ],
 )
 class AppRouter extends _$AppRouter {}

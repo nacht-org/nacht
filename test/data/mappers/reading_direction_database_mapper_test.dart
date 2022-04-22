@@ -7,20 +7,44 @@ import 'mapper_helper.dart';
 
 void main() {
   mapperGroup<ReadingDirection, int>(
-    name: 'ReadingDirectionMapper',
-    mapper: ReadingDirectionMapper(),
+    name: 'ReadingDirectionToSeedMapper',
+    mapper: ReadingDirectionToSeedMapper(),
     test: (mapper) {
       mapperTest(
-        name: 'ltr',
-        entity: ReadingDirection.ltr,
-        model: ReadingDirectionSeed.ltr,
+        'ReadingDirection.ltr',
+        'ReadingDirectionSeed.ltr',
+        from: ReadingDirection.ltr,
+        to: ReadingDirectionSeed.ltr,
         mapper: mapper,
       );
 
       mapperTest(
-        name: 'rtl',
-        entity: ReadingDirection.rtl,
-        model: ReadingDirectionSeed.rtl,
+        'ReadingDirection.rtl',
+        'ReadingDirectionSeed.rtl',
+        from: ReadingDirection.rtl,
+        to: ReadingDirectionSeed.rtl,
+        mapper: mapper,
+      );
+    },
+  );
+
+  mapperGroup(
+    name: 'SeedToReadingDirectionMapper',
+    mapper: SeedToReadingDirectionMapper(),
+    test: (mapper) {
+      mapperTest(
+        'ReadingDirectionSeed.ltr',
+        'ReadingDirection.ltr',
+        from: ReadingDirectionSeed.ltr,
+        to: ReadingDirection.ltr,
+        mapper: mapper,
+      );
+
+      mapperTest(
+        'ReadingDirectionSeed.rtl',
+        'ReadingDirection.rtl',
+        from: ReadingDirectionSeed.rtl,
+        to: ReadingDirection.rtl,
         mapper: mapper,
       );
     },

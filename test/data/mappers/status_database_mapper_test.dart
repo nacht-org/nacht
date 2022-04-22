@@ -8,35 +8,76 @@ import 'mapper_helper.dart';
 void main() {
   mapperGroup<NovelStatus, int>(
     name: 'NovelStatusMapper',
-    mapper: NovelStatusMapper(),
+    mapper: NovelStatusToSeedMapper(),
     test: (mapper) {
       mapperTest(
-        name: 'ongoing',
-        entity: NovelStatus.ongoing,
-        model: StatusSeed.ongoing,
+        'NovelStatus.ongoing',
+        'StatusSeed.ongoing',
+        from: NovelStatus.ongoing,
+        to: StatusSeed.ongoing,
         mapper: mapper,
       );
 
       mapperTest(
-        name: 'hiatus',
-        entity: NovelStatus.hiatus,
-        model: StatusSeed.hiatus,
+        'NovelStatus.hiatus',
+        'StatusSeed.hiatus',
+        from: NovelStatus.hiatus,
+        to: StatusSeed.hiatus,
         mapper: mapper,
       );
 
       mapperTest(
-        name: 'completed',
-        entity: NovelStatus.completed,
-        model: StatusSeed.completed,
+        'NovelStatus.completed',
+        'StatusSeed.completed',
+        from: NovelStatus.completed,
+        to: StatusSeed.completed,
         mapper: mapper,
       );
 
       mapperTest(
-        name: 'unknown',
-        entity: NovelStatus.unknown,
-        model: StatusSeed.unknown,
+        'NovelStatus.unknown',
+        'StatusSeed.unknown',
+        from: NovelStatus.unknown,
+        to: StatusSeed.unknown,
         mapper: mapper,
       );
     },
   );
+
+  mapperGroup(
+      name: 'SeedToNovelStatusMapper',
+      mapper: SeedToNovelStatusMapper(),
+      test: (mapper) {
+        mapperTest(
+          'StatusSeed.ongoing',
+          'NovelStatus.ongoing',
+          from: StatusSeed.ongoing,
+          to: NovelStatus.ongoing,
+          mapper: mapper,
+        );
+
+        mapperTest(
+          'StatusSeed.hiatus',
+          'NovelStatus.hiatus',
+          from: StatusSeed.hiatus,
+          to: NovelStatus.hiatus,
+          mapper: mapper,
+        );
+
+        mapperTest(
+          'StatusSeed.completed',
+          'NovelStatus.completed',
+          from: StatusSeed.completed,
+          to: NovelStatus.completed,
+          mapper: mapper,
+        );
+
+        mapperTest(
+          'StatusSeed.unknown',
+          'NovelStatus.unknown',
+          from: StatusSeed.unknown,
+          to: NovelStatus.unknown,
+          mapper: mapper,
+        );
+      });
 }

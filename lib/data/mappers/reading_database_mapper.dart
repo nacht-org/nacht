@@ -1,12 +1,24 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-import 'mapper.dart';
+import '../../domain/mapper.dart';
 import '../exception.dart';
 import '../models/reading_direction.dart';
 
-class ReadingDirectionMapper implements Mapper<ReadingDirection, int> {
+class ReadingDirectionToSeedMapper implements Mapper<ReadingDirection, int> {
   @override
-  ReadingDirection mapFrom(int model) {
+  int map(ReadingDirection entity) {
+    switch (entity) {
+      case ReadingDirection.ltr:
+        return ReadingDirectionSeed.ltr;
+      case ReadingDirection.rtl:
+        return ReadingDirectionSeed.rtl;
+    }
+  }
+}
+
+class SeedToReadingDirectionMapper implements Mapper<int, ReadingDirection> {
+  @override
+  ReadingDirection map(int model) {
     switch (model) {
       case ReadingDirectionSeed.ltr:
         return ReadingDirection.ltr;
@@ -14,16 +26,6 @@ class ReadingDirectionMapper implements Mapper<ReadingDirection, int> {
         return ReadingDirection.rtl;
       default:
         throw SeedException();
-    }
-  }
-
-  @override
-  int mapTo(ReadingDirection entity) {
-    switch (entity) {
-      case ReadingDirection.ltr:
-        return ReadingDirectionSeed.ltr;
-      case ReadingDirection.rtl:
-        return ReadingDirectionSeed.rtl;
     }
   }
 }

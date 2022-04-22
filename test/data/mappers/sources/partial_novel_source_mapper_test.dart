@@ -5,22 +5,24 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import '../mapper_helper.dart';
 
 void main() {
-  final mapFrom = PartialNovelSourceMapFrom();
+  final mapper = SourceToPartialNovelMapper();
 
-  mapFromTest<PartialNovelEntity, Novel>(
-    entity: PartialNovelEntity(
-      title: 'novel_title',
-      url: 'https://my.site.com/novel/123',
-      author: 'erpson',
-      thumbnailUrl: 'https://cdn.site.com/novel/cover.jpg',
-    ),
-    model: Novel(
+  mapperTest<Novel, PartialNovelEntity>(
+    'source novel',
+    'partial novel',
+    from: Novel(
       title: 'novel_title',
       url: 'https://my.site.com/novel/123',
       lang: 'en',
       thumbnailUrl: 'https://cdn.site.com/novel/cover.jpg',
       author: 'erpson',
     ),
-    mapper: mapFrom,
+    to: PartialNovelEntity(
+      title: 'novel_title',
+      url: 'https://my.site.com/novel/123',
+      author: 'erpson',
+      thumbnailUrl: 'https://cdn.site.com/novel/cover.jpg',
+    ),
+    mapper: mapper,
   );
 }

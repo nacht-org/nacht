@@ -1,35 +1,22 @@
-import 'package:chapturn/data/mappers/mapper.dart';
+import 'package:chapturn/domain/mapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void mapperGroup<Entity, Model>({
+void mapperGroup<I, O>({
   required String name,
-  required Mapper<Entity, Model> mapper,
-  required void Function(Mapper<Entity, Model> mapper) test,
+  required Mapper<I, O> mapper,
+  required void Function(Mapper<I, O> mapper) test,
 }) {
   group(name, () => test(mapper));
 }
 
-void mapperTest<Entity, Model>({
-  required String name,
-  required Entity entity,
-  required Model model,
-  required Mapper<Entity, Model> mapper,
+void mapperTest<I, O>(
+  String fromName,
+  String toName, {
+  required I from,
+  required O to,
+  required Mapper<I, O> mapper,
 }) {
-  group(name, () {
-    test('should map from entity to model', () async {
-      expect(mapper.mapTo(entity), model);
-    });
-
-    mapFromTest(entity: entity, model: model, mapper: mapper);
-  });
-}
-
-void mapFromTest<Entity, Model>({
-  required Entity entity,
-  required Model model,
-  required MapFrom<Entity, Model> mapper,
-}) {
-  test('should map to entity from model', () async {
-    expect(mapper.mapFrom(model), entity);
+  test('should map from $fromName to $toName', () async {
+    expect(mapper.map(from), to);
   });
 }

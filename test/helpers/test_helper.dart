@@ -1,6 +1,15 @@
 import 'package:chapturn/domain/repositories/crawler_repository.dart';
+import 'package:chapturn/domain/repositories/network_repository.dart';
+import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:mockito/annotations.dart';
 
-@GenerateMocks([CrawlerRepository, ParsePopular])
+@GenerateMocks([
+  CrawlerRepository,
+  ParseNovel,
+  ParsePopular,
+  NovelRemoteRepository,
+  NovelLocalRepository,
+  NetworkRepository,
+])
 void main() {}

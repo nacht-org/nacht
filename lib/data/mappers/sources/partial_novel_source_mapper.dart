@@ -1,15 +1,15 @@
-import 'package:chapturn/data/mappers/mapper.dart';
+import 'package:chapturn/domain/mapper.dart';
 import 'package:chapturn/domain/entities/partial_novel_entity.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-class PartialNovelSourceMapFrom extends MapFrom<PartialNovelEntity, Novel> {
+class SourceToPartialNovelMapper extends Mapper<Novel, PartialNovelEntity> {
   @override
-  PartialNovelEntity mapFrom(Novel model) {
+  PartialNovelEntity map(Novel input) {
     return PartialNovelEntity(
-      title: model.title,
-      url: model.url,
-      thumbnailUrl: model.thumbnailUrl,
-      author: model.author,
+      title: input.title,
+      url: input.url,
+      thumbnailUrl: input.thumbnailUrl,
+      author: input.author,
     );
   }
 }

@@ -7,39 +7,85 @@ import 'mapper_helper.dart';
 
 void main() {
   mapperGroup<WorkType, int>(
-    name: 'WorkTypeMapper',
-    mapper: WorkTypeMapper(),
+    name: 'WorkTypeToSeedMapper',
+    mapper: WorkTypeToSeedMapper(),
     test: (mapper) {
       mapperTest(
-        name: 'original',
-        entity: const OriginalWork(),
-        model: WorkTypeSeed.original,
+        'OriginalWork',
+        'original',
+        from: const OriginalWork(),
+        to: WorkTypeSeed.original,
         mapper: mapper,
       );
       mapperTest(
-        name: 'translationMtl',
-        entity: const TranslatedWork.mtl(),
-        model: WorkTypeSeed.translationMtl,
+        'TranslatedWork.mtl',
+        'translationMtl',
+        from: const TranslatedWork.mtl(),
+        to: WorkTypeSeed.translationMtl,
         mapper: mapper,
       );
       mapperTest(
-        name: 'translationHuman',
-        entity: const TranslatedWork.human(),
-        model: WorkTypeSeed.translationHuman,
+        'TranslatedWork.human',
+        'translationHuman',
+        from: const TranslatedWork.human(),
+        to: WorkTypeSeed.translationHuman,
         mapper: mapper,
       );
       mapperTest(
-        name: 'translationUnknown',
-        entity: const TranslatedWork.unknown(),
-        model: WorkTypeSeed.translationUnknown,
+        'TranslatedWork.unknown',
+        'translationUnknown',
+        from: const TranslatedWork.unknown(),
+        to: WorkTypeSeed.translationUnknown,
         mapper: mapper,
       );
       mapperTest(
-        name: 'unknown',
-        entity: const UnknownWorkType(),
-        model: WorkTypeSeed.unknown,
+        'UnknownWorkType',
+        'unknown',
+        from: const UnknownWorkType(),
+        to: WorkTypeSeed.unknown,
         mapper: mapper,
       );
     },
   );
+
+  mapperGroup(
+      name: 'SeedToWorkTypeMapper',
+      mapper: SeedToWorkTypeMapper(),
+      test: (mapper) {
+        mapperTest(
+          'original',
+          'OriginalWork',
+          from: WorkTypeSeed.original,
+          to: const OriginalWork(),
+          mapper: mapper,
+        );
+        mapperTest(
+          'translationMtl',
+          from: WorkTypeSeed.translationMtl,
+          'TranslatedWork.mtl',
+          to: const TranslatedWork.mtl(),
+          mapper: mapper,
+        );
+        mapperTest(
+          'translationHuman',
+          'TranslatedWork.human',
+          from: WorkTypeSeed.translationHuman,
+          to: const TranslatedWork.human(),
+          mapper: mapper,
+        );
+        mapperTest(
+          'translationUnknown',
+          'TranslatedWork.unknown',
+          from: WorkTypeSeed.translationUnknown,
+          to: const TranslatedWork.unknown(),
+          mapper: mapper,
+        );
+        mapperTest(
+          'unknown',
+          'UnknownWorkType',
+          from: WorkTypeSeed.unknown,
+          to: const UnknownWorkType(),
+          mapper: mapper,
+        );
+      });
 }

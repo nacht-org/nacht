@@ -1,5 +1,5 @@
 import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/data/mappers/mapper.dart';
+import 'package:chapturn/domain/mapper.dart';
 import 'package:chapturn/domain/entities/partial_novel_entity.dart';
 import 'package:chapturn/domain/repositories/crawler_repository.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
@@ -9,7 +9,7 @@ import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 class CrawlerRepositoryImpl implements CrawlerRepository {
   CrawlerRepositoryImpl(this.partialFromNovelMapper);
 
-  final MapFrom<PartialNovelEntity, Novel> partialFromNovelMapper;
+  final Mapper<Novel, PartialNovelEntity> partialFromNovelMapper;
 
   @override
   Either<Failure, CrawlerFactory> crawlerFactoryFor(String url) {
@@ -34,7 +34,7 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
     final novels = await parser.parsePopular(page);
 
     final entities =
-        novels.map((novel) => partialFromNovelMapper.mapFrom(novel)).toList();
+        novels.map((novel) => partialFromNovelMapper.map(novel)).toList();
 
     return Right(entities);
   }

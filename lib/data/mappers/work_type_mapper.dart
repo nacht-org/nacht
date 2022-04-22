@@ -2,12 +2,32 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 
 import '../exception.dart';
 import '../models/work_type.dart';
-import 'mapper.dart';
+import '../../domain/mapper.dart';
 
-class WorkTypeMapper implements Mapper<WorkType, int> {
+class WorkTypeToSeedMapper implements Mapper<WorkType, int> {
   @override
-  WorkType mapFrom(int model) {
-    switch (model) {
+  int map(WorkType input) {
+    if (input is OriginalWork) {
+      return WorkTypeSeed.original;
+    } else if (input is TranslatedWork) {
+      switch (input.type) {
+        case TranslationType.mtl:
+          return WorkTypeSeed.translationMtl;
+        case TranslationType.human:
+          return WorkTypeSeed.translationHuman;
+        case TranslationType.unknown:
+          return WorkTypeSeed.translationUnknown;
+      }
+    } else {
+      return WorkTypeSeed.unknown;
+    }
+  }
+}
+
+class SeedToWorkTypeMapper extends Mapper<int, WorkType> {
+  @override
+  WorkType map(int input) {
+    switch (input) {
       case WorkTypeSeed.original:
         return const OriginalWork();
       case WorkTypeSeed.translationMtl:
@@ -20,24 +40,6 @@ class WorkTypeMapper implements Mapper<WorkType, int> {
         return const UnknownWorkType();
       default:
         throw SeedException();
-    }
-  }
-
-  @override
-  int mapTo(WorkType entity) {
-    if (entity is OriginalWork) {
-      return WorkTypeSeed.original;
-    } else if (entity is TranslatedWork) {
-      switch (entity.type) {
-        case TranslationType.mtl:
-          return WorkTypeSeed.translationMtl;
-        case TranslationType.human:
-          return WorkTypeSeed.translationHuman;
-        case TranslationType.unknown:
-          return WorkTypeSeed.translationUnknown;
-      }
-    } else {
-      return WorkTypeSeed.unknown;
     }
   }
 }

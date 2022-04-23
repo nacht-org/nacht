@@ -533,8 +533,8 @@ class Novel extends DataClass implements Insertable<Novel> {
   final int id;
   final String title;
   final String description;
-  final String author;
-  final String thumbnailUrl;
+  final String? author;
+  final String? thumbnailUrl;
   final String url;
   final int statusId;
   final String lang;
@@ -544,8 +544,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       {required this.id,
       required this.title,
       required this.description,
-      required this.author,
-      required this.thumbnailUrl,
+      this.author,
+      this.thumbnailUrl,
       required this.url,
       required this.statusId,
       required this.lang,
@@ -561,9 +561,9 @@ class Novel extends DataClass implements Insertable<Novel> {
       description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       author: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}author'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}author']),
       thumbnailUrl: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail_url'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail_url']),
       url: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}url'])!,
       statusId: const IntType()
@@ -582,8 +582,12 @@ class Novel extends DataClass implements Insertable<Novel> {
     map['id'] = Variable<int>(id);
     map['title'] = Variable<String>(title);
     map['description'] = Variable<String>(description);
-    map['author'] = Variable<String>(author);
-    map['thumbnail_url'] = Variable<String>(thumbnailUrl);
+    if (!nullToAbsent || author != null) {
+      map['author'] = Variable<String?>(author);
+    }
+    if (!nullToAbsent || thumbnailUrl != null) {
+      map['thumbnail_url'] = Variable<String?>(thumbnailUrl);
+    }
     map['url'] = Variable<String>(url);
     map['status_id'] = Variable<int>(statusId);
     map['lang'] = Variable<String>(lang);
@@ -597,8 +601,11 @@ class Novel extends DataClass implements Insertable<Novel> {
       id: Value(id),
       title: Value(title),
       description: Value(description),
-      author: Value(author),
-      thumbnailUrl: Value(thumbnailUrl),
+      author:
+          author == null && nullToAbsent ? const Value.absent() : Value(author),
+      thumbnailUrl: thumbnailUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thumbnailUrl),
       url: Value(url),
       statusId: Value(statusId),
       lang: Value(lang),
@@ -614,8 +621,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
-      author: serializer.fromJson<String>(json['author']),
-      thumbnailUrl: serializer.fromJson<String>(json['thumbnailUrl']),
+      author: serializer.fromJson<String?>(json['author']),
+      thumbnailUrl: serializer.fromJson<String?>(json['thumbnailUrl']),
       url: serializer.fromJson<String>(json['url']),
       statusId: serializer.fromJson<int>(json['statusId']),
       lang: serializer.fromJson<String>(json['lang']),
@@ -630,8 +637,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
-      'author': serializer.toJson<String>(author),
-      'thumbnailUrl': serializer.toJson<String>(thumbnailUrl),
+      'author': serializer.toJson<String?>(author),
+      'thumbnailUrl': serializer.toJson<String?>(thumbnailUrl),
       'url': serializer.toJson<String>(url),
       'statusId': serializer.toJson<int>(statusId),
       'lang': serializer.toJson<String>(lang),
@@ -703,8 +710,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
   final Value<int> id;
   final Value<String> title;
   final Value<String> description;
-  final Value<String> author;
-  final Value<String> thumbnailUrl;
+  final Value<String?> author;
+  final Value<String?> thumbnailUrl;
   final Value<String> url;
   final Value<int> statusId;
   final Value<String> lang;
@@ -726,8 +733,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     this.id = const Value.absent(),
     required String title,
     required String description,
-    required String author,
-    required String thumbnailUrl,
+    this.author = const Value.absent(),
+    this.thumbnailUrl = const Value.absent(),
     required String url,
     required int statusId,
     required String lang,
@@ -735,8 +742,6 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     required int readingDirectionId,
   })  : title = Value(title),
         description = Value(description),
-        author = Value(author),
-        thumbnailUrl = Value(thumbnailUrl),
         url = Value(url),
         statusId = Value(statusId),
         lang = Value(lang),
@@ -746,8 +751,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? description,
-    Expression<String>? author,
-    Expression<String>? thumbnailUrl,
+    Expression<String?>? author,
+    Expression<String?>? thumbnailUrl,
     Expression<String>? url,
     Expression<int>? statusId,
     Expression<String>? lang,
@@ -773,8 +778,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       {Value<int>? id,
       Value<String>? title,
       Value<String>? description,
-      Value<String>? author,
-      Value<String>? thumbnailUrl,
+      Value<String?>? author,
+      Value<String?>? thumbnailUrl,
       Value<String>? url,
       Value<int>? statusId,
       Value<String>? lang,
@@ -807,10 +812,10 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       map['description'] = Variable<String>(description.value);
     }
     if (author.present) {
-      map['author'] = Variable<String>(author.value);
+      map['author'] = Variable<String?>(author.value);
     }
     if (thumbnailUrl.present) {
-      map['thumbnail_url'] = Variable<String>(thumbnailUrl.value);
+      map['thumbnail_url'] = Variable<String?>(thumbnailUrl.value);
     }
     if (url.present) {
       map['url'] = Variable<String>(url.value);
@@ -874,14 +879,14 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
   final VerificationMeta _authorMeta = const VerificationMeta('author');
   @override
   late final GeneratedColumn<String?> author = GeneratedColumn<String?>(
-      'author', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'author', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _thumbnailUrlMeta =
       const VerificationMeta('thumbnailUrl');
   @override
   late final GeneratedColumn<String?> thumbnailUrl = GeneratedColumn<String?>(
-      'thumbnail_url', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'thumbnail_url', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _urlMeta = const VerificationMeta('url');
   @override
   late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
@@ -960,16 +965,12 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
     if (data.containsKey('author')) {
       context.handle(_authorMeta,
           author.isAcceptableOrUnknown(data['author']!, _authorMeta));
-    } else if (isInserting) {
-      context.missing(_authorMeta);
     }
     if (data.containsKey('thumbnail_url')) {
       context.handle(
           _thumbnailUrlMeta,
           thumbnailUrl.isAcceptableOrUnknown(
               data['thumbnail_url']!, _thumbnailUrlMeta));
-    } else if (isInserting) {
-      context.missing(_thumbnailUrlMeta);
     }
     if (data.containsKey('url')) {
       context.handle(
@@ -1634,6 +1635,7 @@ class $VolumesTable extends Volumes with TableInfo<$VolumesTable, Volume> {
 
 class Chapter extends DataClass implements Insertable<Chapter> {
   final int id;
+  final int index;
   final String title;
   final String? content;
   final String url;
@@ -1641,6 +1643,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   final int volumeId;
   Chapter(
       {required this.id,
+      required this.index,
       required this.title,
       this.content,
       required this.url,
@@ -1651,6 +1654,8 @@ class Chapter extends DataClass implements Insertable<Chapter> {
     return Chapter(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      index: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}index'])!,
       title: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
       content: const StringType()
@@ -1667,6 +1672,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['index'] = Variable<int>(index);
     map['title'] = Variable<String>(title);
     if (!nullToAbsent || content != null) {
       map['content'] = Variable<String?>(content);
@@ -1682,6 +1688,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   ChaptersCompanion toCompanion(bool nullToAbsent) {
     return ChaptersCompanion(
       id: Value(id),
+      index: Value(index),
       title: Value(title),
       content: content == null && nullToAbsent
           ? const Value.absent()
@@ -1699,6 +1706,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Chapter(
       id: serializer.fromJson<int>(json['id']),
+      index: serializer.fromJson<int>(json['index']),
       title: serializer.fromJson<String>(json['title']),
       content: serializer.fromJson<String?>(json['content']),
       url: serializer.fromJson<String>(json['url']),
@@ -1711,6 +1719,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'index': serializer.toJson<int>(index),
       'title': serializer.toJson<String>(title),
       'content': serializer.toJson<String?>(content),
       'url': serializer.toJson<String>(url),
@@ -1721,6 +1730,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
 
   Chapter copyWith(
           {int? id,
+          int? index,
           String? title,
           String? content,
           String? url,
@@ -1728,6 +1738,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
           int? volumeId}) =>
       Chapter(
         id: id ?? this.id,
+        index: index ?? this.index,
         title: title ?? this.title,
         content: content ?? this.content,
         url: url ?? this.url,
@@ -1738,6 +1749,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   String toString() {
     return (StringBuffer('Chapter(')
           ..write('id: $id, ')
+          ..write('index: $index, ')
           ..write('title: $title, ')
           ..write('content: $content, ')
           ..write('url: $url, ')
@@ -1748,12 +1760,14 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   }
 
   @override
-  int get hashCode => Object.hash(id, title, content, url, updated, volumeId);
+  int get hashCode =>
+      Object.hash(id, index, title, content, url, updated, volumeId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Chapter &&
           other.id == this.id &&
+          other.index == this.index &&
           other.title == this.title &&
           other.content == this.content &&
           other.url == this.url &&
@@ -1763,6 +1777,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
 
 class ChaptersCompanion extends UpdateCompanion<Chapter> {
   final Value<int> id;
+  final Value<int> index;
   final Value<String> title;
   final Value<String?> content;
   final Value<String> url;
@@ -1770,6 +1785,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   final Value<int> volumeId;
   const ChaptersCompanion({
     this.id = const Value.absent(),
+    this.index = const Value.absent(),
     this.title = const Value.absent(),
     this.content = const Value.absent(),
     this.url = const Value.absent(),
@@ -1778,16 +1794,19 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   });
   ChaptersCompanion.insert({
     this.id = const Value.absent(),
+    required int index,
     required String title,
     this.content = const Value.absent(),
     required String url,
     this.updated = const Value.absent(),
     required int volumeId,
-  })  : title = Value(title),
+  })  : index = Value(index),
+        title = Value(title),
         url = Value(url),
         volumeId = Value(volumeId);
   static Insertable<Chapter> custom({
     Expression<int>? id,
+    Expression<int>? index,
     Expression<String>? title,
     Expression<String?>? content,
     Expression<String>? url,
@@ -1796,6 +1815,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (index != null) 'index': index,
       if (title != null) 'title': title,
       if (content != null) 'content': content,
       if (url != null) 'url': url,
@@ -1806,6 +1826,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
 
   ChaptersCompanion copyWith(
       {Value<int>? id,
+      Value<int>? index,
       Value<String>? title,
       Value<String?>? content,
       Value<String>? url,
@@ -1813,6 +1834,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
       Value<int>? volumeId}) {
     return ChaptersCompanion(
       id: id ?? this.id,
+      index: index ?? this.index,
       title: title ?? this.title,
       content: content ?? this.content,
       url: url ?? this.url,
@@ -1826,6 +1848,9 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (index.present) {
+      map['index'] = Variable<int>(index.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -1849,6 +1874,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   String toString() {
     return (StringBuffer('ChaptersCompanion(')
           ..write('id: $id, ')
+          ..write('index: $index, ')
           ..write('title: $title, ')
           ..write('content: $content, ')
           ..write('url: $url, ')
@@ -1871,6 +1897,11 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _indexMeta = const VerificationMeta('index');
+  @override
+  late final GeneratedColumn<int?> index = GeneratedColumn<int?>(
+      'index', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
@@ -1900,7 +1931,7 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
       defaultConstraints: 'REFERENCES volumes (id)');
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, content, url, updated, volumeId];
+      [id, index, title, content, url, updated, volumeId];
   @override
   String get aliasedName => _alias ?? 'chapters';
   @override
@@ -1912,6 +1943,12 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('index')) {
+      context.handle(
+          _indexMeta, index.isAcceptableOrUnknown(data['index']!, _indexMeta));
+    } else if (isInserting) {
+      context.missing(_indexMeta);
     }
     if (data.containsKey('title')) {
       context.handle(

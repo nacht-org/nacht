@@ -7,8 +7,8 @@ class Novels extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
   TextColumn get description => text()();
-  TextColumn get author => text()();
-  TextColumn get thumbnailUrl => text()();
+  TextColumn get author => text().nullable()();
+  TextColumn get thumbnailUrl => text().nullable()();
   TextColumn get url => text().customConstraint('NOT NULL UNIQUE')();
   IntColumn get statusId => integer().references(Statuses, #id)();
   TextColumn get lang => text().withLength(max: 8)();

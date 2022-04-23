@@ -1,5 +1,6 @@
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/mappers/database/reading_database_mapper.dart';
+import 'package:chapturn/data/mappers/database/source_to_chapter_companion_mapper.dart';
 import 'package:chapturn/data/mappers/database/source_to_novel_companion_mapper.dart';
 import 'package:chapturn/data/mappers/database/source_to_volume_companion_mapper.dart';
 import 'package:chapturn/data/mappers/database/status_mapper.dart';
@@ -44,3 +45,7 @@ final sourceToNovelCompanionMapper =
 final sourceToVolumeCompanionMapper =
     Provider<Mapper<sources.Volume, VolumesCompanion>>(
         (ref) => SourceToVolumeCompanionMapper());
+
+final sourceToChapterCompanionMapper =
+    Provider<Mapper<sources.Chapter, ChaptersCompanion>>(
+        (ref) => SourceToChapterCompanionMapper());

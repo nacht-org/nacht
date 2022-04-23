@@ -12,12 +12,14 @@ void mapperGroup<I, O>({
 void mapperTest<I, O>(
   String fromName,
   String toName, {
+  String? suffix,
   required I from,
   required O to,
   required Mapper<I, O> mapper,
   Function()? stub,
 }) {
-  test('should map from $fromName to $toName', () async {
+  final _suffix = suffix == null ? '' : ' $suffix';
+  test('should map from $fromName to $toName$_suffix', () async {
     if (stub != null) stub();
     expect(mapper.map(from), to);
   });

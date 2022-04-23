@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 
 class Chapters extends Table {
   IntColumn get id => integer().autoIncrement()();
+  IntColumn get index => integer()();
   TextColumn get title => text()();
   TextColumn get content => text().nullable()();
   TextColumn get url => text()();

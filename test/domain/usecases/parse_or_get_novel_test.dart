@@ -75,8 +75,6 @@ void main() {
           .thenAnswer((_) async => Right(tNovel));
       when(mockLocalRepository.saveNovel(tNovel))
           .thenAnswer((_) async => Right(tNovelEntity));
-      when(mockLocalRepository.getNovel(tId))
-          .thenAnswer((_) async => Right(tNovelEntity));
 
       final result = await usecase.execute(tParser, tUrl);
 

@@ -11,5 +11,5 @@ abstract class NovelRemoteRepository {
 abstract class NovelLocalRepository {
   Future<Either<Failure, NovelEntity>> getNovel(int id);
   Future<Either<Failure, NovelEntity>> getNovelByUrl(String url);
-  Future<Either<Failure, int>> saveNovel(db.Novel novel);
+  Future<Either<Failure, int>> saveNovel(db.NovelsCompanion novel);
 }

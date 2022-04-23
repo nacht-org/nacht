@@ -1,29 +1,40 @@
 import 'package:chapturn/domain/entities/novel_entity.dart';
+import 'package:chapturn/domain/mapper.dart';
 import 'package:chapturn/domain/repositories/network_repository.dart';
 import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:chapturn/domain/usecases/parse_or_get_novel.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:chapturn/data/datasources/local/database.dart' as db;
 
 import '../../helpers/test_helper.mocks.dart';
+import 'parse_or_get_novel_test.mocks.dart';
 
+@GenerateMocks([], customMocks: [
+  MockSpec<Mapper<Novel, db.NovelsCompanion>>(
+      as: #MockNovelCompanionFromNovelMapper)
+])
 void main() {
   late NovelRemoteRepository mockRemoteRepository;
   late NovelLocalRepository mockLocalRepository;
   late NetworkRepository mockNetworkRepository;
+  late Mapper<Novel, db.NovelsCompanion> mockNovelCompanionMapper;
   late ParseOrGetNovel usecase;
 
   setUp(() {
     mockRemoteRepository = MockNovelRemoteRepository();
     mockLocalRepository = MockNovelLocalRepository();
     mockNetworkRepository = MockNetworkRepository();
+    mockNovelCompanionMapper = MockNovelCompanionFromNovelMapper();
     usecase = ParseOrGetNovel(
       mockRemoteRepository,
       mockLocalRepository,
       mockNetworkRepository,
+      mockNovelCompanionMapper,
     );
   });
 
@@ -37,17 +48,11 @@ void main() {
     lang: 'en',
   );
 
-  final tDbNovel = db.Novel(
-      id: 1,
-      title: 'My novel story',
-      description: '',
-      author: '',
-      url: tUrl,
-      lang: 'en',
-      thumbnailUrl: 'https://assets.website.com/novel/123/cover.jpg',
-      statusId: 1,
-      readingDirectionId: 1,
-      workTypeId: 1);
+  const tDbNovel = db.NovelsCompanion(
+    title: Value('My novel story'),
+    url: Value(tUrl),
+    lang: Value('en'),
+  );
 
   final tNovelEntity = NovelEntity(
     id: tId,
@@ -69,7 +74,7 @@ void main() {
     () async {
       when(mockNetworkRepository.isConnectionAvailable())
           .thenAnswer((_) async => false);
-      when(mockLocalRepository.getNovel(tId))
+      when(mockLocalRepository.getNovelByUrl(tUrl))
           .thenAnswer((_) async => Right(tNovelEntity));
 
       final result = await usecase.execute(tParser, tUrl);
@@ -85,15 +90,16 @@ void main() {
           .thenAnswer((_) async => true);
       when(mockRemoteRepository.parseNovel(tParser, tUrl))
           .thenAnswer((_) async => Right(tNovel));
-      when(mockLocalRepository.saveNovel(tNovel))
-          .thenAnswer((_) async => Right());
-      when(mockLocalRepository.getNovel(tUrl))
+      when(mockNovelCompanionMapper.map(tNovel)).thenReturn(tDbNovel);
+      when(mockLocalRepository.saveNovel(tDbNovel))
+          .thenAnswer((_) async => const Right(tId));
+      when(mockLocalRepository.getNovel(tId))
           .thenAnswer((_) async => Right(tNovelEntity));
 
       final result = await usecase.execute(tParser, tUrl);
 
       expect(result, Right(tNovelEntity));
-      verify(mockLocalRepository.saveNovel(tNovel)).called(1);
+      verify(mockLocalRepository.saveNovel(tDbNovel)).called(1);
     },
   );
 }

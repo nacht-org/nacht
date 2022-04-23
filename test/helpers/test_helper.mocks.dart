@@ -5,12 +5,13 @@
 import 'dart:async' as _i6;
 
 import 'package:chapturn/core/failure.dart' as _i5;
+import 'package:chapturn/data/datasources/local/database.dart' as _i10;
 import 'package:chapturn/domain/entities/entities.dart' as _i7;
 import 'package:chapturn/domain/entities/network/network_connection.dart'
-    as _i11;
+    as _i12;
 import 'package:chapturn/domain/entities/novel_entity.dart' as _i9;
 import 'package:chapturn/domain/repositories/crawler_repository.dart' as _i4;
-import 'package:chapturn/domain/repositories/network_repository.dart' as _i10;
+import 'package:chapturn/domain/repositories/network_repository.dart' as _i11;
 import 'package:chapturn/domain/repositories/novel_repository.dart' as _i8;
 import 'package:chapturn_sources/chapturn_sources.dart' as _i3;
 import 'package:dartz/dartz.dart' as _i2;
@@ -29,8 +30,6 @@ import 'package:mockito/mockito.dart' as _i1;
 class _FakeEither_0<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
 
 class _FakeNovel_1 extends _i1.Fake implements _i3.Novel {}
-
-class _FakeOption_2<A> extends _i1.Fake implements _i2.Option<A> {}
 
 /// A class which mocks [CrawlerRepository].
 ///
@@ -124,33 +123,41 @@ class MockNovelLocalRepository extends _i1.Mock
   }
 
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i9.NovelEntity>> getNovel(String? url) =>
-      (super.noSuchMethod(Invocation.method(#getNovel, [url]),
+  _i6.Future<_i2.Either<_i5.Failure, _i9.NovelEntity>> getNovel(int? id) =>
+      (super.noSuchMethod(Invocation.method(#getNovel, [id]),
           returnValue: Future<_i2.Either<_i5.Failure, _i9.NovelEntity>>.value(
               _FakeEither_0<_i5.Failure, _i9.NovelEntity>())) as _i6
           .Future<_i2.Either<_i5.Failure, _i9.NovelEntity>>);
   @override
-  _i6.Future<_i2.Option<_i5.Failure>> saveNovel(_i3.Novel? novel) =>
+  _i6.Future<_i2.Either<_i5.Failure, _i9.NovelEntity>> getNovelByUrl(
+          String? url) =>
+      (super.noSuchMethod(Invocation.method(#getNovelByUrl, [url]),
+          returnValue: Future<_i2.Either<_i5.Failure, _i9.NovelEntity>>.value(
+              _FakeEither_0<_i5.Failure, _i9.NovelEntity>())) as _i6
+          .Future<_i2.Either<_i5.Failure, _i9.NovelEntity>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, int>> saveNovel(
+          _i10.NovelsCompanion? novel) =>
       (super.noSuchMethod(Invocation.method(#saveNovel, [novel]),
-              returnValue: Future<_i2.Option<_i5.Failure>>.value(
-                  _FakeOption_2<_i5.Failure>()))
-          as _i6.Future<_i2.Option<_i5.Failure>>);
+              returnValue: Future<_i2.Either<_i5.Failure, int>>.value(
+                  _FakeEither_0<_i5.Failure, int>()))
+          as _i6.Future<_i2.Either<_i5.Failure, int>>);
 }
 
 /// A class which mocks [NetworkRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkRepository extends _i1.Mock implements _i10.NetworkRepository {
+class MockNetworkRepository extends _i1.Mock implements _i11.NetworkRepository {
   MockNetworkRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i11.NetworkConnection> getConnectionStatus() =>
+  _i6.Future<_i12.NetworkConnection> getConnectionStatus() =>
       (super.noSuchMethod(Invocation.method(#getConnectionStatus, []),
-              returnValue: Future<_i11.NetworkConnection>.value(
-                  _i11.NetworkConnection.none))
-          as _i6.Future<_i11.NetworkConnection>);
+              returnValue: Future<_i12.NetworkConnection>.value(
+                  _i12.NetworkConnection.none))
+          as _i6.Future<_i12.NetworkConnection>);
   @override
   _i6.Future<bool> isConnectionAvailable() =>
       (super.noSuchMethod(Invocation.method(#isConnectionAvailable, []),

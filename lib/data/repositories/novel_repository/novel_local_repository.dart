@@ -83,11 +83,13 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
   }
 
   @override
-  Future<Either<Failure, int>> saveNovel(Novel novel) async {
+  Future<Either<Failure, int>> saveNovel(NovelsCompanion novel) async {
     // TODO: check for error?
     final id = await database
         .into(database.novels)
         .insert(novel, onConflict: DoUpdate((old) => novel));
+
+    // FIXME: volumes? chapters?
 
     return Right(id);
   }

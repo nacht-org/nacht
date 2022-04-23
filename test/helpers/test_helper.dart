@@ -1,3 +1,4 @@
+import 'package:chapturn/domain/mapper.dart';
 import 'package:chapturn/domain/repositories/crawler_repository.dart';
 import 'package:chapturn/domain/repositories/network_repository.dart';
 import 'package:chapturn/domain/repositories/novel_repository.dart';

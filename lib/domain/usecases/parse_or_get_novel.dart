@@ -20,7 +20,7 @@ class ParseOrGetNovel {
   final NetworkRepository _networkRepository;
   final NovelRemoteRepository _remoteRepository;
 
-  final Mapper<Novel, db.Novel> sourceToDatabaseMapper;
+  final Mapper<Novel, db.NovelsCompanion> sourceToDatabaseMapper;
 
   Future<Either<Failure, NovelEntity>> execute(
     ParseNovel parser,

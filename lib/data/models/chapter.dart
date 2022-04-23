@@ -9,4 +9,9 @@ class Chapters extends Table {
   TextColumn get url => text()();
   DateTimeColumn get updated => dateTime().nullable()();
   IntColumn get volumeId => integer().references(Volumes, #id)();
+
+  @override
+  List<String> get customConstraints => [
+        'UNIQUE(id, url)',
+      ];
 }

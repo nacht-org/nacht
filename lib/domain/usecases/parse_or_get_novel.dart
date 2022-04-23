@@ -1,26 +1,24 @@
-import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/entities/novel_entity.dart';
-import 'package:chapturn/domain/repositories/network_repository.dart';
-import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
-import 'package:chapturn/data/datasources/local/database.dart' as db;
 
+import '../../core/failure.dart';
+import '../../data/datasources/local/database.dart' as db;
+import '../entities/entities.dart';
+import '../entities/novel/novel_entity.dart';
 import '../mapper.dart';
+import '../repositories/network_repository.dart';
+import '../repositories/novel_repository.dart';
 
 class ParseOrGetNovel {
   ParseOrGetNovel(
     this._remoteRepository,
     this._localRepository,
     this._networkRepository,
-    this.sourceToDatabaseMapper,
   );
 
   final NovelLocalRepository _localRepository;
   final NetworkRepository _networkRepository;
   final NovelRemoteRepository _remoteRepository;
-
-  final Mapper<Novel, db.NovelsCompanion> sourceToDatabaseMapper;
 
   Future<Either<Failure, NovelEntity>> execute(
     ParseNovel parser,
@@ -31,17 +29,11 @@ class ParseOrGetNovel {
     if (isConnectionAvailable) {
       final parseResult = await _remoteRepository.parseNovel(parser, url);
 
-      final updateResult = await parseResult.fold<Future<Either<Failure, int>>>(
-        (failure) async => Left(failure),
-        (data) {
-          final model = sourceToDatabaseMapper.map(data);
-          return _localRepository.saveNovel(model);
-        },
-      );
+      // TODO: download cover image
 
-      return await updateResult.fold<Future<Either<Failure, NovelEntity>>>(
+      return await parseResult.fold<Future<Either<Failure, NovelEntity>>>(
         (failure) async => Left(failure),
-        (data) => _localRepository.getNovel(data),
+        (data) => _localRepository.saveNovel(data),
       );
     } else {
       return await _localRepository.getNovelByUrl(url);

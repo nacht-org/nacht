@@ -19,11 +19,11 @@ class _$VolumeEntityTearOff {
   const _$VolumeEntityTearOff();
 
   _VolumeEntity call(
-      {required int? id,
+      {required int id,
       required int index,
       required String name,
       required List<ChapterEntity> chapters,
-      required int? novelId}) {
+      required int novelId}) {
     return _VolumeEntity(
       id: id,
       index: index,
@@ -39,11 +39,11 @@ const $VolumeEntity = _$VolumeEntityTearOff();
 
 /// @nodoc
 mixin _$VolumeEntity {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<ChapterEntity> get chapters => throw _privateConstructorUsedError;
-  int? get novelId => throw _privateConstructorUsedError;
+  int get novelId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VolumeEntityCopyWith<VolumeEntity> get copyWith =>
@@ -56,11 +56,11 @@ abstract class $VolumeEntityCopyWith<$Res> {
           VolumeEntity value, $Res Function(VolumeEntity) then) =
       _$VolumeEntityCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
+      {int id,
       int index,
       String name,
       List<ChapterEntity> chapters,
-      int? novelId});
+      int novelId});
 }
 
 /// @nodoc
@@ -83,7 +83,7 @@ class _$VolumeEntityCopyWithImpl<$Res> implements $VolumeEntityCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -99,7 +99,7 @@ class _$VolumeEntityCopyWithImpl<$Res> implements $VolumeEntityCopyWith<$Res> {
       novelId: novelId == freezed
           ? _value.novelId
           : novelId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -112,11 +112,11 @@ abstract class _$VolumeEntityCopyWith<$Res>
       __$VolumeEntityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
+      {int id,
       int index,
       String name,
       List<ChapterEntity> chapters,
-      int? novelId});
+      int novelId});
 }
 
 /// @nodoc
@@ -141,7 +141,7 @@ class __$VolumeEntityCopyWithImpl<$Res> extends _$VolumeEntityCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -157,7 +157,7 @@ class __$VolumeEntityCopyWithImpl<$Res> extends _$VolumeEntityCopyWithImpl<$Res>
       novelId: novelId == freezed
           ? _value.novelId
           : novelId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -173,7 +173,7 @@ class _$_VolumeEntity implements _VolumeEntity {
       required this.novelId});
 
   @override
-  final int? id;
+  final int id;
   @override
   final int index;
   @override
@@ -181,7 +181,7 @@ class _$_VolumeEntity implements _VolumeEntity {
   @override
   final List<ChapterEntity> chapters;
   @override
-  final int? novelId;
+  final int novelId;
 
   @override
   String toString() {
@@ -217,14 +217,14 @@ class _$_VolumeEntity implements _VolumeEntity {
 
 abstract class _VolumeEntity implements VolumeEntity {
   factory _VolumeEntity(
-      {required int? id,
+      {required int id,
       required int index,
       required String name,
       required List<ChapterEntity> chapters,
-      required int? novelId}) = _$_VolumeEntity;
+      required int novelId}) = _$_VolumeEntity;
 
   @override
-  int? get id;
+  int get id;
   @override
   int get index;
   @override
@@ -232,7 +232,7 @@ abstract class _VolumeEntity implements VolumeEntity {
   @override
   List<ChapterEntity> get chapters;
   @override
-  int? get novelId;
+  int get novelId;
   @override
   @JsonKey(ignore: true)
   _$VolumeEntityCopyWith<_VolumeEntity> get copyWith =>

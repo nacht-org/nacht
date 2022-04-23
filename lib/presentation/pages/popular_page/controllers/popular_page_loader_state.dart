@@ -2,7 +2,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../domain/entities/partial_novel_entity.dart';
+import '../../../../domain/entities/entities.dart';
 import '../../../../domain/usecases/get_popular_novels.dart';
 
 part 'popular_page_loader_state.freezed.dart';

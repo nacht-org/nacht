@@ -1,5 +1,5 @@
 import 'package:chapturn/data/datasources/local/database.dart' as db;
-import 'package:chapturn/domain/entities/novel_entity.dart';
+import 'package:chapturn/domain/entities/entities.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 
 import '../../../domain/mapper.dart';

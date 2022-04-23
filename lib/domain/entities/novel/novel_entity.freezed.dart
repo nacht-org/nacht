@@ -19,7 +19,7 @@ class _$NovelEntityTearOff {
   const _$NovelEntityTearOff();
 
   _NovelEntity call(
-      {required int? id,
+      {required int id,
       required String title,
       required String url,
       required String? author,
@@ -53,7 +53,7 @@ const $NovelEntity = _$NovelEntityTearOff();
 
 /// @nodoc
 mixin _$NovelEntity {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   String? get author => throw _privateConstructorUsedError;
@@ -77,7 +77,7 @@ abstract class $NovelEntityCopyWith<$Res> {
           NovelEntity value, $Res Function(NovelEntity) then) =
       _$NovelEntityCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
+      {int id,
       String title,
       String url,
       String? author,
@@ -118,7 +118,7 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -175,7 +175,7 @@ abstract class _$NovelEntityCopyWith<$Res>
       __$NovelEntityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
+      {int id,
       String title,
       String url,
       String? author,
@@ -218,7 +218,7 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -285,7 +285,7 @@ class _$_NovelEntity implements _NovelEntity {
       required this.readingDirection});
 
   @override
-  final int? id;
+  final int id;
   @override
   final String title;
   @override
@@ -360,7 +360,7 @@ class _$_NovelEntity implements _NovelEntity {
 
 abstract class _NovelEntity implements NovelEntity {
   factory _NovelEntity(
-      {required int? id,
+      {required int id,
       required String title,
       required String url,
       required String? author,
@@ -374,7 +374,7 @@ abstract class _NovelEntity implements NovelEntity {
       required ReadingDirection readingDirection}) = _$_NovelEntity;
 
   @override
-  int? get id;
+  int get id;
   @override
   String get title;
   @override

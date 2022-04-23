@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/entities/partial_novel_entity.dart';
+import 'package:chapturn/domain/entities/novel/partial_novel_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

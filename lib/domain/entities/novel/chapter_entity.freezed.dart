@@ -19,13 +19,13 @@ class _$ChapterEntityTearOff {
   const _$ChapterEntityTearOff();
 
   _ChapterEntity call(
-      {required int? id,
+      {required int id,
       required int index,
       required String title,
       required String? content,
       required String url,
       required DateTime? updated,
-      required int? volumeId}) {
+      required int volumeId}) {
     return _ChapterEntity(
       id: id,
       index: index,
@@ -43,13 +43,13 @@ const $ChapterEntity = _$ChapterEntityTearOff();
 
 /// @nodoc
 mixin _$ChapterEntity {
-  int? get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   DateTime? get updated => throw _privateConstructorUsedError;
-  int? get volumeId => throw _privateConstructorUsedError;
+  int get volumeId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChapterEntityCopyWith<ChapterEntity> get copyWith =>
@@ -62,13 +62,13 @@ abstract class $ChapterEntityCopyWith<$Res> {
           ChapterEntity value, $Res Function(ChapterEntity) then) =
       _$ChapterEntityCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
+      {int id,
       int index,
       String title,
       String? content,
       String url,
       DateTime? updated,
-      int? volumeId});
+      int volumeId});
 }
 
 /// @nodoc
@@ -94,7 +94,7 @@ class _$ChapterEntityCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -118,7 +118,7 @@ class _$ChapterEntityCopyWithImpl<$Res>
       volumeId: volumeId == freezed
           ? _value.volumeId
           : volumeId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -131,13 +131,13 @@ abstract class _$ChapterEntityCopyWith<$Res>
       __$ChapterEntityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
+      {int id,
       int index,
       String title,
       String? content,
       String url,
       DateTime? updated,
-      int? volumeId});
+      int volumeId});
 }
 
 /// @nodoc
@@ -165,7 +165,7 @@ class __$ChapterEntityCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -189,7 +189,7 @@ class __$ChapterEntityCopyWithImpl<$Res>
       volumeId: volumeId == freezed
           ? _value.volumeId
           : volumeId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -207,7 +207,7 @@ class _$_ChapterEntity implements _ChapterEntity {
       required this.volumeId});
 
   @override
-  final int? id;
+  final int id;
   @override
   final int index;
   @override
@@ -219,7 +219,7 @@ class _$_ChapterEntity implements _ChapterEntity {
   @override
   final DateTime? updated;
   @override
-  final int? volumeId;
+  final int volumeId;
 
   @override
   String toString() {
@@ -259,16 +259,16 @@ class _$_ChapterEntity implements _ChapterEntity {
 
 abstract class _ChapterEntity implements ChapterEntity {
   factory _ChapterEntity(
-      {required int? id,
+      {required int id,
       required int index,
       required String title,
       required String? content,
       required String url,
       required DateTime? updated,
-      required int? volumeId}) = _$_ChapterEntity;
+      required int volumeId}) = _$_ChapterEntity;
 
   @override
-  int? get id;
+  int get id;
   @override
   int get index;
   @override
@@ -280,7 +280,7 @@ abstract class _ChapterEntity implements ChapterEntity {
   @override
   DateTime? get updated;
   @override
-  int? get volumeId;
+  int get volumeId;
   @override
   @JsonKey(ignore: true)
   _$ChapterEntityCopyWith<_ChapterEntity> get copyWith =>

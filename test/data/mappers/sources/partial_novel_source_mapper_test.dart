@@ -1,5 +1,5 @@
 import 'package:chapturn/data/mappers/sources/partial_novel_source_mapper.dart';
-import 'package:chapturn/domain/entities/partial_novel_entity.dart';
+import 'package:chapturn/domain/entities/novel/partial_novel_entity.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 
 import '../mapper_helper.dart';

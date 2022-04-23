@@ -1,9 +1,7 @@
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/failure.dart';
-import 'package:chapturn/domain/entities/chapter_entity.dart';
-import 'package:chapturn/domain/entities/novel_entity.dart';
+import 'package:chapturn/domain/entities/entities.dart';
 import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/entities/volume_entity.dart';
 import 'package:chapturn/domain/mapper.dart';
 import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -13,12 +11,20 @@ import 'package:drift/drift.dart';
 class NovelLocalRepositoryImpl implements NovelLocalRepository {
   NovelLocalRepositoryImpl({
     required this.database,
+    required this.novelCompanionMapper,
+    required this.volumeCompanionMapper,
+    required this.chapterCompanionMapper,
     required this.novelMapper,
     required this.volumeMapper,
     required this.chapterMapper,
   });
 
   final AppDatabase database;
+
+  final Mapper<sources.Novel, NovelsCompanion> novelCompanionMapper;
+  final Mapper<sources.Volume, VolumesCompanion> volumeCompanionMapper;
+  final Mapper<sources.Chapter, ChaptersCompanion> chapterCompanionMapper;
+
   final Mapper<Novel, NovelEntity> novelMapper;
   final Mapper<Volume, VolumeEntity> volumeMapper;
   final Mapper<Chapter, ChapterEntity> chapterMapper;
@@ -83,14 +89,53 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
   }
 
   @override
-  Future<Either<Failure, int>> saveNovel(NovelsCompanion novel) async {
-    // TODO: check for error?
-    final id = await database
-        .into(database.novels)
-        .insert(novel, onConflict: DoUpdate((old) => novel));
+  Future<Either<Failure, NovelEntity>> saveNovel(sources.Novel novel) async {
+    final novelCompanion = novelCompanionMapper.map(novel);
 
-    // FIXME: volumes? chapters?
+    // upsert the novel entity itself
+    final novelModel = await database.into(database.novels).insertReturning(
+          novelCompanion,
+          onConflict: DoUpdate((old) => novelCompanion),
+        );
 
-    return Right(id);
+    //
+    novel.volumes.sort((a, b) => a.index.compareTo(b.index));
+    final volumes = <Volume, List<Chapter>>{};
+    for (final volume in novel.volumes) {
+      final volumeCompanion = volumeCompanionMapper
+          .map(volume)
+          .copyWith(novelId: Value(novelModel.id));
+
+      final volumeModel = await database.into(database.volumes).insertReturning(
+          volumeCompanion,
+          onConflict: DoUpdate((old) => volumeCompanion));
+
+      final chapters = <Chapter>[];
+      for (final chapter in volume.chapters) {
+        final chapterCompanion = chapterCompanionMapper
+            .map(chapter)
+            .copyWith(volumeId: Value(volumeModel.id));
+
+        final chapterModel = await database
+            .into(database.chapters)
+            .insertReturning(chapterCompanion,
+                onConflict: DoUpdate((old) => chapterCompanion));
+
+        chapters.add(chapterModel);
+      }
+
+      volumes[volumeModel] = chapters;
+    }
+
+    final novelEntity = novelMapper.map(novelModel).copyWith(
+          volumes: volumes.entries
+              .map(
+                (entry) => volumeMapper.map(entry.key).copyWith(
+                    chapters: entry.value.map(chapterMapper.map).toList()),
+              )
+              .toList(),
+        );
+
+    return Right(novelEntity);
   }
 }

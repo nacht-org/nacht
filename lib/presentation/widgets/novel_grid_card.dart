@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/routes/app_router.dart';
-import '../../domain/entities/partial_novel_entity.dart';
+import '../../domain/entities/entities.dart';
 
 class NovelGridCard extends StatelessWidget {
   const NovelGridCard({

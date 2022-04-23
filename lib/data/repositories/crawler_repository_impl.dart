@@ -1,10 +1,11 @@
-import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/mapper.dart';
-import 'package:chapturn/domain/entities/partial_novel_entity.dart';
-import 'package:chapturn/domain/repositories/crawler_repository.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:dartz/dartz.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:dartz/dartz.dart';
+
+import '../../core/failure.dart';
+import '../../domain/entities/entities.dart';
+import '../../domain/mapper.dart';
+import '../../domain/repositories/crawler_repository.dart';
 
 class CrawlerRepositoryImpl implements CrawlerRepository {
   CrawlerRepositoryImpl(this.partialFromNovelMapper);

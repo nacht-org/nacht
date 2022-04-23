@@ -3,7 +3,7 @@ import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn/data/models/work_type.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-import '../mapper_helper.dart';
+import '../../mapper_helper.dart';
 
 void main() {
   mapperGroup<WorkType, int>(

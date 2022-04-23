@@ -2,7 +2,7 @@ import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:drift/drift.dart';
 
-import '../mapper_helper.dart';
+import '../../mapper_helper.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 
 void main() {

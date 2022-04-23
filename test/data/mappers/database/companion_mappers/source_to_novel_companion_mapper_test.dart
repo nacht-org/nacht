@@ -9,7 +9,7 @@ import 'package:drift/drift.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../mapper_helper.dart';
+import '../../mapper_helper.dart';
 import './source_to_novel_companion_mapper_test.mocks.dart';
 
 @GenerateMocks(

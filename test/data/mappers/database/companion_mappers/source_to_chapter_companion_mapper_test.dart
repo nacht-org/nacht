@@ -3,7 +3,7 @@ import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:drift/drift.dart';
 
-import '../mapper_helper.dart';
+import '../../mapper_helper.dart';
 
 void main() {
   mapperGroup(

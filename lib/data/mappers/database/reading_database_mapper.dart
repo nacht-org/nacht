@@ -1,8 +1,8 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-import '../../domain/mapper.dart';
-import '../exception.dart';
-import '../models/reading_direction.dart';
+import '../../../domain/mapper.dart';
+import '../../exception.dart';
+import '../../models/reading_direction.dart';
 
 class ReadingDirectionToSeedMapper implements Mapper<ReadingDirection, int> {
   @override

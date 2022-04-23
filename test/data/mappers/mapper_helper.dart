@@ -15,8 +15,10 @@ void mapperTest<I, O>(
   required I from,
   required O to,
   required Mapper<I, O> mapper,
+  Function()? stub,
 }) {
   test('should map from $fromName to $toName', () async {
+    if (stub != null) stub();
     expect(mapper.map(from), to);
   });
 }

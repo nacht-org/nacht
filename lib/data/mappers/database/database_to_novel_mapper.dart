@@ -1,19 +1,19 @@
-import 'package:chapturn/data/datasources/local/database.dart' as db;
-import 'package:chapturn/domain/entities/entities.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../domain/mapper.dart';
+import '../../datasources/local/database.dart' as db;
 
 class DatabaseToNovelMapper implements Mapper<db.Novel, NovelEntity> {
-  final Mapper<int, NovelStatus> statusMapper;
-  final Mapper<int, ReadingDirection> readingDirectionMapper;
-  final Mapper<int, WorkType> workTypeMapper;
-
   DatabaseToNovelMapper({
     required this.statusMapper,
     required this.readingDirectionMapper,
     required this.workTypeMapper,
   });
+
+  final Mapper<int, ReadingDirection> readingDirectionMapper;
+  final Mapper<int, NovelStatus> statusMapper;
+  final Mapper<int, WorkType> workTypeMapper;
 
   @override
   NovelEntity map(db.Novel model) {

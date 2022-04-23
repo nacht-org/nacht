@@ -1,5 +1,5 @@
 import 'package:chapturn/data/datasources/local/database.dart';
-import 'package:chapturn/data/mappers/database/source_to_novel_companion_mapper.dart';
+import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn/data/models/reading_direction.dart';
 import 'package:chapturn/data/models/status.dart';
 import 'package:chapturn/data/models/work_type.dart';

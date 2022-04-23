@@ -1,8 +1,8 @@
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:drift/drift.dart';
 
-import '../../../domain/mapper.dart';
-import '../../datasources/local/database.dart';
+import '../../../../domain/mapper.dart';
+import '../../../datasources/local/database.dart';
 
 class SourceToNovelCompanionMapper
     extends Mapper<sources.Novel, NovelsCompanion> {

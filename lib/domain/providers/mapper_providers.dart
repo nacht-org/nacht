@@ -1,10 +1,5 @@
 import 'package:chapturn/data/datasources/local/database.dart';
-import 'package:chapturn/data/mappers/database/reading_database_mapper.dart';
-import 'package:chapturn/data/mappers/database/source_to_chapter_companion_mapper.dart';
-import 'package:chapturn/data/mappers/database/source_to_novel_companion_mapper.dart';
-import 'package:chapturn/data/mappers/database/source_to_volume_companion_mapper.dart';
-import 'package:chapturn/data/mappers/database/status_mapper.dart';
-import 'package:chapturn/data/mappers/database/work_type_mapper.dart';
+import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn/data/mappers/network/connection_mapper.dart';
 import 'package:chapturn/data/mappers/sources/partial_novel_source_mapper.dart';
 import 'package:chapturn/domain/mapper.dart';

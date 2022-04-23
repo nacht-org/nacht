@@ -1,8 +1,8 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-import '../../exception.dart';
-import '../../models/work_type.dart';
-import '../../../domain/mapper.dart';
+import '../../../exception.dart';
+import '../../../models/work_type.dart';
+import '../../../../domain/mapper.dart';
 
 class WorkTypeToSeedMapper implements Mapper<WorkType, int> {
   @override

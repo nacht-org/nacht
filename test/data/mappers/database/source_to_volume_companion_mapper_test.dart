@@ -1,5 +1,5 @@
 import 'package:chapturn/data/datasources/local/database.dart';
-import 'package:chapturn/data/mappers/database/source_to_volume_companion_mapper.dart';
+import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:drift/drift.dart';
 
 import '../mapper_helper.dart';

@@ -1,5 +1,5 @@
 import 'package:chapturn/data/datasources/local/database.dart' as db;
-import 'package:chapturn/data/mappers/database/status_mapper.dart';
+import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn/data/models/status.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 

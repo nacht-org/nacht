@@ -1,8 +1,8 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-import '../../exception.dart';
-import '../../models/status.dart';
-import '../../../domain/mapper.dart';
+import '../../../exception.dart';
+import '../../../models/status.dart';
+import '../../../../domain/mapper.dart';
 
 class NovelStatusToSeedMapper implements Mapper<NovelStatus, int> {
   @override

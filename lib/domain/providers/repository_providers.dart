@@ -20,6 +20,6 @@ final novelRemoteRepository = Provider<NovelRemoteRepository>(
   (ref) => NovelRemoteRepositoryImpl(),
 );
 
-final novelLocalRepository = Provider<NovelLocalRepository>(((ref) {
-  return NovelLocalRepositoryImpl(database: ref.watch(databaseProvider), novelCompanionMapper: novelCompanionMapper, volumeCompanionMapper: volumeCompanionMapper, chapterCompanionMapper: chapterCompanionMapper, novelMapper: novelMapper, volumeMapper: volumeMapper, chapterMapper: chapterMapper,),
+final novelLocalRepository = Provider<NovelLocalRepository>((ref) {
+  return NovelLocalRepositoryImpl(database: ref.watch(databaseProvider), novelCompanionMapper: ref.watch(sourceToNovelCompanionMapper), volumeCompanionMapper: ref.watch(sourceToVolumeCompanionMapper), chapterCompanionMapper: chapterCompanionMapper, novelMapper: novelMapper, volumeMapper: volumeMapper, chapterMapper: chapterMapper,),
 });

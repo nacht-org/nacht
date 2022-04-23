@@ -138,7 +138,13 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
           volumes: volumes.entries
               .map(
                 (entry) => volumeMapper.map(entry.key).copyWith(
-                    chapters: entry.value.map(chapterMapper.map).toList()),
+                      chapters: entry.value
+                          .map((c) => chapterMapper
+                              .map(c)
+                              .copyWith(volumeId: entry.key.id))
+                          .toList(),
+                      novelId: novelModel.id,
+                    ),
               )
               .toList(),
         );

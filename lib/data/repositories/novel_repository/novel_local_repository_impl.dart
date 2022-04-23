@@ -118,8 +118,15 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
 
         final chapterModel = await database
             .into(database.chapters)
-            .insertReturning(chapterCompanion,
-                onConflict: DoUpdate((old) => chapterCompanion));
+            .insertReturning(
+              chapterCompanion,
+              onConflict: DoUpdate(
+                // Remove the content field null value to prevent overriding
+                // current saved content.
+                (old) =>
+                    chapterCompanion.copyWith(content: const Value.absent()),
+              ),
+            );
 
         chapters.add(chapterModel);
       }

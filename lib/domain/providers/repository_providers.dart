@@ -1,6 +1,6 @@
 import 'package:chapturn/data/repositories/crawler_repository_impl.dart';
 import 'package:chapturn/data/repositories/network_repository_impl.dart';
-import 'package:chapturn/data/repositories/novel_repository/novel_local_repository.dart';
+import 'package:chapturn/data/repositories/novel_repository/novel_local_repository_impl.dart';
 import 'package:chapturn/data/repositories/novel_repository/novel_remote_repository_impl.dart';
 import 'package:chapturn/domain/providers/datasources_provider.dart';
 import 'package:chapturn/domain/providers/mapper_providers.dart';

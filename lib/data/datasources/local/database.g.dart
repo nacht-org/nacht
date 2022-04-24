@@ -2502,6 +2502,419 @@ class $MetaDatasTable extends MetaDatas
   }
 }
 
+class AssetType extends DataClass implements Insertable<AssetType> {
+  final int id;
+  final String type;
+  final String subType;
+  AssetType({required this.id, required this.type, required this.subType});
+  factory AssetType.fromData(Map<String, dynamic> data, {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return AssetType(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      type: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}type'])!,
+      subType: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}sub_type'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['type'] = Variable<String>(type);
+    map['sub_type'] = Variable<String>(subType);
+    return map;
+  }
+
+  AssetTypesCompanion toCompanion(bool nullToAbsent) {
+    return AssetTypesCompanion(
+      id: Value(id),
+      type: Value(type),
+      subType: Value(subType),
+    );
+  }
+
+  factory AssetType.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AssetType(
+      id: serializer.fromJson<int>(json['id']),
+      type: serializer.fromJson<String>(json['type']),
+      subType: serializer.fromJson<String>(json['subType']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'type': serializer.toJson<String>(type),
+      'subType': serializer.toJson<String>(subType),
+    };
+  }
+
+  AssetType copyWith({int? id, String? type, String? subType}) => AssetType(
+        id: id ?? this.id,
+        type: type ?? this.type,
+        subType: subType ?? this.subType,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('AssetType(')
+          ..write('id: $id, ')
+          ..write('type: $type, ')
+          ..write('subType: $subType')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, type, subType);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AssetType &&
+          other.id == this.id &&
+          other.type == this.type &&
+          other.subType == this.subType);
+}
+
+class AssetTypesCompanion extends UpdateCompanion<AssetType> {
+  final Value<int> id;
+  final Value<String> type;
+  final Value<String> subType;
+  const AssetTypesCompanion({
+    this.id = const Value.absent(),
+    this.type = const Value.absent(),
+    this.subType = const Value.absent(),
+  });
+  AssetTypesCompanion.insert({
+    this.id = const Value.absent(),
+    required String type,
+    required String subType,
+  })  : type = Value(type),
+        subType = Value(subType);
+  static Insertable<AssetType> custom({
+    Expression<int>? id,
+    Expression<String>? type,
+    Expression<String>? subType,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (type != null) 'type': type,
+      if (subType != null) 'sub_type': subType,
+    });
+  }
+
+  AssetTypesCompanion copyWith(
+      {Value<int>? id, Value<String>? type, Value<String>? subType}) {
+    return AssetTypesCompanion(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      subType: subType ?? this.subType,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (subType.present) {
+      map['sub_type'] = Variable<String>(subType.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AssetTypesCompanion(')
+          ..write('id: $id, ')
+          ..write('type: $type, ')
+          ..write('subType: $subType')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AssetTypesTable extends AssetTypes
+    with TableInfo<$AssetTypesTable, AssetType> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AssetTypesTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String?> type = GeneratedColumn<String?>(
+      'type', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _subTypeMeta = const VerificationMeta('subType');
+  @override
+  late final GeneratedColumn<String?> subType = GeneratedColumn<String?>(
+      'sub_type', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, type, subType];
+  @override
+  String get aliasedName => _alias ?? 'asset_types';
+  @override
+  String get actualTableName => 'asset_types';
+  @override
+  VerificationContext validateIntegrity(Insertable<AssetType> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('sub_type')) {
+      context.handle(_subTypeMeta,
+          subType.isAcceptableOrUnknown(data['sub_type']!, _subTypeMeta));
+    } else if (isInserting) {
+      context.missing(_subTypeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AssetType map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return AssetType.fromData(data,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $AssetTypesTable createAlias(String alias) {
+    return $AssetTypesTable(attachedDatabase, alias);
+  }
+}
+
+class Asset extends DataClass implements Insertable<Asset> {
+  final int id;
+  final String path;
+  final int typeId;
+  Asset({required this.id, required this.path, required this.typeId});
+  factory Asset.fromData(Map<String, dynamic> data, {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return Asset(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      path: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}path'])!,
+      typeId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}type_id'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['path'] = Variable<String>(path);
+    map['type_id'] = Variable<int>(typeId);
+    return map;
+  }
+
+  AssetsCompanion toCompanion(bool nullToAbsent) {
+    return AssetsCompanion(
+      id: Value(id),
+      path: Value(path),
+      typeId: Value(typeId),
+    );
+  }
+
+  factory Asset.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Asset(
+      id: serializer.fromJson<int>(json['id']),
+      path: serializer.fromJson<String>(json['path']),
+      typeId: serializer.fromJson<int>(json['typeId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'path': serializer.toJson<String>(path),
+      'typeId': serializer.toJson<int>(typeId),
+    };
+  }
+
+  Asset copyWith({int? id, String? path, int? typeId}) => Asset(
+        id: id ?? this.id,
+        path: path ?? this.path,
+        typeId: typeId ?? this.typeId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Asset(')
+          ..write('id: $id, ')
+          ..write('path: $path, ')
+          ..write('typeId: $typeId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, path, typeId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Asset &&
+          other.id == this.id &&
+          other.path == this.path &&
+          other.typeId == this.typeId);
+}
+
+class AssetsCompanion extends UpdateCompanion<Asset> {
+  final Value<int> id;
+  final Value<String> path;
+  final Value<int> typeId;
+  const AssetsCompanion({
+    this.id = const Value.absent(),
+    this.path = const Value.absent(),
+    this.typeId = const Value.absent(),
+  });
+  AssetsCompanion.insert({
+    this.id = const Value.absent(),
+    required String path,
+    required int typeId,
+  })  : path = Value(path),
+        typeId = Value(typeId);
+  static Insertable<Asset> custom({
+    Expression<int>? id,
+    Expression<String>? path,
+    Expression<int>? typeId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (path != null) 'path': path,
+      if (typeId != null) 'type_id': typeId,
+    });
+  }
+
+  AssetsCompanion copyWith(
+      {Value<int>? id, Value<String>? path, Value<int>? typeId}) {
+    return AssetsCompanion(
+      id: id ?? this.id,
+      path: path ?? this.path,
+      typeId: typeId ?? this.typeId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (typeId.present) {
+      map['type_id'] = Variable<int>(typeId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AssetsCompanion(')
+          ..write('id: $id, ')
+          ..write('path: $path, ')
+          ..write('typeId: $typeId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AssetsTable extends Assets with TableInfo<$AssetsTable, Asset> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AssetsTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _pathMeta = const VerificationMeta('path');
+  @override
+  late final GeneratedColumn<String?> path = GeneratedColumn<String?>(
+      'path', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _typeIdMeta = const VerificationMeta('typeId');
+  @override
+  late final GeneratedColumn<int?> typeId = GeneratedColumn<int?>(
+      'type_id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'REFERENCES asset_types (id)');
+  @override
+  List<GeneratedColumn> get $columns => [id, path, typeId];
+  @override
+  String get aliasedName => _alias ?? 'assets';
+  @override
+  String get actualTableName => 'assets';
+  @override
+  VerificationContext validateIntegrity(Insertable<Asset> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+          _pathMeta, path.isAcceptableOrUnknown(data['path']!, _pathMeta));
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    if (data.containsKey('type_id')) {
+      context.handle(_typeIdMeta,
+          typeId.isAcceptableOrUnknown(data['type_id']!, _typeIdMeta));
+    } else if (isInserting) {
+      context.missing(_typeIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Asset map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return Asset.fromData(data,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $AssetsTable createAlias(String alias) {
+    return $AssetsTable(attachedDatabase, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $StatusesTable statuses = $StatusesTable(this);
@@ -2517,6 +2930,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ChaptersTable chapters = $ChaptersTable(this);
   late final $NamespacesTable namespaces = $NamespacesTable(this);
   late final $MetaDatasTable metaDatas = $MetaDatasTable(this);
+  late final $AssetTypesTable assetTypes = $AssetTypesTable(this);
+  late final $AssetsTable assets = $AssetsTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -2530,6 +2945,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         volumes,
         chapters,
         namespaces,
-        metaDatas
+        metaDatas,
+        assetTypes,
+        assets
       ];
 }

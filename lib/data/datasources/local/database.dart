@@ -20,6 +20,8 @@ part 'database.g.dart';
   Chapters,
   MetaDatas,
   Namespaces,
+  Assets,
+  AssetTypes,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
@@ -88,6 +90,23 @@ class AppDatabase extends _$AppDatabase {
           batch.insertAll(namespaces, [
             NamespacesCompanion.insert(id: const Value(1), value: 'dc'),
             NamespacesCompanion.insert(id: const Value(2), value: 'opf'),
+          ]);
+
+          batch.insertAll(assetTypes, [
+            AssetTypesCompanion.insert(
+                id: const Value(1), type: 'image', subType: 'apng'),
+            AssetTypesCompanion.insert(
+                id: const Value(2), type: 'image', subType: 'avif'),
+            AssetTypesCompanion.insert(
+                id: const Value(3), type: 'image', subType: 'gif'),
+            AssetTypesCompanion.insert(
+                id: const Value(4), type: 'image', subType: 'jpeg'),
+            AssetTypesCompanion.insert(
+                id: const Value(5), type: 'image', subType: 'png'),
+            AssetTypesCompanion.insert(
+                id: const Value(6), type: 'image', subType: 'svg+xml'),
+            AssetTypesCompanion.insert(
+                id: const Value(7), type: 'image', subType: 'webp'),
           ]);
         });
       },

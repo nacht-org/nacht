@@ -7,3 +7,4 @@ export 'volume.dart';
 export 'chapter.dart';
 export 'metadatas.dart';
 export 'namespaces.dart';
+export 'assets.dart';

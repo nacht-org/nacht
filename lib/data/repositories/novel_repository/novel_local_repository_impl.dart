@@ -95,7 +95,10 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
     // upsert the novel entity itself
     final novelModel = await database.into(database.novels).insertReturning(
           novelCompanion,
-          onConflict: DoUpdate((old) => novelCompanion),
+          onConflict: DoUpdate(
+            (old) => novelCompanion,
+            target: [database.novels.url],
+          ),
         );
 
     //
@@ -106,9 +109,15 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
           .map(volume)
           .copyWith(novelId: Value(novelModel.id));
 
-      final volumeModel = await database.into(database.volumes).insertReturning(
-          volumeCompanion,
-          onConflict: DoUpdate((old) => volumeCompanion));
+      final volumeModel =
+          await database.into(database.volumes).insertReturning(volumeCompanion,
+              onConflict: DoUpdate(
+                (old) => volumeCompanion,
+                target: [
+                  database.volumes.novelId,
+                  database.volumes.volumeIndex
+                ],
+              ));
 
       final chapters = <Chapter>[];
       for (final chapter in volume.chapters) {
@@ -125,6 +134,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
                 // current saved content.
                 (old) =>
                     chapterCompanion.copyWith(content: const Value.absent()),
+                target: [database.chapters.volumeId, database.chapters.url],
               ),
             );
 

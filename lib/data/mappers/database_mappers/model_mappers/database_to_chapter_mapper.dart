@@ -7,7 +7,7 @@ class DatabaseToChapterMapper implements Mapper<Chapter, ChapterEntity> {
   ChapterEntity map(Chapter input) {
     return ChapterEntity(
       id: input.id,
-      index: input.index,
+      index: input.chapterIndex,
       title: input.title,
       content: input.content,
       url: input.url,

@@ -18,7 +18,7 @@ void main() {
           name: 'volume 1',
         ),
         to: const VolumesCompanion(
-          index: Value(1),
+          volumeIndex: Value(1),
           name: Value('volume 1'),
         ),
         mapper: mapper,

@@ -21,7 +21,7 @@ void main() {
           updated: DateTime(2022, 04, 23),
         ),
         to: ChaptersCompanion(
-          index: const Value(2),
+          chapterIndex: const Value(2),
           title: const Value('my chapter'),
           content: const Value('<div>content</div>'),
           url: const Value('https://website.com/novel/123/1'),
@@ -40,7 +40,7 @@ void main() {
           url: 'https://website.com/novel/123/1',
         ),
         to: const ChaptersCompanion(
-          index: Value(2),
+          chapterIndex: Value(2),
           title: Value('my chapter'),
           content: Value(null),
           url: Value('https://website.com/novel/123/1'),

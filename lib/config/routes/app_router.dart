@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/entities.dart';

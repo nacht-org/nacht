@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 
 class Chapters extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get index => integer()();
+  IntColumn get chapterIndex => integer()();
   TextColumn get title => text()();
   TextColumn get content => text().nullable()();
   TextColumn get url => text()();
@@ -12,6 +12,6 @@ class Chapters extends Table {
 
   @override
   List<String> get customConstraints => [
-        'UNIQUE(id, url)',
+        'UNIQUE(volume_id, url)',
       ];
 }

@@ -14,7 +14,7 @@ void main() {
           'ChapterEntity',
           from: Chapter(
             id: 2,
-            index: 2,
+            chapterIndex: 2,
             title: 'my chapter',
             content: null,
             url: 'https://website.com/novel/123/1',

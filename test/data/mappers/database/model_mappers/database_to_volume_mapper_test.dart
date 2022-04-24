@@ -14,7 +14,7 @@ void main() {
         'VolumEntity',
         from: Volume(
           id: 3,
-          index: 3,
+          volumeIndex: 3,
           name: 'Volume 3',
           novelId: 3,
         ),

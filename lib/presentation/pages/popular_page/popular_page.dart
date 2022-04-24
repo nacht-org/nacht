@@ -74,6 +74,7 @@ class PopularView extends SearchableScrollView {
   @override
   List<Widget> buildBody(BuildContext context, WidgetRef ref) {
     final pageState = ref.watch(popularPageState);
+    final crawler = ref.watch(crawlerProvider);
 
     return pageState.when(
       loading: () => [
@@ -97,7 +98,7 @@ class PopularView extends SearchableScrollView {
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               final novel = novels[index];
-              return NovelGridCard(novel: novel);
+              return NovelGridCard(novel: novel, crawler: crawler);
             },
             childCount: novels.length,
           ),

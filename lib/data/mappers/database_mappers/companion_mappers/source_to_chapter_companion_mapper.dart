@@ -8,7 +8,7 @@ class SourceToChapterCompanionMapper
   @override
   ChaptersCompanion map(sources.Chapter input) {
     return ChaptersCompanion(
-      index: Value(input.index),
+      chapterIndex: Value(input.index),
       title: Value(input.title),
       content: Value(input.content),
       url: Value(input.url),

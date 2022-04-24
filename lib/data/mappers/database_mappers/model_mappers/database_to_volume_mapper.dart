@@ -7,7 +7,7 @@ class DatabaseToVolumeMapper implements Mapper<Volume, VolumeEntity> {
   VolumeEntity map(Volume input) {
     return VolumeEntity(
       id: input.id,
-      index: input.index,
+      index: input.volumeIndex,
       name: input.name,
       chapters: [],
       novelId: input.novelId,

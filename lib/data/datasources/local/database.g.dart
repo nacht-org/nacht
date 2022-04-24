@@ -1387,12 +1387,12 @@ class $NovelCategoriesJunctionTable extends NovelCategoriesJunction
 
 class Volume extends DataClass implements Insertable<Volume> {
   final int id;
-  final int index;
+  final int volumeIndex;
   final String name;
   final int novelId;
   Volume(
       {required this.id,
-      required this.index,
+      required this.volumeIndex,
       required this.name,
       required this.novelId});
   factory Volume.fromData(Map<String, dynamic> data, {String? prefix}) {
@@ -1400,8 +1400,8 @@ class Volume extends DataClass implements Insertable<Volume> {
     return Volume(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      index: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}index'])!,
+      volumeIndex: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}volume_index'])!,
       name: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
       novelId: const IntType()
@@ -1412,7 +1412,7 @@ class Volume extends DataClass implements Insertable<Volume> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['index'] = Variable<int>(index);
+    map['volume_index'] = Variable<int>(volumeIndex);
     map['name'] = Variable<String>(name);
     map['novel_id'] = Variable<int>(novelId);
     return map;
@@ -1421,7 +1421,7 @@ class Volume extends DataClass implements Insertable<Volume> {
   VolumesCompanion toCompanion(bool nullToAbsent) {
     return VolumesCompanion(
       id: Value(id),
-      index: Value(index),
+      volumeIndex: Value(volumeIndex),
       name: Value(name),
       novelId: Value(novelId),
     );
@@ -1432,7 +1432,7 @@ class Volume extends DataClass implements Insertable<Volume> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Volume(
       id: serializer.fromJson<int>(json['id']),
-      index: serializer.fromJson<int>(json['index']),
+      volumeIndex: serializer.fromJson<int>(json['volumeIndex']),
       name: serializer.fromJson<String>(json['name']),
       novelId: serializer.fromJson<int>(json['novelId']),
     );
@@ -1442,15 +1442,16 @@ class Volume extends DataClass implements Insertable<Volume> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'index': serializer.toJson<int>(index),
+      'volumeIndex': serializer.toJson<int>(volumeIndex),
       'name': serializer.toJson<String>(name),
       'novelId': serializer.toJson<int>(novelId),
     };
   }
 
-  Volume copyWith({int? id, int? index, String? name, int? novelId}) => Volume(
+  Volume copyWith({int? id, int? volumeIndex, String? name, int? novelId}) =>
+      Volume(
         id: id ?? this.id,
-        index: index ?? this.index,
+        volumeIndex: volumeIndex ?? this.volumeIndex,
         name: name ?? this.name,
         novelId: novelId ?? this.novelId,
       );
@@ -1458,7 +1459,7 @@ class Volume extends DataClass implements Insertable<Volume> {
   String toString() {
     return (StringBuffer('Volume(')
           ..write('id: $id, ')
-          ..write('index: $index, ')
+          ..write('volumeIndex: $volumeIndex, ')
           ..write('name: $name, ')
           ..write('novelId: $novelId')
           ..write(')'))
@@ -1466,45 +1467,45 @@ class Volume extends DataClass implements Insertable<Volume> {
   }
 
   @override
-  int get hashCode => Object.hash(id, index, name, novelId);
+  int get hashCode => Object.hash(id, volumeIndex, name, novelId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Volume &&
           other.id == this.id &&
-          other.index == this.index &&
+          other.volumeIndex == this.volumeIndex &&
           other.name == this.name &&
           other.novelId == this.novelId);
 }
 
 class VolumesCompanion extends UpdateCompanion<Volume> {
   final Value<int> id;
-  final Value<int> index;
+  final Value<int> volumeIndex;
   final Value<String> name;
   final Value<int> novelId;
   const VolumesCompanion({
     this.id = const Value.absent(),
-    this.index = const Value.absent(),
+    this.volumeIndex = const Value.absent(),
     this.name = const Value.absent(),
     this.novelId = const Value.absent(),
   });
   VolumesCompanion.insert({
     this.id = const Value.absent(),
-    required int index,
+    required int volumeIndex,
     required String name,
     required int novelId,
-  })  : index = Value(index),
+  })  : volumeIndex = Value(volumeIndex),
         name = Value(name),
         novelId = Value(novelId);
   static Insertable<Volume> custom({
     Expression<int>? id,
-    Expression<int>? index,
+    Expression<int>? volumeIndex,
     Expression<String>? name,
     Expression<int>? novelId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (index != null) 'index': index,
+      if (volumeIndex != null) 'volume_index': volumeIndex,
       if (name != null) 'name': name,
       if (novelId != null) 'novel_id': novelId,
     });
@@ -1512,12 +1513,12 @@ class VolumesCompanion extends UpdateCompanion<Volume> {
 
   VolumesCompanion copyWith(
       {Value<int>? id,
-      Value<int>? index,
+      Value<int>? volumeIndex,
       Value<String>? name,
       Value<int>? novelId}) {
     return VolumesCompanion(
       id: id ?? this.id,
-      index: index ?? this.index,
+      volumeIndex: volumeIndex ?? this.volumeIndex,
       name: name ?? this.name,
       novelId: novelId ?? this.novelId,
     );
@@ -1529,8 +1530,8 @@ class VolumesCompanion extends UpdateCompanion<Volume> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (index.present) {
-      map['index'] = Variable<int>(index.value);
+    if (volumeIndex.present) {
+      map['volume_index'] = Variable<int>(volumeIndex.value);
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
@@ -1545,7 +1546,7 @@ class VolumesCompanion extends UpdateCompanion<Volume> {
   String toString() {
     return (StringBuffer('VolumesCompanion(')
           ..write('id: $id, ')
-          ..write('index: $index, ')
+          ..write('volumeIndex: $volumeIndex, ')
           ..write('name: $name, ')
           ..write('novelId: $novelId')
           ..write(')'))
@@ -1565,10 +1566,11 @@ class $VolumesTable extends Volumes with TableInfo<$VolumesTable, Volume> {
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _indexMeta = const VerificationMeta('index');
+  final VerificationMeta _volumeIndexMeta =
+      const VerificationMeta('volumeIndex');
   @override
-  late final GeneratedColumn<int?> index = GeneratedColumn<int?>(
-      'index', aliasedName, false,
+  late final GeneratedColumn<int?> volumeIndex = GeneratedColumn<int?>(
+      'volume_index', aliasedName, false,
       type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -1585,7 +1587,7 @@ class $VolumesTable extends Volumes with TableInfo<$VolumesTable, Volume> {
       requiredDuringInsert: true,
       defaultConstraints: 'REFERENCES novels (id)');
   @override
-  List<GeneratedColumn> get $columns => [id, index, name, novelId];
+  List<GeneratedColumn> get $columns => [id, volumeIndex, name, novelId];
   @override
   String get aliasedName => _alias ?? 'volumes';
   @override
@@ -1598,11 +1600,13 @@ class $VolumesTable extends Volumes with TableInfo<$VolumesTable, Volume> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('index')) {
+    if (data.containsKey('volume_index')) {
       context.handle(
-          _indexMeta, index.isAcceptableOrUnknown(data['index']!, _indexMeta));
+          _volumeIndexMeta,
+          volumeIndex.isAcceptableOrUnknown(
+              data['volume_index']!, _volumeIndexMeta));
     } else if (isInserting) {
-      context.missing(_indexMeta);
+      context.missing(_volumeIndexMeta);
     }
     if (data.containsKey('name')) {
       context.handle(
@@ -1635,7 +1639,7 @@ class $VolumesTable extends Volumes with TableInfo<$VolumesTable, Volume> {
 
 class Chapter extends DataClass implements Insertable<Chapter> {
   final int id;
-  final int index;
+  final int chapterIndex;
   final String title;
   final String? content;
   final String url;
@@ -1643,7 +1647,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   final int volumeId;
   Chapter(
       {required this.id,
-      required this.index,
+      required this.chapterIndex,
       required this.title,
       this.content,
       required this.url,
@@ -1654,8 +1658,8 @@ class Chapter extends DataClass implements Insertable<Chapter> {
     return Chapter(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      index: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}index'])!,
+      chapterIndex: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}chapter_index'])!,
       title: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
       content: const StringType()
@@ -1672,7 +1676,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['index'] = Variable<int>(index);
+    map['chapter_index'] = Variable<int>(chapterIndex);
     map['title'] = Variable<String>(title);
     if (!nullToAbsent || content != null) {
       map['content'] = Variable<String?>(content);
@@ -1688,7 +1692,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   ChaptersCompanion toCompanion(bool nullToAbsent) {
     return ChaptersCompanion(
       id: Value(id),
-      index: Value(index),
+      chapterIndex: Value(chapterIndex),
       title: Value(title),
       content: content == null && nullToAbsent
           ? const Value.absent()
@@ -1706,7 +1710,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Chapter(
       id: serializer.fromJson<int>(json['id']),
-      index: serializer.fromJson<int>(json['index']),
+      chapterIndex: serializer.fromJson<int>(json['chapterIndex']),
       title: serializer.fromJson<String>(json['title']),
       content: serializer.fromJson<String?>(json['content']),
       url: serializer.fromJson<String>(json['url']),
@@ -1719,7 +1723,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'index': serializer.toJson<int>(index),
+      'chapterIndex': serializer.toJson<int>(chapterIndex),
       'title': serializer.toJson<String>(title),
       'content': serializer.toJson<String?>(content),
       'url': serializer.toJson<String>(url),
@@ -1730,7 +1734,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
 
   Chapter copyWith(
           {int? id,
-          int? index,
+          int? chapterIndex,
           String? title,
           String? content,
           String? url,
@@ -1738,7 +1742,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
           int? volumeId}) =>
       Chapter(
         id: id ?? this.id,
-        index: index ?? this.index,
+        chapterIndex: chapterIndex ?? this.chapterIndex,
         title: title ?? this.title,
         content: content ?? this.content,
         url: url ?? this.url,
@@ -1749,7 +1753,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
   String toString() {
     return (StringBuffer('Chapter(')
           ..write('id: $id, ')
-          ..write('index: $index, ')
+          ..write('chapterIndex: $chapterIndex, ')
           ..write('title: $title, ')
           ..write('content: $content, ')
           ..write('url: $url, ')
@@ -1761,13 +1765,13 @@ class Chapter extends DataClass implements Insertable<Chapter> {
 
   @override
   int get hashCode =>
-      Object.hash(id, index, title, content, url, updated, volumeId);
+      Object.hash(id, chapterIndex, title, content, url, updated, volumeId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Chapter &&
           other.id == this.id &&
-          other.index == this.index &&
+          other.chapterIndex == this.chapterIndex &&
           other.title == this.title &&
           other.content == this.content &&
           other.url == this.url &&
@@ -1777,7 +1781,7 @@ class Chapter extends DataClass implements Insertable<Chapter> {
 
 class ChaptersCompanion extends UpdateCompanion<Chapter> {
   final Value<int> id;
-  final Value<int> index;
+  final Value<int> chapterIndex;
   final Value<String> title;
   final Value<String?> content;
   final Value<String> url;
@@ -1785,7 +1789,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   final Value<int> volumeId;
   const ChaptersCompanion({
     this.id = const Value.absent(),
-    this.index = const Value.absent(),
+    this.chapterIndex = const Value.absent(),
     this.title = const Value.absent(),
     this.content = const Value.absent(),
     this.url = const Value.absent(),
@@ -1794,19 +1798,19 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   });
   ChaptersCompanion.insert({
     this.id = const Value.absent(),
-    required int index,
+    required int chapterIndex,
     required String title,
     this.content = const Value.absent(),
     required String url,
     this.updated = const Value.absent(),
     required int volumeId,
-  })  : index = Value(index),
+  })  : chapterIndex = Value(chapterIndex),
         title = Value(title),
         url = Value(url),
         volumeId = Value(volumeId);
   static Insertable<Chapter> custom({
     Expression<int>? id,
-    Expression<int>? index,
+    Expression<int>? chapterIndex,
     Expression<String>? title,
     Expression<String?>? content,
     Expression<String>? url,
@@ -1815,7 +1819,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (index != null) 'index': index,
+      if (chapterIndex != null) 'chapter_index': chapterIndex,
       if (title != null) 'title': title,
       if (content != null) 'content': content,
       if (url != null) 'url': url,
@@ -1826,7 +1830,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
 
   ChaptersCompanion copyWith(
       {Value<int>? id,
-      Value<int>? index,
+      Value<int>? chapterIndex,
       Value<String>? title,
       Value<String?>? content,
       Value<String>? url,
@@ -1834,7 +1838,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
       Value<int>? volumeId}) {
     return ChaptersCompanion(
       id: id ?? this.id,
-      index: index ?? this.index,
+      chapterIndex: chapterIndex ?? this.chapterIndex,
       title: title ?? this.title,
       content: content ?? this.content,
       url: url ?? this.url,
@@ -1849,8 +1853,8 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (index.present) {
-      map['index'] = Variable<int>(index.value);
+    if (chapterIndex.present) {
+      map['chapter_index'] = Variable<int>(chapterIndex.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -1874,7 +1878,7 @@ class ChaptersCompanion extends UpdateCompanion<Chapter> {
   String toString() {
     return (StringBuffer('ChaptersCompanion(')
           ..write('id: $id, ')
-          ..write('index: $index, ')
+          ..write('chapterIndex: $chapterIndex, ')
           ..write('title: $title, ')
           ..write('content: $content, ')
           ..write('url: $url, ')
@@ -1897,10 +1901,11 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _indexMeta = const VerificationMeta('index');
+  final VerificationMeta _chapterIndexMeta =
+      const VerificationMeta('chapterIndex');
   @override
-  late final GeneratedColumn<int?> index = GeneratedColumn<int?>(
-      'index', aliasedName, false,
+  late final GeneratedColumn<int?> chapterIndex = GeneratedColumn<int?>(
+      'chapter_index', aliasedName, false,
       type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
@@ -1931,7 +1936,7 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
       defaultConstraints: 'REFERENCES volumes (id)');
   @override
   List<GeneratedColumn> get $columns =>
-      [id, index, title, content, url, updated, volumeId];
+      [id, chapterIndex, title, content, url, updated, volumeId];
   @override
   String get aliasedName => _alias ?? 'chapters';
   @override
@@ -1944,11 +1949,13 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('index')) {
+    if (data.containsKey('chapter_index')) {
       context.handle(
-          _indexMeta, index.isAcceptableOrUnknown(data['index']!, _indexMeta));
+          _chapterIndexMeta,
+          chapterIndex.isAcceptableOrUnknown(
+              data['chapter_index']!, _chapterIndexMeta));
     } else if (isInserting) {
-      context.missing(_indexMeta);
+      context.missing(_chapterIndexMeta);
     }
     if (data.containsKey('title')) {
       context.handle(

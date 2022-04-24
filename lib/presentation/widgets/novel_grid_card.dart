@@ -1,4 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:chapturn/presentation/pages/novel_page/novel_page.dart';
+import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/routes/app_router.dart';
@@ -8,16 +11,21 @@ class NovelGridCard extends StatelessWidget {
   const NovelGridCard({
     Key? key,
     required this.novel,
+    this.crawler,
   }) : super(key: key);
 
   final PartialNovelEntity novel;
+  final Crawler? crawler;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => context.router.push(NovelRoute(novel: novel)),
+        onTap: () => context.router.push(NovelRoute(
+          novel: NovelEntityArgument.partial(novel),
+          crawler: crawler,
+        )),
         child: Stack(
           children: [
             if (novel.thumbnailUrl != null)
@@ -34,15 +42,15 @@ class NovelGridCard extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Color.fromARGB(200, 0, 0, 0),
+                      Color.fromARGB(100, 0, 0, 0),
                       Colors.transparent,
                     ],
                   ),
                 ),
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0).copyWith(top: 12.0),
                 child: Text(
                   novel.title,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.labelLarge,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

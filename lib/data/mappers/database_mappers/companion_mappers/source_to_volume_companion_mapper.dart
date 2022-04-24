@@ -8,7 +8,7 @@ class SourceToVolumeCompanionMapper
   @override
   VolumesCompanion map(sources.Volume input) {
     return VolumesCompanion(
-      index: Value(input.index),
+      volumeIndex: Value(input.index),
       name: Value(input.name),
     );
   }

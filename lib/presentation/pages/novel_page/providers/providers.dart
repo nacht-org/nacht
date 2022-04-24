@@ -108,6 +108,23 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
   metaProvider,
 ]);
 
+final novelMoreProvider = Provider<Option<NovelPageMore>>((ref) {
+  final state = ref.watch(novelPageState);
+
+  return state.when(
+    partial: (_) => const None(),
+    loaded: (novel) => Some(
+      NovelPageMore(
+        description: novel.description,
+        tags: novel.metadata
+            .where((namespace) => namespace.name == 'subject')
+            .map((namespace) => namespace.value)
+            .toList(),
+      ),
+    ),
+  );
+}, dependencies: [novelPageState]);
+
 final volumesProvider = Provider<List<VolumeEntity>>(
   (ref) {
     final state = ref.watch(novelPageState);

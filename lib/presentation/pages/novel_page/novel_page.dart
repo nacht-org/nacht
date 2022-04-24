@@ -1,5 +1,6 @@
 import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/providers.dart';
+import 'package:chapturn/presentation/pages/novel_page/widgets/action_bar.dart';
 import 'package:chapturn/utils/string.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
@@ -73,12 +74,11 @@ class NovelPageView extends ConsumerWidget {
           Consumer(builder: (context, ref, child) {
             final info = ref.watch(novelInfoProvider);
 
-            return SliverPadding(
-              padding: const EdgeInsets.all(8.0),
+            return buildPadding(
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   SizedBox(
-                    height: 200,
+                    height: 170,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -108,7 +108,7 @@ class NovelPageView extends ConsumerWidget {
                               ),
                               Text(
                                 info.author.toNullable() ?? 'Unknown',
-                                style: Theme.of(context).textTheme.labelLarge,
+                                style: Theme.of(context).textTheme.bodyLarge,
                                 maxLines: 1,
                               ),
                               const SizedBox(height: 4.0),
@@ -126,7 +126,7 @@ class NovelPageView extends ConsumerWidget {
                                           (meta) => ' • ${meta.name}',
                                         ),
                                     style:
-                                        Theme.of(context).textTheme.labelLarge,
+                                        Theme.of(context).textTheme.bodyMedium,
                                     maxLines: 1,
                                   ),
                                 ],
@@ -138,6 +138,28 @@ class NovelPageView extends ConsumerWidget {
                     ),
                   ),
                 ]),
+              ),
+            );
+          }),
+          buildPadding(sliver: ActionBar(), top: 0, bottom: 8),
+          Consumer(builder: (context, ref, child) {
+            final more = ref.watch(novelMoreProvider);
+
+            return more.fold(
+              () => const SliverToBoxAdapter(),
+              (more) => buildPadding(
+                top: 0,
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      for (final para in more.description)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(para),
+                        ),
+                    ],
+                  ),
+                ),
               ),
             );
           }),
@@ -153,7 +175,7 @@ class NovelPageView extends ConsumerWidget {
                 ),
                 trailing: IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.sort),
+                  icon: const Icon(Icons.filter_list),
                 ),
               ),
             );
@@ -167,17 +189,20 @@ class NovelPageView extends ConsumerWidget {
                   return items[index].when(
                     volume: (volume) => ListTile(
                       title: Text(
-                        volume.name,
+                        volume.name.toUpperCase(),
                         maxLines: 1,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
+                      dense: true,
                     ),
                     chapter: (chapter) => ListTile(
                       title: Text(
                         chapter.title,
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(chapter.updated.toString()),
+                      onTap: () {},
                     ),
                   );
                 },
@@ -195,6 +220,24 @@ class NovelPageView extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildPadding({
+    required Widget sliver,
+    double left = 16.0,
+    double top = 16.0,
+    double right = 16.0,
+    double bottom = 16.0,
+  }) {
+    return SliverPadding(
+      padding: EdgeInsets.only(
+        top: top,
+        left: left,
+        right: right,
+        bottom: bottom,
+      ),
+      sliver: sliver,
     );
   }
 }

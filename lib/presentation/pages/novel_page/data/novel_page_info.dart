@@ -14,3 +14,11 @@ class NovelPageInfo with _$NovelPageInfo {
     required Option<Meta> meta,
   }) = _NovelPageInfo;
 }
+
+@freezed
+class NovelPageMore with _$NovelPageMore {
+  factory NovelPageMore({
+    required List<String> description,
+    required List<String> tags,
+  }) = _NovelPageMore;
+}

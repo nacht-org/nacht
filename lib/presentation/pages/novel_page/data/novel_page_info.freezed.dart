@@ -240,3 +240,155 @@ abstract class _NovelPageInfo implements NovelPageInfo {
   _$NovelPageInfoCopyWith<_NovelPageInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$NovelPageMoreTearOff {
+  const _$NovelPageMoreTearOff();
+
+  _NovelPageMore call(
+      {required List<String> description, required List<String> tags}) {
+    return _NovelPageMore(
+      description: description,
+      tags: tags,
+    );
+  }
+}
+
+/// @nodoc
+const $NovelPageMore = _$NovelPageMoreTearOff();
+
+/// @nodoc
+mixin _$NovelPageMore {
+  List<String> get description => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $NovelPageMoreCopyWith<NovelPageMore> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NovelPageMoreCopyWith<$Res> {
+  factory $NovelPageMoreCopyWith(
+          NovelPageMore value, $Res Function(NovelPageMore) then) =
+      _$NovelPageMoreCopyWithImpl<$Res>;
+  $Res call({List<String> description, List<String> tags});
+}
+
+/// @nodoc
+class _$NovelPageMoreCopyWithImpl<$Res>
+    implements $NovelPageMoreCopyWith<$Res> {
+  _$NovelPageMoreCopyWithImpl(this._value, this._then);
+
+  final NovelPageMore _value;
+  // ignore: unused_field
+  final $Res Function(NovelPageMore) _then;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+    Object? tags = freezed,
+  }) {
+    return _then(_value.copyWith(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$NovelPageMoreCopyWith<$Res>
+    implements $NovelPageMoreCopyWith<$Res> {
+  factory _$NovelPageMoreCopyWith(
+          _NovelPageMore value, $Res Function(_NovelPageMore) then) =
+      __$NovelPageMoreCopyWithImpl<$Res>;
+  @override
+  $Res call({List<String> description, List<String> tags});
+}
+
+/// @nodoc
+class __$NovelPageMoreCopyWithImpl<$Res>
+    extends _$NovelPageMoreCopyWithImpl<$Res>
+    implements _$NovelPageMoreCopyWith<$Res> {
+  __$NovelPageMoreCopyWithImpl(
+      _NovelPageMore _value, $Res Function(_NovelPageMore) _then)
+      : super(_value, (v) => _then(v as _NovelPageMore));
+
+  @override
+  _NovelPageMore get _value => super._value as _NovelPageMore;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+    Object? tags = freezed,
+  }) {
+    return _then(_NovelPageMore(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_NovelPageMore implements _NovelPageMore {
+  _$_NovelPageMore({required this.description, required this.tags});
+
+  @override
+  final List<String> description;
+  @override
+  final List<String> tags;
+
+  @override
+  String toString() {
+    return 'NovelPageMore(description: $description, tags: $tags)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _NovelPageMore &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.tags, tags));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(tags));
+
+  @JsonKey(ignore: true)
+  @override
+  _$NovelPageMoreCopyWith<_NovelPageMore> get copyWith =>
+      __$NovelPageMoreCopyWithImpl<_NovelPageMore>(this, _$identity);
+}
+
+abstract class _NovelPageMore implements NovelPageMore {
+  factory _NovelPageMore(
+      {required List<String> description,
+      required List<String> tags}) = _$_NovelPageMore;
+
+  @override
+  List<String> get description;
+  @override
+  List<String> get tags;
+  @override
+  @JsonKey(ignore: true)
+  _$NovelPageMoreCopyWith<_NovelPageMore> get copyWith =>
+      throw _privateConstructorUsedError;
+}

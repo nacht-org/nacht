@@ -8,7 +8,7 @@ part 'novel_page_info.freezed.dart';
 class NovelPageInfo with _$NovelPageInfo {
   factory NovelPageInfo({
     required String title,
-    required Option<String> thumbnailUrl,
+    required Option<String> coverUrl,
     required Option<String> author,
     required Option<NovelStatus> status,
     required Option<Meta> meta,

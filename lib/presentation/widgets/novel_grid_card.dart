@@ -28,10 +28,10 @@ class NovelGridCard extends StatelessWidget {
         )),
         child: Stack(
           children: [
-            if (novel.thumbnailUrl != null)
+            if (novel.coverUrl != null)
               SizedBox.expand(
                 child: Ink.image(
-                  image: NetworkImage(novel.thumbnailUrl!),
+                  image: NetworkImage(novel.coverUrl!),
                   fit: BoxFit.fill,
                 ),
               ),

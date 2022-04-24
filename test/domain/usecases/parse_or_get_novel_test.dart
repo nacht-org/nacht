@@ -43,7 +43,7 @@ void main() {
     url: tUrl,
     author: 'My',
     description: [],
-    thumbnailUrl: 'https://assets.website.com/novel/123/cover.jpg',
+    coverUrl: 'https://assets.website.com/novel/123/cover.jpg',
     status: NovelStatus.unknown,
     lang: 'en',
     volumes: [],

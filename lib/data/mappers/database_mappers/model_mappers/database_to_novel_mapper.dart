@@ -23,7 +23,7 @@ class DatabaseToNovelMapper implements Mapper<db.Novel, NovelEntity> {
       url: input.url,
       author: input.author,
       description: input.description.split('\n'),
-      thumbnailUrl: input.thumbnailUrl,
+      coverUrl: input.coverUrl,
       status: statusMapper.map(input.statusId),
       lang: input.lang,
       volumes: [],

@@ -21,7 +21,7 @@ void main() {
       title: 'novel_title',
       url: 'https://my.site.com/novel/123',
       author: 'erpson',
-      thumbnailUrl: 'https://cdn.site.com/novel/cover.jpg',
+      coverUrl: 'https://cdn.site.com/novel/cover.jpg',
     ),
     mapper: mapper,
   );

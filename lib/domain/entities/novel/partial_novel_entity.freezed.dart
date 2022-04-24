@@ -21,12 +21,12 @@ class _$PartialNovelEntityTearOff {
   _PartialNovelEntity call(
       {required String title,
       required String url,
-      String? thumbnailUrl,
+      String? coverUrl,
       String? author}) {
     return _PartialNovelEntity(
       title: title,
       url: url,
-      thumbnailUrl: thumbnailUrl,
+      coverUrl: coverUrl,
       author: author,
     );
   }
@@ -39,7 +39,7 @@ const $PartialNovelEntity = _$PartialNovelEntityTearOff();
 mixin _$PartialNovelEntity {
   String get title => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  String? get thumbnailUrl => throw _privateConstructorUsedError;
+  String? get coverUrl => throw _privateConstructorUsedError;
   String? get author => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -52,7 +52,7 @@ abstract class $PartialNovelEntityCopyWith<$Res> {
   factory $PartialNovelEntityCopyWith(
           PartialNovelEntity value, $Res Function(PartialNovelEntity) then) =
       _$PartialNovelEntityCopyWithImpl<$Res>;
-  $Res call({String title, String url, String? thumbnailUrl, String? author});
+  $Res call({String title, String url, String? coverUrl, String? author});
 }
 
 /// @nodoc
@@ -68,7 +68,7 @@ class _$PartialNovelEntityCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? url = freezed,
-    Object? thumbnailUrl = freezed,
+    Object? coverUrl = freezed,
     Object? author = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,9 +80,9 @@ class _$PartialNovelEntityCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      thumbnailUrl: thumbnailUrl == freezed
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      coverUrl: coverUrl == freezed
+          ? _value.coverUrl
+          : coverUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       author: author == freezed
           ? _value.author
@@ -99,7 +99,7 @@ abstract class _$PartialNovelEntityCopyWith<$Res>
           _PartialNovelEntity value, $Res Function(_PartialNovelEntity) then) =
       __$PartialNovelEntityCopyWithImpl<$Res>;
   @override
-  $Res call({String title, String url, String? thumbnailUrl, String? author});
+  $Res call({String title, String url, String? coverUrl, String? author});
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class __$PartialNovelEntityCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? url = freezed,
-    Object? thumbnailUrl = freezed,
+    Object? coverUrl = freezed,
     Object? author = freezed,
   }) {
     return _then(_PartialNovelEntity(
@@ -129,9 +129,9 @@ class __$PartialNovelEntityCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      thumbnailUrl: thumbnailUrl == freezed
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      coverUrl: coverUrl == freezed
+          ? _value.coverUrl
+          : coverUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       author: author == freezed
           ? _value.author
@@ -145,20 +145,20 @@ class __$PartialNovelEntityCopyWithImpl<$Res>
 
 class _$_PartialNovelEntity implements _PartialNovelEntity {
   _$_PartialNovelEntity(
-      {required this.title, required this.url, this.thumbnailUrl, this.author});
+      {required this.title, required this.url, this.coverUrl, this.author});
 
   @override
   final String title;
   @override
   final String url;
   @override
-  final String? thumbnailUrl;
+  final String? coverUrl;
   @override
   final String? author;
 
   @override
   String toString() {
-    return 'PartialNovelEntity(title: $title, url: $url, thumbnailUrl: $thumbnailUrl, author: $author)';
+    return 'PartialNovelEntity(title: $title, url: $url, coverUrl: $coverUrl, author: $author)';
   }
 
   @override
@@ -168,8 +168,7 @@ class _$_PartialNovelEntity implements _PartialNovelEntity {
             other is _PartialNovelEntity &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.url, url) &&
-            const DeepCollectionEquality()
-                .equals(other.thumbnailUrl, thumbnailUrl) &&
+            const DeepCollectionEquality().equals(other.coverUrl, coverUrl) &&
             const DeepCollectionEquality().equals(other.author, author));
   }
 
@@ -178,7 +177,7 @@ class _$_PartialNovelEntity implements _PartialNovelEntity {
       runtimeType,
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(thumbnailUrl),
+      const DeepCollectionEquality().hash(coverUrl),
       const DeepCollectionEquality().hash(author));
 
   @JsonKey(ignore: true)
@@ -191,7 +190,7 @@ abstract class _PartialNovelEntity implements PartialNovelEntity {
   factory _PartialNovelEntity(
       {required String title,
       required String url,
-      String? thumbnailUrl,
+      String? coverUrl,
       String? author}) = _$_PartialNovelEntity;
 
   @override
@@ -199,7 +198,7 @@ abstract class _PartialNovelEntity implements PartialNovelEntity {
   @override
   String get url;
   @override
-  String? get thumbnailUrl;
+  String? get coverUrl;
   @override
   String? get author;
   @override

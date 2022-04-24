@@ -20,13 +20,13 @@ class _$NovelPageInfoTearOff {
 
   _NovelPageInfo call(
       {required String title,
-      required Option<String> thumbnailUrl,
+      required Option<String> coverUrl,
       required Option<String> author,
       required Option<NovelStatus> status,
       required Option<Meta> meta}) {
     return _NovelPageInfo(
       title: title,
-      thumbnailUrl: thumbnailUrl,
+      coverUrl: coverUrl,
       author: author,
       status: status,
       meta: meta,
@@ -40,7 +40,7 @@ const $NovelPageInfo = _$NovelPageInfoTearOff();
 /// @nodoc
 mixin _$NovelPageInfo {
   String get title => throw _privateConstructorUsedError;
-  Option<String> get thumbnailUrl => throw _privateConstructorUsedError;
+  Option<String> get coverUrl => throw _privateConstructorUsedError;
   Option<String> get author => throw _privateConstructorUsedError;
   Option<NovelStatus> get status => throw _privateConstructorUsedError;
   Option<Meta> get meta => throw _privateConstructorUsedError;
@@ -57,7 +57,7 @@ abstract class $NovelPageInfoCopyWith<$Res> {
       _$NovelPageInfoCopyWithImpl<$Res>;
   $Res call(
       {String title,
-      Option<String> thumbnailUrl,
+      Option<String> coverUrl,
       Option<String> author,
       Option<NovelStatus> status,
       Option<Meta> meta});
@@ -75,7 +75,7 @@ class _$NovelPageInfoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = freezed,
-    Object? thumbnailUrl = freezed,
+    Object? coverUrl = freezed,
     Object? author = freezed,
     Object? status = freezed,
     Object? meta = freezed,
@@ -85,9 +85,9 @@ class _$NovelPageInfoCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      thumbnailUrl: thumbnailUrl == freezed
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      coverUrl: coverUrl == freezed
+          ? _value.coverUrl
+          : coverUrl // ignore: cast_nullable_to_non_nullable
               as Option<String>,
       author: author == freezed
           ? _value.author
@@ -114,7 +114,7 @@ abstract class _$NovelPageInfoCopyWith<$Res>
   @override
   $Res call(
       {String title,
-      Option<String> thumbnailUrl,
+      Option<String> coverUrl,
       Option<String> author,
       Option<NovelStatus> status,
       Option<Meta> meta});
@@ -134,7 +134,7 @@ class __$NovelPageInfoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = freezed,
-    Object? thumbnailUrl = freezed,
+    Object? coverUrl = freezed,
     Object? author = freezed,
     Object? status = freezed,
     Object? meta = freezed,
@@ -144,9 +144,9 @@ class __$NovelPageInfoCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      thumbnailUrl: thumbnailUrl == freezed
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      coverUrl: coverUrl == freezed
+          ? _value.coverUrl
+          : coverUrl // ignore: cast_nullable_to_non_nullable
               as Option<String>,
       author: author == freezed
           ? _value.author
@@ -169,7 +169,7 @@ class __$NovelPageInfoCopyWithImpl<$Res>
 class _$_NovelPageInfo implements _NovelPageInfo {
   _$_NovelPageInfo(
       {required this.title,
-      required this.thumbnailUrl,
+      required this.coverUrl,
       required this.author,
       required this.status,
       required this.meta});
@@ -177,7 +177,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
   @override
   final String title;
   @override
-  final Option<String> thumbnailUrl;
+  final Option<String> coverUrl;
   @override
   final Option<String> author;
   @override
@@ -187,7 +187,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
 
   @override
   String toString() {
-    return 'NovelPageInfo(title: $title, thumbnailUrl: $thumbnailUrl, author: $author, status: $status, meta: $meta)';
+    return 'NovelPageInfo(title: $title, coverUrl: $coverUrl, author: $author, status: $status, meta: $meta)';
   }
 
   @override
@@ -196,8 +196,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
         (other.runtimeType == runtimeType &&
             other is _NovelPageInfo &&
             const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality()
-                .equals(other.thumbnailUrl, thumbnailUrl) &&
+            const DeepCollectionEquality().equals(other.coverUrl, coverUrl) &&
             const DeepCollectionEquality().equals(other.author, author) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.meta, meta));
@@ -207,7 +206,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(thumbnailUrl),
+      const DeepCollectionEquality().hash(coverUrl),
       const DeepCollectionEquality().hash(author),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(meta));
@@ -221,7 +220,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
 abstract class _NovelPageInfo implements NovelPageInfo {
   factory _NovelPageInfo(
       {required String title,
-      required Option<String> thumbnailUrl,
+      required Option<String> coverUrl,
       required Option<String> author,
       required Option<NovelStatus> status,
       required Option<Meta> meta}) = _$_NovelPageInfo;
@@ -229,7 +228,7 @@ abstract class _NovelPageInfo implements NovelPageInfo {
   @override
   String get title;
   @override
-  Option<String> get thumbnailUrl;
+  Option<String> get coverUrl;
   @override
   Option<String> get author;
   @override

@@ -90,16 +90,14 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
   return state.when(
     partial: (novel) => NovelPageInfo(
       title: novel.title,
-      thumbnailUrl:
-          novel.thumbnailUrl == null ? const None() : Some(novel.thumbnailUrl!),
+      coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
       author: novel.author == null ? const None() : Some(novel.author!),
       status: const None(),
       meta: meta,
     ),
     loaded: (novel) => NovelPageInfo(
       title: novel.title,
-      thumbnailUrl:
-          novel.thumbnailUrl == null ? const None() : Some(novel.thumbnailUrl!),
+      coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
       author: novel.author == null ? const None() : Some(novel.author!),
       status: Some(novel.status),
       meta: meta,

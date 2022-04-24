@@ -3,12 +3,15 @@ import 'package:chapturn/data/models/status.dart';
 import 'package:chapturn/data/models/work_type.dart';
 import 'package:drift/drift.dart';
 
+import '../datasources/local/database.dart';
+
 class Novels extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
   TextColumn get description => text()();
   TextColumn get author => text().nullable()();
-  TextColumn get thumbnailUrl => text().nullable()();
+  TextColumn get coverUrl => text().nullable()();
+  IntColumn get coverId => integer().references(Asset, #id)();
   TextColumn get url => text().customConstraint('NOT NULL UNIQUE')();
   IntColumn get statusId => integer().references(Statuses, #id)();
   TextColumn get lang => text().withLength(max: 8)();

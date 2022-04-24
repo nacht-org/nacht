@@ -22,7 +22,7 @@ class SourceToNovelCompanionMapper
       title: Value(input.title),
       description: Value(input.description.join('\n')),
       author: Value(input.author),
-      thumbnailUrl: Value(input.thumbnailUrl),
+      coverUrl: Value(input.thumbnailUrl),
       url: Value(input.url),
       statusId: Value(statusMapper.map(input.status)),
       lang: Value(input.lang),

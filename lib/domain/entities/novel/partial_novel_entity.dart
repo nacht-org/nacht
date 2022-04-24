@@ -7,7 +7,7 @@ class PartialNovelEntity with _$PartialNovelEntity {
   factory PartialNovelEntity({
     required String title,
     required String url,
-    String? thumbnailUrl,
+    String? coverUrl,
     String? author,
   }) = _PartialNovelEntity;
 }

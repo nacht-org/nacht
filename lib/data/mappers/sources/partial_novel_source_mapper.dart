@@ -8,7 +8,7 @@ class SourceToPartialNovelMapper extends Mapper<Novel, PartialNovelEntity> {
     return PartialNovelEntity(
       title: input.title,
       url: input.url,
-      thumbnailUrl: input.thumbnailUrl,
+      coverUrl: input.thumbnailUrl,
       author: input.author,
     );
   }

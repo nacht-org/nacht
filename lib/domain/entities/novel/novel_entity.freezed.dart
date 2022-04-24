@@ -24,7 +24,7 @@ class _$NovelEntityTearOff {
       required String url,
       required String? author,
       required List<String> description,
-      required String? thumbnailUrl,
+      required String? coverUrl,
       required NovelStatus status,
       required String lang,
       required List<VolumeEntity> volumes,
@@ -37,7 +37,7 @@ class _$NovelEntityTearOff {
       url: url,
       author: author,
       description: description,
-      thumbnailUrl: thumbnailUrl,
+      coverUrl: coverUrl,
       status: status,
       lang: lang,
       volumes: volumes,
@@ -58,7 +58,7 @@ mixin _$NovelEntity {
   String get url => throw _privateConstructorUsedError;
   String? get author => throw _privateConstructorUsedError;
   List<String> get description => throw _privateConstructorUsedError;
-  String? get thumbnailUrl => throw _privateConstructorUsedError;
+  String? get coverUrl => throw _privateConstructorUsedError;
   NovelStatus get status => throw _privateConstructorUsedError;
   String get lang => throw _privateConstructorUsedError;
   List<VolumeEntity> get volumes => throw _privateConstructorUsedError;
@@ -82,7 +82,7 @@ abstract class $NovelEntityCopyWith<$Res> {
       String url,
       String? author,
       List<String> description,
-      String? thumbnailUrl,
+      String? coverUrl,
       NovelStatus status,
       String lang,
       List<VolumeEntity> volumes,
@@ -106,7 +106,7 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
     Object? url = freezed,
     Object? author = freezed,
     Object? description = freezed,
-    Object? thumbnailUrl = freezed,
+    Object? coverUrl = freezed,
     Object? status = freezed,
     Object? lang = freezed,
     Object? volumes = freezed,
@@ -135,9 +135,9 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      thumbnailUrl: thumbnailUrl == freezed
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      coverUrl: coverUrl == freezed
+          ? _value.coverUrl
+          : coverUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       status: status == freezed
           ? _value.status
@@ -180,7 +180,7 @@ abstract class _$NovelEntityCopyWith<$Res>
       String url,
       String? author,
       List<String> description,
-      String? thumbnailUrl,
+      String? coverUrl,
       NovelStatus status,
       String lang,
       List<VolumeEntity> volumes,
@@ -206,7 +206,7 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
     Object? url = freezed,
     Object? author = freezed,
     Object? description = freezed,
-    Object? thumbnailUrl = freezed,
+    Object? coverUrl = freezed,
     Object? status = freezed,
     Object? lang = freezed,
     Object? volumes = freezed,
@@ -235,9 +235,9 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      thumbnailUrl: thumbnailUrl == freezed
-          ? _value.thumbnailUrl
-          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+      coverUrl: coverUrl == freezed
+          ? _value.coverUrl
+          : coverUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       status: status == freezed
           ? _value.status
@@ -276,7 +276,7 @@ class _$_NovelEntity implements _NovelEntity {
       required this.url,
       required this.author,
       required this.description,
-      required this.thumbnailUrl,
+      required this.coverUrl,
       required this.status,
       required this.lang,
       required this.volumes,
@@ -295,7 +295,7 @@ class _$_NovelEntity implements _NovelEntity {
   @override
   final List<String> description;
   @override
-  final String? thumbnailUrl;
+  final String? coverUrl;
   @override
   final NovelStatus status;
   @override
@@ -311,7 +311,7 @@ class _$_NovelEntity implements _NovelEntity {
 
   @override
   String toString() {
-    return 'NovelEntity(id: $id, title: $title, url: $url, author: $author, description: $description, thumbnailUrl: $thumbnailUrl, status: $status, lang: $lang, volumes: $volumes, metadata: $metadata, workType: $workType, readingDirection: $readingDirection)';
+    return 'NovelEntity(id: $id, title: $title, url: $url, author: $author, description: $description, coverUrl: $coverUrl, status: $status, lang: $lang, volumes: $volumes, metadata: $metadata, workType: $workType, readingDirection: $readingDirection)';
   }
 
   @override
@@ -325,8 +325,7 @@ class _$_NovelEntity implements _NovelEntity {
             const DeepCollectionEquality().equals(other.author, author) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
-            const DeepCollectionEquality()
-                .equals(other.thumbnailUrl, thumbnailUrl) &&
+            const DeepCollectionEquality().equals(other.coverUrl, coverUrl) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.lang, lang) &&
             const DeepCollectionEquality().equals(other.volumes, volumes) &&
@@ -344,7 +343,7 @@ class _$_NovelEntity implements _NovelEntity {
       const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(author),
       const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(thumbnailUrl),
+      const DeepCollectionEquality().hash(coverUrl),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(lang),
       const DeepCollectionEquality().hash(volumes),
@@ -365,7 +364,7 @@ abstract class _NovelEntity implements NovelEntity {
       required String url,
       required String? author,
       required List<String> description,
-      required String? thumbnailUrl,
+      required String? coverUrl,
       required NovelStatus status,
       required String lang,
       required List<VolumeEntity> volumes,
@@ -384,7 +383,7 @@ abstract class _NovelEntity implements NovelEntity {
   @override
   List<String> get description;
   @override
-  String? get thumbnailUrl;
+  String? get coverUrl;
   @override
   NovelStatus get status;
   @override

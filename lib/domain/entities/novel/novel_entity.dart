@@ -12,7 +12,7 @@ class NovelEntity with _$NovelEntity {
     required String url,
     required String? author,
     required List<String> description,
-    required String? thumbnailUrl,
+    required String? coverUrl,
     required NovelStatus status,
     required String lang,
     required List<VolumeEntity> volumes,

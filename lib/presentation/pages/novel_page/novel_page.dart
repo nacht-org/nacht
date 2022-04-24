@@ -86,7 +86,7 @@ class NovelPageView extends ConsumerWidget {
                           aspectRatio: 2 / 3,
                           child: Card(
                             clipBehavior: Clip.antiAlias,
-                            child: info.thumbnailUrl.fold(
+                            child: info.coverUrl.fold(
                               () => null,
                               (url) => Image.network(
                                 url,

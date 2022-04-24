@@ -534,7 +534,8 @@ class Novel extends DataClass implements Insertable<Novel> {
   final String title;
   final String description;
   final String? author;
-  final String? thumbnailUrl;
+  final String? coverUrl;
+  final int coverId;
   final String url;
   final int statusId;
   final String lang;
@@ -545,7 +546,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       required this.title,
       required this.description,
       this.author,
-      this.thumbnailUrl,
+      this.coverUrl,
+      required this.coverId,
       required this.url,
       required this.statusId,
       required this.lang,
@@ -562,8 +564,10 @@ class Novel extends DataClass implements Insertable<Novel> {
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       author: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}author']),
-      thumbnailUrl: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail_url']),
+      coverUrl: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}cover_url']),
+      coverId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}cover_id'])!,
       url: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}url'])!,
       statusId: const IntType()
@@ -585,9 +589,10 @@ class Novel extends DataClass implements Insertable<Novel> {
     if (!nullToAbsent || author != null) {
       map['author'] = Variable<String?>(author);
     }
-    if (!nullToAbsent || thumbnailUrl != null) {
-      map['thumbnail_url'] = Variable<String?>(thumbnailUrl);
+    if (!nullToAbsent || coverUrl != null) {
+      map['cover_url'] = Variable<String?>(coverUrl);
     }
+    map['cover_id'] = Variable<int>(coverId);
     map['url'] = Variable<String>(url);
     map['status_id'] = Variable<int>(statusId);
     map['lang'] = Variable<String>(lang);
@@ -603,9 +608,10 @@ class Novel extends DataClass implements Insertable<Novel> {
       description: Value(description),
       author:
           author == null && nullToAbsent ? const Value.absent() : Value(author),
-      thumbnailUrl: thumbnailUrl == null && nullToAbsent
+      coverUrl: coverUrl == null && nullToAbsent
           ? const Value.absent()
-          : Value(thumbnailUrl),
+          : Value(coverUrl),
+      coverId: Value(coverId),
       url: Value(url),
       statusId: Value(statusId),
       lang: Value(lang),
@@ -622,7 +628,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
       author: serializer.fromJson<String?>(json['author']),
-      thumbnailUrl: serializer.fromJson<String?>(json['thumbnailUrl']),
+      coverUrl: serializer.fromJson<String?>(json['coverUrl']),
+      coverId: serializer.fromJson<int>(json['coverId']),
       url: serializer.fromJson<String>(json['url']),
       statusId: serializer.fromJson<int>(json['statusId']),
       lang: serializer.fromJson<String>(json['lang']),
@@ -638,7 +645,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
       'author': serializer.toJson<String?>(author),
-      'thumbnailUrl': serializer.toJson<String?>(thumbnailUrl),
+      'coverUrl': serializer.toJson<String?>(coverUrl),
+      'coverId': serializer.toJson<int>(coverId),
       'url': serializer.toJson<String>(url),
       'statusId': serializer.toJson<int>(statusId),
       'lang': serializer.toJson<String>(lang),
@@ -652,7 +660,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           String? title,
           String? description,
           String? author,
-          String? thumbnailUrl,
+          String? coverUrl,
+          int? coverId,
           String? url,
           int? statusId,
           String? lang,
@@ -663,7 +672,8 @@ class Novel extends DataClass implements Insertable<Novel> {
         title: title ?? this.title,
         description: description ?? this.description,
         author: author ?? this.author,
-        thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+        coverUrl: coverUrl ?? this.coverUrl,
+        coverId: coverId ?? this.coverId,
         url: url ?? this.url,
         statusId: statusId ?? this.statusId,
         lang: lang ?? this.lang,
@@ -677,7 +687,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('author: $author, ')
-          ..write('thumbnailUrl: $thumbnailUrl, ')
+          ..write('coverUrl: $coverUrl, ')
+          ..write('coverId: $coverId, ')
           ..write('url: $url, ')
           ..write('statusId: $statusId, ')
           ..write('lang: $lang, ')
@@ -688,8 +699,8 @@ class Novel extends DataClass implements Insertable<Novel> {
   }
 
   @override
-  int get hashCode => Object.hash(id, title, description, author, thumbnailUrl,
-      url, statusId, lang, workTypeId, readingDirectionId);
+  int get hashCode => Object.hash(id, title, description, author, coverUrl,
+      coverId, url, statusId, lang, workTypeId, readingDirectionId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -698,7 +709,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           other.title == this.title &&
           other.description == this.description &&
           other.author == this.author &&
-          other.thumbnailUrl == this.thumbnailUrl &&
+          other.coverUrl == this.coverUrl &&
+          other.coverId == this.coverId &&
           other.url == this.url &&
           other.statusId == this.statusId &&
           other.lang == this.lang &&
@@ -711,7 +723,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
   final Value<String> title;
   final Value<String> description;
   final Value<String?> author;
-  final Value<String?> thumbnailUrl;
+  final Value<String?> coverUrl;
+  final Value<int> coverId;
   final Value<String> url;
   final Value<int> statusId;
   final Value<String> lang;
@@ -722,7 +735,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     this.title = const Value.absent(),
     this.description = const Value.absent(),
     this.author = const Value.absent(),
-    this.thumbnailUrl = const Value.absent(),
+    this.coverUrl = const Value.absent(),
+    this.coverId = const Value.absent(),
     this.url = const Value.absent(),
     this.statusId = const Value.absent(),
     this.lang = const Value.absent(),
@@ -734,7 +748,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     required String title,
     required String description,
     this.author = const Value.absent(),
-    this.thumbnailUrl = const Value.absent(),
+    this.coverUrl = const Value.absent(),
+    required int coverId,
     required String url,
     required int statusId,
     required String lang,
@@ -742,6 +757,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     required int readingDirectionId,
   })  : title = Value(title),
         description = Value(description),
+        coverId = Value(coverId),
         url = Value(url),
         statusId = Value(statusId),
         lang = Value(lang),
@@ -752,7 +768,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     Expression<String>? title,
     Expression<String>? description,
     Expression<String?>? author,
-    Expression<String?>? thumbnailUrl,
+    Expression<String?>? coverUrl,
+    Expression<int>? coverId,
     Expression<String>? url,
     Expression<int>? statusId,
     Expression<String>? lang,
@@ -764,7 +781,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       if (title != null) 'title': title,
       if (description != null) 'description': description,
       if (author != null) 'author': author,
-      if (thumbnailUrl != null) 'thumbnail_url': thumbnailUrl,
+      if (coverUrl != null) 'cover_url': coverUrl,
+      if (coverId != null) 'cover_id': coverId,
       if (url != null) 'url': url,
       if (statusId != null) 'status_id': statusId,
       if (lang != null) 'lang': lang,
@@ -779,7 +797,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       Value<String>? title,
       Value<String>? description,
       Value<String?>? author,
-      Value<String?>? thumbnailUrl,
+      Value<String?>? coverUrl,
+      Value<int>? coverId,
       Value<String>? url,
       Value<int>? statusId,
       Value<String>? lang,
@@ -790,7 +809,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       title: title ?? this.title,
       description: description ?? this.description,
       author: author ?? this.author,
-      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      coverUrl: coverUrl ?? this.coverUrl,
+      coverId: coverId ?? this.coverId,
       url: url ?? this.url,
       statusId: statusId ?? this.statusId,
       lang: lang ?? this.lang,
@@ -814,8 +834,11 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     if (author.present) {
       map['author'] = Variable<String?>(author.value);
     }
-    if (thumbnailUrl.present) {
-      map['thumbnail_url'] = Variable<String?>(thumbnailUrl.value);
+    if (coverUrl.present) {
+      map['cover_url'] = Variable<String?>(coverUrl.value);
+    }
+    if (coverId.present) {
+      map['cover_id'] = Variable<int>(coverId.value);
     }
     if (url.present) {
       map['url'] = Variable<String>(url.value);
@@ -842,7 +865,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('author: $author, ')
-          ..write('thumbnailUrl: $thumbnailUrl, ')
+          ..write('coverUrl: $coverUrl, ')
+          ..write('coverId: $coverId, ')
           ..write('url: $url, ')
           ..write('statusId: $statusId, ')
           ..write('lang: $lang, ')
@@ -881,12 +905,16 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
   late final GeneratedColumn<String?> author = GeneratedColumn<String?>(
       'author', aliasedName, true,
       type: const StringType(), requiredDuringInsert: false);
-  final VerificationMeta _thumbnailUrlMeta =
-      const VerificationMeta('thumbnailUrl');
+  final VerificationMeta _coverUrlMeta = const VerificationMeta('coverUrl');
   @override
-  late final GeneratedColumn<String?> thumbnailUrl = GeneratedColumn<String?>(
-      'thumbnail_url', aliasedName, true,
+  late final GeneratedColumn<String?> coverUrl = GeneratedColumn<String?>(
+      'cover_url', aliasedName, true,
       type: const StringType(), requiredDuringInsert: false);
+  final VerificationMeta _coverIdMeta = const VerificationMeta('coverId');
+  @override
+  late final GeneratedColumn<int?> coverId = GeneratedColumn<int?>(
+      'cover_id', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _urlMeta = const VerificationMeta('url');
   @override
   late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
@@ -929,7 +957,8 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
         title,
         description,
         author,
-        thumbnailUrl,
+        coverUrl,
+        coverId,
         url,
         statusId,
         lang,
@@ -966,11 +995,15 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
       context.handle(_authorMeta,
           author.isAcceptableOrUnknown(data['author']!, _authorMeta));
     }
-    if (data.containsKey('thumbnail_url')) {
-      context.handle(
-          _thumbnailUrlMeta,
-          thumbnailUrl.isAcceptableOrUnknown(
-              data['thumbnail_url']!, _thumbnailUrlMeta));
+    if (data.containsKey('cover_url')) {
+      context.handle(_coverUrlMeta,
+          coverUrl.isAcceptableOrUnknown(data['cover_url']!, _coverUrlMeta));
+    }
+    if (data.containsKey('cover_id')) {
+      context.handle(_coverIdMeta,
+          coverId.isAcceptableOrUnknown(data['cover_id']!, _coverIdMeta));
+    } else if (isInserting) {
+      context.missing(_coverIdMeta);
     }
     if (data.containsKey('url')) {
       context.handle(

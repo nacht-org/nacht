@@ -53,7 +53,7 @@ void main() {
           description: Value('in\nmany\nwords'),
           author: Value('my name'),
           url: Value('https://website.com/novel/123'),
-          thumbnailUrl: Value('https://website.com/novel/123/cover.jpg'),
+          coverUrl: Value('https://website.com/novel/123/cover.jpg'),
           lang: Value('en'),
           statusId: Value(StatusSeed.ongoing),
           workTypeId: Value(WorkTypeSeed.original),

@@ -3,7 +3,7 @@ import 'package:chapturn/data/models/status.dart';
 import 'package:chapturn/data/models/work_type.dart';
 import 'package:drift/drift.dart';
 
-import '../datasources/local/database.dart';
+import 'assets.dart';
 
 class Novels extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -11,7 +11,7 @@ class Novels extends Table {
   TextColumn get description => text()();
   TextColumn get author => text().nullable()();
   TextColumn get coverUrl => text().nullable()();
-  IntColumn get coverId => integer().references(Asset, #id)();
+  IntColumn get coverId => integer().nullable().references(Assets, #id)();
   TextColumn get url => text().customConstraint('NOT NULL UNIQUE')();
   IntColumn get statusId => integer().references(Statuses, #id)();
   TextColumn get lang => text().withLength(max: 8)();

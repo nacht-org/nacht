@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chapturn/data/models/models.dart';
+import '../../models/models.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +18,8 @@ part 'database.g.dart';
   NovelCategoriesJunction,
   Volumes,
   Chapters,
+  MetaDatas,
+  Namespaces,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
@@ -81,6 +83,11 @@ class AppDatabase extends _$AppDatabase {
             StatusesCompanion.insert(id: const Value(2), value: 'Ongoing'),
             StatusesCompanion.insert(id: const Value(3), value: 'Hiatus'),
             StatusesCompanion.insert(id: const Value(4), value: 'Unknown'),
+          ]);
+
+          batch.insertAll(namespaces, [
+            NamespacesCompanion.insert(id: const Value(1), value: 'dc'),
+            NamespacesCompanion.insert(id: const Value(2), value: 'opf'),
           ]);
         });
       },

@@ -2000,6 +2000,508 @@ class $ChaptersTable extends Chapters with TableInfo<$ChaptersTable, Chapter> {
   }
 }
 
+class Namespace extends DataClass implements Insertable<Namespace> {
+  final int id;
+  final String value;
+  Namespace({required this.id, required this.value});
+  factory Namespace.fromData(Map<String, dynamic> data, {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return Namespace(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      value: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}value'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  NamespacesCompanion toCompanion(bool nullToAbsent) {
+    return NamespacesCompanion(
+      id: Value(id),
+      value: Value(value),
+    );
+  }
+
+  factory Namespace.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Namespace(
+      id: serializer.fromJson<int>(json['id']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  Namespace copyWith({int? id, String? value}) => Namespace(
+        id: id ?? this.id,
+        value: value ?? this.value,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Namespace(')
+          ..write('id: $id, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Namespace && other.id == this.id && other.value == this.value);
+}
+
+class NamespacesCompanion extends UpdateCompanion<Namespace> {
+  final Value<int> id;
+  final Value<String> value;
+  const NamespacesCompanion({
+    this.id = const Value.absent(),
+    this.value = const Value.absent(),
+  });
+  NamespacesCompanion.insert({
+    this.id = const Value.absent(),
+    required String value,
+  }) : value = Value(value);
+  static Insertable<Namespace> custom({
+    Expression<int>? id,
+    Expression<String>? value,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (value != null) 'value': value,
+    });
+  }
+
+  NamespacesCompanion copyWith({Value<int>? id, Value<String>? value}) {
+    return NamespacesCompanion(
+      id: id ?? this.id,
+      value: value ?? this.value,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NamespacesCompanion(')
+          ..write('id: $id, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NamespacesTable extends Namespaces
+    with TableInfo<$NamespacesTable, Namespace> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NamespacesTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String?> value = GeneratedColumn<String?>(
+      'value', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 8),
+      type: const StringType(),
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, value];
+  @override
+  String get aliasedName => _alias ?? 'namespaces';
+  @override
+  String get actualTableName => 'namespaces';
+  @override
+  VerificationContext validateIntegrity(Insertable<Namespace> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Namespace map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return Namespace.fromData(data,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $NamespacesTable createAlias(String alias) {
+    return $NamespacesTable(attachedDatabase, alias);
+  }
+}
+
+class MetaData extends DataClass implements Insertable<MetaData> {
+  final int id;
+  final String name;
+  final String value;
+  final int namespaceId;
+  final String others;
+  final int novelId;
+  MetaData(
+      {required this.id,
+      required this.name,
+      required this.value,
+      required this.namespaceId,
+      required this.others,
+      required this.novelId});
+  factory MetaData.fromData(Map<String, dynamic> data, {String? prefix}) {
+    final effectivePrefix = prefix ?? '';
+    return MetaData(
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
+      value: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}value'])!,
+      namespaceId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}namespace_id'])!,
+      others: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}others'])!,
+      novelId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}novel_id'])!,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['value'] = Variable<String>(value);
+    map['namespace_id'] = Variable<int>(namespaceId);
+    map['others'] = Variable<String>(others);
+    map['novel_id'] = Variable<int>(novelId);
+    return map;
+  }
+
+  MetaDatasCompanion toCompanion(bool nullToAbsent) {
+    return MetaDatasCompanion(
+      id: Value(id),
+      name: Value(name),
+      value: Value(value),
+      namespaceId: Value(namespaceId),
+      others: Value(others),
+      novelId: Value(novelId),
+    );
+  }
+
+  factory MetaData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MetaData(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      value: serializer.fromJson<String>(json['value']),
+      namespaceId: serializer.fromJson<int>(json['namespaceId']),
+      others: serializer.fromJson<String>(json['others']),
+      novelId: serializer.fromJson<int>(json['novelId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'value': serializer.toJson<String>(value),
+      'namespaceId': serializer.toJson<int>(namespaceId),
+      'others': serializer.toJson<String>(others),
+      'novelId': serializer.toJson<int>(novelId),
+    };
+  }
+
+  MetaData copyWith(
+          {int? id,
+          String? name,
+          String? value,
+          int? namespaceId,
+          String? others,
+          int? novelId}) =>
+      MetaData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        value: value ?? this.value,
+        namespaceId: namespaceId ?? this.namespaceId,
+        others: others ?? this.others,
+        novelId: novelId ?? this.novelId,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('MetaData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('value: $value, ')
+          ..write('namespaceId: $namespaceId, ')
+          ..write('others: $others, ')
+          ..write('novelId: $novelId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, value, namespaceId, others, novelId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MetaData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.value == this.value &&
+          other.namespaceId == this.namespaceId &&
+          other.others == this.others &&
+          other.novelId == this.novelId);
+}
+
+class MetaDatasCompanion extends UpdateCompanion<MetaData> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> value;
+  final Value<int> namespaceId;
+  final Value<String> others;
+  final Value<int> novelId;
+  const MetaDatasCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.value = const Value.absent(),
+    this.namespaceId = const Value.absent(),
+    this.others = const Value.absent(),
+    this.novelId = const Value.absent(),
+  });
+  MetaDatasCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String value,
+    required int namespaceId,
+    required String others,
+    required int novelId,
+  })  : name = Value(name),
+        value = Value(value),
+        namespaceId = Value(namespaceId),
+        others = Value(others),
+        novelId = Value(novelId);
+  static Insertable<MetaData> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? value,
+    Expression<int>? namespaceId,
+    Expression<String>? others,
+    Expression<int>? novelId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (value != null) 'value': value,
+      if (namespaceId != null) 'namespace_id': namespaceId,
+      if (others != null) 'others': others,
+      if (novelId != null) 'novel_id': novelId,
+    });
+  }
+
+  MetaDatasCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? value,
+      Value<int>? namespaceId,
+      Value<String>? others,
+      Value<int>? novelId}) {
+    return MetaDatasCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      value: value ?? this.value,
+      namespaceId: namespaceId ?? this.namespaceId,
+      others: others ?? this.others,
+      novelId: novelId ?? this.novelId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (namespaceId.present) {
+      map['namespace_id'] = Variable<int>(namespaceId.value);
+    }
+    if (others.present) {
+      map['others'] = Variable<String>(others.value);
+    }
+    if (novelId.present) {
+      map['novel_id'] = Variable<int>(novelId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MetaDatasCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('value: $value, ')
+          ..write('namespaceId: $namespaceId, ')
+          ..write('others: $others, ')
+          ..write('novelId: $novelId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MetaDatasTable extends MetaDatas
+    with TableInfo<$MetaDatasTable, MetaData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MetaDatasTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String?> value = GeneratedColumn<String?>(
+      'value', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _namespaceIdMeta =
+      const VerificationMeta('namespaceId');
+  @override
+  late final GeneratedColumn<int?> namespaceId = GeneratedColumn<int?>(
+      'namespace_id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'REFERENCES namespaces (id)');
+  final VerificationMeta _othersMeta = const VerificationMeta('others');
+  @override
+  late final GeneratedColumn<String?> others = GeneratedColumn<String?>(
+      'others', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _novelIdMeta = const VerificationMeta('novelId');
+  @override
+  late final GeneratedColumn<int?> novelId = GeneratedColumn<int?>(
+      'novel_id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'REFERENCES novels (id)');
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, value, namespaceId, others, novelId];
+  @override
+  String get aliasedName => _alias ?? 'meta_datas';
+  @override
+  String get actualTableName => 'meta_datas';
+  @override
+  VerificationContext validateIntegrity(Insertable<MetaData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    if (data.containsKey('namespace_id')) {
+      context.handle(
+          _namespaceIdMeta,
+          namespaceId.isAcceptableOrUnknown(
+              data['namespace_id']!, _namespaceIdMeta));
+    } else if (isInserting) {
+      context.missing(_namespaceIdMeta);
+    }
+    if (data.containsKey('others')) {
+      context.handle(_othersMeta,
+          others.isAcceptableOrUnknown(data['others']!, _othersMeta));
+    } else if (isInserting) {
+      context.missing(_othersMeta);
+    }
+    if (data.containsKey('novel_id')) {
+      context.handle(_novelIdMeta,
+          novelId.isAcceptableOrUnknown(data['novel_id']!, _novelIdMeta));
+    } else if (isInserting) {
+      context.missing(_novelIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MetaData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return MetaData.fromData(data,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  }
+
+  @override
+  $MetaDatasTable createAlias(String alias) {
+    return $MetaDatasTable(attachedDatabase, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $StatusesTable statuses = $StatusesTable(this);
@@ -2013,6 +2515,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $NovelCategoriesJunctionTable(this);
   late final $VolumesTable volumes = $VolumesTable(this);
   late final $ChaptersTable chapters = $ChaptersTable(this);
+  late final $NamespacesTable namespaces = $NamespacesTable(this);
+  late final $MetaDatasTable metaDatas = $MetaDatasTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
@@ -2024,6 +2528,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         novelCategories,
         novelCategoriesJunction,
         volumes,
-        chapters
+        chapters,
+        namespaces,
+        metaDatas
       ];
 }

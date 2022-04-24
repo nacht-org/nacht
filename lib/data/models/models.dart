@@ -5,3 +5,5 @@ export 'reading_direction.dart';
 export 'category.dart';
 export 'volume.dart';
 export 'chapter.dart';
+export 'metadatas.dart';
+export 'namespaces.dart';

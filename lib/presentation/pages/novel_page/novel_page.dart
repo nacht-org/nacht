@@ -150,13 +150,60 @@ class NovelPageView extends ConsumerWidget {
               (more) => buildPadding(
                 top: 0,
                 sliver: SliverToBoxAdapter(
-                  child: Column(
+                  child: Stack(
                     children: [
-                      for (final para in more.description)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4.0),
-                          child: Text(para),
+                      ClipRect(
+                        child: SizedOverflowBox(
+                          alignment: Alignment.topLeft,
+                          size: Size.fromHeight(8 * 10),
+                          child: Column(
+                            children: [
+                              for (final para in more.description)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text(para),
+                                ),
+                            ],
+                          ),
                         ),
+                      ),
+                      Positioned(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                                Theme.of(context).canvasColor,
+                                Theme.of(context).canvasColor.withOpacity(0),
+                              ],
+                            ),
+                          ),
+                          height: 8 * 8,
+                        ),
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                      ),
+                      Positioned(
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: RadialGradient(
+                                radius: 0.8,
+                                colors: [
+                                  Theme.of(context).canvasColor,
+                                  Theme.of(context).canvasColor.withOpacity(0),
+                                ],
+                              ),
+                            ),
+                            child: Icon(Icons.keyboard_arrow_down),
+                          ),
+                        ),
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                      ),
                     ],
                   ),
                 ),

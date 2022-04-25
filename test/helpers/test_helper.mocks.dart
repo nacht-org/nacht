@@ -8,6 +8,7 @@ import 'package:chapturn/core/failure.dart' as _i5;
 import 'package:chapturn/domain/entities/entities.dart' as _i7;
 import 'package:chapturn/domain/entities/network/network_connection.dart'
     as _i10;
+import 'package:chapturn/domain/repositories/category_repository.dart' as _i11;
 import 'package:chapturn/domain/repositories/crawler_repository.dart' as _i4;
 import 'package:chapturn/domain/repositories/network_repository.dart' as _i9;
 import 'package:chapturn/domain/repositories/novel_repository.dart' as _i8;
@@ -140,6 +141,11 @@ class MockNovelLocalRepository extends _i1.Mock
           returnValue: Future<_i2.Either<_i5.Failure, _i7.NovelEntity>>.value(
               _FakeEither_0<_i5.Failure, _i7.NovelEntity>())) as _i6
           .Future<_i2.Either<_i5.Failure, _i7.NovelEntity>>);
+  @override
+  _i6.Future<void> setFavourite(int? novelId, bool? value) =>
+      (super.noSuchMethod(Invocation.method(#setFavourite, [novelId, value]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
 }
 
 /// A class which mocks [NetworkRepository].
@@ -160,4 +166,35 @@ class MockNetworkRepository extends _i1.Mock implements _i9.NetworkRepository {
   _i6.Future<bool> isConnectionAvailable() =>
       (super.noSuchMethod(Invocation.method(#isConnectionAvailable, []),
           returnValue: Future<bool>.value(false)) as _i6.Future<bool>);
+}
+
+/// A class which mocks [CategoryRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCategoryRepository extends _i1.Mock
+    implements _i11.CategoryRepository {
+  MockCategoryRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<List<_i7.CategoryEntity>> getAllCategories() =>
+      (super.noSuchMethod(Invocation.method(#getAllCategories, []),
+          returnValue: Future<List<_i7.CategoryEntity>>.value(
+              <_i7.CategoryEntity>[])) as _i6.Future<List<_i7.CategoryEntity>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, List<_i7.CategoryEntity>>>
+      getCategoriesOfNovel(_i7.NovelEntity? novel) => (super.noSuchMethod(
+              Invocation.method(#getCategoriesOfNovel, [novel]),
+              returnValue: Future<
+                      _i2.Either<_i5.Failure, List<_i7.CategoryEntity>>>.value(
+                  _FakeEither_0<_i5.Failure, List<_i7.CategoryEntity>>()))
+          as _i6.Future<_i2.Either<_i5.Failure, List<_i7.CategoryEntity>>>);
+  @override
+  _i6.Future<void> changeNovelCategories(
+          _i7.NovelEntity? novel, List<_i7.CategoryEntity>? categories) =>
+      (super.noSuchMethod(
+          Invocation.method(#changeNovelCategories, [novel, categories]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
 }

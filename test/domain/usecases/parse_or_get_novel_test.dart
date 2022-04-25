@@ -50,7 +50,7 @@ void main() {
     metadata: [],
     workType: const OriginalWork(),
     readingDirection: ReadingDirection.ltr,
-    favorite: false,
+    favourite: false,
   );
 
   test(

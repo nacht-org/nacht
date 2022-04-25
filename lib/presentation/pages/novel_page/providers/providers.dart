@@ -111,7 +111,8 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
 final favoriteProvider = Provider<bool>(
   (ref) {
     final state = ref.watch(novelPageState);
-    return state.when(partial: (_) => false, loaded: (novel) => novel.favorite);
+    return state.when(
+        partial: (_) => false, loaded: (novel) => novel.favourite);
   },
   dependencies: [novelPageState],
 );

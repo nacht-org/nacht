@@ -22,6 +22,6 @@ class NovelEntity with _$NovelEntity {
     required List<MetaDataEntity> metadata,
     required WorkType workType,
     required ReadingDirection readingDirection,
-    required bool favorite,
+    required bool favourite,
   }) = _NovelEntity;
 }

@@ -31,7 +31,7 @@ class _$NovelEntityTearOff {
       required List<MetaDataEntity> metadata,
       required WorkType workType,
       required ReadingDirection readingDirection,
-      required bool favorite}) {
+      required bool favourite}) {
     return _NovelEntity(
       id: id,
       title: title,
@@ -45,7 +45,7 @@ class _$NovelEntityTearOff {
       metadata: metadata,
       workType: workType,
       readingDirection: readingDirection,
-      favorite: favorite,
+      favourite: favourite,
     );
   }
 }
@@ -67,7 +67,7 @@ mixin _$NovelEntity {
   List<MetaDataEntity> get metadata => throw _privateConstructorUsedError;
   WorkType get workType => throw _privateConstructorUsedError;
   ReadingDirection get readingDirection => throw _privateConstructorUsedError;
-  bool get favorite => throw _privateConstructorUsedError;
+  bool get favourite => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NovelEntityCopyWith<NovelEntity> get copyWith =>
@@ -92,7 +92,7 @@ abstract class $NovelEntityCopyWith<$Res> {
       List<MetaDataEntity> metadata,
       WorkType workType,
       ReadingDirection readingDirection,
-      bool favorite});
+      bool favourite});
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
     Object? metadata = freezed,
     Object? workType = freezed,
     Object? readingDirection = freezed,
-    Object? favorite = freezed,
+    Object? favourite = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -168,9 +168,9 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
           ? _value.readingDirection
           : readingDirection // ignore: cast_nullable_to_non_nullable
               as ReadingDirection,
-      favorite: favorite == freezed
-          ? _value.favorite
-          : favorite // ignore: cast_nullable_to_non_nullable
+      favourite: favourite == freezed
+          ? _value.favourite
+          : favourite // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -196,7 +196,7 @@ abstract class _$NovelEntityCopyWith<$Res>
       List<MetaDataEntity> metadata,
       WorkType workType,
       ReadingDirection readingDirection,
-      bool favorite});
+      bool favourite});
 }
 
 /// @nodoc
@@ -223,7 +223,7 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
     Object? metadata = freezed,
     Object? workType = freezed,
     Object? readingDirection = freezed,
-    Object? favorite = freezed,
+    Object? favourite = freezed,
   }) {
     return _then(_NovelEntity(
       id: id == freezed
@@ -274,9 +274,9 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
           ? _value.readingDirection
           : readingDirection // ignore: cast_nullable_to_non_nullable
               as ReadingDirection,
-      favorite: favorite == freezed
-          ? _value.favorite
-          : favorite // ignore: cast_nullable_to_non_nullable
+      favourite: favourite == freezed
+          ? _value.favourite
+          : favourite // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -298,7 +298,7 @@ class _$_NovelEntity implements _NovelEntity {
       required this.metadata,
       required this.workType,
       required this.readingDirection,
-      required this.favorite});
+      required this.favourite});
 
   @override
   final int id;
@@ -325,11 +325,11 @@ class _$_NovelEntity implements _NovelEntity {
   @override
   final ReadingDirection readingDirection;
   @override
-  final bool favorite;
+  final bool favourite;
 
   @override
   String toString() {
-    return 'NovelEntity(id: $id, title: $title, url: $url, author: $author, description: $description, coverUrl: $coverUrl, status: $status, lang: $lang, volumes: $volumes, metadata: $metadata, workType: $workType, readingDirection: $readingDirection, favorite: $favorite)';
+    return 'NovelEntity(id: $id, title: $title, url: $url, author: $author, description: $description, coverUrl: $coverUrl, status: $status, lang: $lang, volumes: $volumes, metadata: $metadata, workType: $workType, readingDirection: $readingDirection, favourite: $favourite)';
   }
 
   @override
@@ -351,7 +351,7 @@ class _$_NovelEntity implements _NovelEntity {
             const DeepCollectionEquality().equals(other.workType, workType) &&
             const DeepCollectionEquality()
                 .equals(other.readingDirection, readingDirection) &&
-            const DeepCollectionEquality().equals(other.favorite, favorite));
+            const DeepCollectionEquality().equals(other.favourite, favourite));
   }
 
   @override
@@ -369,7 +369,7 @@ class _$_NovelEntity implements _NovelEntity {
       const DeepCollectionEquality().hash(metadata),
       const DeepCollectionEquality().hash(workType),
       const DeepCollectionEquality().hash(readingDirection),
-      const DeepCollectionEquality().hash(favorite));
+      const DeepCollectionEquality().hash(favourite));
 
   @JsonKey(ignore: true)
   @override
@@ -391,7 +391,7 @@ abstract class _NovelEntity implements NovelEntity {
       required List<MetaDataEntity> metadata,
       required WorkType workType,
       required ReadingDirection readingDirection,
-      required bool favorite}) = _$_NovelEntity;
+      required bool favourite}) = _$_NovelEntity;
 
   @override
   int get id;
@@ -418,7 +418,7 @@ abstract class _NovelEntity implements NovelEntity {
   @override
   ReadingDirection get readingDirection;
   @override
-  bool get favorite;
+  bool get favourite;
   @override
   @JsonKey(ignore: true)
   _$NovelEntityCopyWith<_NovelEntity> get copyWith =>

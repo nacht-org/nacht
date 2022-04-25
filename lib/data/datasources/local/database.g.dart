@@ -954,7 +954,7 @@ class Novel extends DataClass implements Insertable<Novel> {
   final String lang;
   final int workTypeId;
   final int readingDirectionId;
-  final bool favorite;
+  final bool favourite;
   Novel(
       {required this.id,
       required this.title,
@@ -967,7 +967,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       required this.lang,
       required this.workTypeId,
       required this.readingDirectionId,
-      required this.favorite});
+      required this.favourite});
   factory Novel.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Novel(
@@ -993,8 +993,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           .mapFromDatabaseResponse(data['${effectivePrefix}work_type_id'])!,
       readingDirectionId: const IntType().mapFromDatabaseResponse(
           data['${effectivePrefix}reading_direction_id'])!,
-      favorite: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
+      favourite: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}favourite'])!,
     );
   }
   @override
@@ -1017,7 +1017,7 @@ class Novel extends DataClass implements Insertable<Novel> {
     map['lang'] = Variable<String>(lang);
     map['work_type_id'] = Variable<int>(workTypeId);
     map['reading_direction_id'] = Variable<int>(readingDirectionId);
-    map['favorite'] = Variable<bool>(favorite);
+    map['favourite'] = Variable<bool>(favourite);
     return map;
   }
 
@@ -1039,7 +1039,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       lang: Value(lang),
       workTypeId: Value(workTypeId),
       readingDirectionId: Value(readingDirectionId),
-      favorite: Value(favorite),
+      favourite: Value(favourite),
     );
   }
 
@@ -1058,7 +1058,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       lang: serializer.fromJson<String>(json['lang']),
       workTypeId: serializer.fromJson<int>(json['workTypeId']),
       readingDirectionId: serializer.fromJson<int>(json['readingDirectionId']),
-      favorite: serializer.fromJson<bool>(json['favorite']),
+      favourite: serializer.fromJson<bool>(json['favourite']),
     );
   }
   @override
@@ -1076,7 +1076,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       'lang': serializer.toJson<String>(lang),
       'workTypeId': serializer.toJson<int>(workTypeId),
       'readingDirectionId': serializer.toJson<int>(readingDirectionId),
-      'favorite': serializer.toJson<bool>(favorite),
+      'favourite': serializer.toJson<bool>(favourite),
     };
   }
 
@@ -1092,7 +1092,7 @@ class Novel extends DataClass implements Insertable<Novel> {
           String? lang,
           int? workTypeId,
           int? readingDirectionId,
-          bool? favorite}) =>
+          bool? favourite}) =>
       Novel(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -1105,7 +1105,7 @@ class Novel extends DataClass implements Insertable<Novel> {
         lang: lang ?? this.lang,
         workTypeId: workTypeId ?? this.workTypeId,
         readingDirectionId: readingDirectionId ?? this.readingDirectionId,
-        favorite: favorite ?? this.favorite,
+        favourite: favourite ?? this.favourite,
       );
   @override
   String toString() {
@@ -1121,14 +1121,14 @@ class Novel extends DataClass implements Insertable<Novel> {
           ..write('lang: $lang, ')
           ..write('workTypeId: $workTypeId, ')
           ..write('readingDirectionId: $readingDirectionId, ')
-          ..write('favorite: $favorite')
+          ..write('favourite: $favourite')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, title, description, author, coverUrl,
-      coverId, url, statusId, lang, workTypeId, readingDirectionId, favorite);
+      coverId, url, statusId, lang, workTypeId, readingDirectionId, favourite);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1144,7 +1144,7 @@ class Novel extends DataClass implements Insertable<Novel> {
           other.lang == this.lang &&
           other.workTypeId == this.workTypeId &&
           other.readingDirectionId == this.readingDirectionId &&
-          other.favorite == this.favorite);
+          other.favourite == this.favourite);
 }
 
 class NovelsCompanion extends UpdateCompanion<Novel> {
@@ -1159,7 +1159,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
   final Value<String> lang;
   final Value<int> workTypeId;
   final Value<int> readingDirectionId;
-  final Value<bool> favorite;
+  final Value<bool> favourite;
   const NovelsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -1172,7 +1172,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     this.lang = const Value.absent(),
     this.workTypeId = const Value.absent(),
     this.readingDirectionId = const Value.absent(),
-    this.favorite = const Value.absent(),
+    this.favourite = const Value.absent(),
   });
   NovelsCompanion.insert({
     this.id = const Value.absent(),
@@ -1186,7 +1186,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     required String lang,
     required int workTypeId,
     required int readingDirectionId,
-    this.favorite = const Value.absent(),
+    this.favourite = const Value.absent(),
   })  : title = Value(title),
         description = Value(description),
         url = Value(url),
@@ -1206,7 +1206,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     Expression<String>? lang,
     Expression<int>? workTypeId,
     Expression<int>? readingDirectionId,
-    Expression<bool>? favorite,
+    Expression<bool>? favourite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1221,7 +1221,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       if (workTypeId != null) 'work_type_id': workTypeId,
       if (readingDirectionId != null)
         'reading_direction_id': readingDirectionId,
-      if (favorite != null) 'favorite': favorite,
+      if (favourite != null) 'favourite': favourite,
     });
   }
 
@@ -1237,7 +1237,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       Value<String>? lang,
       Value<int>? workTypeId,
       Value<int>? readingDirectionId,
-      Value<bool>? favorite}) {
+      Value<bool>? favourite}) {
     return NovelsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -1250,7 +1250,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       lang: lang ?? this.lang,
       workTypeId: workTypeId ?? this.workTypeId,
       readingDirectionId: readingDirectionId ?? this.readingDirectionId,
-      favorite: favorite ?? this.favorite,
+      favourite: favourite ?? this.favourite,
     );
   }
 
@@ -1290,8 +1290,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     if (readingDirectionId.present) {
       map['reading_direction_id'] = Variable<int>(readingDirectionId.value);
     }
-    if (favorite.present) {
-      map['favorite'] = Variable<bool>(favorite.value);
+    if (favourite.present) {
+      map['favourite'] = Variable<bool>(favourite.value);
     }
     return map;
   }
@@ -1310,7 +1310,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
           ..write('lang: $lang, ')
           ..write('workTypeId: $workTypeId, ')
           ..write('readingDirectionId: $readingDirectionId, ')
-          ..write('favorite: $favorite')
+          ..write('favourite: $favourite')
           ..write(')'))
         .toString();
   }
@@ -1392,13 +1392,13 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
       type: const IntType(),
       requiredDuringInsert: true,
       defaultConstraints: 'REFERENCES reading_directions (id)');
-  final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
+  final VerificationMeta _favouriteMeta = const VerificationMeta('favourite');
   @override
-  late final GeneratedColumn<bool?> favorite = GeneratedColumn<bool?>(
-      'favorite', aliasedName, false,
+  late final GeneratedColumn<bool?> favourite = GeneratedColumn<bool?>(
+      'favourite', aliasedName, false,
       type: const BoolType(),
       requiredDuringInsert: false,
-      defaultConstraints: 'CHECK (favorite IN (0, 1))',
+      defaultConstraints: 'CHECK (favourite IN (0, 1))',
       defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
@@ -1413,7 +1413,7 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
         lang,
         workTypeId,
         readingDirectionId,
-        favorite
+        favourite
       ];
   @override
   String get aliasedName => _alias ?? 'novels';
@@ -1487,9 +1487,9 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
     } else if (isInserting) {
       context.missing(_readingDirectionIdMeta);
     }
-    if (data.containsKey('favorite')) {
-      context.handle(_favoriteMeta,
-          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    if (data.containsKey('favourite')) {
+      context.handle(_favouriteMeta,
+          favourite.isAcceptableOrUnknown(data['favourite']!, _favouriteMeta));
     }
     return context;
   }

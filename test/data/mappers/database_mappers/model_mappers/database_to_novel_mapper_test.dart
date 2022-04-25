@@ -49,7 +49,7 @@ void main() {
         readingDirectionId: ReadingDirectionSeed.ltr,
         workTypeId: WorkTypeSeed.translationMtl,
         statusId: StatusSeed.completed,
-        favorite: true,
+        favourite: true,
       ),
       to: NovelEntity(
         id: 10,
@@ -64,7 +64,7 @@ void main() {
         status: sources.NovelStatus.completed,
         metadata: [],
         volumes: [],
-        favorite: true,
+        favourite: true,
       ),
       stub: () {
         when(mockStatusMapper.map(StatusSeed.completed))

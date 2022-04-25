@@ -72,165 +72,162 @@ class NovelPageView extends ConsumerWidget {
           );
         }),
       ],
-      body: CustomScrollView(
-        slivers: [
-          Consumer(builder: (context, ref, child) {
-            final info = ref.watch(novelInfoProvider);
+      body: RefreshIndicator(
+        onRefresh: () => ref.read(novelPageState.notifier).reload(),
+        child: CustomScrollView(
+          slivers: [
+            Consumer(builder: (context, ref, child) {
+              final info = ref.watch(novelInfoProvider);
 
-            return buildPadding(
-              sliver: SliverList(
-                delegate: SliverChildListDelegate([
-                  SizedBox(
-                    height: 170,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 2 / 3,
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            child: info.coverUrl.fold(
-                              () => null,
-                              (url) => Image.network(
-                                url,
-                                fit: BoxFit.fill,
+              return buildPadding(
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(
+                      height: 170,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 2 / 3,
+                            child: Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: info.coverUrl.fold(
+                                () => null,
+                                (url) => Image.network(
+                                  url,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                info.title,
-                                style: Theme.of(context).textTheme.titleLarge,
-                                maxLines: 3,
-                              ),
-                              Text(
-                                info.author.toNullable() ?? 'Unknown',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                                maxLines: 1,
-                              ),
-                              const SizedBox(height: 4.0),
-                              Row(
-                                children: [
-                                  Icon(Icons.done_all, size: 16.0),
-                                  const SizedBox(width: 4.0),
-                                  Text(
-                                    info.status.fold(
-                                          () => 'Unknown',
-                                          (status) => status.name.capitalize(),
-                                        ) +
-                                        info.meta.fold(
-                                          () => '',
-                                          (meta) => ' • ${meta.name}',
-                                        ),
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    maxLines: 1,
-                                  ),
-                                ],
-                              ),
-                            ],
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  info.title,
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                  maxLines: 3,
+                                ),
+                                Text(
+                                  info.author.toNullable() ?? 'Unknown',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  maxLines: 1,
+                                ),
+                                const SizedBox(height: 4.0),
+                                Row(
+                                  children: [
+                                    Icon(Icons.done_all, size: 16.0),
+                                    const SizedBox(width: 4.0),
+                                    Text(
+                                      info.status.fold(
+                                            () => 'Unknown',
+                                            (status) =>
+                                                status.name.capitalize(),
+                                          ) +
+                                          info.meta.fold(
+                                            () => '',
+                                            (meta) => ' • ${meta.name}',
+                                          ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      maxLines: 1,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ]),
+                ),
+              );
+            }),
+            buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
+            HookConsumer(builder: (context, ref, child) {
+              final more = ref.watch(novelMoreProvider);
+              final expanded = useState(false);
+
+              return more.fold(
+                () => const SliverToBoxAdapter(),
+                (more) => buildPadding(
+                  top: 0,
+                  sliver: SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () => expanded.value = !expanded.value,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Description(
+                            description: more.description,
+                            expanded: expanded,
                           ),
-                        )
-                      ],
+                          const SizedBox(height: 8),
+                          Tags(
+                            tags: more.tags,
+                            expanded: expanded,
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ]),
-              ),
-            );
-          }),
-          buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
-          HookConsumer(builder: (context, ref, child) {
-            final more = ref.watch(novelMoreProvider);
-            final expanded = useState(false);
+                ),
+              );
+            }),
+            Consumer(builder: (context, ref, child) {
+              final chapterCount = ref.watch(chapterCountProvider);
 
-            return more.fold(
-              () => const SliverToBoxAdapter(),
-              (more) => buildPadding(
-                top: 0,
-                sliver: SliverToBoxAdapter(
-                  child: GestureDetector(
-                    onTap: () => expanded.value = !expanded.value,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Description(
-                          description: more.description,
-                          expanded: expanded,
+              return SliverToBoxAdapter(
+                child: ListTile(
+                  title: Text(
+                    '$chapterCount Chapter'.pluralize(
+                      test: (_) => chapterCount > 1,
+                    ),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.filter_list),
+                  ),
+                ),
+              );
+            }),
+            Consumer(builder: (context, ref, child) {
+              final items = ref.watch(itemsProvider);
+
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return items[index].when(
+                      volume: (volume) => ListTile(
+                        title: Text(
+                          volume.name.toUpperCase(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 8),
-                        Tags(
-                          tags: more.tags,
-                          expanded: expanded,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }),
-          Consumer(builder: (context, ref, child) {
-            final chapterCount = ref.watch(chapterCountProvider);
-
-            return SliverToBoxAdapter(
-              child: ListTile(
-                title: Text(
-                  '$chapterCount Chapter'.pluralize(
-                    test: (_) => chapterCount > 1,
-                  ),
-                ),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.filter_list),
-                ),
-              ),
-            );
-          }),
-          Consumer(builder: (context, ref, child) {
-            final items = ref.watch(itemsProvider);
-
-            return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return items[index].when(
-                    volume: (volume) => ListTile(
-                      title: Text(
-                        volume.name.toUpperCase(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        dense: true,
                       ),
-                      dense: true,
-                    ),
-                    chapter: (chapter) => ListTile(
-                      title: Text(
-                        chapter.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      chapter: (chapter) => ListTile(
+                        title: Text(
+                          chapter.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(chapter.updated.toString()),
+                        onTap: () {},
                       ),
-                      subtitle: Text(chapter.updated.toString()),
-                      onTap: () {},
-                    ),
-                  );
-                },
-                childCount: items.length,
-              ),
-            );
-          }),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          ),
-        ],
+                    );
+                  },
+                  childCount: items.length,
+                ),
+              );
+            }),
+          ],
+        ),
       ),
     );
   }

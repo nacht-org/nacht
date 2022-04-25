@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class Description extends StatelessWidget {
   const Description({
@@ -23,7 +24,8 @@ class Description extends StatelessWidget {
       ],
     );
 
-    if (!expanded.value) {
+    final workCount = description.map((p) => p.length).sum;
+    if (workCount > 200 && !expanded.value) {
       child = Stack(
         children: [
           ClipRect(

@@ -1,6 +1,7 @@
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/mappers/database_mappers/model_mappers/database_to_chapter_mapper.dart';
 import 'package:chapturn/data/mappers/database_mappers/model_mappers/database_to_volume_mapper.dart';
+import 'package:chapturn/data/mappers/database_mappers/seed_mappers/namespace_mapper.dart';
 import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn/data/mappers/network/connection_mapper.dart';
 import 'package:chapturn/data/mappers/sources/partial_novel_source_mapper.dart';
@@ -28,6 +29,9 @@ final workTypeToSeedMapper =
 final readingDirectionToSeedMapper =
     Provider<Mapper<sources.ReadingDirection, int>>(
         (ref) => ReadingDirectionToSeedMapper());
+
+final namespaceToSeedMapper =
+    Provider<Mapper<sources.Namespace, int>>((ref) => NamespaceToSeedMapper());
 
 // From seeds.
 
@@ -62,7 +66,7 @@ final sourceToChapterCompanionMapper =
 
 final sourceToMetaDataCompanionMapper =
     Provider<Mapper<sources.MetaData, MetaDatasCompanion>>(
-  (ref) => SourceToMetaDataCompanionMapper(),
+  (ref) => SourceToMetaDataCompanionMapper(ref.watch(namespaceToSeedMapper)),
 );
 
 // Models.

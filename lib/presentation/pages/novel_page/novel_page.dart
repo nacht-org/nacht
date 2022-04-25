@@ -2,10 +2,10 @@ import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_noti
 import 'package:chapturn/presentation/pages/novel_page/providers/providers.dart';
 import 'package:chapturn/presentation/pages/novel_page/widgets/action_bar.dart';
 import 'package:chapturn/presentation/pages/novel_page/widgets/description.dart';
+import 'package:chapturn/presentation/pages/novel_page/widgets/info.dart';
 import 'package:chapturn/presentation/pages/novel_page/widgets/tags.dart';
 import 'package:chapturn/utils/string.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -76,79 +76,19 @@ class NovelPageView extends ConsumerWidget {
         onRefresh: () => ref.read(novelPageState.notifier).reload(),
         child: CustomScrollView(
           slivers: [
+            buildPadding(top: 24, sliver: const NovelInfo()),
             Consumer(builder: (context, ref, child) {
-              final info = ref.watch(novelInfoProvider);
+              final state = ref.watch(novelPageState);
 
-              return buildPadding(
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    SizedBox(
-                      height: 170,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          AspectRatio(
-                            aspectRatio: 2 / 3,
-                            child: Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: info.coverUrl.fold(
-                                () => null,
-                                (url) => Image.network(
-                                  url,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16.0),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  info.title,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                  maxLines: 3,
-                                ),
-                                Text(
-                                  info.author.toNullable() ?? 'Unknown',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  maxLines: 1,
-                                ),
-                                const SizedBox(height: 4.0),
-                                Row(
-                                  children: [
-                                    Icon(Icons.done_all, size: 16.0),
-                                    const SizedBox(width: 4.0),
-                                    Text(
-                                      info.status.fold(
-                                            () => 'Unknown',
-                                            (status) =>
-                                                status.name.capitalize(),
-                                          ) +
-                                          info.meta.fold(
-                                            () => '',
-                                            (meta) => ' • ${meta.name}',
-                                          ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      maxLines: 1,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ]),
+              return state.when(
+                partial: (_) => const SliverToBoxAdapter(),
+                loaded: (_) => buildPadding(
+                  sliver: const ActionBar(),
+                  top: 0,
+                  bottom: 8,
                 ),
               );
             }),
-            buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
             HookConsumer(builder: (context, ref, child) {
               final more = ref.watch(novelMoreProvider);
               final expanded = useState(false);
@@ -157,6 +97,7 @@ class NovelPageView extends ConsumerWidget {
                 () => const SliverToBoxAdapter(),
                 (more) => buildPadding(
                   top: 0,
+                  bottom: 8,
                   sliver: SliverToBoxAdapter(
                     child: GestureDetector(
                       onTap: () => expanded.value = !expanded.value,
@@ -190,7 +131,7 @@ class NovelPageView extends ConsumerWidget {
                     ),
                   ),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {}, // TODO: Filter options
                     icon: const Icon(Icons.filter_list),
                   ),
                 ),

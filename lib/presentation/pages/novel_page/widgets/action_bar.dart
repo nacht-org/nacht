@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../providers/providers.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({Key? key}) : super(key: key);
@@ -10,11 +13,20 @@ class ActionBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: ActionItem(
-              icon: Icons.favorite,
-              label: 'Add to library',
-              onTap: () {},
-              active: true,
+            child: Consumer(
+              builder: (context, ref, child) {
+                final favorite = ref.watch(favoriteProvider);
+
+                final icon = favorite ? Icons.favorite : Icons.favorite_outline;
+                final label = favorite ? 'In library' : 'Add to library';
+
+                return ActionItem(
+                  icon: icon,
+                  label: label,
+                  onTap: () {},
+                  active: favorite,
+                );
+              },
             ),
           ),
           Expanded(
@@ -48,7 +60,7 @@ class ActionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = active ? theme.colorScheme.primary : null;
-    final textStyle = theme.textTheme.labelLarge?.copyWith(color: color);
+    final textStyle = theme.textTheme.labelMedium?.copyWith(color: color);
 
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -59,7 +71,7 @@ class ActionItem extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Icon(icon, color: color),
+              Icon(icon, color: color, size: 24),
               const SizedBox(height: 4),
               Text(label, style: textStyle),
             ],

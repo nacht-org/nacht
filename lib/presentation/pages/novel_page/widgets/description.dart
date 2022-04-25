@@ -25,13 +25,13 @@ class Description extends StatelessWidget {
     );
 
     final workCount = description.map((p) => p.length).sum;
-    if (workCount > 200 && !expanded.value) {
+    if (workCount > 100 && !expanded.value) {
       child = Stack(
         children: [
           ClipRect(
             child: SizedOverflowBox(
               alignment: Alignment.topLeft,
-              size: const Size.fromHeight(8 * 10),
+              size: const Size.fromHeight(8 * 7),
               child: child,
             ),
           ),

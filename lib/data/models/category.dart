@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 @DataClassName('NovelCategory')
 class NovelCategories extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get value => text()();
+  TextColumn get name => text()();
 
   static const int defaultCategory = 1;
 }

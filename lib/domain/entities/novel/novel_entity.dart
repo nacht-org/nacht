@@ -1,3 +1,5 @@
+import 'package:chapturn/domain/entities/entities.dart';
+
 import 'metadata_entity.dart';
 import 'volume_entity.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
@@ -20,5 +22,6 @@ class NovelEntity with _$NovelEntity {
     required List<MetaDataEntity> metadata,
     required WorkType workType,
     required ReadingDirection readingDirection,
+    required bool favorite,
   }) = _NovelEntity;
 }

@@ -954,6 +954,7 @@ class Novel extends DataClass implements Insertable<Novel> {
   final String lang;
   final int workTypeId;
   final int readingDirectionId;
+  final bool favorite;
   Novel(
       {required this.id,
       required this.title,
@@ -965,7 +966,8 @@ class Novel extends DataClass implements Insertable<Novel> {
       required this.statusId,
       required this.lang,
       required this.workTypeId,
-      required this.readingDirectionId});
+      required this.readingDirectionId,
+      required this.favorite});
   factory Novel.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Novel(
@@ -991,6 +993,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           .mapFromDatabaseResponse(data['${effectivePrefix}work_type_id'])!,
       readingDirectionId: const IntType().mapFromDatabaseResponse(
           data['${effectivePrefix}reading_direction_id'])!,
+      favorite: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
     );
   }
   @override
@@ -1013,6 +1017,7 @@ class Novel extends DataClass implements Insertable<Novel> {
     map['lang'] = Variable<String>(lang);
     map['work_type_id'] = Variable<int>(workTypeId);
     map['reading_direction_id'] = Variable<int>(readingDirectionId);
+    map['favorite'] = Variable<bool>(favorite);
     return map;
   }
 
@@ -1034,6 +1039,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       lang: Value(lang),
       workTypeId: Value(workTypeId),
       readingDirectionId: Value(readingDirectionId),
+      favorite: Value(favorite),
     );
   }
 
@@ -1052,6 +1058,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       lang: serializer.fromJson<String>(json['lang']),
       workTypeId: serializer.fromJson<int>(json['workTypeId']),
       readingDirectionId: serializer.fromJson<int>(json['readingDirectionId']),
+      favorite: serializer.fromJson<bool>(json['favorite']),
     );
   }
   @override
@@ -1069,6 +1076,7 @@ class Novel extends DataClass implements Insertable<Novel> {
       'lang': serializer.toJson<String>(lang),
       'workTypeId': serializer.toJson<int>(workTypeId),
       'readingDirectionId': serializer.toJson<int>(readingDirectionId),
+      'favorite': serializer.toJson<bool>(favorite),
     };
   }
 
@@ -1083,7 +1091,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           int? statusId,
           String? lang,
           int? workTypeId,
-          int? readingDirectionId}) =>
+          int? readingDirectionId,
+          bool? favorite}) =>
       Novel(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -1096,6 +1105,7 @@ class Novel extends DataClass implements Insertable<Novel> {
         lang: lang ?? this.lang,
         workTypeId: workTypeId ?? this.workTypeId,
         readingDirectionId: readingDirectionId ?? this.readingDirectionId,
+        favorite: favorite ?? this.favorite,
       );
   @override
   String toString() {
@@ -1110,14 +1120,15 @@ class Novel extends DataClass implements Insertable<Novel> {
           ..write('statusId: $statusId, ')
           ..write('lang: $lang, ')
           ..write('workTypeId: $workTypeId, ')
-          ..write('readingDirectionId: $readingDirectionId')
+          ..write('readingDirectionId: $readingDirectionId, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, title, description, author, coverUrl,
-      coverId, url, statusId, lang, workTypeId, readingDirectionId);
+      coverId, url, statusId, lang, workTypeId, readingDirectionId, favorite);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1132,7 +1143,8 @@ class Novel extends DataClass implements Insertable<Novel> {
           other.statusId == this.statusId &&
           other.lang == this.lang &&
           other.workTypeId == this.workTypeId &&
-          other.readingDirectionId == this.readingDirectionId);
+          other.readingDirectionId == this.readingDirectionId &&
+          other.favorite == this.favorite);
 }
 
 class NovelsCompanion extends UpdateCompanion<Novel> {
@@ -1147,6 +1159,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
   final Value<String> lang;
   final Value<int> workTypeId;
   final Value<int> readingDirectionId;
+  final Value<bool> favorite;
   const NovelsCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -1159,6 +1172,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     this.lang = const Value.absent(),
     this.workTypeId = const Value.absent(),
     this.readingDirectionId = const Value.absent(),
+    this.favorite = const Value.absent(),
   });
   NovelsCompanion.insert({
     this.id = const Value.absent(),
@@ -1172,6 +1186,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     required String lang,
     required int workTypeId,
     required int readingDirectionId,
+    this.favorite = const Value.absent(),
   })  : title = Value(title),
         description = Value(description),
         url = Value(url),
@@ -1191,6 +1206,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     Expression<String>? lang,
     Expression<int>? workTypeId,
     Expression<int>? readingDirectionId,
+    Expression<bool>? favorite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1205,6 +1221,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       if (workTypeId != null) 'work_type_id': workTypeId,
       if (readingDirectionId != null)
         'reading_direction_id': readingDirectionId,
+      if (favorite != null) 'favorite': favorite,
     });
   }
 
@@ -1219,7 +1236,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       Value<int>? statusId,
       Value<String>? lang,
       Value<int>? workTypeId,
-      Value<int>? readingDirectionId}) {
+      Value<int>? readingDirectionId,
+      Value<bool>? favorite}) {
     return NovelsCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -1232,6 +1250,7 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
       lang: lang ?? this.lang,
       workTypeId: workTypeId ?? this.workTypeId,
       readingDirectionId: readingDirectionId ?? this.readingDirectionId,
+      favorite: favorite ?? this.favorite,
     );
   }
 
@@ -1271,6 +1290,9 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
     if (readingDirectionId.present) {
       map['reading_direction_id'] = Variable<int>(readingDirectionId.value);
     }
+    if (favorite.present) {
+      map['favorite'] = Variable<bool>(favorite.value);
+    }
     return map;
   }
 
@@ -1287,7 +1309,8 @@ class NovelsCompanion extends UpdateCompanion<Novel> {
           ..write('statusId: $statusId, ')
           ..write('lang: $lang, ')
           ..write('workTypeId: $workTypeId, ')
-          ..write('readingDirectionId: $readingDirectionId')
+          ..write('readingDirectionId: $readingDirectionId, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
@@ -1369,6 +1392,14 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
       type: const IntType(),
       requiredDuringInsert: true,
       defaultConstraints: 'REFERENCES reading_directions (id)');
+  final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
+  @override
+  late final GeneratedColumn<bool?> favorite = GeneratedColumn<bool?>(
+      'favorite', aliasedName, false,
+      type: const BoolType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'CHECK (favorite IN (0, 1))',
+      defaultValue: const Constant(false));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1381,7 +1412,8 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
         statusId,
         lang,
         workTypeId,
-        readingDirectionId
+        readingDirectionId,
+        favorite
       ];
   @override
   String get aliasedName => _alias ?? 'novels';
@@ -1455,6 +1487,10 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
     } else if (isInserting) {
       context.missing(_readingDirectionIdMeta);
     }
+    if (data.containsKey('favorite')) {
+      context.handle(_favoriteMeta,
+          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    }
     return context;
   }
 
@@ -1474,29 +1510,29 @@ class $NovelsTable extends Novels with TableInfo<$NovelsTable, Novel> {
 
 class NovelCategory extends DataClass implements Insertable<NovelCategory> {
   final int id;
-  final String value;
-  NovelCategory({required this.id, required this.value});
+  final String name;
+  NovelCategory({required this.id, required this.name});
   factory NovelCategory.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return NovelCategory(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      value: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}value'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['value'] = Variable<String>(value);
+    map['name'] = Variable<String>(name);
     return map;
   }
 
   NovelCategoriesCompanion toCompanion(bool nullToAbsent) {
     return NovelCategoriesCompanion(
       id: Value(id),
-      value: Value(value),
+      name: Value(name),
     );
   }
 
@@ -1505,7 +1541,7 @@ class NovelCategory extends DataClass implements Insertable<NovelCategory> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return NovelCategory(
       id: serializer.fromJson<int>(json['id']),
-      value: serializer.fromJson<String>(json['value']),
+      name: serializer.fromJson<String>(json['name']),
     );
   }
   @override
@@ -1513,58 +1549,58 @@ class NovelCategory extends DataClass implements Insertable<NovelCategory> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'value': serializer.toJson<String>(value),
+      'name': serializer.toJson<String>(name),
     };
   }
 
-  NovelCategory copyWith({int? id, String? value}) => NovelCategory(
+  NovelCategory copyWith({int? id, String? name}) => NovelCategory(
         id: id ?? this.id,
-        value: value ?? this.value,
+        name: name ?? this.name,
       );
   @override
   String toString() {
     return (StringBuffer('NovelCategory(')
           ..write('id: $id, ')
-          ..write('value: $value')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, value);
+  int get hashCode => Object.hash(id, name);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is NovelCategory &&
           other.id == this.id &&
-          other.value == this.value);
+          other.name == this.name);
 }
 
 class NovelCategoriesCompanion extends UpdateCompanion<NovelCategory> {
   final Value<int> id;
-  final Value<String> value;
+  final Value<String> name;
   const NovelCategoriesCompanion({
     this.id = const Value.absent(),
-    this.value = const Value.absent(),
+    this.name = const Value.absent(),
   });
   NovelCategoriesCompanion.insert({
     this.id = const Value.absent(),
-    required String value,
-  }) : value = Value(value);
+    required String name,
+  }) : name = Value(name);
   static Insertable<NovelCategory> custom({
     Expression<int>? id,
-    Expression<String>? value,
+    Expression<String>? name,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (value != null) 'value': value,
+      if (name != null) 'name': name,
     });
   }
 
-  NovelCategoriesCompanion copyWith({Value<int>? id, Value<String>? value}) {
+  NovelCategoriesCompanion copyWith({Value<int>? id, Value<String>? name}) {
     return NovelCategoriesCompanion(
       id: id ?? this.id,
-      value: value ?? this.value,
+      name: name ?? this.name,
     );
   }
 
@@ -1574,8 +1610,8 @@ class NovelCategoriesCompanion extends UpdateCompanion<NovelCategory> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (value.present) {
-      map['value'] = Variable<String>(value.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
     return map;
   }
@@ -1584,7 +1620,7 @@ class NovelCategoriesCompanion extends UpdateCompanion<NovelCategory> {
   String toString() {
     return (StringBuffer('NovelCategoriesCompanion(')
           ..write('id: $id, ')
-          ..write('value: $value')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
@@ -1603,13 +1639,13 @@ class $NovelCategoriesTable extends NovelCategories
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _valueMeta = const VerificationMeta('value');
+  final VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
-  late final GeneratedColumn<String?> value = GeneratedColumn<String?>(
-      'value', aliasedName, false,
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, value];
+  List<GeneratedColumn> get $columns => [id, name];
   @override
   String get aliasedName => _alias ?? 'novel_categories';
   @override
@@ -1622,11 +1658,11 @@ class $NovelCategoriesTable extends NovelCategories
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('value')) {
+    if (data.containsKey('name')) {
       context.handle(
-          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
-      context.missing(_valueMeta);
+      context.missing(_nameMeta);
     }
     return context;
   }

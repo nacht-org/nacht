@@ -76,7 +76,7 @@ class AppDatabase extends _$AppDatabase {
           batch.insertAll(novelCategories, [
             NovelCategoriesCompanion.insert(
               id: const Value(1),
-              value: '_default',
+              name: '_default',
             )
           ]);
 

@@ -18,4 +18,5 @@ class Novels extends Table {
   IntColumn get workTypeId => integer().references(WorkTypes, #id)();
   IntColumn get readingDirectionId =>
       integer().references(ReadingDirections, #id)();
+  BoolColumn get favorite => boolean().withDefault(const Constant(false))();
 }

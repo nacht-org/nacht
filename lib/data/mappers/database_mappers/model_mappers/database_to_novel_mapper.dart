@@ -30,6 +30,7 @@ class DatabaseToNovelMapper implements Mapper<db.Novel, NovelEntity> {
       metadata: [],
       workType: workTypeMapper.map(input.workTypeId),
       readingDirection: readingDirectionMapper.map(input.readingDirectionId),
+      favorite: input.favorite,
     );
   }
 }

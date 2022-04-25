@@ -1,4 +1,4 @@
-import 'package:chapturn/data/datasources/local/database.dart';
+import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'metadata_entity.freezed.dart';
@@ -11,5 +11,6 @@ class MetaDataEntity with _$MetaDataEntity {
     required String value,
     required Namespace namespace,
     required Map<String, Object> others,
+    required int novelId,
   }) = _MetaDataEntity;
 }

@@ -7,7 +7,7 @@ import 'package:drift/drift.dart';
 
 class SourceToMetaDataCompanionMapper
     implements Mapper<sources.MetaData, MetaDatasCompanion> {
-  const SourceToMetaDataCompanionMapper(this.namespaceMapper);
+  SourceToMetaDataCompanionMapper(this.namespaceMapper);
 
   final Mapper<sources.Namespace, int> namespaceMapper;
 

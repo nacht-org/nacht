@@ -23,13 +23,15 @@ class _$MetaDataEntityTearOff {
       required String name,
       required String value,
       required Namespace namespace,
-      required Map<String, Object> others}) {
+      required Map<String, Object> others,
+      required int novelId}) {
     return _MetaDataEntity(
       id: id,
       name: name,
       value: value,
       namespace: namespace,
       others: others,
+      novelId: novelId,
     );
   }
 }
@@ -44,6 +46,7 @@ mixin _$MetaDataEntity {
   String get value => throw _privateConstructorUsedError;
   Namespace get namespace => throw _privateConstructorUsedError;
   Map<String, Object> get others => throw _privateConstructorUsedError;
+  int get novelId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MetaDataEntityCopyWith<MetaDataEntity> get copyWith =>
@@ -60,7 +63,8 @@ abstract class $MetaDataEntityCopyWith<$Res> {
       String name,
       String value,
       Namespace namespace,
-      Map<String, Object> others});
+      Map<String, Object> others,
+      int novelId});
 }
 
 /// @nodoc
@@ -79,6 +83,7 @@ class _$MetaDataEntityCopyWithImpl<$Res>
     Object? value = freezed,
     Object? namespace = freezed,
     Object? others = freezed,
+    Object? novelId = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -101,6 +106,10 @@ class _$MetaDataEntityCopyWithImpl<$Res>
           ? _value.others
           : others // ignore: cast_nullable_to_non_nullable
               as Map<String, Object>,
+      novelId: novelId == freezed
+          ? _value.novelId
+          : novelId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -117,7 +126,8 @@ abstract class _$MetaDataEntityCopyWith<$Res>
       String name,
       String value,
       Namespace namespace,
-      Map<String, Object> others});
+      Map<String, Object> others,
+      int novelId});
 }
 
 /// @nodoc
@@ -138,6 +148,7 @@ class __$MetaDataEntityCopyWithImpl<$Res>
     Object? value = freezed,
     Object? namespace = freezed,
     Object? others = freezed,
+    Object? novelId = freezed,
   }) {
     return _then(_MetaDataEntity(
       id: id == freezed
@@ -160,6 +171,10 @@ class __$MetaDataEntityCopyWithImpl<$Res>
           ? _value.others
           : others // ignore: cast_nullable_to_non_nullable
               as Map<String, Object>,
+      novelId: novelId == freezed
+          ? _value.novelId
+          : novelId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -172,7 +187,8 @@ class _$_MetaDataEntity implements _MetaDataEntity {
       required this.name,
       required this.value,
       required this.namespace,
-      required this.others});
+      required this.others,
+      required this.novelId});
 
   @override
   final int id;
@@ -184,10 +200,12 @@ class _$_MetaDataEntity implements _MetaDataEntity {
   final Namespace namespace;
   @override
   final Map<String, Object> others;
+  @override
+  final int novelId;
 
   @override
   String toString() {
-    return 'MetaDataEntity(id: $id, name: $name, value: $value, namespace: $namespace, others: $others)';
+    return 'MetaDataEntity(id: $id, name: $name, value: $value, namespace: $namespace, others: $others, novelId: $novelId)';
   }
 
   @override
@@ -199,7 +217,8 @@ class _$_MetaDataEntity implements _MetaDataEntity {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.value, value) &&
             const DeepCollectionEquality().equals(other.namespace, namespace) &&
-            const DeepCollectionEquality().equals(other.others, others));
+            const DeepCollectionEquality().equals(other.others, others) &&
+            const DeepCollectionEquality().equals(other.novelId, novelId));
   }
 
   @override
@@ -209,7 +228,8 @@ class _$_MetaDataEntity implements _MetaDataEntity {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(value),
       const DeepCollectionEquality().hash(namespace),
-      const DeepCollectionEquality().hash(others));
+      const DeepCollectionEquality().hash(others),
+      const DeepCollectionEquality().hash(novelId));
 
   @JsonKey(ignore: true)
   @override
@@ -223,7 +243,8 @@ abstract class _MetaDataEntity implements MetaDataEntity {
       required String name,
       required String value,
       required Namespace namespace,
-      required Map<String, Object> others}) = _$_MetaDataEntity;
+      required Map<String, Object> others,
+      required int novelId}) = _$_MetaDataEntity;
 
   @override
   int get id;
@@ -235,6 +256,8 @@ abstract class _MetaDataEntity implements MetaDataEntity {
   Namespace get namespace;
   @override
   Map<String, Object> get others;
+  @override
+  int get novelId;
   @override
   @JsonKey(ignore: true)
   _$MetaDataEntityCopyWith<_MetaDataEntity> get copyWith =>

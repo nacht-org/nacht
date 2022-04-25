@@ -1,11 +1,13 @@
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/mappers/database_mappers/model_mappers/database_to_chapter_mapper.dart';
+import 'package:chapturn/data/mappers/database_mappers/model_mappers/database_to_metadata_mapper.dart';
 import 'package:chapturn/data/mappers/database_mappers/model_mappers/database_to_volume_mapper.dart';
 import 'package:chapturn/data/mappers/database_mappers/seed_mappers/namespace_mapper.dart';
 import 'package:chapturn/data/mappers/mappers.dart';
 import 'package:chapturn/data/mappers/network/connection_mapper.dart';
 import 'package:chapturn/data/mappers/sources/partial_novel_source_mapper.dart';
 import 'package:chapturn/domain/entities/novel/chapter_entity.dart';
+import 'package:chapturn/domain/entities/novel/metadata_entity.dart';
 import 'package:chapturn/domain/entities/novel/novel_entity.dart';
 import 'package:chapturn/domain/entities/novel/volume_entity.dart';
 import 'package:chapturn/domain/mapper.dart';
@@ -45,6 +47,9 @@ final seedToReadingDirectionMapper =
     Provider<Mapper<int, sources.ReadingDirection>>(
         (ref) => SeedToReadingDirectionMapper());
 
+final seedToNamespaceMapper =
+    Provider<Mapper<int, sources.Namespace>>((ref) => SeedToNamespaceMapper());
+
 // Companions.
 
 final sourceToNovelCompanionMapper =
@@ -82,3 +87,6 @@ final databaseToVolumeMapper =
 
 final databaseToChapterMapper = Provider<Mapper<Chapter, ChapterEntity>>(
     (ref) => DatabaseToChapterMapper());
+
+final databaseToMetaDataMapper = Provider<Mapper<MetaData, MetaDataEntity>>(
+    (ref) => DatabaseToMetaDataMapper(ref.watch(seedToNamespaceMapper)));

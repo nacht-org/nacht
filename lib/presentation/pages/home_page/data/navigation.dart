@@ -2,37 +2,43 @@ import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/config/routes/app_router.dart';
 import 'package:flutter/material.dart';
 
-class NavigationTab {
+class Destination {
   final PageRouteInfo route;
   final String label;
-  final IconData iconData;
+  final Widget icon;
+  final Widget selectedIcon;
 
-  const NavigationTab({
+  const Destination({
     required this.route,
     required this.label,
-    required this.iconData,
+    required this.icon,
+    required this.selectedIcon,
   });
 }
 
-const navigationItems = [
-  NavigationTab(
+const destinations = [
+  Destination(
     route: LibraryRoute(),
     label: 'Library',
-    iconData: Icons.library_books,
+    icon: Icon(Icons.library_books_outlined),
+    selectedIcon: Icon(Icons.library_books),
   ),
-  NavigationTab(
+  Destination(
     route: UpdatesRoute(),
     label: 'Updates',
-    iconData: Icons.update,
+    icon: Icon(Icons.update_outlined),
+    selectedIcon: Icon(Icons.update),
   ),
-  NavigationTab(
+  Destination(
     route: BrowseRoute(),
     label: 'Browse',
-    iconData: Icons.explore,
+    icon: Icon(Icons.explore_outlined),
+    selectedIcon: Icon(Icons.explore),
   ),
-  NavigationTab(
+  Destination(
     route: MoreRoute(),
     label: 'More',
-    iconData: Icons.more_horiz,
+    icon: Icon(Icons.more_horiz_outlined),
+    selectedIcon: Icon(Icons.more_horiz),
   ),
 ];

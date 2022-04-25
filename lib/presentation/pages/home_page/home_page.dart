@@ -11,24 +11,23 @@ class HomePage extends StatelessWidget {
     return AutoTabsRouter(
       lazyLoad: false,
       homeIndex: 0,
-      routes: navigationItems.map((item) => item.route).toList(),
+      routes: destinations.map((item) => item.route).toList(),
       builder: (context, child, animation) {
         final tabsRouter = AutoTabsRouter.of(context);
 
         return Scaffold(
           body: child,
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: tabsRouter.activeIndex,
-            onTap: (index) => tabsRouter.setActiveIndex(index),
-            items: List.generate(navigationItems.length, (index) {
-              final item = navigationItems[index];
-
-              return BottomNavigationBarItem(
-                icon: Icon(item.iconData),
-                label: item.label,
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: tabsRouter.activeIndex,
+            onDestinationSelected: (index) => tabsRouter.setActiveIndex(index),
+            destinations: List.generate(destinations.length, (index) {
+              final destination = destinations[index];
+              return NavigationDestination(
+                icon: destination.icon,
+                selectedIcon: destination.selectedIcon,
+                label: destination.label,
               );
             }),
-            type: BottomNavigationBarType.fixed,
           ),
         );
       },

@@ -8,6 +8,7 @@ import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:drift/drift.dart';
+import 'package:logging/logging.dart';
 
 class NovelLocalRepositoryImpl implements NovelLocalRepository {
   NovelLocalRepositoryImpl({
@@ -33,6 +34,8 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
   final Mapper<Volume, VolumeEntity> volumeMapper;
   final Mapper<Chapter, ChapterEntity> chapterMapper;
   final Mapper<MetaData, MetaDataEntity> metaDataMapper;
+
+  final _log = Logger('NovelLocalRepositoryImpl');
 
   @override
   Future<Either<Failure, NovelEntity>> getNovel(int id) async {
@@ -186,6 +189,8 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
     int novelId,
     List<sources.MetaData> metaData,
   ) async {
+    _log.info('Start metadata sync.');
+
     final currentMetaData = await getMetaData(novelId);
     final indexedMetaData = {
       for (final data in currentMetaData) Tuple2(data.name, data.value): data
@@ -201,7 +206,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
 
         final key = Tuple2(data.name, data.value);
         if (indexedMetaData.containsKey(key)) {
-          final currentData = indexedMetaData.remove(data)!;
+          final currentData = indexedMetaData.remove(key)!;
 
           if (currentData.others != companion.others.value) {
             batch.replace(
@@ -224,5 +229,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
               .id
               .isIn(indexedMetaData.values.map((data) => data.id)));
     });
+
+    _log.info('End metadata sync.');
   }
 }

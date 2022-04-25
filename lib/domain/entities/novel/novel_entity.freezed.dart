@@ -28,7 +28,7 @@ class _$NovelEntityTearOff {
       required NovelStatus status,
       required String lang,
       required List<VolumeEntity> volumes,
-      required List<MetaData> metadata,
+      required List<MetaDataEntity> metadata,
       required WorkType workType,
       required ReadingDirection readingDirection}) {
     return _NovelEntity(
@@ -62,7 +62,7 @@ mixin _$NovelEntity {
   NovelStatus get status => throw _privateConstructorUsedError;
   String get lang => throw _privateConstructorUsedError;
   List<VolumeEntity> get volumes => throw _privateConstructorUsedError;
-  List<MetaData> get metadata => throw _privateConstructorUsedError;
+  List<MetaDataEntity> get metadata => throw _privateConstructorUsedError;
   WorkType get workType => throw _privateConstructorUsedError;
   ReadingDirection get readingDirection => throw _privateConstructorUsedError;
 
@@ -86,7 +86,7 @@ abstract class $NovelEntityCopyWith<$Res> {
       NovelStatus status,
       String lang,
       List<VolumeEntity> volumes,
-      List<MetaData> metadata,
+      List<MetaDataEntity> metadata,
       WorkType workType,
       ReadingDirection readingDirection});
 }
@@ -154,7 +154,7 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
       metadata: metadata == freezed
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
-              as List<MetaData>,
+              as List<MetaDataEntity>,
       workType: workType == freezed
           ? _value.workType
           : workType // ignore: cast_nullable_to_non_nullable
@@ -184,7 +184,7 @@ abstract class _$NovelEntityCopyWith<$Res>
       NovelStatus status,
       String lang,
       List<VolumeEntity> volumes,
-      List<MetaData> metadata,
+      List<MetaDataEntity> metadata,
       WorkType workType,
       ReadingDirection readingDirection});
 }
@@ -254,7 +254,7 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
       metadata: metadata == freezed
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
-              as List<MetaData>,
+              as List<MetaDataEntity>,
       workType: workType == freezed
           ? _value.workType
           : workType // ignore: cast_nullable_to_non_nullable
@@ -303,7 +303,7 @@ class _$_NovelEntity implements _NovelEntity {
   @override
   final List<VolumeEntity> volumes;
   @override
-  final List<MetaData> metadata;
+  final List<MetaDataEntity> metadata;
   @override
   final WorkType workType;
   @override
@@ -368,7 +368,7 @@ abstract class _NovelEntity implements NovelEntity {
       required NovelStatus status,
       required String lang,
       required List<VolumeEntity> volumes,
-      required List<MetaData> metadata,
+      required List<MetaDataEntity> metadata,
       required WorkType workType,
       required ReadingDirection readingDirection}) = _$_NovelEntity;
 
@@ -391,7 +391,7 @@ abstract class _NovelEntity implements NovelEntity {
   @override
   List<VolumeEntity> get volumes;
   @override
-  List<MetaData> get metadata;
+  List<MetaDataEntity> get metadata;
   @override
   WorkType get workType;
   @override

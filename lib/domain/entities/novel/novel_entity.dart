@@ -1,3 +1,4 @@
+import 'metadata_entity.dart';
 import 'volume_entity.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,7 +17,7 @@ class NovelEntity with _$NovelEntity {
     required NovelStatus status,
     required String lang,
     required List<VolumeEntity> volumes,
-    required List<MetaData> metadata,
+    required List<MetaDataEntity> metadata,
     required WorkType workType,
     required ReadingDirection readingDirection,
   }) = _NovelEntity;

@@ -1,5 +1,6 @@
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/failure.dart';
+import 'package:chapturn/data/models/models.dart';
 import 'package:chapturn/domain/entities/entities.dart';
 import 'package:chapturn/core/failure.dart';
 import 'package:chapturn/domain/mapper.dart';
@@ -14,9 +15,11 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
     required this.novelCompanionMapper,
     required this.volumeCompanionMapper,
     required this.chapterCompanionMapper,
+    required this.metadataCompanionMapper,
     required this.novelMapper,
     required this.volumeMapper,
     required this.chapterMapper,
+    required this.metaDataMapper,
   });
 
   final AppDatabase database;
@@ -24,10 +27,12 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
   final Mapper<sources.Novel, NovelsCompanion> novelCompanionMapper;
   final Mapper<sources.Volume, VolumesCompanion> volumeCompanionMapper;
   final Mapper<sources.Chapter, ChaptersCompanion> chapterCompanionMapper;
+  final Mapper<sources.MetaData, MetaDatasCompanion> metadataCompanionMapper;
 
   final Mapper<Novel, NovelEntity> novelMapper;
   final Mapper<Volume, VolumeEntity> volumeMapper;
   final Mapper<Chapter, ChapterEntity> chapterMapper;
+  final Mapper<MetaData, MetaDataEntity> metaDataMapper;
 
   @override
   Future<Either<Failure, NovelEntity>> getNovel(int id) async {
@@ -92,7 +97,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
   Future<Either<Failure, NovelEntity>> saveNovel(sources.Novel novel) async {
     final novelCompanion = novelCompanionMapper.map(novel);
 
-    // upsert the novel entity itself
+    // Upsert the novel entity itself
     final novelModel = await database.into(database.novels).insertReturning(
           novelCompanion,
           onConflict: DoUpdate(
@@ -101,7 +106,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
           ),
         );
 
-    //
+    // Update volumes and chapters
     novel.volumes.sort((a, b) => a.index.compareTo(b.index));
     final volumes = <Volume, List<Chapter>>{};
     for (final volume in novel.volumes) {
@@ -144,6 +149,9 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
       volumes[volumeModel] = chapters;
     }
 
+    // Update metadata.
+    await syncMetaData(novelModel.id, novel.metadata);
+
     final novelEntity = novelMapper.map(novelModel).copyWith(
           volumes: volumes.entries
               .map(
@@ -157,8 +165,64 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
                     ),
               )
               .toList(),
+          metadata: (await getMetaData(novelModel.id))
+              .map(metaDataMapper.map)
+              .toList(),
         );
 
     return Right(novelEntity);
+  }
+
+  // MetaData.
+
+  Future<List<MetaData>> getMetaData(int novelId) async {
+    final query = database.select(database.metaDatas)
+      ..where((tbl) => tbl.novelId.equals(novelId));
+
+    return await query.get();
+  }
+
+  Future<void> syncMetaData(
+    int novelId,
+    List<sources.MetaData> metaData,
+  ) async {
+    final currentMetaData = await getMetaData(novelId);
+    final indexedMetaData = {
+      for (final data in currentMetaData) Tuple2(data.name, data.value): data
+    };
+
+    await database.batch((batch) {
+      final toAdd = <MetaDatasCompanion>[];
+
+      // Check for required updates.
+      for (final data in metaData) {
+        final companion =
+            metadataCompanionMapper.map(data).copyWith(novelId: Value(novelId));
+
+        final key = Tuple2(data.name, data.value);
+        if (indexedMetaData.containsKey(key)) {
+          final currentData = indexedMetaData.remove(data)!;
+
+          if (currentData.others != companion.others.value) {
+            batch.replace(
+              database.metaDatas,
+              companion.copyWith(id: Value(currentData.id)),
+            );
+          }
+        } else {
+          toAdd.add(companion);
+        }
+      }
+
+      // Add all the new metadata.
+      batch.insertAll(database.metaDatas, toAdd);
+
+      // Delete those that are no longer associated with novel.
+      batch.deleteWhere(
+          database.metaDatas,
+          (tbl) => (tbl as MetaDatas)
+              .id
+              .isIn(indexedMetaData.values.map((data) => data.id)));
+    });
   }
 }

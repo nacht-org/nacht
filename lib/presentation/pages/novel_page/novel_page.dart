@@ -203,7 +203,7 @@ class NovelPageView extends ConsumerWidget {
                       title: Text(
                         volume.name.toUpperCase(),
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.labelMedium,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       dense: true,
                     ),

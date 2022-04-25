@@ -141,14 +141,13 @@ final itemsProvider = Provider<List<NovelListItem>>(
   (ref) {
     final volumes = ref.watch(volumesProvider);
     final items = <NovelListItem>[];
-    // if (volumes.length == 1) {
-    //   items.addAll(volumes.single.chapters.map(NovelListItem.chapter));
-    // } else {
-
-    // }
-    for (final volume in volumes) {
-      items.add(NovelListItem.volume(volume));
-      items.addAll(volume.chapters.map(NovelListItem.chapter));
+    if (volumes.length == 1) {
+      items.addAll(volumes.single.chapters.map(NovelListItem.chapter));
+    } else {
+      for (final volume in volumes) {
+        items.add(NovelListItem.volume(volume));
+        items.addAll(volume.chapters.map(NovelListItem.chapter));
+      }
     }
     return items;
   },

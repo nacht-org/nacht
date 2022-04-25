@@ -13,7 +13,14 @@ class Tags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[
-      for (final tag in tags) Chip(label: Text(tag)),
+      for (final tag in tags)
+        Chip(
+          label: Text(
+            tag,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
     ];
 
     if (children.isEmpty) {
@@ -22,6 +29,7 @@ class Tags extends StatelessWidget {
       return Wrap(
         children: children,
         spacing: 8.0,
+        runSpacing: 8.0,
       );
     } else {
       return SingleChildScrollView(

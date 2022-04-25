@@ -8,6 +8,6 @@ class MetaDatas extends Table {
   TextColumn get name => text()();
   TextColumn get value => text()();
   IntColumn get namespaceId => integer().references(Namespaces, #id)();
-  TextColumn get others => text()();
+  TextColumn get others => text().nullable()();
   IntColumn get novelId => integer().references(Novels, #id)();
 }

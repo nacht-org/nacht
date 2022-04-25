@@ -60,6 +60,11 @@ final sourceToChapterCompanionMapper =
     Provider<Mapper<sources.Chapter, ChaptersCompanion>>(
         (ref) => SourceToChapterCompanionMapper());
 
+final sourceToMetaDataCompanionMapper =
+    Provider<Mapper<sources.MetaData, MetaDatasCompanion>>(
+  (ref) => SourceToMetaDataCompanionMapper(),
+);
+
 // Models.
 final databaseToNovelMapper =
     Provider<Mapper<Novel, NovelEntity>>((ref) => DatabaseToNovelMapper(

@@ -2627,14 +2627,14 @@ class MetaData extends DataClass implements Insertable<MetaData> {
   final String name;
   final String value;
   final int namespaceId;
-  final String others;
+  final String? others;
   final int novelId;
   MetaData(
       {required this.id,
       required this.name,
       required this.value,
       required this.namespaceId,
-      required this.others,
+      this.others,
       required this.novelId});
   factory MetaData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -2648,7 +2648,7 @@ class MetaData extends DataClass implements Insertable<MetaData> {
       namespaceId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}namespace_id'])!,
       others: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}others'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}others']),
       novelId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}novel_id'])!,
     );
@@ -2660,7 +2660,9 @@ class MetaData extends DataClass implements Insertable<MetaData> {
     map['name'] = Variable<String>(name);
     map['value'] = Variable<String>(value);
     map['namespace_id'] = Variable<int>(namespaceId);
-    map['others'] = Variable<String>(others);
+    if (!nullToAbsent || others != null) {
+      map['others'] = Variable<String?>(others);
+    }
     map['novel_id'] = Variable<int>(novelId);
     return map;
   }
@@ -2671,7 +2673,8 @@ class MetaData extends DataClass implements Insertable<MetaData> {
       name: Value(name),
       value: Value(value),
       namespaceId: Value(namespaceId),
-      others: Value(others),
+      others:
+          others == null && nullToAbsent ? const Value.absent() : Value(others),
       novelId: Value(novelId),
     );
   }
@@ -2684,7 +2687,7 @@ class MetaData extends DataClass implements Insertable<MetaData> {
       name: serializer.fromJson<String>(json['name']),
       value: serializer.fromJson<String>(json['value']),
       namespaceId: serializer.fromJson<int>(json['namespaceId']),
-      others: serializer.fromJson<String>(json['others']),
+      others: serializer.fromJson<String?>(json['others']),
       novelId: serializer.fromJson<int>(json['novelId']),
     );
   }
@@ -2696,7 +2699,7 @@ class MetaData extends DataClass implements Insertable<MetaData> {
       'name': serializer.toJson<String>(name),
       'value': serializer.toJson<String>(value),
       'namespaceId': serializer.toJson<int>(namespaceId),
-      'others': serializer.toJson<String>(others),
+      'others': serializer.toJson<String?>(others),
       'novelId': serializer.toJson<int>(novelId),
     };
   }
@@ -2749,7 +2752,7 @@ class MetaDatasCompanion extends UpdateCompanion<MetaData> {
   final Value<String> name;
   final Value<String> value;
   final Value<int> namespaceId;
-  final Value<String> others;
+  final Value<String?> others;
   final Value<int> novelId;
   const MetaDatasCompanion({
     this.id = const Value.absent(),
@@ -2764,19 +2767,18 @@ class MetaDatasCompanion extends UpdateCompanion<MetaData> {
     required String name,
     required String value,
     required int namespaceId,
-    required String others,
+    this.others = const Value.absent(),
     required int novelId,
   })  : name = Value(name),
         value = Value(value),
         namespaceId = Value(namespaceId),
-        others = Value(others),
         novelId = Value(novelId);
   static Insertable<MetaData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? value,
     Expression<int>? namespaceId,
-    Expression<String>? others,
+    Expression<String?>? others,
     Expression<int>? novelId,
   }) {
     return RawValuesInsertable({
@@ -2794,7 +2796,7 @@ class MetaDatasCompanion extends UpdateCompanion<MetaData> {
       Value<String>? name,
       Value<String>? value,
       Value<int>? namespaceId,
-      Value<String>? others,
+      Value<String?>? others,
       Value<int>? novelId}) {
     return MetaDatasCompanion(
       id: id ?? this.id,
@@ -2822,7 +2824,7 @@ class MetaDatasCompanion extends UpdateCompanion<MetaData> {
       map['namespace_id'] = Variable<int>(namespaceId.value);
     }
     if (others.present) {
-      map['others'] = Variable<String>(others.value);
+      map['others'] = Variable<String?>(others.value);
     }
     if (novelId.present) {
       map['novel_id'] = Variable<int>(novelId.value);
@@ -2878,8 +2880,8 @@ class $MetaDatasTable extends MetaDatas
   final VerificationMeta _othersMeta = const VerificationMeta('others');
   @override
   late final GeneratedColumn<String?> others = GeneratedColumn<String?>(
-      'others', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'others', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _novelIdMeta = const VerificationMeta('novelId');
   @override
   late final GeneratedColumn<int?> novelId = GeneratedColumn<int?>(
@@ -2925,8 +2927,6 @@ class $MetaDatasTable extends MetaDatas
     if (data.containsKey('others')) {
       context.handle(_othersMeta,
           others.isAcceptableOrUnknown(data['others']!, _othersMeta));
-    } else if (isInserting) {
-      context.missing(_othersMeta);
     }
     if (data.containsKey('novel_id')) {
       context.handle(_novelIdMeta,

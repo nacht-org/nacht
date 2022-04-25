@@ -1,10 +1,13 @@
 import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/providers.dart';
 import 'package:chapturn/presentation/pages/novel_page/widgets/action_bar.dart';
+import 'package:chapturn/presentation/pages/novel_page/widgets/description.dart';
+import 'package:chapturn/presentation/pages/novel_page/widgets/tags.dart';
 import 'package:chapturn/utils/string.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'data/novel_page_args.dart';
@@ -141,70 +144,32 @@ class NovelPageView extends ConsumerWidget {
               ),
             );
           }),
-          buildPadding(sliver: ActionBar(), top: 0, bottom: 8),
-          Consumer(builder: (context, ref, child) {
+          buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
+          HookConsumer(builder: (context, ref, child) {
             final more = ref.watch(novelMoreProvider);
+            final expanded = useState(false);
 
             return more.fold(
               () => const SliverToBoxAdapter(),
               (more) => buildPadding(
                 top: 0,
                 sliver: SliverToBoxAdapter(
-                  child: Stack(
-                    children: [
-                      ClipRect(
-                        child: SizedOverflowBox(
-                          alignment: Alignment.topLeft,
-                          size: Size.fromHeight(8 * 10),
-                          child: Column(
-                            children: [
-                              for (final para in more.description)
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 4.0),
-                                  child: Text(para),
-                                ),
-                            ],
-                          ),
+                  child: GestureDetector(
+                    onTap: () => expanded.value = !expanded.value,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Description(
+                          description: more.description,
+                          expanded: expanded,
                         ),
-                      ),
-                      Positioned(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                Theme.of(context).canvasColor,
-                                Theme.of(context).canvasColor.withOpacity(0),
-                              ],
-                            ),
-                          ),
-                          height: 8 * 8,
-                        ),
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                      ),
-                      Positioned(
-                        child: Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                radius: 0.8,
-                                colors: [
-                                  Theme.of(context).canvasColor,
-                                  Theme.of(context).canvasColor.withOpacity(0),
-                                ],
-                              ),
-                            ),
-                            child: Icon(Icons.keyboard_arrow_down),
-                          ),
-                        ),
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Tags(
+                          tags: more.tags,
+                          expanded: expanded,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

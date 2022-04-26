@@ -1,4 +1,5 @@
 import 'package:chapturn/domain/providers/repository_providers.dart';
+import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
 import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
 import 'package:chapturn/domain/usecases/get_all_crawlers.dart';
 import 'package:chapturn/domain/usecases/get_crawler_factory_for.dart';
@@ -26,3 +27,10 @@ final parseOrGetNovel = Provider<ParseOrGetNovel>(
 
 final getAllCategories = Provider<GetAllCategories>((ref) =>
     GetAllCategories(categoryRepository: ref.watch(categoryRepository)));
+
+final changeNovelCategories = Provider<ChangeNovelCategories>(
+  (ref) => ChangeNovelCategories(
+    categoryRepository: ref.watch(categoryRepository),
+    novelLocalRepository: ref.watch(novelLocalRepository),
+  ),
+);

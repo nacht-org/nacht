@@ -1,3 +1,5 @@
+import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
+import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,13 +23,18 @@ class NovelPageController extends StateNotifier<NovelPageState> {
   NovelPageController({
     required NovelPageState initial,
     required this.crawler,
-    required this.parseOrGetNovel,
     required this.read,
+    required this.parseOrGetNovel,
+    required this.getAllCategories,
+    required this.changeNovelCategories,
   }) : super(initial);
 
   final Crawler? crawler;
-  final ParseOrGetNovel parseOrGetNovel;
   final Reader read;
+
+  final ParseOrGetNovel parseOrGetNovel;
+  final GetAllCategories getAllCategories;
+  final ChangeNovelCategories changeNovelCategories;
 
   final _log = Logger('NovelPageController');
 
@@ -53,4 +60,8 @@ class NovelPageController extends StateNotifier<NovelPageState> {
       (data) => state = NovelPageState.loaded(data),
     );
   }
+
+  Future<void> addToLibrary() async {}
+
+  Future<void> removeFromLibrary() async {}
 }

@@ -71,15 +71,19 @@ final novelPageState =
     return NovelPageController(
       initial: state,
       crawler: ref.watch(crawlerProvider),
-      parseOrGetNovel: ref.watch(parseOrGetNovel),
       read: ref.read,
+      parseOrGetNovel: ref.watch(parseOrGetNovel),
+      getAllCategories: ref.watch(getAllCategories),
+      changeNovelCategories: ref.watch(changeNovelCategories),
     )..reload();
   },
   dependencies: [
     novelArgProvider,
     crawlerProvider,
-    parseOrGetNovel,
     noticeProvider,
+    parseOrGetNovel,
+    getAllCategories,
+    changeNovelCategories,
   ],
 );
 

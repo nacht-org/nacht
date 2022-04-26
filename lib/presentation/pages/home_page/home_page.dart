@@ -15,7 +15,15 @@ class HomePage extends StatelessWidget {
         final tabsRouter = AutoTabsRouter.of(context);
 
         return Scaffold(
-          body: child,
+          body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                destinations[tabsRouter.activeIndex].headerBuilder,
+            body: FadeTransition(
+              child: child,
+              opacity: animation,
+            ),
+          ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: tabsRouter.activeIndex,
             onDestinationSelected: (index) => tabsRouter.setActiveIndex(index),

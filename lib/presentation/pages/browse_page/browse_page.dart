@@ -16,22 +16,6 @@ class BrowsePage extends ConsumerWidget {
 
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          title: const Text('Browse'),
-          actions: [
-            PopupMenuButton(
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    child: const Text('Import from url'),
-                    onTap: () =>
-                        context.router.push(const ImportFromUrlRoute()),
-                  ),
-                ];
-              },
-            ),
-          ],
-        ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {

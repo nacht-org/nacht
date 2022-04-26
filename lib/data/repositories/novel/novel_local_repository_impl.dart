@@ -242,6 +242,9 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
       favourite: Value(value),
     );
 
-    await database.update(database.novels).replace(companion);
+    final statement = database.update(database.novels)
+      ..whereSamePrimaryKey(companion);
+
+    await statement.write(companion);
   }
 }

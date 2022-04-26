@@ -1,5 +1,6 @@
 import 'package:chapturn/domain/providers/providers.dart';
 import 'package:chapturn/presentation/pages/novel_page/data/novel_page_args.dart';
+import 'package:chapturn/presentation/pages/novel_page/providers/loaded_controller.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_state.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
@@ -20,6 +21,9 @@ final novelArgProvider =
 
 final crawlerArgProvider =
     Provider<Crawler?>((ref) => throw UnimplementedError());
+
+final novelOverrideProvider =
+    Provider<NovelEntity>((ref) => throw UnimplementedError());
 
 final crawlerFactoryProvider = Provider<CrawlerFactory?>(
   (ref) {
@@ -68,14 +72,18 @@ final novelPageState =
           complete: NovelPageState.loaded,
         );
 
-    return NovelPageController(
+    final controller = NovelPageController(
       initial: state,
       crawler: ref.watch(crawlerProvider),
       read: ref.read,
       parseOrGetNovel: ref.watch(parseOrGetNovel),
-      getAllCategories: ref.watch(getAllCategories),
-      changeNovelCategories: ref.watch(changeNovelCategories),
-    )..reload();
+    );
+
+    state.mapOrNull(
+      partial: (value) => controller.reload(),
+    );
+
+    return controller;
   },
   dependencies: [
     novelArgProvider,
@@ -112,42 +120,46 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
   metaProvider,
 ]);
 
-final favoriteProvider = Provider<bool>(
+// Providers only for loaded page state.
+
+final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
   (ref) {
-    final state = ref.watch(novelPageState);
-    return state.when(
-        partial: (_) => false, loaded: (novel) => novel.favourite);
+    final novel = ref.watch(novelOverrideProvider);
+
+    return LoadedController(
+      novel,
+      getAllCategories: ref.watch(getAllCategories),
+      changeNovelCategories: ref.watch(changeNovelCategories),
+    );
   },
-  dependencies: [novelPageState],
+  dependencies: [
+    novelOverrideProvider,
+    getAllCategories,
+    changeNovelCategories,
+  ],
 );
 
-final novelMoreProvider = Provider<Option<NovelPageMore>>((ref) {
-  final state = ref.watch(novelPageState);
+final novelMoreProvider = Provider<NovelPageMore>(
+  (ref) {
+    final novel = ref.watch(novelProvider);
 
-  return state.when(
-    partial: (_) => const None(),
-    loaded: (novel) => Some(
-      NovelPageMore(
-        description: novel.description,
-        tags: novel.metadata
-            .where((namespace) => namespace.name == 'subject')
-            .map((namespace) => namespace.value)
-            .toList(),
-      ),
-    ),
-  );
-}, dependencies: [novelPageState]);
+    return NovelPageMore(
+      description: novel.description,
+      tags: novel.metadata
+          .where((namespace) => namespace.name == 'subject')
+          .map((namespace) => namespace.value)
+          .toList(),
+    );
+  },
+  dependencies: [novelProvider],
+);
 
 final volumesProvider = Provider<List<VolumeEntity>>(
   (ref) {
-    final state = ref.watch(novelPageState);
-
-    return state.when(
-      partial: (_) => [],
-      loaded: (novel) => novel.volumes,
-    );
+    final novel = ref.watch(novelProvider);
+    return novel.volumes;
   },
-  dependencies: [novelPageState],
+  dependencies: [novelProvider],
 );
 
 final itemsProvider = Provider<List<NovelListItem>>(

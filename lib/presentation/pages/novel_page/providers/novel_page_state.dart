@@ -25,16 +25,12 @@ class NovelPageController extends StateNotifier<NovelPageState> {
     required this.crawler,
     required this.read,
     required this.parseOrGetNovel,
-    required this.getAllCategories,
-    required this.changeNovelCategories,
   }) : super(initial);
 
   final Crawler? crawler;
   final Reader read;
 
   final ParseOrGetNovel parseOrGetNovel;
-  final GetAllCategories getAllCategories;
-  final ChangeNovelCategories changeNovelCategories;
 
   final _log = Logger('NovelPageController');
 
@@ -60,8 +56,4 @@ class NovelPageController extends StateNotifier<NovelPageState> {
       (data) => state = NovelPageState.loaded(data),
     );
   }
-
-  Future<void> addToLibrary() async {}
-
-  Future<void> removeFromLibrary() async {}
 }

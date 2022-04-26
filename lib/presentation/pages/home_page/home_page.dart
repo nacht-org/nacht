@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      lazyLoad: false,
       homeIndex: 0,
       routes: destinations.map((item) => item.route).toList(),
       builder: (context, child, animation) {

@@ -1,16 +1,17 @@
-import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';
-import 'package:chapturn/presentation/pages/novel_page/providers/providers.dart';
-import 'package:chapturn/presentation/pages/novel_page/widgets/action_bar.dart';
-import 'package:chapturn/presentation/pages/novel_page/widgets/description.dart';
-import 'package:chapturn/presentation/pages/novel_page/widgets/info.dart';
-import 'package:chapturn/presentation/pages/novel_page/widgets/tags.dart';
-import 'package:chapturn/utils/string.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../utils/string.dart';
 import 'data/novel_page_args.dart';
+import 'providers/providers.dart';
+import 'widgets/action_bar.dart';
+import 'widgets/description.dart';
+import 'widgets/info.dart';
+import 'widgets/notice_listener.dart';
+import 'widgets/tags.dart';
+
 export 'data/novel_page_args.dart';
 
 class NovelPage extends StatelessWidget {
@@ -31,8 +32,63 @@ class NovelPage extends StatelessWidget {
         crawlerArgProvider.overrideWithValue(crawler),
       ],
       child: const Scaffold(
-        body: NovelPageView(),
+        body: NoticeListener(
+          child: NovelPageSplit(),
+        ),
       ),
+    );
+  }
+}
+
+class NovelPageSplit extends ConsumerWidget {
+  const NovelPageSplit({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(novelPageState);
+
+    return state.when(
+      partial: (novel) {
+        return NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              title: Text(novel.title),
+              floating: true,
+              forceElevated: innerBoxIsScrolled,
+            )
+          ],
+          body: const CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: EdgeInsets.only(
+                  left: 16.0,
+                  top: 24.0,
+                  right: 16.0,
+                  bottom: 16.0,
+                ),
+                sliver: NovelInfo(),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                sliver: SliverToBoxAdapter(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      loaded: (novel) {
+        return ProviderScope(
+          overrides: [
+            novelOverrideProvider.overrideWithValue(novel),
+          ],
+          child: const NovelPageView(),
+        );
+      },
     );
   }
 }
@@ -42,18 +98,6 @@ class NovelPageView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<NovelPageNotice?>(noticeProvider, (previous, next) {
-      if (next == null) {
-        return;
-      }
-
-      final snackBar = next.when(
-        error: (message) => SnackBar(content: Text(message)),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    });
-
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         Consumer(builder: (context, ref, child) {
@@ -93,28 +137,25 @@ class NovelPageView extends ConsumerWidget {
               final more = ref.watch(novelMoreProvider);
               final expanded = useState(false);
 
-              return more.fold(
-                () => const SliverToBoxAdapter(),
-                (more) => buildPadding(
-                  top: 0,
-                  bottom: 8,
-                  sliver: SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () => expanded.value = !expanded.value,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Description(
-                            description: more.description,
-                            expanded: expanded,
-                          ),
-                          const SizedBox(height: 8),
-                          Tags(
-                            tags: more.tags,
-                            expanded: expanded,
-                          )
-                        ],
-                      ),
+              return buildPadding(
+                top: 0,
+                bottom: 8,
+                sliver: SliverToBoxAdapter(
+                  child: GestureDetector(
+                    onTap: () => expanded.value = !expanded.value,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Description(
+                          description: more.description,
+                          expanded: expanded,
+                        ),
+                        const SizedBox(height: 8),
+                        Tags(
+                          tags: more.tags,
+                          expanded: expanded,
+                        )
+                      ],
                     ),
                   ),
                 ),

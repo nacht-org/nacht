@@ -39,25 +39,31 @@ void main() {
     favourite: false,
   );
 
-  final tCategories = [
-    CategoryEntity(id: 1, name: '_default', isDefault: true),
-  ];
+  final tCategories = {
+    CategoryEntity(id: 1, name: '_default', isDefault: true): true,
+  };
+
+  final tUnselectedCategories = {
+    CategoryEntity(id: 1, name: '_default', isDefault: true): false,
+  };
 
   test('should update categories with category repository', () async {
-    final result = await usecase.execute(tNovelEntity, tCategories);
+    await usecase.execute(tNovelEntity, tCategories);
 
     verify(mockCategoryRepository.changeNovelCategories(
             tNovelEntity, tCategories))
         .called(1);
   });
 
-  test('should set favourite to false when catergories is empty', () async {
-    final result = await usecase.execute(tNovelEntity, []);
+  test('should set favourite to false when selected catergories is empty',
+      () async {
+    await usecase.execute(tNovelEntity, tUnselectedCategories);
     verify(mockLocalRepository.setFavourite(tNovelEntity.id, false)).called(1);
   });
 
-  test('should set favourite to true when catergories is not empty', () async {
-    final result = await usecase.execute(tNovelEntity, tCategories);
+  test('should set favourite to true when selected catergories is not empty',
+      () async {
+    await usecase.execute(tNovelEntity, tCategories);
     verify(mockLocalRepository.setFavourite(tNovelEntity.id, true)).called(1);
   });
 }

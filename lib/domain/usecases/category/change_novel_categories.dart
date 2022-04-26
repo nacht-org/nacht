@@ -14,11 +14,15 @@ class ChangeNovelCategories {
 
   Future<Either<Failure, bool>> execute(
     NovelEntity novel,
-    List<CategoryEntity> categories,
+    Map<CategoryEntity, bool> categories,
   ) async {
     await categoryRepository.changeNovelCategories(novel, categories);
 
-    final favourite = categories.isNotEmpty;
+    final favourite = categories.values.firstWhere(
+      (selected) => selected,
+      orElse: () => false,
+    );
+
     await novelLocalRepository.setFavourite(novel.id, favourite);
 
     return Right(favourite);

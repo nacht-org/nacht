@@ -1,9 +1,11 @@
+import 'package:chapturn/data/repositories/category/category_repository_impl.dart';
+import 'package:chapturn/domain/repositories/category_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/repositories/crawler_repository_impl.dart';
 import '../../data/repositories/network_repository_impl.dart';
-import '../../data/repositories/novel_repository/novel_local_repository_impl.dart';
-import '../../data/repositories/novel_repository/novel_remote_repository_impl.dart';
+import '../../data/repositories/novel/novel_local_repository_impl.dart';
+import '../../data/repositories/novel/novel_remote_repository_impl.dart';
 import '../repositories/crawler_repository.dart';
 import '../repositories/network_repository.dart';
 import '../repositories/novel_repository.dart';
@@ -34,3 +36,10 @@ final novelLocalRepository = Provider<NovelLocalRepository>((ref) {
     metaDataMapper: ref.watch(databaseToMetaDataMapper),
   );
 });
+
+final categoryRepository = Provider<CategoryRepository>(
+  (ref) => CategoryRepositoryImpl(
+    database: ref.watch(databaseProvider),
+    categoryMapper: ref.watch(databaseToCategoryMapper),
+  ),
+);

@@ -232,4 +232,16 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
 
     _log.info('End metadata sync.');
   }
+
+  // Single field updates.
+
+  @override
+  Future<void> setFavourite(int novelId, bool value) async {
+    final companion = NovelsCompanion(
+      id: Value(novelId),
+      favourite: Value(value),
+    );
+
+    await database.update(database.novels).replace(companion);
+  }
 }

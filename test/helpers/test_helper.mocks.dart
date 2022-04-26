@@ -183,16 +183,14 @@ class MockCategoryRepository extends _i1.Mock
           returnValue: Future<List<_i7.CategoryEntity>>.value(
               <_i7.CategoryEntity>[])) as _i6.Future<List<_i7.CategoryEntity>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, List<_i7.CategoryEntity>>>
-      getCategoriesOfNovel(_i7.NovelEntity? novel) => (super.noSuchMethod(
-              Invocation.method(#getCategoriesOfNovel, [novel]),
-              returnValue: Future<
-                      _i2.Either<_i5.Failure, List<_i7.CategoryEntity>>>.value(
-                  _FakeEither_0<_i5.Failure, List<_i7.CategoryEntity>>()))
-          as _i6.Future<_i2.Either<_i5.Failure, List<_i7.CategoryEntity>>>);
+  _i6.Future<List<_i7.CategoryEntity>> getCategoriesOfNovel(
+          _i7.NovelEntity? novel) =>
+      (super.noSuchMethod(Invocation.method(#getCategoriesOfNovel, [novel]),
+          returnValue: Future<List<_i7.CategoryEntity>>.value(
+              <_i7.CategoryEntity>[])) as _i6.Future<List<_i7.CategoryEntity>>);
   @override
   _i6.Future<void> changeNovelCategories(
-          _i7.NovelEntity? novel, List<_i7.CategoryEntity>? categories) =>
+          _i7.NovelEntity? novel, Map<_i7.CategoryEntity, bool>? categories) =>
       (super.noSuchMethod(
           Invocation.method(#changeNovelCategories, [novel, categories]),
           returnValue: Future<void>.value(),

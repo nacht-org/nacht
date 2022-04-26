@@ -6,3 +6,7 @@ export 'database_mappers/seed_mappers/status_mapper.dart';
 export 'database_mappers/seed_mappers/reading_database_mapper.dart';
 export 'database_mappers/seed_mappers/work_type_mapper.dart';
 export 'database_mappers/model_mappers/database_to_novel_mapper.dart';
+export 'database_mappers/model_mappers/database_to_category_mapper.dart';
+export 'database_mappers/model_mappers/database_to_metadata_mapper.dart';
+export 'database_mappers/model_mappers/database_to_volume_mapper.dart';
+export 'database_mappers/model_mappers/database_to_chapter_mapper.dart';

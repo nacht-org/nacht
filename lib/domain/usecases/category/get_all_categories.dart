@@ -2,7 +2,9 @@ import 'package:chapturn/domain/entities/entities.dart';
 import 'package:chapturn/domain/repositories/category_repository.dart';
 
 class GetAllCategories {
-  GetAllCategories(this.categoryRepository);
+  GetAllCategories({
+    required this.categoryRepository,
+  });
 
   final CategoryRepository categoryRepository;
 

@@ -12,7 +12,7 @@ void main() {
 
   setUp(() {
     mockCategoryRepository = MockCategoryRepository();
-    usecase = GetAllCategories(mockCategoryRepository);
+    usecase = GetAllCategories(categoryRepository: mockCategoryRepository);
   });
 
   final tCategories = [

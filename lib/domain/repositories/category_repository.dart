@@ -5,11 +5,10 @@ import 'package:dartz/dartz.dart';
 abstract class CategoryRepository {
   Future<List<CategoryEntity>> getAllCategories();
 
-  Future<Either<Failure, List<CategoryEntity>>> getCategoriesOfNovel(
-      NovelEntity novel);
+  Future<List<CategoryEntity>> getCategoriesOfNovel(NovelEntity novel);
 
   Future<void> changeNovelCategories(
     NovelEntity novel,
-    List<CategoryEntity> categories,
+    Map<CategoryEntity, bool> categories,
   );
 }

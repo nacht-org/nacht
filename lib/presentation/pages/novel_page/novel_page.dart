@@ -101,38 +101,21 @@ class NovelPageView extends ConsumerWidget {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         Consumer(builder: (context, ref, child) {
-          final state = ref.watch(novelPageState);
-          return state.when(
-            partial: (novel) => SliverAppBar(
-              title: Text(novel.title),
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-            ),
-            loaded: (novel) => SliverAppBar(
-              title: Text(novel.title),
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-            ),
+          final novel = ref.watch(novelProvider);
+
+          return SliverAppBar(
+            title: Text(novel.title),
+            floating: true,
+            forceElevated: innerBoxIsScrolled,
           );
         }),
       ],
       body: RefreshIndicator(
-        onRefresh: () => ref.read(novelPageState.notifier).reload(),
+        onRefresh: ref.read(novelProvider.notifier).reload,
         child: CustomScrollView(
           slivers: [
-            buildPadding(top: 24, sliver: const NovelInfo()),
-            Consumer(builder: (context, ref, child) {
-              final state = ref.watch(novelPageState);
-
-              return state.when(
-                partial: (_) => const SliverToBoxAdapter(),
-                loaded: (_) => buildPadding(
-                  sliver: const ActionBar(),
-                  top: 0,
-                  bottom: 8,
-                ),
-              );
-            }),
+            buildPadding(sliver: const NovelInfo(), top: 24),
+            buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
             HookConsumer(builder: (context, ref, child) {
               final more = ref.watch(novelMoreProvider);
               final expanded = useState(false);

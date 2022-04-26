@@ -125,15 +125,22 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
 final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
   (ref) {
     final novel = ref.watch(novelOverrideProvider);
+    final crawler = ref.watch(crawlerProvider);
 
     return LoadedController(
       novel,
+      crawler: crawler,
+      noticeController: ref.watch(noticeProvider.notifier),
+      parseOrGetNovel: ref.watch(parseOrGetNovel),
       getAllCategories: ref.watch(getAllCategories),
       changeNovelCategories: ref.watch(changeNovelCategories),
     );
   },
   dependencies: [
+    crawlerProvider,
+    noticeProvider.notifier,
     novelOverrideProvider,
+    parseOrGetNovel,
     getAllCategories,
     changeNovelCategories,
   ],

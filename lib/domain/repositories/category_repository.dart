@@ -11,4 +11,6 @@ abstract class CategoryRepository {
     NovelEntity novel,
     Map<CategoryEntity, bool> categories,
   );
+
+  Future<List<NovelEntity>> getNovelsOfCategory(CategoryEntity category);
 }

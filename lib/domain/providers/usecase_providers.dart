@@ -1,6 +1,7 @@
 import 'package:chapturn/domain/providers/repository_providers.dart';
 import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
 import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
+import 'package:chapturn/domain/usecases/category/get_all_categories_with_novels.dart';
 import 'package:chapturn/domain/usecases/get_all_crawlers.dart';
 import 'package:chapturn/domain/usecases/get_crawler_factory_for.dart';
 import 'package:chapturn/domain/usecases/get_popular_novels.dart';
@@ -34,3 +35,7 @@ final changeNovelCategories = Provider<ChangeNovelCategories>(
     novelLocalRepository: ref.watch(novelLocalRepository),
   ),
 );
+
+final getAllCategoriesWithNovels = Provider<GetAllCategoriesWithNovels>((ref) =>
+    GetAllCategoriesWithNovels(
+        categoryRepository: ref.watch(categoryRepository)));

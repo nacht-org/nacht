@@ -5,6 +5,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../novel_page/data/novel_page_args.dart';
 import 'controllers/popular_page.dart';
 import '../../widgets/novel_grid_card.dart';
 
@@ -98,7 +99,14 @@ class PopularView extends SearchableScrollView {
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               final novel = novels[index];
-              return NovelGridCard(novel: novel, crawler: crawler);
+              return NovelGridCard(
+                title: novel.title,
+                coverUrl: novel.coverUrl,
+                onTap: () => context.router.push(NovelRoute(
+                  novel: NovelEntityArgument.partial(novel),
+                  crawler: crawler,
+                )),
+              );
             },
             childCount: novels.length,
           ),

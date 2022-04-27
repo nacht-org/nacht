@@ -12,11 +12,13 @@ class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({
     required this.database,
     required this.categoryMapper,
+    required this.novelMapper,
   });
 
   final AppDatabase database;
 
   final Mapper<NovelCategory, CategoryEntity> categoryMapper;
+  final Mapper<Novel, NovelEntity> novelMapper;
 
   @override
   Future<void> changeNovelCategories(
@@ -43,12 +45,13 @@ class CategoryRepositoryImpl implements CategoryRepository {
         }
 
         batch.insert(
-            database.novelCategoriesJunction,
-            NovelCategoriesJunctionCompanion.insert(
-              categoryId: entry.key.id,
-              novelId: novel.id,
-            ),
-            mode: InsertMode.insertOrIgnore);
+          database.novelCategoriesJunction,
+          NovelCategoriesJunctionCompanion.insert(
+            categoryId: entry.key.id,
+            novelId: novel.id,
+          ),
+          mode: InsertMode.insertOrIgnore,
+        );
       }
     });
   }
@@ -78,6 +81,25 @@ class CategoryRepositoryImpl implements CategoryRepository {
     return results.map((row) {
       final category = row.readTable(database.novelCategories);
       return categoryMapper.map(category);
+    }).toList();
+  }
+
+  @override
+  Future<List<NovelEntity>> getNovelsOfCategory(CategoryEntity category) async {
+    final query = database.select(database.novels).join([
+      leftOuterJoin(
+        database.novelCategoriesJunction,
+        database.novelCategoriesJunction.novelId.equalsExp(database.novels.id),
+        useColumns: false,
+      )
+    ])
+      ..where(database.novelCategoriesJunction.categoryId.equals(category.id));
+
+    final results = await query.get();
+
+    return results.map((row) {
+      final novel = row.readTable(database.novels);
+      return novelMapper.map(novel);
     }).toList();
   }
 }

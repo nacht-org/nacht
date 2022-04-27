@@ -7,6 +7,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../helpers/model_helper.dart';
 import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
@@ -23,21 +24,7 @@ void main() {
     );
   });
 
-  final tNovelEntity = NovelEntity(
-    id: 1,
-    title: 'My novel story',
-    url: 'https://website.com/novel/123',
-    author: 'My',
-    description: [],
-    coverUrl: 'https://assets.website.com/novel/123/cover.jpg',
-    status: NovelStatus.unknown,
-    lang: 'en',
-    volumes: [],
-    metadata: [],
-    workType: const OriginalWork(),
-    readingDirection: ReadingDirection.ltr,
-    favourite: false,
-  );
+  final tNovelEntity = helperNovelEntity;
 
   final tCategories = {
     CategoryEntity(id: 1, name: '_default', isDefault: true): true,

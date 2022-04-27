@@ -195,4 +195,11 @@ class MockCategoryRepository extends _i1.Mock
           Invocation.method(#changeNovelCategories, [novel, categories]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
+  @override
+  _i6.Future<List<_i7.NovelEntity>> getNovelsOfCategory(
+          _i7.CategoryEntity? category) =>
+      (super.noSuchMethod(Invocation.method(#getNovelsOfCategory, [category]),
+              returnValue:
+                  Future<List<_i7.NovelEntity>>.value(<_i7.NovelEntity>[]))
+          as _i6.Future<List<_i7.NovelEntity>>);
 }

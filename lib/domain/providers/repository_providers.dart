@@ -41,5 +41,6 @@ final categoryRepository = Provider<CategoryRepository>(
   (ref) => CategoryRepositoryImpl(
     database: ref.watch(databaseProvider),
     categoryMapper: ref.watch(databaseToCategoryMapper),
+    novelMapper: ref.watch(databaseToNovelMapper),
   ),
 );

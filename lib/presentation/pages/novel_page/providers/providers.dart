@@ -128,20 +128,30 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
     final novel = ref.watch(novelOverrideProvider);
     final crawler = ref.watch(crawlerProvider);
 
-    return LoadedController(
+    final controller = LoadedController(
       novel,
       crawler: crawler,
       read: ref.read,
+      getNovel: ref.watch(getNovel),
       parseOrGetNovel: ref.watch(parseOrGetNovel),
       getAllCategories: ref.watch(getAllCategories),
       changeNovelCategories: ref.watch(changeNovelCategories),
     );
+
+    ref.watch(novelArgProvider).when(
+          partial: (_) => {},
+          complete: (_) async => controller.reload(),
+        );
+
+    return controller;
   },
   dependencies: [
+    novelArgProvider,
     crawlerProvider,
     noticeProvider.notifier,
     libraryProvider.notifier,
     novelOverrideProvider,
+    getNovel,
     parseOrGetNovel,
     getAllCategories,
     changeNovelCategories,

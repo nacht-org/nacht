@@ -1,6 +1,7 @@
 import 'package:chapturn/domain/entities/novel/novel_entity.dart';
 import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
 import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
+import 'package:chapturn/domain/usecases/get_novel.dart';
 import 'package:chapturn/domain/usecases/parse_or_get_novel.dart';
 import 'package:chapturn/presentation/controllers/library/library_controller.dart';
 import 'package:chapturn/presentation/controllers/library/library_provider.dart';
@@ -15,6 +16,7 @@ class LoadedController extends StateNotifier<NovelEntity> {
     NovelEntity state, {
     required this.crawler,
     required this.read,
+    required this.getNovel,
     required this.parseOrGetNovel,
     required this.getAllCategories,
     required this.changeNovelCategories,
@@ -23,6 +25,7 @@ class LoadedController extends StateNotifier<NovelEntity> {
   final Reader read;
   final Crawler? crawler;
 
+  final GetNovel getNovel;
   final ParseOrGetNovel parseOrGetNovel;
   final GetAllCategories getAllCategories;
   final ChangeNovelCategories changeNovelCategories;
@@ -32,7 +35,7 @@ class LoadedController extends StateNotifier<NovelEntity> {
   NoticeController get _notice => read(noticeProvider.notifier);
   LibraryController get _library => read(libraryProvider.notifier);
 
-  Future<void> reload() async {
+  Future<void> fetch() async {
     if (crawler == null || crawler is! ParseNovel) {
       _notice.error('Unable to parse.');
       return;
@@ -73,5 +76,14 @@ class LoadedController extends StateNotifier<NovelEntity> {
     );
 
     _library.reload();
+  }
+
+  Future<void> reload() async {
+    final result = await getNovel.execute(state.id);
+
+    result.fold(
+      (failure) => {},
+      (data) => state = data,
+    );
   }
 }

@@ -61,9 +61,12 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
       return const Left(NovelNotFound());
     }
 
-    final entity = novelMapper
-        .map(novel)
-        .copyWith(volumes: await _getVolumesOfNovel(novel.id));
+    final metadata =
+        (await getMetaData(novel.id)).map(metaDataMapper.map).toList();
+    final volumes = await _getVolumesOfNovel(novel.id);
+
+    final entity =
+        novelMapper.map(novel).copyWith(volumes: volumes, metadata: metadata);
 
     return Right(entity);
   }

@@ -111,7 +111,7 @@ class NovelPageView extends ConsumerWidget {
         }),
       ],
       body: RefreshIndicator(
-        onRefresh: ref.read(novelProvider.notifier).reload,
+        onRefresh: ref.read(novelProvider.notifier).fetch,
         child: CustomScrollView(
           slivers: [
             buildPadding(sliver: const NovelInfo(), top: 24),

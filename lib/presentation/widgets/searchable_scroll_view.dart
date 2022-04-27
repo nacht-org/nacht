@@ -52,6 +52,7 @@ abstract class SearchableScrollView extends HookWidget {
     final controller = useTextEditingController();
 
     return NestedScrollView(
+      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverOverlapAbsorber(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
@@ -68,12 +69,7 @@ abstract class SearchableScrollView extends HookWidget {
       ],
       body: Consumer(
         builder: (context, ref, child) => CustomScrollView(
-          slivers: [
-            SliverOverlapInjector(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            ),
-            ...buildBody(context, ref),
-          ],
+          slivers: buildBody(context, ref),
         ),
       ),
     );
@@ -115,7 +111,6 @@ abstract class SearchableScrollView extends HookWidget {
           ),
       ],
       floating: true,
-      snap: true,
       forceElevated: innerBoxIsScrolled,
     );
   }

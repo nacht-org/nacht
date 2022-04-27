@@ -51,7 +51,6 @@ class PopularView extends SearchableScrollView {
         getSearchAction(context, ref),
       ],
       floating: true,
-      snap: true,
       forceElevated: innerBoxIsScrolled,
     );
   }

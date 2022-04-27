@@ -34,12 +34,12 @@ class NovelGridCard extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Color.fromARGB(100, 0, 0, 0),
+                      Color.fromARGB(200, 0, 0, 0),
                       Colors.transparent,
                     ],
                   ),
                 ),
-                padding: const EdgeInsets.all(8.0).copyWith(top: 12.0),
+                padding: const EdgeInsets.all(8.0).copyWith(top: 32.0),
                 child: Text(
                   title,
                   style: Theme.of(context).textTheme.labelLarge,

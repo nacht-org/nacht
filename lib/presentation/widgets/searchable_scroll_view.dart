@@ -103,6 +103,9 @@ abstract class SearchableScrollView extends HookWidget {
         autofocus: true,
         onChanged: (value) => ref.read(searchtext.notifier).state = value,
         onEditingComplete: onEditingComplete,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
       ),
       actions: [
         if (value.isNotEmpty)

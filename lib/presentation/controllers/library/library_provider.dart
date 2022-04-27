@@ -8,6 +8,6 @@ final libraryProvider =
   (ref) {
     return LibraryController(
       getAllCategoriesWithNovels: ref.watch(getAllCategoriesWithNovels),
-    )..reload();
+    );
   },
 );

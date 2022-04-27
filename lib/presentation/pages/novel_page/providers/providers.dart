@@ -73,18 +73,12 @@ final novelPageState =
           complete: NovelPageState.loaded,
         );
 
-    final controller = NovelPageController(
+    return NovelPageController(
       initial: state,
       crawler: ref.watch(crawlerProvider),
       read: ref.read,
       parseOrGetNovel: ref.watch(parseOrGetNovel),
     );
-
-    state.mapOrNull(
-      partial: (value) => controller.reload(),
-    );
-
-    return controller;
   },
   dependencies: [
     novelArgProvider,
@@ -128,7 +122,7 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
     final novel = ref.watch(novelOverrideProvider);
     final crawler = ref.watch(crawlerProvider);
 
-    final controller = LoadedController(
+    return LoadedController(
       novel,
       crawler: crawler,
       read: ref.read,
@@ -137,13 +131,6 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
       getAllCategories: ref.watch(getAllCategories),
       changeNovelCategories: ref.watch(changeNovelCategories),
     );
-
-    ref.watch(novelArgProvider).when(
-          partial: (_) => {},
-          complete: (_) async => controller.reload(),
-        );
-
-    return controller;
   },
   dependencies: [
     novelArgProvider,

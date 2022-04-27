@@ -40,12 +40,19 @@ class NovelPage extends StatelessWidget {
   }
 }
 
-class NovelPageSplit extends ConsumerWidget {
+class NovelPageSplit extends HookConsumerWidget {
   const NovelPageSplit({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(novelPageState);
+    final novelArg = ref.read(novelArgProvider);
+    useEffect(() {
+      novelArg.mapOrNull(
+        partial: (value) => ref.read(novelPageState.notifier).reload(),
+      );
+      return null;
+    }, []);
 
     return state.when(
       partial: (novel) {
@@ -93,11 +100,22 @@ class NovelPageSplit extends ConsumerWidget {
   }
 }
 
-class NovelPageView extends ConsumerWidget {
+class NovelPageView extends HookConsumerWidget {
   const NovelPageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final novelArg = ref.watch(novelArgProvider);
+    useEffect(() {
+      novelArg.when(
+        partial: (_) => {},
+        complete: (_) async {
+          return ref.read(novelProvider.notifier).reload();
+        },
+      );
+      return null;
+    }, []);
+
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         Consumer(builder: (context, ref, child) {

@@ -99,14 +99,14 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
       title: novel.title,
       coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
       author: novel.author == null ? const None() : Some(novel.author!),
-      status: const None(),
+      status: NovelStatus.unknown,
       meta: meta,
     ),
     loaded: (novel) => NovelPageInfo(
       title: novel.title,
       coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
       author: novel.author == null ? const None() : Some(novel.author!),
-      status: Some(novel.status),
+      status: novel.status,
       meta: meta,
     ),
   );

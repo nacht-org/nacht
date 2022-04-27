@@ -22,7 +22,7 @@ class _$NovelPageInfoTearOff {
       {required String title,
       required Option<String> coverUrl,
       required Option<String> author,
-      required Option<NovelStatus> status,
+      required NovelStatus status,
       required Option<Meta> meta}) {
     return _NovelPageInfo(
       title: title,
@@ -42,7 +42,7 @@ mixin _$NovelPageInfo {
   String get title => throw _privateConstructorUsedError;
   Option<String> get coverUrl => throw _privateConstructorUsedError;
   Option<String> get author => throw _privateConstructorUsedError;
-  Option<NovelStatus> get status => throw _privateConstructorUsedError;
+  NovelStatus get status => throw _privateConstructorUsedError;
   Option<Meta> get meta => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -59,7 +59,7 @@ abstract class $NovelPageInfoCopyWith<$Res> {
       {String title,
       Option<String> coverUrl,
       Option<String> author,
-      Option<NovelStatus> status,
+      NovelStatus status,
       Option<Meta> meta});
 }
 
@@ -96,7 +96,7 @@ class _$NovelPageInfoCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as Option<NovelStatus>,
+              as NovelStatus,
       meta: meta == freezed
           ? _value.meta
           : meta // ignore: cast_nullable_to_non_nullable
@@ -116,7 +116,7 @@ abstract class _$NovelPageInfoCopyWith<$Res>
       {String title,
       Option<String> coverUrl,
       Option<String> author,
-      Option<NovelStatus> status,
+      NovelStatus status,
       Option<Meta> meta});
 }
 
@@ -155,7 +155,7 @@ class __$NovelPageInfoCopyWithImpl<$Res>
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as Option<NovelStatus>,
+              as NovelStatus,
       meta: meta == freezed
           ? _value.meta
           : meta // ignore: cast_nullable_to_non_nullable
@@ -181,7 +181,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
   @override
   final Option<String> author;
   @override
-  final Option<NovelStatus> status;
+  final NovelStatus status;
   @override
   final Option<Meta> meta;
 
@@ -222,7 +222,7 @@ abstract class _NovelPageInfo implements NovelPageInfo {
       {required String title,
       required Option<String> coverUrl,
       required Option<String> author,
-      required Option<NovelStatus> status,
+      required NovelStatus status,
       required Option<Meta> meta}) = _$_NovelPageInfo;
 
   @override
@@ -232,7 +232,7 @@ abstract class _NovelPageInfo implements NovelPageInfo {
   @override
   Option<String> get author;
   @override
-  Option<NovelStatus> get status;
+  NovelStatus get status;
   @override
   Option<Meta> get meta;
   @override

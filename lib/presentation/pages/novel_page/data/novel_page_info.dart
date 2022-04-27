@@ -10,7 +10,7 @@ class NovelPageInfo with _$NovelPageInfo {
     required String title,
     required Option<String> coverUrl,
     required Option<String> author,
-    required Option<NovelStatus> status,
+    required NovelStatus status,
     required Option<Meta> meta,
   }) = _NovelPageInfo;
 }

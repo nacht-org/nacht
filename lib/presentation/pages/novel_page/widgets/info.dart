@@ -1,8 +1,8 @@
-import 'package:chapturn/utils/string.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../providers/providers.dart';
+import 'status.dart';
 
 class NovelInfo extends ConsumerWidget {
   const NovelInfo({Key? key}) : super(key: key);
@@ -47,23 +47,9 @@ class NovelInfo extends ConsumerWidget {
                     maxLines: 1,
                   ),
                   const SizedBox(height: 4.0),
-                  Row(
-                    children: [
-                      Icon(Icons.done_all, size: 16.0),
-                      const SizedBox(width: 4.0),
-                      Text(
-                        info.status.fold(
-                              () => 'Unknown',
-                              (status) => status.name.capitalize(),
-                            ) +
-                            info.meta.fold(
-                              () => '',
-                              (meta) => ' • ${meta.name}',
-                            ),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                      ),
-                    ],
+                  StatusInfo(
+                    status: info.status,
+                    suffix: info.meta.toNullable()?.name,
                   ),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:chapturn/domain/providers/providers.dart';
+import 'package:chapturn/presentation/controllers/library/library_provider.dart';
 import 'package:chapturn/presentation/pages/novel_page/data/novel_page_args.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/loaded_controller.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';
@@ -88,7 +89,7 @@ final novelPageState =
   dependencies: [
     novelArgProvider,
     crawlerProvider,
-    noticeProvider,
+    noticeProvider.notifier,
     parseOrGetNovel,
     getAllCategories,
     changeNovelCategories,
@@ -130,7 +131,7 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
     return LoadedController(
       novel,
       crawler: crawler,
-      noticeController: ref.watch(noticeProvider.notifier),
+      read: ref.read,
       parseOrGetNovel: ref.watch(parseOrGetNovel),
       getAllCategories: ref.watch(getAllCategories),
       changeNovelCategories: ref.watch(changeNovelCategories),
@@ -139,6 +140,7 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
   dependencies: [
     crawlerProvider,
     noticeProvider.notifier,
+    libraryProvider.notifier,
     novelOverrideProvider,
     parseOrGetNovel,
     getAllCategories,

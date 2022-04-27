@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/config/routes/app_router.dart';
 import 'package:chapturn/presentation/pages/browse_page/header_builder.dart';
+import 'package:chapturn/presentation/pages/library_page/header_builder.dart';
 import 'package:flutter/material.dart';
 
 import '../../browse_page/browse_page.dart';
@@ -31,7 +32,7 @@ List<Widget> buildEmptyHeader(BuildContext context, bool innerBoxIsScrolled) {
 const destinations = [
   Destination(
     route: LibraryRoute(),
-    headerBuilder: buildEmptyHeader,
+    headerBuilder: buildLibraryHeader,
     label: 'Library',
     icon: Icon(Icons.library_books_outlined),
     selectedIcon: Icon(Icons.library_books),

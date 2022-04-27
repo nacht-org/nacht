@@ -39,6 +39,13 @@ class _$AppRouter extends RootStackRouter {
           child: NovelPage(
               key: args.key, novel: args.novel, crawler: args.crawler));
     },
+    WebViewRoute.name: (routeData) {
+      final args = routeData.argsAs<WebViewRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: WebViewPage(
+              key: args.key, title: args.title, initialUrl: args.initialUrl));
+    },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LibraryPage());
@@ -70,7 +77,8 @@ class _$AppRouter extends RootStackRouter {
         ]),
         RouteConfig(ImportFromUrlRoute.name, path: 'import-from-url'),
         RouteConfig(PopularRoute.name, path: 'popular'),
-        RouteConfig(NovelRoute.name, path: 'novel')
+        RouteConfig(NovelRoute.name, path: 'novel'),
+        RouteConfig(WebViewRoute.name, path: 'webview')
       ];
 }
 
@@ -140,6 +148,34 @@ class NovelRouteArgs {
   @override
   String toString() {
     return 'NovelRouteArgs{key: $key, novel: $novel, crawler: $crawler}';
+  }
+}
+
+/// generated route for
+/// [WebViewPage]
+class WebViewRoute extends PageRouteInfo<WebViewRouteArgs> {
+  WebViewRoute({Key? key, required String title, required String initialUrl})
+      : super(WebViewRoute.name,
+            path: 'webview',
+            args: WebViewRouteArgs(
+                key: key, title: title, initialUrl: initialUrl));
+
+  static const String name = 'WebViewRoute';
+}
+
+class WebViewRouteArgs {
+  const WebViewRouteArgs(
+      {this.key, required this.title, required this.initialUrl});
+
+  final Key? key;
+
+  final String title;
+
+  final String initialUrl;
+
+  @override
+  String toString() {
+    return 'WebViewRouteArgs{key: $key, title: $title, initialUrl: $initialUrl}';
   }
 }
 

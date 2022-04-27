@@ -118,20 +118,22 @@ class PopularView extends SearchableScrollView {
           child: Container(
             height: 64,
             alignment: Alignment.center,
-            child: Consumer(builder: (context, ref, child) {
-              final loaderState = ref.watch(popularPageLoaderState);
+            child: Consumer(
+              builder: (context, ref, child) {
+                final loaderState = ref.watch(popularPageLoaderState);
 
-              return loaderState.when(
-                data: (_) {
-                  return TextButton(
-                    child: const Text('Load more'),
-                    onPressed: () =>
-                        ref.read(popularPageLoaderState.notifier).loadNext(),
-                  );
-                },
-                loading: () => const CircularProgressIndicator(),
-              );
-            }),
+                return loaderState.when(
+                  data: (_) {
+                    return TextButton(
+                      child: const Text('Load more'),
+                      onPressed: () =>
+                          ref.read(popularPageLoaderState.notifier).loadNext(),
+                    );
+                  },
+                  loading: () => const CircularProgressIndicator(),
+                );
+              },
+            ),
           ),
         ),
       ],

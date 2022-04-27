@@ -6,3 +6,4 @@ export 'library_page/library_page.dart';
 export 'home_page/more_page.dart';
 export 'home_page/updates_page.dart';
 export 'novel_page/novel_page.dart';
+export 'webview_page/webview_page.dart';

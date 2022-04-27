@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:chapturn/config/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -34,11 +36,17 @@ class ActionBar extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ActionItem(
-              icon: Icons.open_in_browser,
-              label: 'WebView',
-              onTap: () {},
-            ),
+            child: Consumer(builder: (context, ref, child) {
+              final novel = ref.watch(novelProvider);
+
+              return ActionItem(
+                icon: Icons.open_in_browser,
+                label: 'WebView',
+                onTap: () => context.router.push(
+                  WebViewRoute(title: novel.title, initialUrl: novel.url),
+                ),
+              );
+            }),
           ),
         ],
       ),

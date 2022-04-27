@@ -28,7 +28,8 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: NovelPage,
       path: 'novel',
-    )
+    ),
+    AutoRoute(page: WebViewPage, path: 'webview'),
   ],
 )
 class AppRouter extends _$AppRouter {}

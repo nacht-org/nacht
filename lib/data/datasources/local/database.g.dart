@@ -2989,6 +2989,7 @@ class $MetaDatasTable extends MetaDatas
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
+  _$AppDatabase.connect(DatabaseConnection c) : super.connect(c);
   late final $AssetTypesTable assetTypes = $AssetTypesTable(this);
   late final $AssetsTable assets = $AssetsTable(this);
   late final $StatusesTable statuses = $StatusesTable(this);

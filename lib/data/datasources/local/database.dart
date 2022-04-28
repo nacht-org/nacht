@@ -98,19 +98,19 @@ class AppDatabase extends _$AppDatabase {
 
           batch.insertAll(assetTypes, [
             AssetTypesCompanion.insert(
-                id: const Value(1), type: 'image', subType: 'apng'),
+                id: const Value(1), mimetype: 'image/apng'),
             AssetTypesCompanion.insert(
-                id: const Value(2), type: 'image', subType: 'avif'),
+                id: const Value(2), mimetype: 'image/avif'),
             AssetTypesCompanion.insert(
-                id: const Value(3), type: 'image', subType: 'gif'),
+                id: const Value(3), mimetype: 'image/gif'),
             AssetTypesCompanion.insert(
-                id: const Value(4), type: 'image', subType: 'jpeg'),
+                id: const Value(4), mimetype: 'image/jpeg'),
             AssetTypesCompanion.insert(
-                id: const Value(5), type: 'image', subType: 'png'),
+                id: const Value(5), mimetype: 'image/png'),
             AssetTypesCompanion.insert(
-                id: const Value(6), type: 'image', subType: 'svg+xml'),
+                id: const Value(6), mimetype: 'image/svg+xml'),
             AssetTypesCompanion.insert(
-                id: const Value(7), type: 'image', subType: 'webp'),
+                id: const Value(7), mimetype: 'image/webp'),
           ]);
         });
       },

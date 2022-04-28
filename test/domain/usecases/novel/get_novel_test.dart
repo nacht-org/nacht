@@ -1,11 +1,11 @@
 import 'package:chapturn/domain/repositories/novel_repository.dart';
-import 'package:chapturn/domain/usecases/get_novel.dart';
+import 'package:chapturn/domain/usecases/novel/get_novel.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../helpers/model_helper.dart';
-import '../../helpers/test_helper.mocks.dart';
+import '../../../helpers/model_helper.dart';
+import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
   late NovelLocalRepository mockNovelLocalRepository;

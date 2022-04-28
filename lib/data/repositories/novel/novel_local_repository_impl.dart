@@ -245,6 +245,20 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
       favourite: Value(value),
     );
 
+    await _update(companion);
+  }
+
+  @override
+  Future<void> setCover(int novelId, AssetEntity asset) async {
+    final companion = NovelsCompanion(
+      id: Value(novelId),
+      coverId: Value(asset.id),
+    );
+
+    await _update(companion);
+  }
+
+  Future<void> _update(NovelsCompanion companion) async {
     final statement = database.update(database.novels)
       ..whereSamePrimaryKey(companion);
 

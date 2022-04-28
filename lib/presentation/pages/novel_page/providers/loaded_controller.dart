@@ -1,8 +1,8 @@
 import 'package:chapturn/domain/entities/novel/novel_entity.dart';
 import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
 import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
-import 'package:chapturn/domain/usecases/get_novel.dart';
-import 'package:chapturn/domain/usecases/parse_or_get_novel.dart';
+import 'package:chapturn/domain/usecases/novel/get_novel.dart';
+import 'package:chapturn/domain/usecases/novel/parse_or_get_novel.dart';
 import 'package:chapturn/presentation/controllers/library/library_controller.dart';
 import 'package:chapturn/presentation/controllers/library/library_provider.dart';
 import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';

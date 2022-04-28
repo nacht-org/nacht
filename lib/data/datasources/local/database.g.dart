@@ -9,34 +9,29 @@ part of 'database.dart';
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class AssetType extends DataClass implements Insertable<AssetType> {
   final int id;
-  final String type;
-  final String subType;
-  AssetType({required this.id, required this.type, required this.subType});
+  final String mimetype;
+  AssetType({required this.id, required this.mimetype});
   factory AssetType.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return AssetType(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      type: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}type'])!,
-      subType: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}sub_type'])!,
+      mimetype: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}mimetype'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['type'] = Variable<String>(type);
-    map['sub_type'] = Variable<String>(subType);
+    map['mimetype'] = Variable<String>(mimetype);
     return map;
   }
 
   AssetTypesCompanion toCompanion(bool nullToAbsent) {
     return AssetTypesCompanion(
       id: Value(id),
-      type: Value(type),
-      subType: Value(subType),
+      mimetype: Value(mimetype),
     );
   }
 
@@ -45,8 +40,7 @@ class AssetType extends DataClass implements Insertable<AssetType> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return AssetType(
       id: serializer.fromJson<int>(json['id']),
-      type: serializer.fromJson<String>(json['type']),
-      subType: serializer.fromJson<String>(json['subType']),
+      mimetype: serializer.fromJson<String>(json['mimetype']),
     );
   }
   @override
@@ -54,70 +48,58 @@ class AssetType extends DataClass implements Insertable<AssetType> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'type': serializer.toJson<String>(type),
-      'subType': serializer.toJson<String>(subType),
+      'mimetype': serializer.toJson<String>(mimetype),
     };
   }
 
-  AssetType copyWith({int? id, String? type, String? subType}) => AssetType(
+  AssetType copyWith({int? id, String? mimetype}) => AssetType(
         id: id ?? this.id,
-        type: type ?? this.type,
-        subType: subType ?? this.subType,
+        mimetype: mimetype ?? this.mimetype,
       );
   @override
   String toString() {
     return (StringBuffer('AssetType(')
           ..write('id: $id, ')
-          ..write('type: $type, ')
-          ..write('subType: $subType')
+          ..write('mimetype: $mimetype')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, type, subType);
+  int get hashCode => Object.hash(id, mimetype);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AssetType &&
           other.id == this.id &&
-          other.type == this.type &&
-          other.subType == this.subType);
+          other.mimetype == this.mimetype);
 }
 
 class AssetTypesCompanion extends UpdateCompanion<AssetType> {
   final Value<int> id;
-  final Value<String> type;
-  final Value<String> subType;
+  final Value<String> mimetype;
   const AssetTypesCompanion({
     this.id = const Value.absent(),
-    this.type = const Value.absent(),
-    this.subType = const Value.absent(),
+    this.mimetype = const Value.absent(),
   });
   AssetTypesCompanion.insert({
     this.id = const Value.absent(),
-    required String type,
-    required String subType,
-  })  : type = Value(type),
-        subType = Value(subType);
+    required String mimetype,
+  }) : mimetype = Value(mimetype);
   static Insertable<AssetType> custom({
     Expression<int>? id,
-    Expression<String>? type,
-    Expression<String>? subType,
+    Expression<String>? mimetype,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (type != null) 'type': type,
-      if (subType != null) 'sub_type': subType,
+      if (mimetype != null) 'mimetype': mimetype,
     });
   }
 
-  AssetTypesCompanion copyWith(
-      {Value<int>? id, Value<String>? type, Value<String>? subType}) {
+  AssetTypesCompanion copyWith({Value<int>? id, Value<String>? mimetype}) {
     return AssetTypesCompanion(
       id: id ?? this.id,
-      type: type ?? this.type,
-      subType: subType ?? this.subType,
+      mimetype: mimetype ?? this.mimetype,
     );
   }
 
@@ -127,11 +109,8 @@ class AssetTypesCompanion extends UpdateCompanion<AssetType> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (type.present) {
-      map['type'] = Variable<String>(type.value);
-    }
-    if (subType.present) {
-      map['sub_type'] = Variable<String>(subType.value);
+    if (mimetype.present) {
+      map['mimetype'] = Variable<String>(mimetype.value);
     }
     return map;
   }
@@ -140,8 +119,7 @@ class AssetTypesCompanion extends UpdateCompanion<AssetType> {
   String toString() {
     return (StringBuffer('AssetTypesCompanion(')
           ..write('id: $id, ')
-          ..write('type: $type, ')
-          ..write('subType: $subType')
+          ..write('mimetype: $mimetype')
           ..write(')'))
         .toString();
   }
@@ -160,18 +138,13 @@ class $AssetTypesTable extends AssetTypes
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _typeMeta = const VerificationMeta('type');
+  final VerificationMeta _mimetypeMeta = const VerificationMeta('mimetype');
   @override
-  late final GeneratedColumn<String?> type = GeneratedColumn<String?>(
-      'type', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _subTypeMeta = const VerificationMeta('subType');
-  @override
-  late final GeneratedColumn<String?> subType = GeneratedColumn<String?>(
-      'sub_type', aliasedName, false,
+  late final GeneratedColumn<String?> mimetype = GeneratedColumn<String?>(
+      'mimetype', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, type, subType];
+  List<GeneratedColumn> get $columns => [id, mimetype];
   @override
   String get aliasedName => _alias ?? 'asset_types';
   @override
@@ -184,17 +157,11 @@ class $AssetTypesTable extends AssetTypes
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('type')) {
-      context.handle(
-          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    if (data.containsKey('mimetype')) {
+      context.handle(_mimetypeMeta,
+          mimetype.isAcceptableOrUnknown(data['mimetype']!, _mimetypeMeta));
     } else if (isInserting) {
-      context.missing(_typeMeta);
-    }
-    if (data.containsKey('sub_type')) {
-      context.handle(_subTypeMeta,
-          subType.isAcceptableOrUnknown(data['sub_type']!, _subTypeMeta));
-    } else if (isInserting) {
-      context.missing(_subTypeMeta);
+      context.missing(_mimetypeMeta);
     }
     return context;
   }

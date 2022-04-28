@@ -5,9 +5,11 @@
 import 'dart:async' as _i6;
 
 import 'package:chapturn/core/failure.dart' as _i5;
+import 'package:chapturn/data/datasources/local/database.dart' as _i13;
 import 'package:chapturn/domain/entities/entities.dart' as _i7;
 import 'package:chapturn/domain/entities/network/network_connection.dart'
     as _i10;
+import 'package:chapturn/domain/repositories/asset_repository.dart' as _i12;
 import 'package:chapturn/domain/repositories/category_repository.dart' as _i11;
 import 'package:chapturn/domain/repositories/crawler_repository.dart' as _i4;
 import 'package:chapturn/domain/repositories/network_repository.dart' as _i9;
@@ -146,6 +148,11 @@ class MockNovelLocalRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#setFavourite, [novelId, value]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
+  @override
+  _i6.Future<void> setCover(int? novelId, _i7.AssetEntity? asset) =>
+      (super.noSuchMethod(Invocation.method(#setCover, [novelId, asset]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
 }
 
 /// A class which mocks [NetworkRepository].
@@ -202,4 +209,36 @@ class MockCategoryRepository extends _i1.Mock
               returnValue:
                   Future<List<_i7.NovelEntity>>.value(<_i7.NovelEntity>[]))
           as _i6.Future<List<_i7.NovelEntity>>);
+}
+
+/// A class which mocks [AssetRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAssetRepository extends _i1.Mock implements _i12.AssetRepository {
+  MockAssetRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, _i7.AssetEntity>> addAsset(
+          _i13.AssetsCompanion? asset) =>
+      (super.noSuchMethod(Invocation.method(#addAsset, [asset]),
+          returnValue: Future<_i2.Either<_i5.Failure, _i7.AssetEntity>>.value(
+              _FakeEither_0<_i5.Failure, _i7.AssetEntity>())) as _i6
+          .Future<_i2.Either<_i5.Failure, _i7.AssetEntity>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, _i13.AssetsCompanion>> downloadAsset(
+          String? url) =>
+      (super.noSuchMethod(Invocation.method(#downloadAsset, [url]),
+              returnValue:
+                  Future<_i2.Either<_i5.Failure, _i13.AssetsCompanion>>.value(
+                      _FakeEither_0<_i5.Failure, _i13.AssetsCompanion>()))
+          as _i6.Future<_i2.Either<_i5.Failure, _i13.AssetsCompanion>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, void>> deleteAsset(
+          _i7.AssetEntity? asset) =>
+      (super.noSuchMethod(Invocation.method(#deleteAsset, [asset]),
+              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
+                  _FakeEither_0<_i5.Failure, void>()))
+          as _i6.Future<_i2.Either<_i5.Failure, void>>);
 }

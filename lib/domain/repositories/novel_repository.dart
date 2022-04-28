@@ -12,4 +12,5 @@ abstract class NovelLocalRepository {
   Future<Either<Failure, NovelEntity>> getNovelByUrl(String url);
   Future<Either<Failure, NovelEntity>> saveNovel(Novel novel);
   Future<void> setFavourite(int novelId, bool value);
+  Future<void> setCover(int novelId, AssetEntity asset);
 }

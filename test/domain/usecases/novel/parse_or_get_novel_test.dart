@@ -1,14 +1,13 @@
 import 'package:chapturn/domain/entities/entities.dart';
 import 'package:chapturn/domain/repositories/network_repository.dart';
 import 'package:chapturn/domain/repositories/novel_repository.dart';
-import 'package:chapturn/domain/usecases/parse_or_get_novel.dart';
+import 'package:chapturn/domain/usecases/novel/parse_or_get_novel.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:chapturn/data/datasources/local/database.dart' as db;
 
-import '../../helpers/test_helper.mocks.dart';
+import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
   late NovelRemoteRepository mockRemoteRepository;
@@ -21,9 +20,9 @@ void main() {
     mockLocalRepository = MockNovelLocalRepository();
     mockNetworkRepository = MockNetworkRepository();
     usecase = ParseOrGetNovel(
-      mockRemoteRepository,
-      mockLocalRepository,
-      mockNetworkRepository,
+      remoteRepository: mockRemoteRepository,
+      localRepository: mockLocalRepository,
+      networkRepository: mockNetworkRepository,
     );
   });
 

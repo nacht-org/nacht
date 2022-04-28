@@ -4,9 +4,9 @@ import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
 import 'package:chapturn/domain/usecases/category/get_all_categories_with_novels.dart';
 import 'package:chapturn/domain/usecases/get_all_crawlers.dart';
 import 'package:chapturn/domain/usecases/get_crawler_factory_for.dart';
-import 'package:chapturn/domain/usecases/get_novel.dart';
-import 'package:chapturn/domain/usecases/get_popular_novels.dart';
-import 'package:chapturn/domain/usecases/parse_or_get_novel.dart';
+import 'package:chapturn/domain/usecases/novel/get_novel.dart';
+import 'package:chapturn/domain/usecases/novel/get_popular_novels.dart';
+import 'package:chapturn/domain/usecases/novel/parse_or_get_novel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final getAllCrawlers = Provider<GetAllCrawlers>(
@@ -21,9 +21,9 @@ final getPopularNovels = Provider<GetPopularNovels>(
 
 final parseOrGetNovel = Provider<ParseOrGetNovel>(
   (ref) => ParseOrGetNovel(
-    ref.watch(novelRemoteRepository),
-    ref.watch(novelLocalRepository),
-    ref.watch(networkRepository),
+    remoteRepository: ref.watch(novelRemoteRepository),
+    localRepository: ref.watch(novelLocalRepository),
+    networkRepository: ref.watch(networkRepository),
   ),
 );
 

@@ -16,6 +16,7 @@ class NovelEntity with _$NovelEntity {
     required String? author,
     required List<String> description,
     required String? coverUrl,
+    AssetEntity? cover,
     required NovelStatus status,
     required String lang,
     required List<VolumeEntity> volumes,

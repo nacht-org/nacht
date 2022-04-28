@@ -1,10 +1,10 @@
 import 'package:chapturn/domain/entities/entities.dart';
-import 'package:chapturn/domain/usecases/get_popular_novels.dart';
+import 'package:chapturn/domain/usecases/novel/get_popular_novels.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../helpers/test_helper.mocks.dart';
+import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
   late MockCrawlerRepository mockCrawlerRepository;

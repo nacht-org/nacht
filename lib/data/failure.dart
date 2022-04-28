@@ -5,3 +5,15 @@ class NovelNotFound extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class CoverNotAvailable extends Failure {
+  const CoverNotAvailable();
+  @override
+  List<Object?> get props => [];
+}
+
+class NetworkNotAvailable extends Failure {
+  const NetworkNotAvailable();
+  @override
+  List<Object?> get props => [];
+}

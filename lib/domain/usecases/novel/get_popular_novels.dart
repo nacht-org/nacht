@@ -2,8 +2,8 @@ import 'package:chapturn/domain/repositories/crawler_repository.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../core/failure.dart';
-import '../entities/entities.dart';
+import '../../../core/failure.dart';
+import '../../entities/entities.dart';
 
 class GetPopularNovels {
   GetPopularNovels({required this.crawlerRepository});

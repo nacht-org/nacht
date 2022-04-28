@@ -25,6 +25,7 @@ class _$NovelEntityTearOff {
       required String? author,
       required List<String> description,
       required String? coverUrl,
+      AssetEntity? cover,
       required NovelStatus status,
       required String lang,
       required List<VolumeEntity> volumes,
@@ -39,6 +40,7 @@ class _$NovelEntityTearOff {
       author: author,
       description: description,
       coverUrl: coverUrl,
+      cover: cover,
       status: status,
       lang: lang,
       volumes: volumes,
@@ -61,6 +63,7 @@ mixin _$NovelEntity {
   String? get author => throw _privateConstructorUsedError;
   List<String> get description => throw _privateConstructorUsedError;
   String? get coverUrl => throw _privateConstructorUsedError;
+  AssetEntity? get cover => throw _privateConstructorUsedError;
   NovelStatus get status => throw _privateConstructorUsedError;
   String get lang => throw _privateConstructorUsedError;
   List<VolumeEntity> get volumes => throw _privateConstructorUsedError;
@@ -86,6 +89,7 @@ abstract class $NovelEntityCopyWith<$Res> {
       String? author,
       List<String> description,
       String? coverUrl,
+      AssetEntity? cover,
       NovelStatus status,
       String lang,
       List<VolumeEntity> volumes,
@@ -93,6 +97,8 @@ abstract class $NovelEntityCopyWith<$Res> {
       WorkType workType,
       ReadingDirection readingDirection,
       bool favourite});
+
+  $AssetEntityCopyWith<$Res>? get cover;
 }
 
 /// @nodoc
@@ -111,6 +117,7 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
     Object? author = freezed,
     Object? description = freezed,
     Object? coverUrl = freezed,
+    Object? cover = freezed,
     Object? status = freezed,
     Object? lang = freezed,
     Object? volumes = freezed,
@@ -144,6 +151,10 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
           ? _value.coverUrl
           : coverUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      cover: cover == freezed
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as AssetEntity?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -174,6 +185,17 @@ class _$NovelEntityCopyWithImpl<$Res> implements $NovelEntityCopyWith<$Res> {
               as bool,
     ));
   }
+
+  @override
+  $AssetEntityCopyWith<$Res>? get cover {
+    if (_value.cover == null) {
+      return null;
+    }
+
+    return $AssetEntityCopyWith<$Res>(_value.cover!, (value) {
+      return _then(_value.copyWith(cover: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -190,6 +212,7 @@ abstract class _$NovelEntityCopyWith<$Res>
       String? author,
       List<String> description,
       String? coverUrl,
+      AssetEntity? cover,
       NovelStatus status,
       String lang,
       List<VolumeEntity> volumes,
@@ -197,6 +220,9 @@ abstract class _$NovelEntityCopyWith<$Res>
       WorkType workType,
       ReadingDirection readingDirection,
       bool favourite});
+
+  @override
+  $AssetEntityCopyWith<$Res>? get cover;
 }
 
 /// @nodoc
@@ -217,6 +243,7 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
     Object? author = freezed,
     Object? description = freezed,
     Object? coverUrl = freezed,
+    Object? cover = freezed,
     Object? status = freezed,
     Object? lang = freezed,
     Object? volumes = freezed,
@@ -250,6 +277,10 @@ class __$NovelEntityCopyWithImpl<$Res> extends _$NovelEntityCopyWithImpl<$Res>
           ? _value.coverUrl
           : coverUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      cover: cover == freezed
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as AssetEntity?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -292,6 +323,7 @@ class _$_NovelEntity implements _NovelEntity {
       required this.author,
       required this.description,
       required this.coverUrl,
+      this.cover,
       required this.status,
       required this.lang,
       required this.volumes,
@@ -313,6 +345,8 @@ class _$_NovelEntity implements _NovelEntity {
   @override
   final String? coverUrl;
   @override
+  final AssetEntity? cover;
+  @override
   final NovelStatus status;
   @override
   final String lang;
@@ -329,7 +363,7 @@ class _$_NovelEntity implements _NovelEntity {
 
   @override
   String toString() {
-    return 'NovelEntity(id: $id, title: $title, url: $url, author: $author, description: $description, coverUrl: $coverUrl, status: $status, lang: $lang, volumes: $volumes, metadata: $metadata, workType: $workType, readingDirection: $readingDirection, favourite: $favourite)';
+    return 'NovelEntity(id: $id, title: $title, url: $url, author: $author, description: $description, coverUrl: $coverUrl, cover: $cover, status: $status, lang: $lang, volumes: $volumes, metadata: $metadata, workType: $workType, readingDirection: $readingDirection, favourite: $favourite)';
   }
 
   @override
@@ -344,6 +378,7 @@ class _$_NovelEntity implements _NovelEntity {
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
             const DeepCollectionEquality().equals(other.coverUrl, coverUrl) &&
+            const DeepCollectionEquality().equals(other.cover, cover) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.lang, lang) &&
             const DeepCollectionEquality().equals(other.volumes, volumes) &&
@@ -363,6 +398,7 @@ class _$_NovelEntity implements _NovelEntity {
       const DeepCollectionEquality().hash(author),
       const DeepCollectionEquality().hash(description),
       const DeepCollectionEquality().hash(coverUrl),
+      const DeepCollectionEquality().hash(cover),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(lang),
       const DeepCollectionEquality().hash(volumes),
@@ -385,6 +421,7 @@ abstract class _NovelEntity implements NovelEntity {
       required String? author,
       required List<String> description,
       required String? coverUrl,
+      AssetEntity? cover,
       required NovelStatus status,
       required String lang,
       required List<VolumeEntity> volumes,
@@ -405,6 +442,8 @@ abstract class _NovelEntity implements NovelEntity {
   List<String> get description;
   @override
   String? get coverUrl;
+  @override
+  AssetEntity? get cover;
   @override
   NovelStatus get status;
   @override

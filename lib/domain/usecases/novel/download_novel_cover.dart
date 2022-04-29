@@ -9,6 +9,7 @@ import 'package:dartz/dartz.dart';
 /// Potential failures
 /// * [CoverNotAvailable] if novel has not cover.
 /// * [NetworkNotAvailable] if internet connection is not available.
+/// * [SameAssetError] if the current asset has the same hash as downloaded.
 ///
 /// See also:
 /// * [AssetRepository.downloadAsset]
@@ -38,18 +39,22 @@ class DownloadNovelCover {
       return const Left(NetworkNotAvailable());
     }
 
-    final companionResult =
-        await assetRepository.downloadAsset(novel.coverUrl!);
+    final dataResult = await assetRepository.downloadAsset(novel.coverUrl!);
 
     final assetResult =
-        await companionResult.fold<Future<Either<Failure, AssetEntity>>>(
+        await dataResult.fold<Future<Either<Failure, AssetEntity>>>(
       (failure) async => Left(failure),
-      (companion) async {
+      (data) async {
         if (novel.cover != null) {
+          if (novel.cover!.hash == data.hash) {
+            return const Left(SameAssetError());
+          }
+
           await assetRepository.deleteAsset(novel.cover!);
         }
 
-        return await assetRepository.addAsset(companion);
+        return await assetRepository.addAsset(
+            novel.id.toString(), data, novel.coverUrl);
       },
     );
 

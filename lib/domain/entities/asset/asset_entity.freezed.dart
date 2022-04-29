@@ -19,10 +19,16 @@ class _$AssetEntityTearOff {
   const _$AssetEntityTearOff();
 
   _AssetEntity call(
-      {required int id, required String path, required String mimetype}) {
+      {required int id,
+      required String? url,
+      required String path,
+      required String hash,
+      required String mimetype}) {
     return _AssetEntity(
       id: id,
+      url: url,
       path: path,
+      hash: hash,
       mimetype: mimetype,
     );
   }
@@ -34,7 +40,9 @@ const $AssetEntity = _$AssetEntityTearOff();
 /// @nodoc
 mixin _$AssetEntity {
   int get id => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
+  String get hash => throw _privateConstructorUsedError;
   String get mimetype => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -47,7 +55,7 @@ abstract class $AssetEntityCopyWith<$Res> {
   factory $AssetEntityCopyWith(
           AssetEntity value, $Res Function(AssetEntity) then) =
       _$AssetEntityCopyWithImpl<$Res>;
-  $Res call({int id, String path, String mimetype});
+  $Res call({int id, String? url, String path, String hash, String mimetype});
 }
 
 /// @nodoc
@@ -61,7 +69,9 @@ class _$AssetEntityCopyWithImpl<$Res> implements $AssetEntityCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? url = freezed,
     Object? path = freezed,
+    Object? hash = freezed,
     Object? mimetype = freezed,
   }) {
     return _then(_value.copyWith(
@@ -69,9 +79,17 @@ class _$AssetEntityCopyWithImpl<$Res> implements $AssetEntityCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       path: path == freezed
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
+              as String,
+      hash: hash == freezed
+          ? _value.hash
+          : hash // ignore: cast_nullable_to_non_nullable
               as String,
       mimetype: mimetype == freezed
           ? _value.mimetype
@@ -88,7 +106,7 @@ abstract class _$AssetEntityCopyWith<$Res>
           _AssetEntity value, $Res Function(_AssetEntity) then) =
       __$AssetEntityCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String path, String mimetype});
+  $Res call({int id, String? url, String path, String hash, String mimetype});
 }
 
 /// @nodoc
@@ -104,7 +122,9 @@ class __$AssetEntityCopyWithImpl<$Res> extends _$AssetEntityCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? url = freezed,
     Object? path = freezed,
+    Object? hash = freezed,
     Object? mimetype = freezed,
   }) {
     return _then(_AssetEntity(
@@ -112,9 +132,17 @@ class __$AssetEntityCopyWithImpl<$Res> extends _$AssetEntityCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       path: path == freezed
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
+              as String,
+      hash: hash == freezed
+          ? _value.hash
+          : hash // ignore: cast_nullable_to_non_nullable
               as String,
       mimetype: mimetype == freezed
           ? _value.mimetype
@@ -128,18 +156,26 @@ class __$AssetEntityCopyWithImpl<$Res> extends _$AssetEntityCopyWithImpl<$Res>
 
 class _$_AssetEntity implements _AssetEntity {
   _$_AssetEntity(
-      {required this.id, required this.path, required this.mimetype});
+      {required this.id,
+      required this.url,
+      required this.path,
+      required this.hash,
+      required this.mimetype});
 
   @override
   final int id;
   @override
+  final String? url;
+  @override
   final String path;
+  @override
+  final String hash;
   @override
   final String mimetype;
 
   @override
   String toString() {
-    return 'AssetEntity(id: $id, path: $path, mimetype: $mimetype)';
+    return 'AssetEntity(id: $id, url: $url, path: $path, hash: $hash, mimetype: $mimetype)';
   }
 
   @override
@@ -148,7 +184,9 @@ class _$_AssetEntity implements _AssetEntity {
         (other.runtimeType == runtimeType &&
             other is _AssetEntity &&
             const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.url, url) &&
             const DeepCollectionEquality().equals(other.path, path) &&
+            const DeepCollectionEquality().equals(other.hash, hash) &&
             const DeepCollectionEquality().equals(other.mimetype, mimetype));
   }
 
@@ -156,7 +194,9 @@ class _$_AssetEntity implements _AssetEntity {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(path),
+      const DeepCollectionEquality().hash(hash),
       const DeepCollectionEquality().hash(mimetype));
 
   @JsonKey(ignore: true)
@@ -168,13 +208,19 @@ class _$_AssetEntity implements _AssetEntity {
 abstract class _AssetEntity implements AssetEntity {
   factory _AssetEntity(
       {required int id,
+      required String? url,
       required String path,
+      required String hash,
       required String mimetype}) = _$_AssetEntity;
 
   @override
   int get id;
   @override
+  String? get url;
+  @override
   String get path;
+  @override
+  String get hash;
   @override
   String get mimetype;
   @override

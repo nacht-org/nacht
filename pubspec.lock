@@ -226,12 +226,12 @@ packages:
     source: hosted
     version: "3.0.1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   csslib:
     dependency: transitive
     description:
@@ -268,7 +268,7 @@ packages:
     source: hosted
     version: "0.7.3"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       url: "https://pub.dartlang.org"

@@ -6,3 +6,4 @@ export 'novel/metadata_entity.dart';
 export 'category/category_entity.dart';
 export 'category/novel_category_entity.dart';
 export 'asset/asset_entity.dart';
+export 'asset/asset_data.dart';

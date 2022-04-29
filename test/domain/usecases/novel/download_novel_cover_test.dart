@@ -33,6 +33,8 @@ void main() {
     id: 2,
     path: 'path/to/image',
     mimetype: 'image/',
+    hash: 'hash',
+    url: null,
   );
 
   final tNovelWithoutCoverUrl = helperNovelEntity.copyWith(
@@ -45,7 +47,7 @@ void main() {
 
   final tNovel = helperNovelEntity;
 
-  const tCompanion = AssetsCompanion();
+  final tAssetData = AssetData([], 'image/png', 'hash');
 
   test('should throw cover not available if novel has no cover', () async {
     final result = await usecase.execute(tNovelWithoutCoverUrl);
@@ -67,8 +69,9 @@ void main() {
     when(mockNetworkRepository.isConnectionAvailable())
         .thenAnswer((_) async => true);
     when(mockAssetRepository.downloadAsset(tNovel.coverUrl!))
-        .thenAnswer((_) async => const Right(tCompanion));
-    when(mockAssetRepository.addAsset(tCompanion))
+        .thenAnswer((_) async => Right(tAssetData));
+    when(mockAssetRepository.addAsset(
+            tNovel.id.toString(), tAssetData, tNovel.coverUrl))
         .thenAnswer((_) async => Right(tAssetEntity));
 
     final result = await usecase.execute(tNovel);
@@ -76,14 +79,29 @@ void main() {
     expect(result, Right(tAssetEntity));
   });
 
-  test('should delete existing novel cover', () async {
+  test('should abort when downloaded data has the same hash value', () async {
     when(mockNetworkRepository.isConnectionAvailable())
         .thenAnswer((_) async => true);
     when(mockAssetRepository.downloadAsset(tNovel.coverUrl!))
-        .thenAnswer((_) async => const Right(tCompanion));
+        .thenAnswer((_) async => Right(tAssetData));
+
+    final result = await usecase.execute(tNovelWithCover);
+
+    expect(result, const Left(SameAssetError()));
+    verifyNever(mockAssetRepository.deleteAsset(tNovelWithCover.cover!));
+  });
+
+  test('should delete existing novel cover if hash is different', () async {
+    final tLocalAssetData = tAssetData.copyWith(hash: 'different');
+
+    when(mockNetworkRepository.isConnectionAvailable())
+        .thenAnswer((_) async => true);
+    when(mockAssetRepository.downloadAsset(tNovel.coverUrl!))
+        .thenAnswer((_) async => Right(tLocalAssetData));
     when(mockAssetRepository.deleteAsset(tNovelWithCover.cover!))
         .thenAnswer((_) async => const Right(null));
-    when(mockAssetRepository.addAsset(tCompanion))
+    when(mockAssetRepository.addAsset(
+            tNovel.id.toString(), tLocalAssetData, tNovelWithCover.coverUrl))
         .thenAnswer((_) async => Right(tAssetEntity));
 
     final result = await usecase.execute(tNovelWithCover);

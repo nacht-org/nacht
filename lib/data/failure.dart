@@ -17,3 +17,30 @@ class NetworkNotAvailable extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class DownloadFailed extends Failure {
+  const DownloadFailed(this.reason);
+
+  final String reason;
+
+  @override
+  List<Object?> get props => [reason];
+}
+
+class UnknownAssetType extends Failure {
+  const UnknownAssetType();
+  @override
+  List<Object?> get props => [];
+}
+
+class FileSaveError extends Failure {
+  const FileSaveError();
+  @override
+  List<Object?> get props => [];
+}
+
+class SameAssetError extends Failure {
+  const SameAssetError();
+  @override
+  List<Object?> get props => [];
+}

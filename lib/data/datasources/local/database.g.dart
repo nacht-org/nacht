@@ -182,16 +182,27 @@ class $AssetTypesTable extends AssetTypes
 
 class Asset extends DataClass implements Insertable<Asset> {
   final int id;
-  final String path;
+  final String? url;
+  final String? path;
+  final String hash;
   final int typeId;
-  Asset({required this.id, required this.path, required this.typeId});
+  Asset(
+      {required this.id,
+      this.url,
+      this.path,
+      required this.hash,
+      required this.typeId});
   factory Asset.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Asset(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      url: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}url']),
       path: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}path'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}path']),
+      hash: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}hash'])!,
       typeId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}type_id'])!,
     );
@@ -200,7 +211,13 @@ class Asset extends DataClass implements Insertable<Asset> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['path'] = Variable<String>(path);
+    if (!nullToAbsent || url != null) {
+      map['url'] = Variable<String?>(url);
+    }
+    if (!nullToAbsent || path != null) {
+      map['path'] = Variable<String?>(path);
+    }
+    map['hash'] = Variable<String>(hash);
     map['type_id'] = Variable<int>(typeId);
     return map;
   }
@@ -208,7 +225,9 @@ class Asset extends DataClass implements Insertable<Asset> {
   AssetsCompanion toCompanion(bool nullToAbsent) {
     return AssetsCompanion(
       id: Value(id),
-      path: Value(path),
+      url: url == null && nullToAbsent ? const Value.absent() : Value(url),
+      path: path == null && nullToAbsent ? const Value.absent() : Value(path),
+      hash: Value(hash),
       typeId: Value(typeId),
     );
   }
@@ -218,7 +237,9 @@ class Asset extends DataClass implements Insertable<Asset> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Asset(
       id: serializer.fromJson<int>(json['id']),
-      path: serializer.fromJson<String>(json['path']),
+      url: serializer.fromJson<String?>(json['url']),
+      path: serializer.fromJson<String?>(json['path']),
+      hash: serializer.fromJson<String>(json['hash']),
       typeId: serializer.fromJson<int>(json['typeId']),
     );
   }
@@ -227,69 +248,95 @@ class Asset extends DataClass implements Insertable<Asset> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'path': serializer.toJson<String>(path),
+      'url': serializer.toJson<String?>(url),
+      'path': serializer.toJson<String?>(path),
+      'hash': serializer.toJson<String>(hash),
       'typeId': serializer.toJson<int>(typeId),
     };
   }
 
-  Asset copyWith({int? id, String? path, int? typeId}) => Asset(
+  Asset copyWith(
+          {int? id, String? url, String? path, String? hash, int? typeId}) =>
+      Asset(
         id: id ?? this.id,
+        url: url ?? this.url,
         path: path ?? this.path,
+        hash: hash ?? this.hash,
         typeId: typeId ?? this.typeId,
       );
   @override
   String toString() {
     return (StringBuffer('Asset(')
           ..write('id: $id, ')
+          ..write('url: $url, ')
           ..write('path: $path, ')
+          ..write('hash: $hash, ')
           ..write('typeId: $typeId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, path, typeId);
+  int get hashCode => Object.hash(id, url, path, hash, typeId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Asset &&
           other.id == this.id &&
+          other.url == this.url &&
           other.path == this.path &&
+          other.hash == this.hash &&
           other.typeId == this.typeId);
 }
 
 class AssetsCompanion extends UpdateCompanion<Asset> {
   final Value<int> id;
-  final Value<String> path;
+  final Value<String?> url;
+  final Value<String?> path;
+  final Value<String> hash;
   final Value<int> typeId;
   const AssetsCompanion({
     this.id = const Value.absent(),
+    this.url = const Value.absent(),
     this.path = const Value.absent(),
+    this.hash = const Value.absent(),
     this.typeId = const Value.absent(),
   });
   AssetsCompanion.insert({
     this.id = const Value.absent(),
-    required String path,
+    this.url = const Value.absent(),
+    this.path = const Value.absent(),
+    required String hash,
     required int typeId,
-  })  : path = Value(path),
+  })  : hash = Value(hash),
         typeId = Value(typeId);
   static Insertable<Asset> custom({
     Expression<int>? id,
-    Expression<String>? path,
+    Expression<String?>? url,
+    Expression<String?>? path,
+    Expression<String>? hash,
     Expression<int>? typeId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (url != null) 'url': url,
       if (path != null) 'path': path,
+      if (hash != null) 'hash': hash,
       if (typeId != null) 'type_id': typeId,
     });
   }
 
   AssetsCompanion copyWith(
-      {Value<int>? id, Value<String>? path, Value<int>? typeId}) {
+      {Value<int>? id,
+      Value<String?>? url,
+      Value<String?>? path,
+      Value<String>? hash,
+      Value<int>? typeId}) {
     return AssetsCompanion(
       id: id ?? this.id,
+      url: url ?? this.url,
       path: path ?? this.path,
+      hash: hash ?? this.hash,
       typeId: typeId ?? this.typeId,
     );
   }
@@ -300,8 +347,14 @@ class AssetsCompanion extends UpdateCompanion<Asset> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
+    if (url.present) {
+      map['url'] = Variable<String?>(url.value);
+    }
     if (path.present) {
-      map['path'] = Variable<String>(path.value);
+      map['path'] = Variable<String?>(path.value);
+    }
+    if (hash.present) {
+      map['hash'] = Variable<String>(hash.value);
     }
     if (typeId.present) {
       map['type_id'] = Variable<int>(typeId.value);
@@ -313,7 +366,9 @@ class AssetsCompanion extends UpdateCompanion<Asset> {
   String toString() {
     return (StringBuffer('AssetsCompanion(')
           ..write('id: $id, ')
+          ..write('url: $url, ')
           ..write('path: $path, ')
+          ..write('hash: $hash, ')
           ..write('typeId: $typeId')
           ..write(')'))
         .toString();
@@ -332,11 +387,23 @@ class $AssetsTable extends Assets with TableInfo<$AssetsTable, Asset> {
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
+      'url', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _pathMeta = const VerificationMeta('path');
   @override
   late final GeneratedColumn<String?> path = GeneratedColumn<String?>(
-      'path', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'path', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
+  final VerificationMeta _hashMeta = const VerificationMeta('hash');
+  @override
+  late final GeneratedColumn<String?> hash = GeneratedColumn<String?>(
+      'hash', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 40),
+      type: const StringType(),
+      requiredDuringInsert: true);
   final VerificationMeta _typeIdMeta = const VerificationMeta('typeId');
   @override
   late final GeneratedColumn<int?> typeId = GeneratedColumn<int?>(
@@ -345,7 +412,7 @@ class $AssetsTable extends Assets with TableInfo<$AssetsTable, Asset> {
       requiredDuringInsert: true,
       defaultConstraints: 'REFERENCES asset_types (id)');
   @override
-  List<GeneratedColumn> get $columns => [id, path, typeId];
+  List<GeneratedColumn> get $columns => [id, url, path, hash, typeId];
   @override
   String get aliasedName => _alias ?? 'assets';
   @override
@@ -358,11 +425,19 @@ class $AssetsTable extends Assets with TableInfo<$AssetsTable, Asset> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
+    if (data.containsKey('url')) {
+      context.handle(
+          _urlMeta, url.isAcceptableOrUnknown(data['url']!, _urlMeta));
+    }
     if (data.containsKey('path')) {
       context.handle(
           _pathMeta, path.isAcceptableOrUnknown(data['path']!, _pathMeta));
+    }
+    if (data.containsKey('hash')) {
+      context.handle(
+          _hashMeta, hash.isAcceptableOrUnknown(data['hash']!, _hashMeta));
     } else if (isInserting) {
-      context.missing(_pathMeta);
+      context.missing(_hashMeta);
     }
     if (data.containsKey('type_id')) {
       context.handle(_typeIdMeta,

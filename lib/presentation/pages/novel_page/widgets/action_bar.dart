@@ -75,7 +75,7 @@ class ActionItem extends StatelessWidget {
     final textStyle = theme.textTheme.labelMedium?.copyWith(color: color);
 
     return Material(
-      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      borderRadius: const BorderRadius.all(Radius.circular(50)),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,

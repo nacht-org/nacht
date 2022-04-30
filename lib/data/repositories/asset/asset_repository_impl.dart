@@ -17,10 +17,12 @@ class AssetRepositoryImpl implements AssetRepository {
   AssetRepositoryImpl({
     required this.database,
     required this.mimeTypeToSeedMapper,
+    required this.databaseToAssetMapper,
   });
 
   final AppDatabase database;
   final Mapper<String, int> mimeTypeToSeedMapper;
+  final Mapper<Asset, AssetEntity> databaseToAssetMapper;
 
   /// Possible failures:
   /// * [UnknownAssetType]
@@ -113,5 +115,20 @@ class AssetRepositoryImpl implements AssetRepository {
       ..whereSamePrimaryKey(companion);
 
     await statement.write(companion);
+  }
+
+  /// Possible failures:
+  /// * [AssetNotFound]
+  @override
+  Future<Either<Failure, AssetEntity>> getAsset(int assetId) async {
+    final query = database.select(database.assets)
+      ..where((tbl) => tbl.id.equals(assetId));
+
+    try {
+      final asset = await query.getSingle();
+      return Right(databaseToAssetMapper.map(asset));
+    } catch (e) {
+      return const Left(AssetNotFound());
+    }
   }
 }

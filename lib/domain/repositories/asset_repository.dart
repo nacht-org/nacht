@@ -11,5 +11,8 @@ abstract class AssetRepository {
   ]);
 
   Future<Either<Failure, AssetData>> downloadAsset(String url);
+
   Future<Either<Failure, void>> deleteAsset(AssetEntity asset);
+
+  Future<Either<Failure, AssetEntity>> getAsset(int assetId);
 }

@@ -239,4 +239,10 @@ class MockAssetRepository extends _i1.Mock implements _i12.AssetRepository {
               returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
                   _FakeEither_0<_i5.Failure, void>()))
           as _i6.Future<_i2.Either<_i5.Failure, void>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, _i7.AssetEntity>> getAsset(int? assetId) =>
+      (super.noSuchMethod(Invocation.method(#getAsset, [assetId]),
+          returnValue: Future<_i2.Either<_i5.Failure, _i7.AssetEntity>>.value(
+              _FakeEither_0<_i5.Failure, _i7.AssetEntity>())) as _i6
+          .Future<_i2.Either<_i5.Failure, _i7.AssetEntity>>);
 }

@@ -44,3 +44,9 @@ class SameAssetError extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class AssetNotFound extends Failure {
+  const AssetNotFound();
+  @override
+  List<Object?> get props => [];
+}

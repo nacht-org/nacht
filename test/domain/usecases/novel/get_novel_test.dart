@@ -13,7 +13,10 @@ void main() {
 
   setUp(() {
     mockNovelLocalRepository = MockNovelLocalRepository();
-    usecase = GetNovel(novelRepository: mockNovelLocalRepository);
+    usecase = GetNovel(
+      novelRepository: mockNovelLocalRepository,
+      assetRepository: MockAssetRepository(),
+    );
   });
 
   final tNovel = helperNovelEntity;

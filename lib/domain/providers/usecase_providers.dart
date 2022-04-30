@@ -27,8 +27,11 @@ final parseOrGetNovel = Provider<ParseOrGetNovel>(
   ),
 );
 
-final getAllCategories = Provider<GetAllCategories>((ref) =>
-    GetAllCategories(categoryRepository: ref.watch(categoryRepository)));
+final getAllCategories = Provider<GetAllCategories>(
+  (ref) => GetAllCategories(
+    categoryRepository: ref.watch(categoryRepository),
+  ),
+);
 
 final changeNovelCategories = Provider<ChangeNovelCategories>(
   (ref) => ChangeNovelCategories(
@@ -37,9 +40,15 @@ final changeNovelCategories = Provider<ChangeNovelCategories>(
   ),
 );
 
-final getAllCategoriesWithNovels = Provider<GetAllCategoriesWithNovels>((ref) =>
-    GetAllCategoriesWithNovels(
-        categoryRepository: ref.watch(categoryRepository)));
+final getAllCategoriesWithNovels = Provider<GetAllCategoriesWithNovels>(
+  (ref) => GetAllCategoriesWithNovels(
+    categoryRepository: ref.watch(categoryRepository),
+  ),
+);
 
 final getNovel = Provider<GetNovel>(
-    (ref) => GetNovel(novelRepository: ref.watch(novelLocalRepository)));
+  (ref) => GetNovel(
+    novelRepository: ref.watch(novelLocalRepository),
+    assetRepository: ref.watch(assetRepository),
+  ),
+);

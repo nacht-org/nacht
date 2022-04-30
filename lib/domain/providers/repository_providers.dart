@@ -1,4 +1,6 @@
+import 'package:chapturn/data/repositories/asset/asset_repository_impl.dart';
 import 'package:chapturn/data/repositories/category/category_repository_impl.dart';
+import 'package:chapturn/domain/repositories/asset_repository.dart';
 import 'package:chapturn/domain/repositories/category_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -42,5 +44,13 @@ final categoryRepository = Provider<CategoryRepository>(
     database: ref.watch(databaseProvider),
     categoryMapper: ref.watch(databaseToCategoryMapper),
     novelMapper: ref.watch(databaseToNovelMapper),
+  ),
+);
+
+final assetRepository = Provider<AssetRepository>(
+  (ref) => AssetRepositoryImpl(
+    database: ref.watch(databaseProvider),
+    mimeTypeToSeedMapper: ref.watch(mimeTypeToSeedMapper),
+    databaseToAssetMapper: ref.watch(databaseToAssetMapper),
   ),
 );

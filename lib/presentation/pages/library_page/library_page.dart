@@ -36,6 +36,7 @@ class LibraryPage extends HookConsumerWidget {
                 return NovelGridCard(
                   title: novel.title,
                   coverUrl: novel.coverUrl,
+                  cover: novel.cover,
                   onTap: () => context.router.push(
                     NovelRoute(
                       novel: NovelEntityArgument.complete(novel),

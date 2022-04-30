@@ -78,6 +78,7 @@ final novelPageState =
       crawler: ref.watch(crawlerProvider),
       read: ref.read,
       parseOrGetNovel: ref.watch(parseOrGetNovel),
+      downloadNovelCover: ref.watch(downloadNovelCover),
     );
   },
   dependencies: [
@@ -85,6 +86,7 @@ final novelPageState =
     crawlerProvider,
     noticeProvider.notifier,
     parseOrGetNovel,
+    downloadNovelCover,
     getAllCategories,
     changeNovelCategories,
   ],
@@ -98,6 +100,7 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
     partial: (novel) => NovelPageInfo(
       title: novel.title,
       coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
+      cover: const None(),
       author: novel.author == null ? const None() : Some(novel.author!),
       status: NovelStatus.unknown,
       meta: meta,
@@ -105,6 +108,7 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
     loaded: (novel) => NovelPageInfo(
       title: novel.title,
       coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
+      cover: novel.cover == null ? const None() : Some(novel.cover!),
       author: novel.author == null ? const None() : Some(novel.author!),
       status: novel.status,
       meta: meta,
@@ -128,6 +132,7 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
       read: ref.read,
       getNovel: ref.watch(getNovel),
       parseOrGetNovel: ref.watch(parseOrGetNovel),
+      downloadNovelCover: ref.watch(downloadNovelCover),
       getAllCategories: ref.watch(getAllCategories),
       changeNovelCategories: ref.watch(changeNovelCategories),
     );
@@ -140,6 +145,7 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
     novelOverrideProvider,
     getNovel,
     parseOrGetNovel,
+    downloadNovelCover,
     getAllCategories,
     changeNovelCategories,
   ],

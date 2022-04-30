@@ -1,3 +1,4 @@
+import 'package:chapturn/domain/usecases/novel/download_novel_cover.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,12 +24,14 @@ class NovelPageController extends StateNotifier<NovelPageState> {
     required this.crawler,
     required this.read,
     required this.parseOrGetNovel,
+    required this.downloadNovelCover,
   }) : super(initial);
 
   final Crawler? crawler;
   final Reader read;
 
   final ParseOrGetNovel parseOrGetNovel;
+  final DownloadNovelCover downloadNovelCover;
 
   final _log = Logger('NovelPageController');
 
@@ -51,7 +54,18 @@ class NovelPageController extends StateNotifier<NovelPageState> {
 
     result.fold(
       (failure) => _notice.error('An error occured'),
-      (data) => state = NovelPageState.loaded(data),
+      (data) async {
+        state = NovelPageState.loaded(data);
+
+        _log.info('Downloading cover.');
+        final coverResult = await downloadNovelCover.execute(data);
+        coverResult.fold(
+          (failure) => {},
+          (cover) => state = NovelPageState.loaded(
+            data.copyWith(cover: cover),
+          ),
+        );
+      },
     );
   }
 }

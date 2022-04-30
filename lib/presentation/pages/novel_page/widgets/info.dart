@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,6 +13,14 @@ class NovelInfo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final info = ref.watch(novelInfoProvider);
 
+    final image = info.cover.fold(
+      () => info.coverUrl.fold(
+        () => null,
+        (url) => Image.network(url),
+      ),
+      (cover) => Image.file(File(cover.path)),
+    );
+
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 170,
@@ -21,19 +31,13 @@ class NovelInfo extends ConsumerWidget {
               aspectRatio: 2 / 3,
               child: Card(
                 clipBehavior: Clip.antiAlias,
-                child: info.coverUrl.fold(
-                  () => null,
-                  (url) => Image.network(
-                    url,
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                child: image,
               ),
             ),
             const SizedBox(width: 16.0),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -46,7 +50,6 @@ class NovelInfo extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
                   ),
-                  const SizedBox(height: 4.0),
                   StatusInfo(
                     status: info.status,
                     suffix: info.meta.toNullable()?.name,

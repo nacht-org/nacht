@@ -117,12 +117,13 @@ class NovelPageView extends HookConsumerWidget {
     }, []);
 
     return NestedScrollView(
+      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         Consumer(builder: (context, ref, child) {
           final novel = ref.watch(novelProvider);
 
           return SliverAppBar(
-            title: Text(novel.title),
+            title: innerBoxIsScrolled ? Text(novel.title) : null,
             floating: true,
             forceElevated: innerBoxIsScrolled,
           );
@@ -171,11 +172,11 @@ class NovelPageView extends HookConsumerWidget {
                     '$chapterCount Chapter'.pluralize(
                       test: (_) => chapterCount > 1,
                     ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  trailing: IconButton(
-                    onPressed: () {}, // TODO: Filter options
-                    icon: const Icon(Icons.filter_list),
-                  ),
+                  trailing: const Icon(Icons.filter_list),
+                  onTap: () {},
+                  dense: true,
                 ),
               );
             }),

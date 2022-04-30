@@ -17,12 +17,13 @@ class ActionBar extends StatelessWidget {
           Expanded(
             child: Consumer(
               builder: (context, ref, child) {
-                final favorite =
+                final favourite =
                     ref.watch(novelProvider.select((novel) => novel.favourite));
 
-                final icon = favorite ? Icons.favorite : Icons.favorite_outline;
-                final label = favorite ? 'In library' : 'Add to library';
-                final onTap = favorite
+                final icon =
+                    favourite ? Icons.favorite : Icons.favorite_outline;
+                final label = favourite ? 'In library' : 'Add to library';
+                final onTap = favourite
                     ? ref.read(novelProvider.notifier).removeFromLibrary
                     : ref.read(novelProvider.notifier).addToLibrary;
 
@@ -30,7 +31,7 @@ class ActionBar extends StatelessWidget {
                   icon: icon,
                   label: label,
                   onTap: onTap,
-                  active: favorite,
+                  active: favourite,
                 );
               },
             ),

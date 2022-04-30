@@ -1,6 +1,4 @@
-import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/entities/entities.dart';
-import 'package:dartz/dartz.dart';
+import '../entities/entities.dart';
 
 abstract class CategoryRepository {
   Future<List<CategoryEntity>> getAllCategories();

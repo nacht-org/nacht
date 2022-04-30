@@ -1,6 +1,7 @@
 import 'package:chapturn/domain/entities/novel/novel_entity.dart';
 import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
 import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
+import 'package:chapturn/domain/usecases/novel/download_novel_cover.dart';
 import 'package:chapturn/domain/usecases/novel/get_novel.dart';
 import 'package:chapturn/domain/usecases/novel/parse_or_get_novel.dart';
 import 'package:chapturn/presentation/controllers/library/library_controller.dart';
@@ -18,6 +19,7 @@ class LoadedController extends StateNotifier<NovelEntity> {
     required this.read,
     required this.getNovel,
     required this.parseOrGetNovel,
+    required this.downloadNovelCover,
     required this.getAllCategories,
     required this.changeNovelCategories,
   }) : super(state);
@@ -27,6 +29,7 @@ class LoadedController extends StateNotifier<NovelEntity> {
 
   final GetNovel getNovel;
   final ParseOrGetNovel parseOrGetNovel;
+  final DownloadNovelCover downloadNovelCover;
   final GetAllCategories getAllCategories;
   final ChangeNovelCategories changeNovelCategories;
 
@@ -48,7 +51,16 @@ class LoadedController extends StateNotifier<NovelEntity> {
 
     result.fold(
       (failure) => _notice.error('An error occured'),
-      (data) => state = data,
+      (data) async {
+        state = data;
+
+        _log.info('Downloading cover.');
+        final coverResult = await downloadNovelCover.execute(state);
+        coverResult.fold(
+          (failure) => {},
+          (data) => state = state.copyWith(cover: data),
+        );
+      },
     );
   }
 

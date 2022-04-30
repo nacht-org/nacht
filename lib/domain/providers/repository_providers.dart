@@ -44,6 +44,7 @@ final categoryRepository = Provider<CategoryRepository>(
     database: ref.watch(databaseProvider),
     categoryMapper: ref.watch(databaseToCategoryMapper),
     novelMapper: ref.watch(databaseToNovelMapper),
+    assetMapper: ref.watch(databaseToAssetMapper),
   ),
 );
 

@@ -1,24 +1,24 @@
-import 'package:chapturn/data/datasources/local/database.dart';
-import 'package:chapturn/data/models/models.dart';
-import 'package:chapturn/domain/entities/novel/novel_entity.dart';
-import 'package:chapturn/domain/entities/category/category_entity.dart';
-import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/mapper.dart';
-import 'package:chapturn/domain/repositories/category_repository.dart';
-import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
+
+import '../../../domain/entities/entities.dart';
+import '../../../domain/mapper.dart';
+import '../../../domain/repositories/category_repository.dart';
+import '../../datasources/local/database.dart';
+import '../../models/models.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({
     required this.database,
     required this.categoryMapper,
     required this.novelMapper,
+    required this.assetMapper,
   });
 
   final AppDatabase database;
 
   final Mapper<NovelCategory, CategoryEntity> categoryMapper;
   final Mapper<Novel, NovelEntity> novelMapper;
+  final Mapper<Asset, AssetEntity> assetMapper;
 
   @override
   Future<void> changeNovelCategories(
@@ -91,7 +91,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
         database.novelCategoriesJunction,
         database.novelCategoriesJunction.novelId.equalsExp(database.novels.id),
         useColumns: false,
-      )
+      ),
+      leftOuterJoin(
+        database.assets,
+        database.assets.id.equalsExp(database.novels.coverId),
+      ),
     ])
       ..where(database.novelCategoriesJunction.categoryId.equals(category.id));
 
@@ -99,7 +103,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
     return results.map((row) {
       final novel = row.readTable(database.novels);
-      return novelMapper.map(novel);
+      final asset = row.readTableOrNull(database.assets);
+
+      return novelMapper.map(novel).copyWith(
+            cover: asset != null ? assetMapper.map(asset) : null,
+          );
     }).toList();
   }
 }

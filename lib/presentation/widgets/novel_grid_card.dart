@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:chapturn/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 
 class NovelGridCard extends StatelessWidget {
@@ -5,15 +8,26 @@ class NovelGridCard extends StatelessWidget {
     Key? key,
     required this.title,
     this.coverUrl,
+    this.cover,
     required this.onTap,
   }) : super(key: key);
 
   final String title;
   final String? coverUrl;
+  final AssetEntity? cover;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider? image;
+    if (cover != null) {
+      image = FileImage(File(cover!.path));
+    } else if (coverUrl != null) {
+      image = NetworkImage(coverUrl!);
+    } else {
+      image = null;
+    }
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -22,10 +36,12 @@ class NovelGridCard extends StatelessWidget {
           children: [
             if (coverUrl != null)
               SizedBox.expand(
-                child: Ink.image(
-                  image: NetworkImage(coverUrl!),
-                  fit: BoxFit.fill,
-                ),
+                child: image == null
+                    ? Ink()
+                    : Ink.image(
+                        image: image,
+                        fit: BoxFit.fill,
+                      ),
               ),
             Positioned(
               child: Container(

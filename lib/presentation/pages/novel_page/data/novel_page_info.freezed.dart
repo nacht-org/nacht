@@ -21,12 +21,14 @@ class _$NovelPageInfoTearOff {
   _NovelPageInfo call(
       {required String title,
       required Option<String> coverUrl,
+      required Option<AssetEntity> cover,
       required Option<String> author,
       required NovelStatus status,
       required Option<Meta> meta}) {
     return _NovelPageInfo(
       title: title,
       coverUrl: coverUrl,
+      cover: cover,
       author: author,
       status: status,
       meta: meta,
@@ -41,6 +43,7 @@ const $NovelPageInfo = _$NovelPageInfoTearOff();
 mixin _$NovelPageInfo {
   String get title => throw _privateConstructorUsedError;
   Option<String> get coverUrl => throw _privateConstructorUsedError;
+  Option<AssetEntity> get cover => throw _privateConstructorUsedError;
   Option<String> get author => throw _privateConstructorUsedError;
   NovelStatus get status => throw _privateConstructorUsedError;
   Option<Meta> get meta => throw _privateConstructorUsedError;
@@ -58,6 +61,7 @@ abstract class $NovelPageInfoCopyWith<$Res> {
   $Res call(
       {String title,
       Option<String> coverUrl,
+      Option<AssetEntity> cover,
       Option<String> author,
       NovelStatus status,
       Option<Meta> meta});
@@ -76,6 +80,7 @@ class _$NovelPageInfoCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? coverUrl = freezed,
+    Object? cover = freezed,
     Object? author = freezed,
     Object? status = freezed,
     Object? meta = freezed,
@@ -89,6 +94,10 @@ class _$NovelPageInfoCopyWithImpl<$Res>
           ? _value.coverUrl
           : coverUrl // ignore: cast_nullable_to_non_nullable
               as Option<String>,
+      cover: cover == freezed
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as Option<AssetEntity>,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -115,6 +124,7 @@ abstract class _$NovelPageInfoCopyWith<$Res>
   $Res call(
       {String title,
       Option<String> coverUrl,
+      Option<AssetEntity> cover,
       Option<String> author,
       NovelStatus status,
       Option<Meta> meta});
@@ -135,6 +145,7 @@ class __$NovelPageInfoCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? coverUrl = freezed,
+    Object? cover = freezed,
     Object? author = freezed,
     Object? status = freezed,
     Object? meta = freezed,
@@ -148,6 +159,10 @@ class __$NovelPageInfoCopyWithImpl<$Res>
           ? _value.coverUrl
           : coverUrl // ignore: cast_nullable_to_non_nullable
               as Option<String>,
+      cover: cover == freezed
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as Option<AssetEntity>,
       author: author == freezed
           ? _value.author
           : author // ignore: cast_nullable_to_non_nullable
@@ -170,6 +185,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
   _$_NovelPageInfo(
       {required this.title,
       required this.coverUrl,
+      required this.cover,
       required this.author,
       required this.status,
       required this.meta});
@@ -179,6 +195,8 @@ class _$_NovelPageInfo implements _NovelPageInfo {
   @override
   final Option<String> coverUrl;
   @override
+  final Option<AssetEntity> cover;
+  @override
   final Option<String> author;
   @override
   final NovelStatus status;
@@ -187,7 +205,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
 
   @override
   String toString() {
-    return 'NovelPageInfo(title: $title, coverUrl: $coverUrl, author: $author, status: $status, meta: $meta)';
+    return 'NovelPageInfo(title: $title, coverUrl: $coverUrl, cover: $cover, author: $author, status: $status, meta: $meta)';
   }
 
   @override
@@ -197,6 +215,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
             other is _NovelPageInfo &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.coverUrl, coverUrl) &&
+            const DeepCollectionEquality().equals(other.cover, cover) &&
             const DeepCollectionEquality().equals(other.author, author) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.meta, meta));
@@ -207,6 +226,7 @@ class _$_NovelPageInfo implements _NovelPageInfo {
       runtimeType,
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(coverUrl),
+      const DeepCollectionEquality().hash(cover),
       const DeepCollectionEquality().hash(author),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(meta));
@@ -221,6 +241,7 @@ abstract class _NovelPageInfo implements NovelPageInfo {
   factory _NovelPageInfo(
       {required String title,
       required Option<String> coverUrl,
+      required Option<AssetEntity> cover,
       required Option<String> author,
       required NovelStatus status,
       required Option<Meta> meta}) = _$_NovelPageInfo;
@@ -229,6 +250,8 @@ abstract class _NovelPageInfo implements NovelPageInfo {
   String get title;
   @override
   Option<String> get coverUrl;
+  @override
+  Option<AssetEntity> get cover;
   @override
   Option<String> get author;
   @override

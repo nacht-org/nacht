@@ -25,16 +25,26 @@ class StatusInfo extends StatelessWidget {
   }
 
   Widget buildIcon() {
+    final IconData iconData;
     switch (status) {
       case NovelStatus.ongoing:
-        return const Icon(Icons.timelapse);
+        iconData = Icons.timelapse;
+        break;
       case NovelStatus.hiatus:
-        return const Icon(Icons.stop_circle);
+        iconData = Icons.stop_circle;
+        break;
       case NovelStatus.completed:
-        return const Icon(Icons.cancel);
+        iconData = Icons.cancel;
+        break;
       case NovelStatus.unknown:
-        return const Icon(Icons.question_mark);
+        iconData = Icons.question_mark;
+        break;
     }
+
+    return Icon(
+      iconData,
+      size: 16,
+    );
   }
 
   String buildStatusLabel() {

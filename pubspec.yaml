@@ -41,6 +41,7 @@ dependencies:
   url_launcher: ^6.0.20
   webview_flutter: ^3.0.2
   crypto: ^3.0.2
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:

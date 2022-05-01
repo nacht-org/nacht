@@ -17,16 +17,16 @@ final noticeProvider =
     StateNotifierProvider<NoticeController, NovelPageNotice?>(
         (ref) => NoticeController());
 
-final novelArgProvider =
-    Provider<NovelEntityArgument>((ref) => throw UnimplementedError());
+final novelArgProvider = Provider.autoDispose<NovelEntityArgument>(
+    (ref) => throw UnimplementedError());
 
 final crawlerArgProvider =
-    Provider<Crawler?>((ref) => throw UnimplementedError());
+    Provider.autoDispose<Crawler?>((ref) => throw UnimplementedError());
 
 final novelOverrideProvider =
-    Provider<NovelEntity>((ref) => throw UnimplementedError());
+    Provider.autoDispose<NovelEntity>((ref) => throw UnimplementedError());
 
-final crawlerFactoryProvider = Provider<CrawlerFactory?>(
+final crawlerFactoryProvider = Provider.autoDispose<CrawlerFactory?>(
   (ref) {
     final url = ref.watch(novelArgProvider).when(
           partial: (novel) => novel.url,
@@ -41,7 +41,7 @@ final crawlerFactoryProvider = Provider<CrawlerFactory?>(
   dependencies: [novelArgProvider, getCrawlerFactoryFor],
 );
 
-final metaProvider = Provider<Option<Meta>>(
+final metaProvider = Provider.autoDispose<Option<Meta>>(
   (ref) {
     final factory = ref.watch(crawlerFactoryProvider);
     if (factory == null) {
@@ -53,7 +53,7 @@ final metaProvider = Provider<Option<Meta>>(
   dependencies: [crawlerFactoryProvider],
 );
 
-final crawlerProvider = Provider<Crawler?>((ref) {
+final crawlerProvider = Provider.autoDispose<Crawler?>((ref) {
   final crawlerArg = ref.watch(crawlerArgProvider);
   if (crawlerArg == null) {
     return ref.watch(crawlerFactoryProvider)?.create();
@@ -66,7 +66,7 @@ final crawlerProvider = Provider<Crawler?>((ref) {
 ]);
 
 final novelPageState =
-    StateNotifierProvider<NovelPageController, NovelPageState>(
+    StateNotifierProvider.autoDispose<NovelPageController, NovelPageState>(
   (ref) {
     final state = ref.watch(novelArgProvider).when(
           partial: NovelPageState.partial,
@@ -92,7 +92,7 @@ final novelPageState =
   ],
 );
 
-final novelInfoProvider = Provider<NovelPageInfo>((ref) {
+final novelInfoProvider = Provider.autoDispose<NovelPageInfo>((ref) {
   final state = ref.watch(novelPageState);
   final meta = ref.watch(metaProvider);
 
@@ -121,7 +121,8 @@ final novelInfoProvider = Provider<NovelPageInfo>((ref) {
 
 // Providers only for loaded page state.
 
-final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
+final novelProvider =
+    StateNotifierProvider.autoDispose<LoadedController, NovelEntity>(
   (ref) {
     final novel = ref.watch(novelOverrideProvider);
     final crawler = ref.watch(crawlerProvider);
@@ -151,7 +152,7 @@ final novelProvider = StateNotifierProvider<LoadedController, NovelEntity>(
   ],
 );
 
-final novelMoreProvider = Provider<NovelPageMore>(
+final novelMoreProvider = Provider.autoDispose<NovelPageMore>(
   (ref) {
     final novel = ref.watch(novelProvider);
 
@@ -166,7 +167,7 @@ final novelMoreProvider = Provider<NovelPageMore>(
   dependencies: [novelProvider],
 );
 
-final volumesProvider = Provider<List<VolumeEntity>>(
+final volumesProvider = Provider.autoDispose<List<VolumeEntity>>(
   (ref) {
     final novel = ref.watch(novelProvider);
     return novel.volumes;
@@ -174,7 +175,7 @@ final volumesProvider = Provider<List<VolumeEntity>>(
   dependencies: [novelProvider],
 );
 
-final itemsProvider = Provider<List<NovelListItem>>(
+final itemsProvider = Provider.autoDispose<List<NovelListItem>>(
   (ref) {
     final volumes = ref.watch(volumesProvider);
     final items = <NovelListItem>[];
@@ -191,7 +192,7 @@ final itemsProvider = Provider<List<NovelListItem>>(
   dependencies: [volumesProvider],
 );
 
-final chapterCountProvider = Provider<int>(
+final chapterCountProvider = Provider.autoDispose<int>(
   (ref) {
     final volumes = ref.watch(volumesProvider);
     return volumes.map((e) => e.chapters.length).sum;

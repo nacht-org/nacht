@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/mapper/mapper.dart';
 import 'package:chapturn/domain/entities/asset/asset_entity.dart';
@@ -36,7 +38,7 @@ void main() {
         to: AssetEntity(
           id: 6,
           url: 'https://website.com/cover/123',
-          path: '/1/6.png',
+          file: File('/1/6.png'),
           hash: 'af5c3',
           mimetype: 'image/png',
         ),

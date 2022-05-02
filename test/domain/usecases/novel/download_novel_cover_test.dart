@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/failure.dart';
 import 'package:chapturn/domain/entities/entities.dart';
@@ -31,7 +33,7 @@ void main() {
 
   final tAssetEntity = AssetEntity(
     id: 2,
-    path: 'path/to/image',
+    file: File('path/to/image'),
     mimetype: 'image/',
     hash: 'hash',
     url: null,

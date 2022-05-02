@@ -6,25 +6,25 @@ import 'popular_page_loader_state.dart';
 import 'popular_page_state.dart';
 
 final crawlerFactoryProvider =
-    Provider<CrawlerFactory>((ref) => throw UnimplementedError());
+    Provider.autoDispose<CrawlerFactory>((ref) => throw UnimplementedError());
 
-final crawlerMetaProvider = Provider<Meta>(
+final crawlerMetaProvider = Provider.autoDispose<Meta>(
   (ref) => ref.watch(crawlerFactoryProvider).meta(),
   dependencies: [crawlerFactoryProvider],
 );
 
-final crawlerProvider = Provider<Crawler>(
+final crawlerProvider = Provider.autoDispose<Crawler>(
   (ref) => ref.watch(crawlerFactoryProvider).create(),
   dependencies: [crawlerFactoryProvider],
 );
 
-final hasPopularFeatureProvider = Provider<bool>(
+final hasPopularFeatureProvider = Provider.autoDispose<bool>(
   (ref) => ref.watch(crawlerMetaProvider).features.contains(Feature.popular),
   dependencies: [crawlerMetaProvider],
 );
 
-final popularPageLoaderState =
-    StateNotifierProvider<PopularPageLoaderController, PopularPageLoaderState>(
+final popularPageLoaderState = StateNotifierProvider.autoDispose<
+    PopularPageLoaderController, PopularPageLoaderState>(
   (ref) {
     return PopularPageLoaderController(
       getPopularNovels: ref.watch(getPopularNovels),
@@ -40,7 +40,7 @@ final popularPageLoaderState =
 );
 
 final popularPageState =
-    StateNotifierProvider<PopularPageController, PopularPageState>(
+    StateNotifierProvider.autoDispose<PopularPageController, PopularPageState>(
   (ref) {
     final initial = ref.watch(hasPopularFeatureProvider)
         ? const PopularPageState.loading()

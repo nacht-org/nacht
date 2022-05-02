@@ -14,7 +14,7 @@ class NetworkRepositoryImpl with LoggerMixin implements NetworkRepository {
   @override
   Future<NetworkConnection> getConnectionStatus() async {
     final result = await connectivity.checkConnectivity();
-    return _connectionMapper.map(result);
+    return _connectionMapper.from(result);
   }
 
   @override

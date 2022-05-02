@@ -21,6 +21,6 @@ void mapperTest<I, O>(
   final _suffix = suffix == null ? '' : ' $suffix';
   test('should map from $fromName to $toName$_suffix', () async {
     if (stub != null) stub();
-    expect(mapper.map(from), to);
+    expect(mapper.from(from), to);
   });
 }

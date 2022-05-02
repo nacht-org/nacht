@@ -1,4 +1,4 @@
-import 'package:chapturn/data/mappers/network/connection_mapper.dart';
+import 'package:chapturn/data/mapper/mapper.dart';
 import 'package:chapturn/domain/entities/network/network_connection.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 

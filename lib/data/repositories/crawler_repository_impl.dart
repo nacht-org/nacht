@@ -35,7 +35,7 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
     final novels = await parser.parsePopular(page);
 
     final entities =
-        novels.map((novel) => partialFromNovelMapper.map(novel)).toList();
+        novels.map((novel) => partialFromNovelMapper.from(novel)).toList();
 
     return Right(entities);
   }

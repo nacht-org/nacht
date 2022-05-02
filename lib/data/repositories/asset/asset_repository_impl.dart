@@ -34,7 +34,7 @@ class AssetRepositoryImpl implements AssetRepository {
   ]) async {
     int assetType;
     try {
-      assetType = mimeTypeToSeedMapper.map(data.mimetype);
+      assetType = mimeTypeToSeedMapper.from(data.mimetype);
     } catch (e) {
       return const Left(UnknownAssetType());
     }
@@ -126,7 +126,7 @@ class AssetRepositoryImpl implements AssetRepository {
 
     try {
       final asset = await query.getSingle();
-      return Right(databaseToAssetMapper.map(asset));
+      return Right(databaseToAssetMapper.from(asset));
     } catch (e) {
       return const Left(AssetNotFound());
     }

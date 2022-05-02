@@ -63,11 +63,11 @@ class NovelLocalRepositoryImpl
     }
 
     final metadata =
-        (await getMetaData(novel.id)).map(metaDataMapper.map).toList();
+        (await getMetaData(novel.id)).map(metaDataMapper.from).toList();
     final volumes = await _getVolumesOfNovel(novel.id);
 
     final entity =
-        novelMapper.map(novel).copyWith(volumes: volumes, metadata: metadata);
+        novelMapper.from(novel).copyWith(volumes: volumes, metadata: metadata);
 
     return Right(entity);
   }
@@ -82,7 +82,7 @@ class NovelLocalRepositoryImpl
     final entities = <VolumeEntity>[];
     for (final volume in volumes) {
       final entity = volumeMapper
-          .map(volume)
+          .from(volume)
           .copyWith(chapters: await _getChaptersOfVolume(volume.id));
       entities.add(entity);
     }
@@ -97,12 +97,12 @@ class NovelLocalRepositoryImpl
       ..where((tbl) => tbl.volumeId.equals(volumeId));
     final result = await query.get();
 
-    return result.map(chapterMapper.map).toList();
+    return result.map(chapterMapper.from).toList();
   }
 
   @override
   Future<Either<Failure, NovelEntity>> saveNovel(sources.Novel novel) async {
-    final novelCompanion = novelCompanionMapper.map(novel);
+    final novelCompanion = novelCompanionMapper.from(novel);
 
     // Upsert the novel entity itself
     final novelModel = await database.into(database.novels).insertReturning(
@@ -118,7 +118,7 @@ class NovelLocalRepositoryImpl
     final volumes = <Volume, List<Chapter>>{};
     for (final volume in novel.volumes) {
       final volumeCompanion = volumeCompanionMapper
-          .map(volume)
+          .from(volume)
           .copyWith(novelId: Value(novelModel.id));
 
       final volumeModel =
@@ -134,7 +134,7 @@ class NovelLocalRepositoryImpl
       final chapters = <Chapter>[];
       for (final chapter in volume.chapters) {
         final chapterCompanion = chapterCompanionMapper
-            .map(chapter)
+            .from(chapter)
             .copyWith(volumeId: Value(volumeModel.id));
 
         final chapterModel = await database
@@ -159,13 +159,13 @@ class NovelLocalRepositoryImpl
     // Update metadata.
     await syncMetaData(novelModel.id, novel.metadata);
 
-    final novelEntity = novelMapper.map(novelModel).copyWith(
+    final novelEntity = novelMapper.from(novelModel).copyWith(
           volumes: volumes.entries
               .map(
-                (entry) => volumeMapper.map(entry.key).copyWith(
+                (entry) => volumeMapper.from(entry.key).copyWith(
                       chapters: entry.value
                           .map((c) => chapterMapper
-                              .map(c)
+                              .from(c)
                               .copyWith(volumeId: entry.key.id))
                           .toList(),
                       novelId: novelModel.id,
@@ -173,7 +173,7 @@ class NovelLocalRepositoryImpl
               )
               .toList(),
           metadata: (await getMetaData(novelModel.id))
-              .map(metaDataMapper.map)
+              .map(metaDataMapper.from)
               .toList(),
         );
 
@@ -205,8 +205,9 @@ class NovelLocalRepositoryImpl
 
       // Check for required updates.
       for (final data in metaData) {
-        final companion =
-            metadataCompanionMapper.map(data).copyWith(novelId: Value(novelId));
+        final companion = metadataCompanionMapper
+            .from(data)
+            .copyWith(novelId: Value(novelId));
 
         final key = Tuple2(data.name, data.value);
         if (indexedMetaData.containsKey(key)) {

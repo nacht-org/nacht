@@ -59,7 +59,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<List<CategoryEntity>> getAllCategories() async {
     final results = await database.select(database.novelCategories).get();
-    return results.map(categoryMapper.map).toList();
+    return results.map(categoryMapper.from).toList();
   }
 
   @override
@@ -80,7 +80,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
     return results.map((row) {
       final category = row.readTable(database.novelCategories);
-      return categoryMapper.map(category);
+      return categoryMapper.from(category);
     }).toList();
   }
 
@@ -105,8 +105,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
       final novel = row.readTable(database.novels);
       final asset = row.readTableOrNull(database.assets);
 
-      return novelMapper.map(novel).copyWith(
-            cover: asset != null ? assetMapper.map(asset) : null,
+      return novelMapper.from(novel).copyWith(
+            cover: asset != null ? assetMapper.from(asset) : null,
           );
     }).toList();
   }

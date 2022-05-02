@@ -32,9 +32,7 @@ class NovelPage extends StatelessWidget {
         crawlerArgProvider.overrideWithValue(crawler),
       ],
       child: const Scaffold(
-        body: NoticeListener(
-          child: NovelPageSplit(),
-        ),
+        body: NovelPageSplit(),
       ),
     );
   }
@@ -65,26 +63,28 @@ class NovelPageSplit extends HookConsumerWidget {
               forceElevated: innerBoxIsScrolled,
             )
           ],
-          body: const CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.only(
-                  left: 16.0,
-                  top: 24.0,
-                  right: 16.0,
-                  bottom: 16.0,
+          body: const NoticeListener(
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: EdgeInsets.only(
+                    left: 16.0,
+                    top: 24.0,
+                    right: 16.0,
+                    bottom: 16.0,
+                  ),
+                  sliver: NovelInfo(),
                 ),
-                sliver: NovelInfo(),
-              ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                sliver: SliverToBoxAdapter(
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  sliver: SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -131,86 +131,88 @@ class NovelPageView extends HookConsumerWidget {
       ],
       body: RefreshIndicator(
         onRefresh: ref.read(novelProvider.notifier).fetch,
-        child: CustomScrollView(
-          slivers: [
-            buildPadding(sliver: const NovelInfo(), top: 24),
-            buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
-            HookConsumer(builder: (context, ref, child) {
-              final more = ref.watch(novelMoreProvider);
-              final expanded = useState(false);
+        child: NoticeListener(
+          child: CustomScrollView(
+            slivers: [
+              buildPadding(sliver: const NovelInfo(), top: 24),
+              buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
+              HookConsumer(builder: (context, ref, child) {
+                final more = ref.watch(novelMoreProvider);
+                final expanded = useState(false);
 
-              return buildPadding(
-                top: 0,
-                bottom: 8,
-                sliver: SliverToBoxAdapter(
-                  child: GestureDetector(
-                    onTap: () => expanded.value = !expanded.value,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Description(
-                          description: more.description,
-                          expanded: expanded,
-                        ),
-                        const SizedBox(height: 8),
-                        Tags(
-                          tags: more.tags,
-                          expanded: expanded,
-                        )
-                      ],
+                return buildPadding(
+                  top: 0,
+                  bottom: 8,
+                  sliver: SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () => expanded.value = !expanded.value,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Description(
+                            description: more.description,
+                            expanded: expanded,
+                          ),
+                          const SizedBox(height: 8),
+                          Tags(
+                            tags: more.tags,
+                            expanded: expanded,
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }),
-            Consumer(builder: (context, ref, child) {
-              final chapterCount = ref.watch(chapterCountProvider);
+                );
+              }),
+              Consumer(builder: (context, ref, child) {
+                final chapterCount = ref.watch(chapterCountProvider);
 
-              return SliverToBoxAdapter(
-                child: ListTile(
-                  title: Text(
-                    '$chapterCount Chapter'.pluralize(
-                      test: (_) => chapterCount > 1,
+                return SliverToBoxAdapter(
+                  child: ListTile(
+                    title: Text(
+                      '$chapterCount Chapter'.pluralize(
+                        test: (_) => chapterCount > 1,
+                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    style: Theme.of(context).textTheme.titleMedium,
+                    trailing: const Icon(Icons.filter_list),
+                    onTap: () {},
+                    dense: true,
                   ),
-                  trailing: const Icon(Icons.filter_list),
-                  onTap: () {},
-                  dense: true,
-                ),
-              );
-            }),
-            Consumer(builder: (context, ref, child) {
-              final items = ref.watch(itemsProvider);
+                );
+              }),
+              Consumer(builder: (context, ref, child) {
+                final items = ref.watch(itemsProvider);
 
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return items[index].when(
-                      volume: (volume) => ListTile(
-                        title: Text(
-                          volume.name.toUpperCase(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return items[index].when(
+                        volume: (volume) => ListTile(
+                          title: Text(
+                            volume.name.toUpperCase(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          dense: true,
                         ),
-                        dense: true,
-                      ),
-                      chapter: (chapter) => ListTile(
-                        title: Text(
-                          chapter.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        chapter: (chapter) => ListTile(
+                          title: Text(
+                            chapter.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(chapter.updated.toString()),
+                          onTap: () {},
                         ),
-                        subtitle: Text(chapter.updated.toString()),
-                        onTap: () {},
-                      ),
-                    );
-                  },
-                  childCount: items.length,
-                ),
-              );
-            }),
-          ],
+                      );
+                    },
+                    childCount: items.length,
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );

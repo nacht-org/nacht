@@ -1,8 +1,8 @@
-import 'package:chapturn/utils/string.dart';
+import 'package:chapturn/core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('.capitalize()', () {
+  group('capitalize', () {
     test('should return unmodified when string is empty', () {
       const string = '';
       final result = string.capitalize();

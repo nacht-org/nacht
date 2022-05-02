@@ -1,4 +1,4 @@
-import 'package:chapturn/utils/string.dart';
+import 'package:chapturn/core/core.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 

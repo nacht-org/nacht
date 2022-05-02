@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../config/routes/app_router.dart';
-import '../../../utils/iso_lang.dart';
-import '../../../utils/string.dart';
+import '../../../core/core.dart';
 import 'controllers/browse_notifier.dart';
 
 class BrowsePage extends ConsumerWidget {

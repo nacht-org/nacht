@@ -1,7 +1,7 @@
 import 'package:chapturn/core/failure.dart';
 import 'package:chapturn/domain/providers/providers.dart';
 import 'package:chapturn/presentation/controllers/import_from_url/searchbar_notifier.dart';
-import 'package:chapturn/utils/uri.dart';
+import 'package:chapturn/core/misc/uri_utils.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

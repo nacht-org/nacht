@@ -5,7 +5,7 @@ part 'asset_data.freezed.dart';
 @freezed
 class AssetData with _$AssetData {
   factory AssetData(
-    List<int> data,
+    List<int> bytes,
     String mimetype,
     String hash,
   ) = _AssetData;

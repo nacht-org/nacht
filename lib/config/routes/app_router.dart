@@ -1,10 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../presentation/pages/pages.dart';
 
 part 'app_router.gr.dart';
+
+final routerProvider = Provider<AppRouter>(
+  (ref) => AppRouter(),
+  name: 'RouterProvider',
+);
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',

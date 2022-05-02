@@ -12,32 +12,29 @@ void main() {
     });
   }
 
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
 
-class _MyAppState extends State<MyApp> {
-  final _router = AppRouter();
-
-  @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp.router(
-        title: 'Chapturn',
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          useMaterial3: true,
-        ),
-        routeInformationParser: _router.defaultRouteParser(),
-        routerDelegate: _router.delegate(),
-        routeInformationProvider: _router.routeInfoProvider(),
+    return MaterialApp.router(
+      title: 'Chapturn',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
       ),
+      routeInformationParser: router.defaultRouteParser(),
+      routerDelegate: router.delegate(),
+      routeInformationProvider: router.routeInfoProvider(),
     );
   }
 }

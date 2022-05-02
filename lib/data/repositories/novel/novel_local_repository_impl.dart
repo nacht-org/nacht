@@ -1,3 +1,4 @@
+import 'package:chapturn/core/misc/logger_mixin.dart';
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/failure.dart';
 import 'package:chapturn/data/models/models.dart';
@@ -8,9 +9,10 @@ import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:drift/drift.dart';
-import 'package:logging/logging.dart';
 
-class NovelLocalRepositoryImpl implements NovelLocalRepository {
+class NovelLocalRepositoryImpl
+    with LoggerMixin
+    implements NovelLocalRepository {
   NovelLocalRepositoryImpl({
     required this.database,
     required this.novelCompanionMapper,
@@ -34,8 +36,6 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
   final Mapper<Volume, VolumeEntity> volumeMapper;
   final Mapper<Chapter, ChapterEntity> chapterMapper;
   final Mapper<MetaData, MetaDataEntity> metaDataMapper;
-
-  final _log = Logger('NovelLocalRepositoryImpl');
 
   @override
   Future<Either<Failure, NovelEntity>> getNovel(int id) async {
@@ -192,7 +192,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
     int novelId,
     List<sources.MetaData> metaData,
   ) async {
-    _log.info('Start metadata sync.');
+    log.info('Start metadata sync.');
 
     final currentMetaData = await getMetaData(novelId);
     final indexedMetaData = {
@@ -233,7 +233,7 @@ class NovelLocalRepositoryImpl implements NovelLocalRepository {
               .isIn(indexedMetaData.values.map((data) => data.id)));
     });
 
-    _log.info('End metadata sync.');
+    log.info('End metadata sync.');
   }
 
   // Single field updates.

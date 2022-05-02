@@ -1,18 +1,19 @@
-import 'package:chapturn/domain/entities/novel/novel_entity.dart';
-import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
-import 'package:chapturn/domain/usecases/category/get_all_categories.dart';
-import 'package:chapturn/domain/usecases/novel/download_novel_cover.dart';
-import 'package:chapturn/domain/usecases/novel/get_novel.dart';
-import 'package:chapturn/domain/usecases/novel/parse_or_get_novel.dart';
-import 'package:chapturn/presentation/controllers/library/library_controller.dart';
-import 'package:chapturn/presentation/controllers/library/library_provider.dart';
-import 'package:chapturn/presentation/pages/novel_page/providers/novel_page_notice.dart';
-import 'package:chapturn/presentation/pages/novel_page/providers/providers.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:logging/logging.dart';
 
-class LoadedController extends StateNotifier<NovelEntity> {
+import '../../../../core/misc/logger_mixin.dart';
+import '../../../../domain/entities/novel/novel_entity.dart';
+import '../../../../domain/usecases/category/change_novel_categories.dart';
+import '../../../../domain/usecases/category/get_all_categories.dart';
+import '../../../../domain/usecases/novel/download_novel_cover.dart';
+import '../../../../domain/usecases/novel/get_novel.dart';
+import '../../../../domain/usecases/novel/parse_or_get_novel.dart';
+import '../../../controllers/library/library_controller.dart';
+import '../../../controllers/library/library_provider.dart';
+import 'novel_page_notice.dart';
+import 'providers.dart';
+
+class LoadedController extends StateNotifier<NovelEntity> with LoggerMixin {
   LoadedController(
     NovelEntity state, {
     required this.crawler,
@@ -33,8 +34,6 @@ class LoadedController extends StateNotifier<NovelEntity> {
   final GetAllCategories getAllCategories;
   final ChangeNovelCategories changeNovelCategories;
 
-  final _log = Logger('LoadedController');
-
   NoticeController get _notice => read(noticeProvider.notifier);
   LibraryController get _library => read(libraryProvider.notifier);
 
@@ -44,17 +43,17 @@ class LoadedController extends StateNotifier<NovelEntity> {
       return;
     }
 
-    _log.info('Start parse or get novel.');
+    log.info('Start parse or get novel.');
     final result =
         await parseOrGetNovel.execute(crawler as ParseNovel, state.url);
-    _log.info('End parse or get novel.');
+    log.info('End parse or get novel.');
 
     result.fold(
       (failure) => _notice.error('An error occured'),
       (data) async {
         state = data;
 
-        _log.info('Downloading cover.');
+        log.info('Downloading cover.');
         final coverResult = await downloadNovelCover.execute(state);
         coverResult.fold(
           (failure) => {},

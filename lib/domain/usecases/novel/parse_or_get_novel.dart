@@ -1,8 +1,6 @@
-import 'package:chapturn/data/datasources/local/database.dart';
-import 'package:chapturn/domain/repositories/asset_repository.dart';
+import 'package:chapturn/core/misc/logger_mixin.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
-import 'package:logging/logging.dart';
 
 import '../../../core/failure.dart';
 import '../../entities/entities.dart';
@@ -10,7 +8,7 @@ import '../../entities/novel/novel_entity.dart';
 import '../../repositories/network_repository.dart';
 import '../../repositories/novel_repository.dart';
 
-class ParseOrGetNovel {
+class ParseOrGetNovel with LoggerMixin {
   ParseOrGetNovel({
     required this.remoteRepository,
     required this.localRepository,
@@ -21,15 +19,12 @@ class ParseOrGetNovel {
   final NetworkRepository networkRepository;
   final NovelRemoteRepository remoteRepository;
 
-  final _log = Logger('ParseOrGetNovel');
-
   Future<Either<Failure, NovelEntity>> execute(
     ParseNovel parser,
     String url,
   ) async {
     final isConnectionAvailable =
         await networkRepository.isConnectionAvailable();
-    _log.info('Is network connection available: $isConnectionAvailable.');
 
     if (isConnectionAvailable) {
       final parseResult = await remoteRepository.parseNovel(parser, url);

@@ -1,3 +1,4 @@
+import 'package:chapturn/core/misc/logger_mixin.dart';
 import 'package:chapturn/domain/usecases/novel/download_novel_cover.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -18,7 +19,8 @@ class NovelPageState with _$NovelPageState {
   factory NovelPageState.loaded(NovelEntity entity) = _NovelPageLoaded;
 }
 
-class NovelPageController extends StateNotifier<NovelPageState> {
+class NovelPageController extends StateNotifier<NovelPageState>
+    with LoggerMixin {
   NovelPageController({
     required NovelPageState initial,
     required this.crawler,
@@ -33,8 +35,6 @@ class NovelPageController extends StateNotifier<NovelPageState> {
   final ParseOrGetNovel parseOrGetNovel;
   final DownloadNovelCover downloadNovelCover;
 
-  final _log = Logger('NovelPageController');
-
   NoticeController get _notice => read(noticeProvider.notifier);
 
   Future<void> reload() async {
@@ -48,16 +48,16 @@ class NovelPageController extends StateNotifier<NovelPageState> {
       return;
     }
 
-    _log.info('Start parse or get novel.');
+    log.info('Start parse or get novel.');
     final result = await parseOrGetNovel.execute(crawler as ParseNovel, url);
-    _log.info('End parse or get novel.');
+    log.info('End parse or get novel.');
 
     result.fold(
       (failure) => _notice.error('An error occured'),
       (data) async {
         state = NovelPageState.loaded(data);
 
-        _log.info('Downloading cover.');
+        log.info('Downloading cover.');
         final coverResult = await downloadNovelCover.execute(data);
         coverResult.fold(
           (failure) => {},

@@ -18,7 +18,7 @@ class NovelInfo extends ConsumerWidget {
         () => null,
         (url) => Image.network(url),
       ),
-      (cover) => Image.file(File(cover.path)),
+      (cover) => Image.file(cover.file),
     );
 
     return SliverToBoxAdapter(

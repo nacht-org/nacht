@@ -8,7 +8,7 @@ import '../../../../domain/usecases/category/get_all_categories.dart';
 import '../../../../domain/usecases/novel/download_novel_cover.dart';
 import '../../../../domain/usecases/novel/get_novel.dart';
 import '../../../../domain/usecases/novel/parse_or_get_novel.dart';
-import '../../home/provider/library_provider.dart';
+import '../../library/provider/library_provider.dart';
 import 'novel_page_notice.dart';
 import 'providers.dart';
 
@@ -55,7 +55,9 @@ class LoadedController extends StateNotifier<NovelEntity> with LoggerMixin {
         log.info('Downloading cover.');
         final coverResult = await downloadNovelCover.execute(state);
         coverResult.fold(
-          (failure) => {},
+          (failure) {
+            log.warning(failure.toString());
+          },
           (data) => state = state.copyWith(cover: data),
         );
       },

@@ -134,7 +134,7 @@ class NovelPageView extends HookConsumerWidget {
         child: NoticeListener(
           child: CustomScrollView(
             slivers: [
-              buildPadding(sliver: const NovelInfo(), top: 24),
+              buildPadding(sliver: const NovelInfo(), top: 24, bottom: 8),
               buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
               HookConsumer(builder: (context, ref, child) {
                 final more = ref.watch(novelMoreProvider);

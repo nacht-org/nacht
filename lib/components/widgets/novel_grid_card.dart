@@ -21,7 +21,8 @@ class NovelGridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ImageProvider? image;
     if (cover != null) {
-      image = FileImage(File(cover!.path));
+      image = FileImage(cover!.file);
+      print(image);
     } else if (coverUrl != null) {
       image = NetworkImage(coverUrl!);
     } else {

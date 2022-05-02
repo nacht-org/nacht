@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../domain/entities/entities.dart';
 import '../../../../domain/providers/providers.dart';
-import '../../home/provider/library_provider.dart';
+import '../../library/provider/library_provider.dart';
 import '../model/novel_list_item.dart';
 import '../model/novel_page_args.dart';
 import '../model/novel_page_info.dart';

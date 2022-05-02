@@ -21,7 +21,7 @@ class NetworkRepositoryImpl with LoggerMixin implements NetworkRepository {
   Future<bool> isConnectionAvailable() async {
     final connection = await getConnectionStatus();
     log.info(
-        'Checking whether device is connected to the intenet: $connection.');
+        'checking whether device is connected to the intenet => $connection.');
 
     switch (connection) {
       case NetworkConnection.none:

@@ -1,19 +1,21 @@
 import 'dart:io';
 
-import 'package:chapturn/data/failure.dart';
-import 'package:chapturn/data/datasources/local/database.dart';
-import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/entities/entities.dart';
-import 'package:chapturn/domain/mapper.dart';
-import 'package:chapturn/domain/repositories/asset_repository.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
-class AssetRepositoryImpl implements AssetRepository {
+import '../../../core/failure.dart';
+import '../../../core/core.dart';
+import '../../../domain/entities/entities.dart';
+import '../../../domain/mapper.dart';
+import '../../../domain/repositories/asset_repository.dart';
+import '../../datasources/local/database.dart';
+import '../../failure.dart';
+
+class AssetRepositoryImpl with LoggerMixin implements AssetRepository {
   AssetRepositoryImpl({
     required this.database,
     required this.mimeTypeToSeedMapper,
@@ -26,6 +28,7 @@ class AssetRepositoryImpl implements AssetRepository {
 
   /// Possible failures:
   /// * [UnknownAssetType]
+  /// * [FileSaveError]
   @override
   Future<Either<Failure, AssetEntity>> addAsset(
     String directory,
@@ -46,28 +49,32 @@ class AssetRepositoryImpl implements AssetRepository {
     );
 
     final assetId = await database.into(database.assets).insert(insert);
-    final documentDirectory = await getApplicationDocumentsDirectory();
+    final documentDirectory = await getTemporaryDirectory();
 
     final assetName = '$assetId.${data.mimetype.split("/").last}';
     final assetPath = path.join(documentDirectory.path, directory, assetName);
     final companion =
         AssetsCompanion(id: Value(assetId), path: Value(assetPath));
 
+    File assetFile;
     try {
-      File assetFile = File(assetPath);
+      assetFile = File(assetPath)..create(recursive: true);
       await assetFile.writeAsBytes(data.bytes);
 
       await _update(companion);
     } catch (e) {
+      log.fine('failed to save asset type ${data.mimetype}');
       await (database.delete(database.assets)..whereSamePrimaryKey(companion))
           .go();
       return const Left(FileSaveError());
     }
 
+    log.fine("saved asset into $assetPath.");
+
     return Right(AssetEntity(
       id: assetId,
       url: url,
-      path: assetPath,
+      file: assetFile,
       hash: data.hash,
       mimetype: data.mimetype,
     ));

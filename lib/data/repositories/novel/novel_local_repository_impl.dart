@@ -1,4 +1,3 @@
-import 'package:chapturn/core/misc/logger_mixin.dart';
 import 'package:chapturn/data/datasources/local/database.dart';
 import 'package:chapturn/data/failure.dart';
 import 'package:chapturn/data/models/models.dart';
@@ -9,6 +8,8 @@ import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:drift/drift.dart';
+
+import '../../../core/core.dart';
 
 class NovelLocalRepositoryImpl
     with LoggerMixin

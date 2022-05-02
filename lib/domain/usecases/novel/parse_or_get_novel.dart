@@ -1,7 +1,7 @@
-import 'package:chapturn/core/misc/logger_mixin.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../core/core.dart';
 import '../../../core/failure.dart';
 import '../../entities/entities.dart';
 import '../../entities/novel/novel_entity.dart';

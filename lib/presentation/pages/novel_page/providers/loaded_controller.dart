@@ -1,7 +1,7 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../core/misc/logger_mixin.dart';
+import '../../../../core/core.dart';
 import '../../../../domain/entities/novel/novel_entity.dart';
 import '../../../../domain/usecases/category/change_novel_categories.dart';
 import '../../../../domain/usecases/category/get_all_categories.dart';

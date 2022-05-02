@@ -1,12 +1,11 @@
-import 'package:chapturn/core/misc/logger_mixin.dart';
-import 'package:chapturn/domain/usecases/novel/download_novel_cover.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:logging/logging.dart';
 
+import '../../../../core/core.dart';
 import '../../../../domain/entities/novel/novel_entity.dart';
 import '../../../../domain/entities/novel/partial_novel_entity.dart';
+import '../../../../domain/usecases/novel/download_novel_cover.dart';
 import '../../../../domain/usecases/novel/parse_or_get_novel.dart';
 import 'novel_page_notice.dart';
 import 'providers.dart';

@@ -1,4 +1,4 @@
-export 'misc/logger_mixin.dart';
+export 'logger/logger.dart';
 export 'misc/error_handler.dart';
 export 'misc/string_utils.dart';
 export 'misc/uri_utils.dart';

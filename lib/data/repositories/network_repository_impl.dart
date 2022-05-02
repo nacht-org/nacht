@@ -1,8 +1,8 @@
-import 'package:chapturn/core/misc/logger_mixin.dart';
 import 'package:chapturn/domain/entities/network/network_connection.dart';
 import 'package:chapturn/domain/repositories/network_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+import '../../core/core.dart';
 import '../../domain/mapper.dart';
 
 class NetworkRepositoryImpl with LoggerMixin implements NetworkRepository {

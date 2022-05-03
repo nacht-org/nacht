@@ -49,7 +49,7 @@ class AssetRepositoryImpl with LoggerMixin implements AssetRepository {
     );
 
     final assetId = await database.into(database.assets).insert(insert);
-    final documentDirectory = await getTemporaryDirectory();
+    final documentDirectory = await getApplicationDocumentsDirectory();
 
     final assetName = '$assetId.${data.mimetype.split("/").last}';
     final assetPath = path.join(documentDirectory.path, directory, assetName);
@@ -81,9 +81,19 @@ class AssetRepositoryImpl with LoggerMixin implements AssetRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteAsset(AssetEntity asset) {
-    // TODO: implement deleteAsset
-    throw UnimplementedError();
+  Future<Either<Failure, void>> deleteAsset(AssetEntity asset) async {
+    try {
+      await asset.file.delete();
+      await (database.delete(database.assets)
+            ..where((tbl) => tbl.id.equals(asset.id)))
+          .go();
+    } catch (e) {
+      return Left(AssetDeleteFailure(e.toString()));
+    }
+
+    log.fine("deleted asset in '${asset.file.path}'");
+
+    return const Right(null);
   }
 
   /// Possible failures:

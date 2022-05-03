@@ -11,7 +11,7 @@ class NovelPageInfo with _$NovelPageInfo {
   factory NovelPageInfo({
     required String title,
     required Option<String> coverUrl,
-    required Option<AssetEntity> cover,
+    required Option<AssetData> cover,
     required Option<String> author,
     required NovelStatus status,
     required Option<Meta> meta,

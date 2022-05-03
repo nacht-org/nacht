@@ -18,7 +18,7 @@ void main() {
   final tParser = MockParsePopular();
   final tPage = 1;
   final tNovels = [
-    PartialNovelEntity(
+    PartialNovelData(
       title: 'novel_title',
       url: 'https://my.site.com/novel/123',
       author: 'erpson',

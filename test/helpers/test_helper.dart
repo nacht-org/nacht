@@ -1,4 +1,3 @@
-import 'package:chapturn/domain/mapper.dart';
 import 'package:chapturn/domain/repositories/asset_repository.dart';
 import 'package:chapturn/domain/repositories/category_repository.dart';
 import 'package:chapturn/domain/repositories/crawler_repository.dart';
@@ -11,8 +10,8 @@ import 'package:mockito/annotations.dart';
   CrawlerRepository,
   ParseNovel,
   ParsePopular,
-  NovelRemoteRepository,
-  NovelLocalRepository,
+  GatewayRepository,
+  NovelRepository,
   NetworkRepository,
   CategoryRepository,
   AssetRepository,

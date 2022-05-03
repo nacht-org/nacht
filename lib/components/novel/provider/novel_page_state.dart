@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/core.dart';
-import '../../../../domain/entities/novel/novel_entity.dart';
-import '../../../../domain/entities/novel/partial_novel_entity.dart';
+import '../../../domain/entities/novel/novel_data.dart';
+import '../../../domain/entities/novel/partial_novel_data.dart';
 import '../../../../domain/usecases/novel/download_novel_cover.dart';
 import '../../../../domain/usecases/novel/parse_or_get_novel.dart';
 import 'novel_page_notice.dart';
@@ -14,8 +14,8 @@ part 'novel_page_state.freezed.dart';
 
 @freezed
 class NovelPageState with _$NovelPageState {
-  factory NovelPageState.partial(PartialNovelEntity entity) = _NovelPagePartial;
-  factory NovelPageState.loaded(NovelEntity entity) = _NovelPageLoaded;
+  factory NovelPageState.partial(PartialNovelData entity) = _NovelPagePartial;
+  factory NovelPageState.loaded(NovelData entity) = _NovelPageLoaded;
 }
 
 class NovelPageController extends StateNotifier<NovelPageState>

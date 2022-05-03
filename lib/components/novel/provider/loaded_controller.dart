@@ -2,7 +2,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/core.dart';
-import '../../../../domain/entities/novel/novel_entity.dart';
+import '../../../domain/entities/novel/novel_data.dart';
 import '../../../../domain/usecases/category/change_novel_categories.dart';
 import '../../../../domain/usecases/category/get_all_categories.dart';
 import '../../../../domain/usecases/novel/download_novel_cover.dart';
@@ -12,9 +12,9 @@ import '../../library/provider/library_provider.dart';
 import 'novel_page_notice.dart';
 import 'providers.dart';
 
-class LoadedController extends StateNotifier<NovelEntity> with LoggerMixin {
+class LoadedController extends StateNotifier<NovelData> with LoggerMixin {
   LoadedController(
-    NovelEntity state, {
+    NovelData state, {
     required this.crawler,
     required this.read,
     required this.getNovel,

@@ -1,5 +1,5 @@
-import 'package:chapturn/domain/entities/category/category_entity.dart';
-import 'package:chapturn/domain/entities/novel/novel_entity.dart';
+import 'package:chapturn/domain/entities/category/category_data.dart';
+import 'package:chapturn/domain/entities/novel/novel_data.dart';
 import 'package:chapturn/domain/repositories/category_repository.dart';
 import 'package:chapturn/domain/repositories/novel_repository.dart';
 import 'package:chapturn/domain/usecases/category/change_novel_categories.dart';
@@ -11,7 +11,7 @@ import '../../../helpers/model_helper.dart';
 import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late NovelLocalRepository mockLocalRepository;
+  late NovelRepository mockLocalRepository;
   late CategoryRepository mockCategoryRepository;
   late ChangeNovelCategories usecase;
 
@@ -27,11 +27,11 @@ void main() {
   final tNovelEntity = helperNovelEntity;
 
   final tCategories = {
-    CategoryEntity(id: 1, name: '_default', isDefault: true): true,
+    CategoryData(id: 1, name: '_default', isDefault: true): true,
   };
 
   final tUnselectedCategories = {
-    CategoryEntity(id: 1, name: '_default', isDefault: true): false,
+    CategoryData(id: 1, name: '_default', isDefault: true): false,
   };
 
   test('should update categories with category repository', () async {

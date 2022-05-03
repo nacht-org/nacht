@@ -1,16 +1,22 @@
-import 'package:chapturn/core/failure.dart';
-import 'package:chapturn/domain/entities/entities.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:chapturn/core/core.dart';
+import 'package:chapturn/data/data.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 
-abstract class NovelRemoteRepository {
-  Future<Either<Failure, Novel>> parseNovel(ParseNovel parser, String url);
-}
+import '../domain.dart';
 
-abstract class NovelLocalRepository {
-  Future<Either<Failure, NovelEntity>> getNovel(int id);
-  Future<Either<Failure, NovelEntity>> getNovelByUrl(String url);
-  Future<Either<Failure, NovelEntity>> saveNovel(Novel novel);
+final novelRepositoryProvider = Provider<NovelRepository>(
+  (ref) => NovelRepositoryImpl(
+    database: ref.watch(databaseProvider),
+  ),
+  name: 'NovelRepositoryProvider',
+);
+
+abstract class NovelRepository {
+  Future<Either<Failure, NovelData>> getNovel(int id);
+  Future<Either<Failure, NovelData>> getNovelByUrl(String url);
+  Future<Either<Failure, NovelData>> saveNovel(sources.Novel novel);
   Future<void> setFavourite(int novelId, bool value);
-  Future<void> setCover(int novelId, AssetEntity asset);
+  Future<void> setCover(int novelId, AssetData asset);
 }

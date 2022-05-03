@@ -5,6 +5,6 @@ export 'reading_direction.dart';
 export 'category.dart';
 export 'volume.dart';
 export 'chapter.dart';
-export 'metadatas.dart';
+export 'meta_entry.dart';
 export 'namespaces.dart';
 export 'assets.dart';

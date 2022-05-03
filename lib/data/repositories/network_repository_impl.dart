@@ -1,20 +1,18 @@
-import 'package:chapturn/domain/entities/network/network_connection.dart';
+import 'package:chapturn/domain/entities/network/network_connection_data.dart';
 import 'package:chapturn/domain/repositories/network_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../../core/core.dart';
-import '../../domain/mapper.dart';
 
 class NetworkRepositoryImpl with LoggerMixin implements NetworkRepository {
-  NetworkRepositoryImpl(this._connectionMapper);
+  NetworkRepositoryImpl();
 
-  final Mapper<ConnectivityResult, NetworkConnection> _connectionMapper;
   final Connectivity connectivity = Connectivity();
 
   @override
-  Future<NetworkConnection> getConnectionStatus() async {
+  Future<NetworkConnectionType> getConnectionStatus() async {
     final result = await connectivity.checkConnectivity();
-    return _connectionMapper.from(result);
+    return NetworkConnectionData.fromConnectivity(result).type;
   }
 
   @override
@@ -24,11 +22,11 @@ class NetworkRepositoryImpl with LoggerMixin implements NetworkRepository {
         'checking whether device is connected to the intenet => $connection.');
 
     switch (connection) {
-      case NetworkConnection.none:
+      case NetworkConnectionType.none:
         return false;
-      case NetworkConnection.mobile:
+      case NetworkConnectionType.mobile:
         return true;
-      case NetworkConnection.wifi:
+      case NetworkConnectionType.wifi:
         return true;
     }
   }

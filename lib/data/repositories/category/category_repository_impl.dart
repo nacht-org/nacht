@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../../domain/mapper.dart';
+import '../../../domain/domain.dart';
 import '../../../domain/repositories/category_repository.dart';
 import '../../datasources/local/database.dart';
 import '../../models/models.dart';
@@ -9,21 +8,14 @@ import '../../models/models.dart';
 class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({
     required this.database,
-    required this.categoryMapper,
-    required this.novelMapper,
-    required this.assetMapper,
   });
 
   final AppDatabase database;
 
-  final Mapper<NovelCategory, CategoryEntity> categoryMapper;
-  final Mapper<Novel, NovelEntity> novelMapper;
-  final Mapper<Asset, AssetEntity> assetMapper;
-
   @override
   Future<void> changeNovelCategories(
-    NovelEntity novel,
-    Map<CategoryEntity, bool> categories,
+    NovelData novel,
+    Map<CategoryData, bool> categories,
   ) async {
     await database.batch((batch) {
       final toDelete = categories.entries
@@ -57,14 +49,14 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
-  Future<List<CategoryEntity>> getAllCategories() async {
+  Future<List<CategoryData>> getAllCategories() async {
     final results = await database.select(database.novelCategories).get();
-    return results.map(categoryMapper.from).toList();
+    return results.map(CategoryData.fromModel).toList();
   }
 
   @override
-  Future<List<CategoryEntity>> getCategoriesOfNovel(
-    NovelEntity novel,
+  Future<List<CategoryData>> getCategoriesOfNovel(
+    NovelData novel,
   ) async {
     final query = database.select(database.novelCategories).join([
       leftOuterJoin(
@@ -80,12 +72,12 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
     return results.map((row) {
       final category = row.readTable(database.novelCategories);
-      return categoryMapper.from(category);
+      return CategoryData.fromModel(category);
     }).toList();
   }
 
   @override
-  Future<List<NovelEntity>> getNovelsOfCategory(CategoryEntity category) async {
+  Future<List<NovelData>> getNovelsOfCategory(CategoryData category) async {
     final query = database.select(database.novels).join([
       leftOuterJoin(
         database.novelCategoriesJunction,
@@ -105,9 +97,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
       final novel = row.readTable(database.novels);
       final asset = row.readTableOrNull(database.assets);
 
-      return novelMapper.from(novel).copyWith(
-            cover: asset != null ? assetMapper.from(asset) : null,
-          );
+      return NovelData.fromModel(novel).copyWith(
+        cover: asset != null ? AssetData.fromModel(asset) : null,
+      );
     }).toList();
   }
 }

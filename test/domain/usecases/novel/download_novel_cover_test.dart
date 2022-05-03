@@ -15,7 +15,7 @@ import '../../../helpers/model_helper.dart';
 import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late NovelLocalRepository mockLocalRepository;
+  late NovelRepository mockLocalRepository;
   late NetworkRepository mockNetworkRepository;
   late AssetRepository mockAssetRepository;
   late DownloadNovelCover usecase;
@@ -31,7 +31,7 @@ void main() {
     );
   });
 
-  final tAssetEntity = AssetEntity(
+  final tAssetEntity = AssetData(
     id: 2,
     file: File('path/to/image'),
     mimetype: 'image/',
@@ -49,7 +49,7 @@ void main() {
 
   final tNovel = helperNovelEntity;
 
-  final tAssetData = AssetData([], 'image/png', 'hash');
+  final tAssetData = AssetInfo([], 'image/png', 'hash');
 
   test('should throw cover not available if novel has no cover', () async {
     final result = await usecase.execute(tNovelWithoutCoverUrl);

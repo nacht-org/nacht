@@ -9,16 +9,16 @@ part 'popular_page_state.freezed.dart';
 class PopularPageState with _$PopularPageState {
   const factory PopularPageState.loading() = _PopularPageLoading;
   const factory PopularPageState.unsupported() = _PopularNovelUnsupported;
-  const factory PopularPageState.data(List<PartialNovelEntity> entities) =
+  const factory PopularPageState.data(List<PartialNovelData> entities) =
       _PopularNovelData;
 }
 
 class PopularPageController extends StateNotifier<PopularPageState> {
-  List<PartialNovelEntity> _novels = [];
+  List<PartialNovelData> _novels = [];
 
   PopularPageController(super.state);
 
-  void add(List<PartialNovelEntity> novels) {
+  void add(List<PartialNovelData> novels) {
     _novels = [..._novels, ...novels];
     state = PopularPageState.data(_novels);
   }

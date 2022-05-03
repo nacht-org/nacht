@@ -10,8 +10,8 @@ import 'package:mockito/mockito.dart';
 import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late NovelRemoteRepository mockRemoteRepository;
-  late NovelLocalRepository mockLocalRepository;
+  late GatewayRepository mockRemoteRepository;
+  late NovelRepository mockLocalRepository;
   late NetworkRepository mockNetworkRepository;
   late ParseOrGetNovel usecase;
 
@@ -36,7 +36,7 @@ void main() {
     lang: 'en',
   );
 
-  final tNovelEntity = NovelEntity(
+  final tNovelEntity = NovelData(
     id: tId,
     title: 'My novel story',
     url: tUrl,

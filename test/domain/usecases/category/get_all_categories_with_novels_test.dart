@@ -18,7 +18,7 @@ void main() {
     );
   });
 
-  final tCategory = CategoryEntity(id: 1, name: '_default', isDefault: true);
+  final tCategory = CategoryData(id: 1, name: '_default', isDefault: true);
 
   final tCategories = [
     tCategory,

@@ -1,7 +1,7 @@
-import 'package:chapturn/domain/entities/entities.dart';
+import 'package:chapturn/domain/domain.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 
-final helperNovelEntity = NovelEntity(
+final helperNovelEntity = NovelData(
   id: 1,
   title: 'My novel story',
   url: 'https://website.com/novel/123',

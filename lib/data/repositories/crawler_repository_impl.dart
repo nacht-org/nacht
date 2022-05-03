@@ -3,22 +3,19 @@ import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 
 import '../../core/failure.dart';
-import '../../domain/entities/entities.dart';
-import '../../domain/mapper.dart';
+import '../../domain/domain.dart';
 import '../../domain/repositories/crawler_repository.dart';
 
 class CrawlerRepositoryImpl implements CrawlerRepository {
-  CrawlerRepositoryImpl(this.partialFromNovelMapper);
-
-  final Mapper<Novel, PartialNovelEntity> partialFromNovelMapper;
+  CrawlerRepositoryImpl();
 
   @override
-  Either<Failure, CrawlerFactory> crawlerFactoryFor(String url) {
+  Option<CrawlerFactory> crawlerFactoryFor(String url) {
     final crawler = sources.crawlerFactoryFor(url);
     if (crawler == null) {
-      return const Left(CrawlerNotFound());
+      return const None();
     } else {
-      return Right(crawler);
+      return Some(crawler);
     }
   }
 
@@ -28,14 +25,14 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
   }
 
   @override
-  Future<Either<Failure, List<PartialNovelEntity>>> getPopularNovels(
+  Future<Either<Failure, List<PartialNovelData>>> getPopularNovels(
     ParsePopular parser,
     int page,
   ) async {
     final novels = await parser.parsePopular(page);
 
     final entities =
-        novels.map((novel) => partialFromNovelMapper.from(novel)).toList();
+        novels.map((novel) => PartialNovelData.fromSource(novel)).toList();
 
     return Right(entities);
   }

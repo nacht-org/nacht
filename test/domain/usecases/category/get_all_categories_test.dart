@@ -16,7 +16,7 @@ void main() {
   });
 
   final tCategories = [
-    CategoryEntity(id: 1, name: '_default', isDefault: true),
+    CategoryData(id: 1, name: '_default', isDefault: true),
   ];
 
   test('should get categories from categories repository', () async {

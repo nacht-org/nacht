@@ -9,7 +9,7 @@ part 'popular_page_loader_state.freezed.dart';
 
 @freezed
 class PopularPageLoaderState with _$PopularPageLoaderState {
-  const factory PopularPageLoaderState.data(List<PartialNovelEntity> novels) =
+  const factory PopularPageLoaderState.data(List<PartialNovelData> novels) =
       _PopularPageLoaderData;
 
   const factory PopularPageLoaderState.loading() = _PopularPageLoaderLoading;

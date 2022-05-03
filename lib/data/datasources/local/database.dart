@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../models/models.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
@@ -11,6 +13,10 @@ import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
+final databaseProvider = Provider<AppDatabase>(
+  (ref) => AppDatabase.connect(),
+);
+
 @DriftDatabase(tables: [
   Novels,
   Statuses,
@@ -20,7 +26,7 @@ part 'database.g.dart';
   NovelCategoriesJunction,
   Volumes,
   Chapters,
-  MetaDatas,
+  MetaEntries,
   Namespaces,
   Assets,
   AssetTypes,

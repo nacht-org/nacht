@@ -24,7 +24,7 @@ final crawlerArgProvider =
     Provider.autoDispose<Crawler?>((ref) => throw UnimplementedError());
 
 final novelOverrideProvider =
-    Provider.autoDispose<NovelEntity>((ref) => throw UnimplementedError());
+    Provider.autoDispose<NovelData>((ref) => throw UnimplementedError());
 
 final crawlerFactoryProvider = Provider.autoDispose<CrawlerFactory?>(
   (ref) {
@@ -122,7 +122,7 @@ final novelInfoProvider = Provider.autoDispose<NovelPageInfo>((ref) {
 // Providers only for loaded page state.
 
 final novelProvider =
-    StateNotifierProvider.autoDispose<LoadedController, NovelEntity>(
+    StateNotifierProvider.autoDispose<LoadedController, NovelData>(
   (ref) {
     final novel = ref.watch(novelOverrideProvider);
     final crawler = ref.watch(crawlerProvider);
@@ -167,7 +167,7 @@ final novelMoreProvider = Provider.autoDispose<NovelPageMore>(
   dependencies: [novelProvider],
 );
 
-final volumesProvider = Provider.autoDispose<List<VolumeEntity>>(
+final volumesProvider = Provider.autoDispose<List<VolumeData>>(
   (ref) {
     final novel = ref.watch(novelProvider);
     return novel.volumes;

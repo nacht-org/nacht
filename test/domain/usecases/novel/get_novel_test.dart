@@ -8,7 +8,7 @@ import '../../../helpers/model_helper.dart';
 import '../../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late NovelLocalRepository mockNovelLocalRepository;
+  late NovelRepository mockNovelLocalRepository;
   late GetNovel usecase;
 
   setUp(() {

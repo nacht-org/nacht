@@ -14,7 +14,7 @@ class NovelGridCard extends StatelessWidget {
 
   final String title;
   final String? coverUrl;
-  final AssetEntity? cover;
+  final AssetData? cover;
   final VoidCallback onTap;
 
   @override

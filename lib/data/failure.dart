@@ -50,3 +50,12 @@ class AssetNotFound extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class AssetDeleteFailure extends Failure {
+  const AssetDeleteFailure(this.message);
+
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
+}

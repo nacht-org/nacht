@@ -1,13 +1,12 @@
-import 'package:chapturn/components/novel/provider/providers.dart';
-import 'package:chapturn/domain/entities/novel/partial_novel_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../domain/entities/novel/partial_novel_entity.dart';
+import '../provider/providers.dart';
 import 'info.dart';
-import 'notice_listener.dart';
 
-class PartialView extends HookConsumerWidget {
+class PartialView extends HookWidget {
   const PartialView({
     Key? key,
     required this.novel,
@@ -16,7 +15,7 @@ class PartialView extends HookConsumerWidget {
   final PartialNovelEntity novel;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final refreshIndicatorKey =
         useMemoized(() => GlobalKey<RefreshIndicatorState>());
 

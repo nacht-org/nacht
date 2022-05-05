@@ -7,7 +7,7 @@ import '../domain.dart';
 final libraryServiceProvider = Provider<LibraryService>(
   (ref) => LibraryService(
     categoryRepository: ref.watch(categoryRepositoryProvider),
-    novelLocalRepository: ref.watch(novelRepositoryProvider),
+    novelRepository: ref.watch(novelRepositoryProvider),
   ),
   name: 'LibraryServiceProvider',
 );
@@ -15,11 +15,11 @@ final libraryServiceProvider = Provider<LibraryService>(
 class LibraryService with LoggerMixin {
   LibraryService({
     required this.categoryRepository,
-    required this.novelLocalRepository,
+    required this.novelRepository,
   });
 
   final CategoryRepository categoryRepository;
-  final NovelRepository novelLocalRepository;
+  final NovelRepository novelRepository;
 
   Future<Either<Failure, bool>> changeCategory(
     NovelData novel,
@@ -32,7 +32,7 @@ class LibraryService with LoggerMixin {
       orElse: () => false,
     );
 
-    await novelLocalRepository.setFavourite(novel.id, favourite);
+    await novelRepository.setFavourite(novel.id, favourite);
 
     return Right(favourite);
   }

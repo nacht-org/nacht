@@ -1,7 +1,6 @@
-import 'dart:io';
-
-import 'package:chapturn/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
+
+import '../../domain/domain.dart';
 
 class NovelGridCard extends StatelessWidget {
   const NovelGridCard({

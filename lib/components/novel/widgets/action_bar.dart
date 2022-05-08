@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/core.dart';
-import '../provider/providers.dart';
+import '../provider/novel_provider.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({Key? key}) : super(key: key);

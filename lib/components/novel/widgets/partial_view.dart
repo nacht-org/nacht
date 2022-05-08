@@ -1,17 +1,20 @@
+import 'package:chapturn/components/novel/novel_page.dart';
+import 'package:chapturn/components/novel/provider/intermediate_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/entities/novel/partial_novel_data.dart';
-import '../provider/providers.dart';
 import 'info.dart';
 
 class PartialView extends HookWidget {
   const PartialView({
     Key? key,
+    required this.either,
     required this.novel,
   }) : super(key: key);
 
+  final NovelEither either;
   final PartialNovelData novel;
 
   @override
@@ -40,7 +43,7 @@ class PartialView extends HookWidget {
       body: Consumer(
         builder: (context, ref, child) {
           return RefreshIndicator(
-            onRefresh: ref.read(novelPageState.notifier).reload,
+            onRefresh: ref.read(intermediateProvider(either).notifier).reload,
             key: refreshIndicatorKey,
             child: child!,
           );
@@ -54,7 +57,7 @@ class PartialView extends HookWidget {
                 right: 16.0,
                 bottom: 16.0,
               ),
-              sliver: NovelInfo(),
+              sliver: EssentialSection(),
             ),
           ],
         ),

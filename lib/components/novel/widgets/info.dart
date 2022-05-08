@@ -3,15 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../provider/providers.dart';
+import '../model/essential_info.dart';
 import 'status.dart';
 
-class NovelInfo extends ConsumerWidget {
-  const NovelInfo({Key? key}) : super(key: key);
+final currentEssentialProvider =
+    Provider.autoDispose<EssentialInfo>((ref) => throw UnimplementedError());
+
+class EssentialSection extends ConsumerWidget {
+  const EssentialSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final info = ref.watch(novelInfoProvider);
+    final info = ref.watch(currentEssentialProvider);
 
     final image = info.cover.fold(
       () => info.coverUrl.fold(

@@ -1,13 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:chapturn/components/popular/provider/crawler_info_provider.dart';
+import 'package:chapturn/components/popular/provider/popular_fetch_provider.dart';
+import 'package:chapturn/components/popular/provider/popular_provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/core.dart';
-import '../novel/model/novel_page_args.dart';
+import '../novel/model/novel_either.dart';
 import '../widgets/novel_grid_card.dart';
 import '../widgets/searchable_scroll_view.dart';
-import 'provider/popular_page.dart';
 
 class PopularPage extends StatelessWidget {
   const PopularPage({Key? key, required this.crawlerFactory}) : super(key: key);
@@ -16,13 +18,8 @@ class PopularPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      overrides: [
-        crawlerFactoryProvider.overrideWithValue(crawlerFactory),
-      ],
-      child: const Scaffold(
-        body: PopularView(),
-      ),
+    return PopularView(
+      crawlerFactory: crawlerFactory,
     );
   }
 }
@@ -32,7 +29,12 @@ final isSearchEnabled = StateProvider((ref) => false);
 final searchTextProvider = StateProvider((ref) => '');
 
 class PopularView extends SearchableScrollView {
-  const PopularView({Key? key}) : super(key: key);
+  const PopularView({
+    Key? key,
+    required this.crawlerFactory,
+  }) : super(key: key);
+
+  final CrawlerFactory crawlerFactory;
 
   @override
   StateProvider<bool> get isSearching => isSearchEnabled;
@@ -43,7 +45,9 @@ class PopularView extends SearchableScrollView {
   @override
   Widget buildAppBar(
       BuildContext context, bool innerBoxIsScrolled, WidgetRef ref) {
-    final meta = ref.watch(crawlerMetaProvider);
+    final meta = ref.watch(
+      crawlerInfoProvider(crawlerFactory).select((info) => info.meta),
+    );
 
     return SliverAppBar(
       title: Text(meta.name),
@@ -73,10 +77,9 @@ class PopularView extends SearchableScrollView {
 
   @override
   List<Widget> buildBody(BuildContext context, WidgetRef ref) {
-    final pageState = ref.watch(popularPageState);
-    final crawler = ref.watch(crawlerProvider);
+    final popularState = ref.watch(popularProvider(crawlerFactory));
 
-    return pageState.when(
+    return popularState.when(
       loading: () => [
         const SliverFillRemaining(
           child: Center(
@@ -102,8 +105,8 @@ class PopularView extends SearchableScrollView {
                 title: novel.title,
                 coverUrl: novel.coverUrl,
                 onTap: () => context.router.push(NovelRoute(
-                  novel: NovelEntityArgument.partial(novel),
-                  crawler: crawler,
+                  novel: NovelEither.partial(novel),
+                  crawler: null, // TODO: Pass along crawler
                 )),
               );
             },
@@ -120,18 +123,18 @@ class PopularView extends SearchableScrollView {
             alignment: Alignment.center,
             child: Consumer(
               builder: (context, ref, child) {
-                final loaderState = ref.watch(popularPageLoaderState);
+                final info = ref.watch(crawlerInfoProvider(crawlerFactory));
+                final fetch = ref.watch(popularFetchProvider(info));
+                final notifier = ref.watch(popularFetchProvider(info).notifier);
 
-                return loaderState.when(
-                  data: (_) {
-                    return TextButton(
-                      child: const Text('Load more'),
-                      onPressed: () =>
-                          ref.read(popularPageLoaderState.notifier).loadNext(),
-                    );
-                  },
-                  loading: () => const CircularProgressIndicator(),
-                );
+                if (fetch.isLoading) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return TextButton(
+                    child: const Text('Load more'),
+                    onPressed: notifier.fetch,
+                  );
+                }
               },
             ),
           ),

@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/core.dart';
-import 'provider/browse_notifier.dart';
+import 'provider/crawlers_provider.dart';
 
 List<Widget> buildBrowseHeader(BuildContext context, bool innerBoxIsScrolled) {
   return [
     SliverAppBar(
       title: const Text('Browse'),
-      actions: [],
       floating: true,
       forceElevated: innerBoxIsScrolled,
     )

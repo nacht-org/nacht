@@ -14,25 +14,26 @@ final libraryServiceProvider = Provider<LibraryService>(
 
 class LibraryService with LoggerMixin {
   LibraryService({
-    required this.categoryRepository,
-    required this.novelRepository,
-  });
+    required CategoryRepository categoryRepository,
+    required NovelRepository novelRepository,
+  })  : _categoryRepository = categoryRepository,
+        _novelRepository = novelRepository;
 
-  final CategoryRepository categoryRepository;
-  final NovelRepository novelRepository;
+  final CategoryRepository _categoryRepository;
+  final NovelRepository _novelRepository;
 
   Future<Either<Failure, bool>> changeCategory(
     NovelData novel,
     Map<CategoryData, bool> categories,
   ) async {
-    await categoryRepository.changeNovelCategories(novel, categories);
+    await _categoryRepository.changeNovelCategories(novel, categories);
 
     final favourite = categories.values.firstWhere(
       (selected) => selected,
       orElse: () => false,
     );
 
-    await novelRepository.setFavourite(novel.id, favourite);
+    await _novelRepository.setFavourite(novel.id, favourite);
 
     return Right(favourite);
   }
@@ -40,14 +41,14 @@ class LibraryService with LoggerMixin {
   Future<List<CategoryData>> categories({
     bool fetchNovels = false,
   }) async {
-    final categories = await categoryRepository.getAllCategories();
+    final categories = await _categoryRepository.getAllCategories();
 
     if (fetchNovels) {
       return categories;
     } else {
       final entities = <CategoryData>[];
       for (final category in categories) {
-        final novels = await categoryRepository.getNovelsOfCategory(category);
+        final novels = await _categoryRepository.getNovelsOfCategory(category);
         entities.add(category.copyWith(novels: novels));
       }
 

@@ -32,8 +32,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<NovelRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: NovelPage(
-              key: args.key, novel: args.novel, crawler: args.crawler));
+          child: NovelPage(key: args.key, either: args.either));
     },
     WebViewRoute.name: (routeData) {
       final args = routeData.argsAs<WebViewRouteArgs>();
@@ -113,27 +112,23 @@ class PopularRouteArgs {
 /// generated route for
 /// [NovelPage]
 class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
-  NovelRoute(
-      {Key? key, required NovelEntityArgument novel, required Crawler? crawler})
+  NovelRoute({Key? key, required NovelEither either})
       : super(NovelRoute.name,
-            path: 'novel',
-            args: NovelRouteArgs(key: key, novel: novel, crawler: crawler));
+            path: 'novel', args: NovelRouteArgs(key: key, either: either));
 
   static const String name = 'NovelRoute';
 }
 
 class NovelRouteArgs {
-  const NovelRouteArgs({this.key, required this.novel, required this.crawler});
+  const NovelRouteArgs({this.key, required this.either});
 
   final Key? key;
 
-  final NovelEntityArgument novel;
-
-  final Crawler? crawler;
+  final NovelEither either;
 
   @override
   String toString() {
-    return 'NovelRouteArgs{key: $key, novel: $novel, crawler: $crawler}';
+    return 'NovelRouteArgs{key: $key, either: $either}';
   }
 }
 

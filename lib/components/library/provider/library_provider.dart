@@ -1,26 +1,24 @@
 import 'package:chapturn/domain/entities/category/category_data.dart';
+import 'package:chapturn/domain/services/library_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../domain/providers/providers.dart';
-import '../../../domain/usecases/category/get_all_categories_with_novels.dart';
-
 final libraryProvider =
-    StateNotifierProvider<LibraryController, List<CategoryData>>(
-  (ref) {
-    return LibraryController(
-      getAllCategoriesWithNovels: ref.watch(getAllCategoriesWithNovels),
-    );
-  },
+    StateNotifierProvider<LibraryNotifier, List<CategoryData>>(
+  (ref) => LibraryNotifier(
+    libraryService: ref.watch(libraryServiceProvider),
+  ),
+  name: 'LibraryProvider',
 );
 
-class LibraryController extends StateNotifier<List<CategoryData>> {
-  LibraryController({
-    required this.getAllCategoriesWithNovels,
-  }) : super([]);
+class LibraryNotifier extends StateNotifier<List<CategoryData>> {
+  LibraryNotifier({
+    required LibraryService libraryService,
+  })  : _libraryService = libraryService,
+        super([]);
 
-  final GetAllCategoriesWithNovels getAllCategoriesWithNovels;
+  final LibraryService _libraryService;
 
   Future<void> reload() async {
-    state = await getAllCategoriesWithNovels.execute();
+    state = await _libraryService.categories(fetchNovels: true);
   }
 }

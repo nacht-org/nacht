@@ -78,6 +78,9 @@ class PopularView extends SearchableScrollView {
   @override
   List<Widget> buildBody(BuildContext context, WidgetRef ref) {
     final popularState = ref.watch(popularProvider(crawlerFactory));
+    final crawler = ref.watch(
+      crawlerInfoProvider(crawlerFactory).select((info) => info.crawler),
+    );
 
     return popularState.when(
       loading: () => [
@@ -105,8 +108,7 @@ class PopularView extends SearchableScrollView {
                 title: novel.title,
                 coverUrl: novel.coverUrl,
                 onTap: () => context.router.push(NovelRoute(
-                  novel: NovelEither.partial(novel),
-                  crawler: null, // TODO: Pass along crawler
+                  either: NovelEither.partial(novel, crawler),
                 )),
               );
             },

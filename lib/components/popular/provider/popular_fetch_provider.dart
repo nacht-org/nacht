@@ -52,7 +52,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
 }
 
 @freezed
-class FetchInfo with _$PopularInfo {
+class FetchInfo with _$FetchInfo {
   const factory FetchInfo({
     required List<PartialNovelData> data,
     required bool isLoading,

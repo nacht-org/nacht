@@ -49,7 +49,7 @@ class LibraryPage extends HookConsumerWidget {
                   cover: novel.cover,
                   onTap: () => context.router.push(
                     NovelRoute(
-                      novel: NovelEither.complete(novel),
+                      either: NovelEither.complete(novel),
                     ),
                   ),
                 );

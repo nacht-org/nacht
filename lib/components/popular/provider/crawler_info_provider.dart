@@ -14,16 +14,19 @@ final crawlerInfoProvider =
 class CrawlerInfo with _$CrawlerInfo {
   factory CrawlerInfo({
     required Meta meta,
+    required Crawler crawler,
     required ParsePopular? popularParser,
   }) = _CrawlerInfo;
 
   factory CrawlerInfo.fromFactory(CrawlerFactory crawlerFactory) {
     final meta = crawlerFactory.meta();
+    final crawler = crawlerFactory.create();
 
     return CrawlerInfo(
       meta: meta,
+      crawler: crawler,
       popularParser: meta.features.contains(Feature.popular)
-          ? crawlerFactory.create() as ParsePopular
+          ? crawler as ParsePopular
           : null,
     );
   }

@@ -63,7 +63,7 @@ class NovelView extends HookConsumerWidget {
             buildPadding(sliver: const EssentialSection(), top: 24, bottom: 8),
             buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
             HookConsumer(builder: (context, ref, child) {
-              final description = ref.watch(descriptionInfoProvider(novel));
+              final description = ref.watch(descriptionInfoProvider);
               final expanded = useState(false);
 
               return buildPadding(
@@ -91,7 +91,7 @@ class NovelView extends HookConsumerWidget {
               );
             }),
             Consumer(builder: (context, ref, child) {
-              final chapterCount = ref.watch(chapterCountProvider(novel));
+              final chapterCount = ref.watch(chapterCountProvider);
 
               return SliverToBoxAdapter(
                 child: ListTile(
@@ -108,7 +108,7 @@ class NovelView extends HookConsumerWidget {
               );
             }),
             Consumer(builder: (context, ref, child) {
-              final items = ref.watch(chapterListProvider(novel));
+              final items = ref.watch(chapterListProvider);
 
               return SliverList(
                 delegate: SliverChildBuilderDelegate(

@@ -22,11 +22,13 @@ void main() {
   final tNovelEntity = helperNovelEntity;
 
   final tCategories = {
-    CategoryData(id: 1, name: '_default', isDefault: true, novels: []): true,
+    CategoryData(
+        id: 1, index: 1, name: '_default', isDefault: true, novels: []): true,
   };
 
   final tUnselectedCategories = {
-    CategoryData(id: 1, name: '_default', isDefault: true, novels: []): false,
+    CategoryData(
+        id: 1, index: 1, name: '_default', isDefault: true, novels: []): false,
   };
 
   group('changeCategory', () {
@@ -53,8 +55,8 @@ void main() {
   });
 
   group('categories', () {
-    final tCategory =
-        CategoryData(id: 1, name: '_default', isDefault: true, novels: []);
+    final tCategory = CategoryData(
+        id: 1, index: 1, name: '_default', isDefault: true, novels: []);
 
     final tCategories = [
       tCategory,

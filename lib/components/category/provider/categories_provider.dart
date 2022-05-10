@@ -47,6 +47,16 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
     );
   }
 
+  Future<void> edit(CategoryData category) async {
+    final result = await _libraryService.editCategory(category);
+
+    result.fold((failure) {
+      log.warning(failure);
+    }, (data) {
+      reload();
+    });
+  }
+
   Future<void> remove(CategoryData category) async {}
 
   int _highestIndex() {

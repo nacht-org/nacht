@@ -35,6 +35,25 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
+  Future<Either<Failure, void>> edit(CategoryData category) async {
+    // TODO: test edit
+    final companion = NovelCategoriesCompanion(
+      id: Value(category.id),
+      name: Value(category.name),
+      categoryIndex: Value(category.index),
+    );
+
+    final didUpdate =
+        await database.update(database.novelCategories).replace(companion);
+
+    if (didUpdate) {
+      return const Right(null);
+    } else {
+      return const Left(UpdateFailure());
+    }
+  }
+
+  @override
   Future<void> changeNovelCategories(
     NovelData novel,
     Map<CategoryData, bool> categories,

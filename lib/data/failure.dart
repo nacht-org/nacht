@@ -66,3 +66,10 @@ class InsertFailure extends Failure {
   @override
   List<Object?> get props => [];
 }
+
+class UpdateFailure extends Failure {
+  const UpdateFailure();
+
+  @override
+  List<Object?> get props => [];
+}

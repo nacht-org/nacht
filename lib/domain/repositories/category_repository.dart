@@ -15,6 +15,8 @@ final categoryRepositoryProvider = Provider<CategoryRepository>(
 abstract class CategoryRepository {
   Future<Either<Failure, CategoryData>> add(int index, String name);
 
+  Future<Either<Failure, void>> edit(CategoryData category);
+
   Future<List<CategoryData>> getAllCategories();
 
   Future<List<CategoryData>> getCategoriesOfNovel(NovelData novel);

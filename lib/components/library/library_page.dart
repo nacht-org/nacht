@@ -36,7 +36,7 @@ class LibraryPage extends HookConsumerWidget {
             return const SliverToBoxAdapter();
           }
 
-          final entity = entities.single;
+          final entity = entities.first;
 
           return SliverGrid(
             delegate: SliverChildBuilderDelegate(

@@ -22,6 +22,10 @@ class LibraryService with LoggerMixin {
   final CategoryRepository _categoryRepository;
   final NovelRepository _novelRepository;
 
+  Future<Either<Failure, CategoryData>> addCategory(int index, String name) {
+    return _categoryRepository.add(index, name);
+  }
+
   Future<Either<Failure, bool>> changeCategory(
     NovelData novel,
     Map<CategoryData, bool> categories,

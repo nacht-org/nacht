@@ -45,10 +45,10 @@ class AssetRepositoryImpl with LoggerMixin implements AssetRepository {
     );
 
     final assetId = await database.into(database.assets).insert(insert);
-    final documentDirectory = await getApplicationDocumentsDirectory();
+    final cacheDirectory = await getTemporaryDirectory();
 
     final assetName = '$assetId.${data.mimetype.split("/").last}';
-    final assetPath = path.join(documentDirectory.path, directory, assetName);
+    final assetPath = path.join(cacheDirectory.path, directory, assetName);
     final companion =
         AssetsCompanion(id: Value(assetId), path: Value(assetPath));
 

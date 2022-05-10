@@ -1,3 +1,6 @@
+import 'package:chapturn/data/failure.dart';
+import 'package:dartz/dartz.dart';
+import 'package:chapturn/core/failure.dart';
 import 'package:drift/drift.dart';
 
 import '../../../domain/domain.dart';
@@ -11,6 +14,25 @@ class CategoryRepositoryImpl implements CategoryRepository {
   });
 
   final AppDatabase database;
+
+  @override
+  Future<Either<Failure, CategoryData>> add(int index, String name) async {
+    // TODO: test add
+    final companion = NovelCategoriesCompanion.insert(
+      categoryIndex: index,
+      name: name,
+    );
+
+    try {
+      final model = await database
+          .into(database.novelCategories)
+          .insertReturning(companion);
+
+      return Right(CategoryData.fromModel(model));
+    } catch (e) {
+      return const Left(InsertFailure());
+    }
+  }
 
   @override
   Future<void> changeNovelCategories(

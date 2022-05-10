@@ -7,7 +7,9 @@ void main() {
 
   ErrorHandler(
     child: ProviderScope(
-      observers: [ProviderLogger()],
+      observers: [
+        ProviderLogger(),
+      ],
       child: const ChapturnApp(),
     ),
   );

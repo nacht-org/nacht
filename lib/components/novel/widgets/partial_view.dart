@@ -1,5 +1,6 @@
 import 'package:chapturn/components/novel/novel_page.dart';
 import 'package:chapturn/components/novel/provider/intermediate_provider.dart';
+import 'package:chapturn/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,17 +20,7 @@ class PartialView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final refreshIndicatorKey =
-        useMemoized(() => GlobalKey<RefreshIndicatorState>());
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        assert(refreshIndicatorKey.currentState != null);
-        refreshIndicatorKey.currentState?.show();
-      });
-
-      return null;
-    }, []);
+    final refreshKey = useRefresh();
 
     return NestedScrollView(
       floatHeaderSlivers: true,
@@ -44,7 +35,7 @@ class PartialView extends HookWidget {
         builder: (context, ref, child) {
           return RefreshIndicator(
             onRefresh: ref.read(intermediateProvider(either).notifier).reload,
-            key: refreshIndicatorKey,
+            key: refreshKey,
             child: child!,
           );
         },

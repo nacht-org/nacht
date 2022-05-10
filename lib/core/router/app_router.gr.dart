@@ -41,6 +41,10 @@ class _$AppRouter extends RootStackRouter {
           child: WebViewPage(
               key: args.key, title: args.title, initialUrl: args.initialUrl));
     },
+    CategoryRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const CategoryPage());
+    },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LibraryPage());
@@ -72,7 +76,8 @@ class _$AppRouter extends RootStackRouter {
         ]),
         RouteConfig(PopularRoute.name, path: 'popular'),
         RouteConfig(NovelRoute.name, path: 'novel'),
-        RouteConfig(WebViewRoute.name, path: 'webview')
+        RouteConfig(WebViewRoute.name, path: 'webview'),
+        RouteConfig(CategoryRoute.name, path: 'categories')
       ];
 }
 
@@ -158,6 +163,14 @@ class WebViewRouteArgs {
   String toString() {
     return 'WebViewRouteArgs{key: $key, title: $title, initialUrl: $initialUrl}';
   }
+}
+
+/// generated route for
+/// [CategoryPage]
+class CategoryRoute extends PageRouteInfo<void> {
+  const CategoryRoute() : super(CategoryRoute.name, path: 'categories');
+
+  static const String name = 'CategoryRoute';
 }
 
 /// generated route for

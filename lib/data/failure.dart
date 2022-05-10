@@ -59,3 +59,10 @@ class AssetDeleteFailure extends Failure {
   @override
   List<Object?> get props => [message];
 }
+
+class InsertFailure extends Failure {
+  const InsertFailure();
+
+  @override
+  List<Object?> get props => [];
+}

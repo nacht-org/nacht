@@ -1,3 +1,5 @@
+import 'package:chapturn/core/failure.dart';
+import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/data.dart';
@@ -11,6 +13,8 @@ final categoryRepositoryProvider = Provider<CategoryRepository>(
 );
 
 abstract class CategoryRepository {
+  Future<Either<Failure, CategoryData>> add(int index, String name);
+
   Future<List<CategoryData>> getAllCategories();
 
   Future<List<CategoryData>> getCategoriesOfNovel(NovelData novel);

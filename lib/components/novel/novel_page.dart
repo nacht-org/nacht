@@ -30,7 +30,9 @@ class NovelPage extends ConsumerWidget {
         );
 
         return ProviderScope(
-          overrides: [currentEssentialProvider.overrideWithValue(info)],
+          overrides: [
+            currentEssentialProvider.overrideWithValue(info),
+          ],
           child: PartialView(either: either, novel: novel),
         );
       },

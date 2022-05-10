@@ -26,15 +26,10 @@ final routerProvider = Provider<AppRouter>(
         AutoRoute(page: MorePage),
       ],
     ),
-    AutoRoute(
-      page: PopularPage,
-      path: 'popular',
-    ),
-    AutoRoute(
-      page: NovelPage,
-      path: 'novel',
-    ),
+    AutoRoute(page: PopularPage, path: 'popular'),
+    AutoRoute(page: NovelPage, path: 'novel'),
     AutoRoute(page: WebViewPage, path: 'webview'),
+    AutoRoute(page: CategoryPage, path: 'categories'),
   ],
 )
 class AppRouter extends _$AppRouter {}

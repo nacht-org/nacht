@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
-import '../../browse/browse_page.dart';
-import '../../library/library_page.dart';
+import 'package:chapturn/core/core.dart';
+import 'package:chapturn/components/components.dart';
 
 typedef HeaderBuilder = List<Widget> Function(
     BuildContext context, bool innerBoxIsScrolled);
@@ -52,7 +51,7 @@ const destinations = [
   ),
   Destination(
     route: MoreRoute(),
-    headerBuilder: buildEmptyHeader,
+    headerBuilder: buildMoreHeader,
     label: 'More',
     icon: Icon(Icons.more_horiz_outlined),
     selectedIcon: Icon(Icons.more_horiz),

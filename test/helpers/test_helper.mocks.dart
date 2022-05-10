@@ -180,6 +180,13 @@ class MockCategoryRepository extends _i1.Mock
   }
 
   @override
+  _i6.Future<_i2.Either<_i5.Failure, _i4.CategoryData>> add(
+          int? index, String? name) =>
+      (super.noSuchMethod(Invocation.method(#add, [index, name]),
+          returnValue: Future<_i2.Either<_i5.Failure, _i4.CategoryData>>.value(
+              _FakeEither_1<_i5.Failure, _i4.CategoryData>())) as _i6
+          .Future<_i2.Either<_i5.Failure, _i4.CategoryData>>);
+  @override
   _i6.Future<List<_i4.CategoryData>> getAllCategories() =>
       (super.noSuchMethod(Invocation.method(#getAllCategories, []),
               returnValue:

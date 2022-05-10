@@ -6,3 +6,4 @@ export 'popular/popular_page.dart';
 export 'webview/webview_page.dart';
 export 'updates/updates_page.dart';
 export 'more/more_page.dart';
+export 'category/category_page.dart';

@@ -1,3 +1,4 @@
+import 'package:chapturn/components/library/provider/library_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
 
@@ -8,6 +9,7 @@ final categoriesProvider =
     StateNotifierProvider<CategoriesNotifier, List<CategoryData>?>(
   (ref) => CategoriesNotifier(
     state: null,
+    read: ref.read,
     libraryService: ref.watch(libraryServiceProvider),
     dialogService: ref.watch(dialogServiceProvider),
     messageService: ref.watch(messageServiceProvider),
@@ -19,14 +21,17 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
     with LoggerMixin {
   CategoriesNotifier({
     required List<CategoryData>? state,
+    required Reader read,
     required LibraryService libraryService,
     required DialogService dialogService,
     required MessageService messageService,
-  })  : _libraryService = libraryService,
+  })  : _read = read,
+        _libraryService = libraryService,
         _dialogService = dialogService,
         _messageService = messageService,
         super(state);
 
+  final Reader _read;
   final LibraryService _libraryService;
   final DialogService _dialogService;
   final MessageService _messageService;
@@ -51,6 +56,7 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
       },
       (data) {
         state = _sort([...?state, data]);
+        _read(libraryProvider.notifier).reload();
       },
     );
   }
@@ -77,6 +83,8 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
         newCategory,
         ...state!.sublist(newCategory.index),
       ];
+
+      _read(libraryProvider.notifier).reload();
     });
   }
 
@@ -117,7 +125,9 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
         log.warning(failure);
         state = oldState;
       },
-      (_) {},
+      (_) {
+        _read(libraryProvider.notifier).reload();
+      },
     );
   }
 

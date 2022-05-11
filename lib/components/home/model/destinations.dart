@@ -21,10 +21,6 @@ class Destination {
   });
 }
 
-List<Widget> buildEmptyHeader(BuildContext context, bool innerBoxIsScrolled) {
-  return [];
-}
-
 const destinations = [
   Destination(
     route: LibraryRoute(),

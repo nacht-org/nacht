@@ -187,6 +187,19 @@ class MockCategoryRepository extends _i1.Mock
               _FakeEither_1<_i5.Failure, _i4.CategoryData>())) as _i6
           .Future<_i2.Either<_i5.Failure, _i4.CategoryData>>);
   @override
+  _i6.Future<_i2.Either<_i5.Failure, void>> edit(_i4.CategoryData? category) =>
+      (super.noSuchMethod(Invocation.method(#edit, [category]),
+              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
+                  _FakeEither_1<_i5.Failure, void>()))
+          as _i6.Future<_i2.Either<_i5.Failure, void>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, void>> updateIndex(
+          List<_i4.CategoryData>? categories) =>
+      (super.noSuchMethod(Invocation.method(#updateIndex, [categories]),
+              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
+                  _FakeEither_1<_i5.Failure, void>()))
+          as _i6.Future<_i2.Either<_i5.Failure, void>>);
+  @override
   _i6.Future<List<_i4.CategoryData>> getAllCategories() =>
       (super.noSuchMethod(Invocation.method(#getAllCategories, []),
               returnValue:

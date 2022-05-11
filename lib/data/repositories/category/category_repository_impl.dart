@@ -54,6 +54,36 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
+  Future<Either<Failure, void>> updateIndex(
+      List<CategoryData> categories) async {
+    // await database.batch((batch) {
+    //   for (final category in categories) {
+    //     final companion = NovelCategoriesCompanion(
+    //       id: Value(category.id),
+    //       categoryIndex: Value(category.index),
+    //     );
+
+    //     batch.update(database.novelCategories, companion);
+    //   }
+    // });
+
+    await database.transaction(() async {
+      for (final category in categories) {
+        final companion = NovelCategoriesCompanion(
+          id: Value(category.id),
+          categoryIndex: Value(category.index),
+        );
+
+        await (database.update(database.novelCategories)
+              ..whereSamePrimaryKey(companion))
+            .write(companion);
+      }
+    });
+
+    return const Right(null);
+  }
+
+  @override
   Future<void> changeNovelCategories(
     NovelData novel,
     Map<CategoryData, bool> categories,

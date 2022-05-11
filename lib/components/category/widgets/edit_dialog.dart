@@ -26,10 +26,7 @@ class EditCategoryDialog extends HookConsumerWidget {
       // TODO: Add proper validation.
       assert(controller.value.text.isNotEmpty);
 
-      notifier.edit(
-        categoryData.copyWith(name: controller.value.text),
-      );
-
+      notifier.edit(categoryData, controller.value.text);
       context.router.pop();
     }
 

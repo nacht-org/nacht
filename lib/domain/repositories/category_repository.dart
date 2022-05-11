@@ -17,6 +17,8 @@ abstract class CategoryRepository {
 
   Future<Either<Failure, void>> edit(CategoryData category);
 
+  Future<Either<Failure, void>> updateIndex(List<CategoryData> categories);
+
   Future<List<CategoryData>> getAllCategories();
 
   Future<List<CategoryData>> getCategoriesOfNovel(NovelData novel);

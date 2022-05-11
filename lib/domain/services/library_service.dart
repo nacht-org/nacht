@@ -30,6 +30,11 @@ class LibraryService with LoggerMixin {
     return _categoryRepository.edit(category);
   }
 
+  Future<Either<Failure, void>> updateCategoriesOrder(
+      List<CategoryData> categories) {
+    return _categoryRepository.updateIndex(categories);
+  }
+
   Future<Either<Failure, bool>> changeCategory(
     NovelData novel,
     Map<CategoryData, bool> categories,

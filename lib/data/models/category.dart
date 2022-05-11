@@ -4,8 +4,12 @@ import 'package:drift/drift.dart';
 @DataClassName('NovelCategory')
 class NovelCategories extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get categoryIndex =>
-      integer().customConstraint('NOT NULL UNIQUE')();
+
+  /// This value should be kept programmatically unique as its used to
+  /// represent the order of categories shown in app.
+  ///
+  /// The [UNIQUE] constant is not added since it restricts changing the value.
+  IntColumn get categoryIndex => integer()();
   TextColumn get name => text()();
 }
 

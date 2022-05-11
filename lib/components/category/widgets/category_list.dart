@@ -34,7 +34,7 @@ class CategoryList extends HookConsumerWidget {
           final category = categories[index];
 
           return ListTile(
-            leading: ReorderableDragStartListener(
+            leading: ReorderableDelayedDragStartListener(
               index: index,
               child: const Icon(Icons.drag_handle),
             ),
@@ -46,8 +46,9 @@ class CategoryList extends HookConsumerWidget {
             ),
           );
         },
+        buildDefaultDragHandles: false,
         itemCount: categories.length,
-        onReorder: (oldIndex, newIndex) {},
+        onReorder: notifier.reorder,
       ),
     );
   }

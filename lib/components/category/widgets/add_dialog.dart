@@ -13,9 +13,6 @@ class AddCategoryDialog extends HookConsumerWidget {
     final controller = useTextEditingController();
 
     void submit() {
-      // TODO: Add proper validation.
-      assert(controller.value.text.isNotEmpty);
-
       notifier.add(controller.value.text);
       context.router.pop();
     }

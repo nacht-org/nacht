@@ -87,7 +87,7 @@ class AppDatabase extends _$AppDatabase {
             NovelCategoriesCompanion.insert(
               id: const Value(1),
               categoryIndex: 0,
-              name: '_default',
+              name: 'Default',
             )
           ]);
 

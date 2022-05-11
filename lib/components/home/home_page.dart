@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
       routes: destinations.map((item) => item.route).toList(),
       builder: (context, child, animation) {
         final tabsRouter = AutoTabsRouter.of(context);
-        final destination = destinations[tabsRouter.activeIndex];
 
         return Scaffold(
           body: ProviderScope(

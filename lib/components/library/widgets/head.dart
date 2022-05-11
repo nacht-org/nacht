@@ -1,4 +1,5 @@
 import 'package:chapturn/components/components.dart';
+import 'package:chapturn/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -45,9 +46,18 @@ class _LibraryHeadState extends ConsumerState<LibraryHead>
           title: const Text('Library'),
           floating: true,
           forceElevated: innerBoxIsScrolled,
-          bottom: TabBar(
-            controller: _controller,
-            tabs: library.map((category) => Tab(text: category.name)).toList(),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(kTabHeight),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                controller: _controller,
+                tabs: library
+                    .map((category) => Tab(text: category.name))
+                    .toList(),
+                isScrollable: true,
+              ),
+            ),
           ),
         ),
       ],

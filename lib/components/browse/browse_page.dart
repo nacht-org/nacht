@@ -22,31 +22,41 @@ class BrowsePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final crawlerFactories = ref.watch(crawlersProvider);
 
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final meta = crawlerFactories[index].meta();
-              final lang =
-                  langFromCode(meta.lang)?['name'] ?? meta.lang.capitalize();
-
-              return ListTile(
-                title: Text(meta.name),
-                subtitle: Text(lang),
-                trailing: TextButton(
-                  child: const Text('Latest'),
-                  onPressed: () {},
-                ),
-                onTap: () => context.router.push(
-                  PopularRoute(crawlerFactory: crawlerFactories[index]),
-                ),
-              );
-            },
-            childCount: crawlerFactories.length,
-          ),
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        SliverAppBar(
+          title: const Text('Browse'),
+          floating: true,
+          forceElevated: innerBoxIsScrolled,
         )
       ],
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final meta = crawlerFactories[index].meta();
+                final lang =
+                    langFromCode(meta.lang)?['name'] ?? meta.lang.capitalize();
+
+                return ListTile(
+                  title: Text(meta.name),
+                  subtitle: Text(lang),
+                  trailing: TextButton(
+                    child: const Text('Latest'),
+                    onPressed: () {},
+                  ),
+                  onTap: () => context.router.push(
+                    PopularRoute(crawlerFactory: crawlerFactories[index]),
+                  ),
+                );
+              },
+              childCount: crawlerFactories.length,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

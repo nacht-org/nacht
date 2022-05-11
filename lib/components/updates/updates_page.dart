@@ -5,6 +5,16 @@ class UpdatesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        SliverAppBar(
+          title: const Text('Updates'),
+          floating: true,
+          forceElevated: innerBoxIsScrolled,
+        ),
+      ],
+      body: Container(),
+    );
   }
 }

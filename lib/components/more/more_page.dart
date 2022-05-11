@@ -17,15 +17,25 @@ class MorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(0),
-      children: [
-        ListTile(
-          leading: const Icon(Icons.category),
-          title: const Text('Categories'),
-          onTap: () => context.router.push(const CategoryRoute()),
-        )
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        SliverAppBar(
+          title: const Text('More'),
+          floating: true,
+          forceElevated: innerBoxIsScrolled,
+        ),
       ],
+      body: ListView(
+        padding: const EdgeInsets.all(0),
+        children: [
+          ListTile(
+            leading: const Icon(Icons.category),
+            title: const Text('Categories'),
+            onTap: () => context.router.push(const CategoryRoute()),
+          )
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:chapturn/components/home/provider/destination_animation_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'model/destinations.dart';
 
@@ -13,16 +15,14 @@ class HomePage extends StatelessWidget {
       routes: destinations.map((item) => item.route).toList(),
       builder: (context, child, animation) {
         final tabsRouter = AutoTabsRouter.of(context);
+        final destination = destinations[tabsRouter.activeIndex];
 
         return Scaffold(
-          body: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                destinations[tabsRouter.activeIndex].headerBuilder,
-            body: FadeTransition(
-              child: child,
-              opacity: animation,
-            ),
+          body: ProviderScope(
+            overrides: [
+              destinationAnimationProvider.overrideWithValue(animation)
+            ],
+            child: child,
           ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: tabsRouter.activeIndex,

@@ -7,3 +7,4 @@ export 'webview/webview_page.dart';
 export 'updates/updates_page.dart';
 export 'more/more_page.dart';
 export 'category/category_page.dart';
+export 'home/provider/destination_animation_provider.dart';

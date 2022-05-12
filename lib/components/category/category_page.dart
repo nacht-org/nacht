@@ -19,7 +19,7 @@ class CategoryPage extends ConsumerWidget {
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            title: Text('Categories'),
+            title: const Text('Edit categories'),
             floating: true,
             forceElevated: innerBoxIsScrolled,
           )

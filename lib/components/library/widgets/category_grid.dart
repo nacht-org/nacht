@@ -6,8 +6,8 @@ import '../../../domain/domain.dart';
 import '../../components.dart';
 import '../../widgets/novel_grid_card.dart';
 
-class CategoryView extends StatelessWidget {
-  const CategoryView({Key? key, required this.category}) : super(key: key);
+class CategoryGrid extends StatelessWidget {
+  const CategoryGrid({Key? key, required this.category}) : super(key: key);
 
   final CategoryData category;
 

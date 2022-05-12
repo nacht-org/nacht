@@ -88,7 +88,7 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
     });
   }
 
-  Future<void> remove(CategoryData category) async {}
+  Future<void> remove(Set<int> ids) async {}
 
   Future<void> reorder(int oldIndex, int newIndex) async {
     assert(state != null);

@@ -11,3 +11,4 @@ export 'services/message_service.dart';
 export 'services/dialog_service.dart';
 export 'widgets/ticker_builder.dart';
 export 'hooks/use_will_pop_scope.dart';
+export 'widgets/align_tab_bar.dart';

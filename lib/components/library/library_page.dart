@@ -1,13 +1,12 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:chapturn/components/library/widgets/head.dart';
-import 'package:chapturn/components/widgets/novel_grid_card.dart';
+import 'package:chapturn/components/library/widgets/category_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../core/core.dart';
-import '../novel/novel_page.dart';
 import 'provider/library_provider.dart';
+import 'provider/relevant_categories_provider.dart';
+import 'widgets/library_app_bar.dart';
+import 'widgets/library_tab_provider.dart';
 
 class LibraryPage extends HookConsumerWidget {
   const LibraryPage({Key? key}) : super(key: key);
@@ -19,42 +18,30 @@ class LibraryPage extends HookConsumerWidget {
       return null;
     }, []);
 
-    return LibraryHead(
-      child: CustomScrollView(
-        slivers: [
-          Consumer(builder: (context, ref, child) {
-            final entities = ref.watch(libraryProvider);
-            if (entities.isEmpty) {
-              return const SliverToBoxAdapter();
-            }
-
-            final entity = entities.first;
-
-            return SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final novel = entity.novels[index];
-
-                  return NovelGridCard(
-                    title: novel.title,
-                    coverUrl: novel.coverUrl,
-                    cover: novel.cover,
-                    onTap: () => context.router.push(
-                      NovelRoute(
-                        either: NovelEither.complete(novel),
-                      ),
-                    ),
-                  );
-                },
-                childCount: entity.novels.length,
-              ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2 / 3,
-              ),
-            );
-          })
+    return TabControllerProvider(
+      length: tabCountProvider,
+      child: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          LibraryAppBar(forceElevated: innerBoxIsScrolled),
         ],
+        body: Consumer(
+          builder: (context, ref, child) {
+            final categories = ref.watch(relevantCategoriesProvider);
+
+            if (categories.isEmpty) {
+              return Container();
+            } else if (categories.length == 1) {
+              return CategoryView(category: categories.single);
+            } else {
+              return TabBarView(
+                children: categories
+                    .map((category) => CategoryView(category: category))
+                    .toList(),
+              );
+            }
+          },
+        ),
       ),
     );
   }

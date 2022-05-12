@@ -68,4 +68,17 @@ class LibraryService with LoggerMixin {
       return entities;
     }
   }
+
+  Future<Map<CategoryData, bool>> novelCategories(NovelData novel) async {
+    final categories = await _categoryRepository.getAllCategories();
+    final novelCategories =
+        await _categoryRepository.getCategoriesOfNovel(novel);
+
+    final map = <CategoryData, bool>{};
+    for (final category in categories) {
+      map[category] = novelCategories.contains(category);
+    }
+
+    return map;
+  }
 }

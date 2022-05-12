@@ -1,3 +1,5 @@
+import 'package:chapturn/components/novel/set_categories/provider/selected_categories_provider.dart';
+import 'package:chapturn/components/novel/set_categories/set_categories_dialog.dart';
 import 'package:chapturn/components/novel/widgets/novel_view.dart';
 import 'package:chapturn/core/services/message_service.dart';
 import 'package:chapturn/domain/services/library_service.dart';
@@ -6,6 +8,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/core.dart';
+import '../../../domain/domain.dart';
 import '../../../domain/entities/novel/novel_data.dart';
 import '../../library/provider/library_provider.dart';
 
@@ -23,6 +26,7 @@ final novelProvider =
     currentCrawlerProvider,
     novelServiceProvider,
     libraryServiceProvider,
+    dialogServiceProvider,
   ],
 );
 
@@ -71,30 +75,37 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     );
   }
 
-  Future<void> addToLibrary() async {
-    final categories = await libraryService.categories();
-    final map = {for (final category in categories) category: true};
+  Future<void> toggleLibrary() async {
+    Map<CategoryData, bool>? categories =
+        await libraryService.novelCategories(state);
 
-    await libraryService.changeCategory(state, map);
+    // There must always be one category.
+    assert(categories.isNotEmpty);
 
-    state = state.copyWith(
-      favourite: true,
-    );
+    if (categories.length == 1) {
+      // if there is only one category (default) dont show the dialog
+      // just reverse the state.
+      categories = {
+        for (final entry in categories.entries) entry.key: !entry.value
+      };
+    } else {
+      categories = await read(dialogServiceProvider).show<CategorySelection?>(
+        child: SetCategoriesDialog(categories: categories),
+      );
+    }
 
-    _library.reload();
-  }
+    // Dont do anything if the dialog was cancelled.
+    if (categories == null) {
+      return;
+    }
 
-  Future<void> removeFromLibrary() async {
-    final categories = await libraryService.categories();
-    final map = {for (final category in categories) category: false};
-
-    await libraryService.changeCategory(state, map);
-
-    state = state.copyWith(
-      favourite: false,
-    );
-
-    _library.reload();
+    final result = await libraryService.changeCategory(state, categories);
+    result.fold((failure) {
+      log.warning(failure);
+    }, (data) {
+      state = state.copyWith(favourite: data);
+      _library.reload();
+    });
   }
 
   Future<void> reload() async {

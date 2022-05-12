@@ -23,14 +23,11 @@ class ActionBar extends StatelessWidget {
                 final icon =
                     favourite ? Icons.favorite : Icons.favorite_outline;
                 final label = favourite ? 'In library' : 'Add to library';
-                final onTap = favourite
-                    ? ref.read(novelProvider.notifier).removeFromLibrary
-                    : ref.read(novelProvider.notifier).addToLibrary;
 
                 return ActionItem(
                   icon: icon,
                   label: label,
-                  onTap: onTap,
+                  onTap: ref.read(novelProvider.notifier).toggleLibrary,
                   active: favourite,
                 );
               },

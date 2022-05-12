@@ -14,7 +14,7 @@ import 'package:path/path.dart' as p;
 part 'database.g.dart';
 
 final databaseProvider = Provider<AppDatabase>(
-  (ref) => AppDatabase.connect(),
+  (ref) => AppDatabase(),
 );
 
 @DriftDatabase(tables: [

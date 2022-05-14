@@ -29,4 +29,6 @@ abstract class CategoryRepository {
   );
 
   Future<List<NovelData>> getNovelsOfCategory(CategoryData category);
+
+  Future<Either<Failure, void>> remove(Iterable<int> ids);
 }

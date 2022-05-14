@@ -30,6 +30,10 @@ class LibraryService with LoggerMixin {
     return _categoryRepository.edit(category);
   }
 
+  Future<Either<Failure, void>> removeCategories(Iterable<int> ids) {
+    return _categoryRepository.remove(ids);
+  }
+
   Future<Either<Failure, void>> updateCategoriesOrder(
       List<CategoryData> categories) {
     return _categoryRepository.updateIndex(categories);

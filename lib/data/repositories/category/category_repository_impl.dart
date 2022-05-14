@@ -54,19 +54,23 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
+  Future<Either<Failure, void>> remove(Iterable<int> ids) async {
+    // TODO: test remove
+    await database.batch((batch) {
+      for (final id in ids) {
+        batch.deleteWhere<NovelCategories, void>(
+          database.novelCategories,
+          (tbl) => tbl.id.equals(id),
+        );
+      }
+    });
+
+    return const Right(null);
+  }
+
+  @override
   Future<Either<Failure, void>> updateIndex(
       List<CategoryData> categories) async {
-    // await database.batch((batch) {
-    //   for (final category in categories) {
-    //     final companion = NovelCategoriesCompanion(
-    //       id: Value(category.id),
-    //       categoryIndex: Value(category.index),
-    //     );
-
-    //     batch.update(database.novelCategories, companion);
-    //   }
-    // });
-
     await database.transaction(() async {
       for (final category in categories) {
         final companion = NovelCategoriesCompanion(

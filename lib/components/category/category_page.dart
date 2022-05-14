@@ -57,10 +57,18 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
               floating: true,
               forceElevated: innerBoxIsScrolled,
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {},
-                ),
+                Consumer(builder: (context, ref, child) {
+                  final selected = ref.watch(
+                      selectionProvider.select((value) => value.selected));
+
+                  return IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      ref.read(categoriesProvider.notifier).remove(selected);
+                      Navigator.of(context).pop();
+                    },
+                  );
+                }),
               ],
             ),
         ],

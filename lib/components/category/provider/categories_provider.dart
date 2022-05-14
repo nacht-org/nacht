@@ -1,4 +1,5 @@
 import 'package:chapturn/components/library/provider/library_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
 
@@ -88,7 +89,35 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
     });
   }
 
-  Future<void> remove(Set<int> ids) async {}
+  Future<void> remove(List<int> ids) async {
+    assert(state != null);
+
+    final oldState = state;
+    state = [
+      for (final category in state!)
+        if (!ids.contains(category.id)) category
+    ];
+
+    _messageService.showUndo(
+      '${ids.length} categories removed',
+      onUndo: () {
+        log.fine('undid ${ids.length} category removes');
+        state = oldState;
+      },
+      orElse: () async {
+        log.fine('commited ${ids.length} category removes');
+        final result = await _libraryService.removeCategories(ids);
+
+        result.fold(
+          (failure) {
+            log.warning(failure);
+            state = oldState;
+          },
+          (data) => _read(libraryProvider.notifier).reload(),
+        );
+      },
+    );
+  }
 
   Future<void> reorder(int oldIndex, int newIndex) async {
     assert(state != null);

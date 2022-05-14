@@ -17,22 +17,38 @@ class MessageService {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showText(
     String text,
   ) {
-    return showSnackbar(SnackBar(content: Text(text)));
+    return showSnackBar(SnackBar(content: Text(text)));
   }
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showSnackbar(
+  Future<void> showUndo(
+    String message, {
+    required VoidCallback onUndo,
+    required VoidCallback orElse,
+    Duration duration = const Duration(seconds: 3),
+  }) async {
+    final handle = showSnackBar(SnackBar(
+      content: Text(message),
+      action: SnackBarAction(label: 'Undo', onPressed: onUndo),
+    ));
+
+    switch (await handle.closed) {
+      case SnackBarClosedReason.action:
+        return;
+      default:
+        orElse();
+        break;
+    }
+  }
+
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
     SnackBar snackBar,
   ) {
     final context = _read(routerProvider).navigatorKey.currentContext;
     assert(context != null);
 
-    if (context != null) {
-      final messenger = ScaffoldMessenger.maybeOf(context);
-      assert(messenger != null);
+    final messenger = ScaffoldMessenger.maybeOf(context!);
+    assert(messenger != null);
 
-      return messenger?.showSnackBar(snackBar);
-    } else {
-      return null;
-    }
+    return messenger!.showSnackBar(snackBar);
   }
 }

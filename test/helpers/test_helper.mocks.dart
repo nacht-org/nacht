@@ -225,6 +225,12 @@ class MockCategoryRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getNovelsOfCategory, [category]),
               returnValue: Future<List<_i4.NovelData>>.value(<_i4.NovelData>[]))
           as _i6.Future<List<_i4.NovelData>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, void>> remove(Iterable<int>? ids) =>
+      (super.noSuchMethod(Invocation.method(#remove, [ids]),
+              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
+                  _FakeEither_1<_i5.Failure, void>()))
+          as _i6.Future<_i2.Either<_i5.Failure, void>>);
 }
 
 /// A class which mocks [AssetRepository].

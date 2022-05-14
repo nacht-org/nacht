@@ -1,4 +1,5 @@
 import 'package:chapturn/components/category/provider/categories_provider.dart';
+import 'package:chapturn/components/category/provider/selection_provider.dart';
 import 'package:chapturn/components/category/widgets/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,10 +11,13 @@ class CategoryList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categories = ref.watch(categoriesProvider);
-    final notifier = ref.watch(categoriesProvider.notifier);
+    final categoriesNotifier = ref.watch(categoriesProvider.notifier);
+
+    final selection = ref.watch(selectionProvider);
+    final selectionNotifier = ref.watch(selectionProvider.notifier);
 
     useEffect(() {
-      notifier.reload();
+      categoriesNotifier.reload();
       return null;
     }, []);
 
@@ -27,27 +31,42 @@ class CategoryList extends HookConsumerWidget {
     }
 
     return RefreshIndicator(
-      onRefresh: notifier.reload,
+      onRefresh: categoriesNotifier.reload,
       child: ReorderableListView.builder(
         itemBuilder: (context, index) {
           final category = categories[index];
 
-          return ListTile(
-            leading: ReorderableDelayedDragStartListener(
-              index: index,
-              child: const Icon(Icons.drag_handle),
-            ),
+          return Consumer(
             key: Key('${category.id}'),
-            title: Text(category.name),
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => EditCategoryDialog(categoryData: category),
-            ),
+            builder: (context, ref, child) {
+              final selected = ref.watch(selectionProvider
+                  .select((value) => value.contains(category.id)));
+
+              return ListTile(
+                leading: ReorderableDelayedDragStartListener(
+                  index: index,
+                  child: const Icon(Icons.drag_handle),
+                  enabled: !selection.active,
+                ),
+                title: Text(category.name),
+                onTap: selection.active
+                    ? () => selectionNotifier.toggle(category.id)
+                    : () => showDialog(
+                          context: context,
+                          builder: (context) =>
+                              EditCategoryDialog(categoryData: category),
+                        ),
+                onLongPress: selection.active
+                    ? null
+                    : () => selectionNotifier.toggle(category.id),
+                selected: selected,
+              );
+            },
           );
         },
         buildDefaultDragHandles: false,
         itemCount: categories.length,
-        onReorder: notifier.reorder,
+        onReorder: categoriesNotifier.reorder,
       ),
     );
   }

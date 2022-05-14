@@ -1,11 +1,10 @@
-import 'package:chapturn/components/library/widgets/category_grid.dart';
-import 'package:chapturn/core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../core/core.dart';
 import '../../../domain/domain.dart';
+import 'category_grid.dart';
 
-class TabularLibraryDisplay extends HookWidget {
+class TabularLibraryDisplay extends StatefulWidget {
   const TabularLibraryDisplay({
     Key? key,
     required this.categories,
@@ -14,9 +13,30 @@ class TabularLibraryDisplay extends HookWidget {
   final List<CategoryData> categories;
 
   @override
-  Widget build(BuildContext context) {
-    final controller = useTabController(initialLength: categories.length);
+  State<TabularLibraryDisplay> createState() => _TabularLibraryDisplayState();
+}
 
+class _TabularLibraryDisplayState extends State<TabularLibraryDisplay>
+    with TickerProviderStateMixin {
+  late TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: widget.categories.length, vsync: this);
+  }
+
+  @override
+  void didUpdateWidget(covariant TabularLibraryDisplay oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.categories.length != widget.categories.length) {
+      controller.dispose();
+      controller = TabController(length: widget.categories.length, vsync: this);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return NestedScrollView(
       floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -27,7 +47,7 @@ class TabularLibraryDisplay extends HookWidget {
           bottom: AlignTabBar(
             child: TabBar(
               controller: controller,
-              tabs: categories
+              tabs: widget.categories
                   .map((category) => Tab(text: category.name))
                   .toList(),
               isScrollable: true,
@@ -37,10 +57,16 @@ class TabularLibraryDisplay extends HookWidget {
       ],
       body: TabBarView(
         controller: controller,
-        children: categories
+        children: widget.categories
             .map((category) => CategoryGrid(category: category))
             .toList(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 }

@@ -20,7 +20,7 @@ class CrawlerInfo with _$CrawlerInfo {
 
   factory CrawlerInfo.fromFactory(CrawlerFactory crawlerFactory) {
     final meta = crawlerFactory.meta();
-    final crawler = crawlerFactory.create();
+    final crawler = crawlerFactory.basic();
 
     return CrawlerInfo(
       meta: meta,

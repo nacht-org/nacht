@@ -29,7 +29,7 @@ final intermediateProvider = StateNotifierProvider.autoDispose
       partial: (novel, crawler) =>
           IntermediateState.partial(novel, crawlerFactory?.meta(), crawler),
       complete: (novel) => IntermediateState.complete(
-          novel, crawlerFactory?.meta(), crawlerFactory?.create()),
+          novel, crawlerFactory?.meta(), crawlerFactory?.basic()),
     );
 
     final crawler = either.when(

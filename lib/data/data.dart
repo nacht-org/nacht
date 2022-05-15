@@ -9,6 +9,7 @@ export 'models/chapter.dart';
 export 'models/meta_entry.dart';
 export 'models/namespaces.dart';
 export 'models/assets.dart';
+export 'models/updates.dart';
 export 'repositories/novel/gateway_repository_impl.dart';
 export 'repositories/novel/novel_repository_impl.dart';
 export 'repositories/network_repository_impl.dart';

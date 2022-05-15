@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:logging/logging.dart';
+
+import '../core.dart';
 
 /// Calls [runApp] to run the app and catches any errors thrown by the Flutter
 /// framework or dart.
 ///
 /// * In debug mode, any caught errors will be printed to the console.
 /// TODO: Write to file in release mode.
-class ErrorHandler {
+class ErrorHandler with LoggerMixin {
   ErrorHandler({
     required Widget child,
   }) {

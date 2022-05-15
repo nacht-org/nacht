@@ -1,75 +1,45 @@
 import 'package:chapturn/core/failure.dart';
 
 class NovelNotFound extends Failure {
-  const NovelNotFound();
-  @override
-  List<Object?> get props => [];
+  const NovelNotFound([super.message]);
 }
 
 class CoverNotAvailable extends Failure {
-  const CoverNotAvailable();
-  @override
-  List<Object?> get props => [];
+  const CoverNotAvailable([super.message]);
 }
 
 class NetworkNotAvailable extends Failure {
-  const NetworkNotAvailable();
-  @override
-  List<Object?> get props => [];
+  const NetworkNotAvailable([super.message]);
 }
 
 class DownloadFailed extends Failure {
-  const DownloadFailed(this.reason);
-
-  final String reason;
-
-  @override
-  List<Object?> get props => [reason];
+  const DownloadFailed(super.message);
 }
 
 class UnknownAssetType extends Failure {
-  const UnknownAssetType();
-  @override
-  List<Object?> get props => [];
+  const UnknownAssetType([super.message]);
 }
 
 class FileSaveError extends Failure {
-  const FileSaveError();
-  @override
-  List<Object?> get props => [];
+  const FileSaveError([super.message]);
 }
 
 class SameAssetError extends Failure {
-  const SameAssetError();
-  @override
-  List<Object?> get props => [];
+  const SameAssetError([super.message]);
 }
 
 class AssetNotFound extends Failure {
-  const AssetNotFound();
-  @override
-  List<Object?> get props => [];
+  const AssetNotFound([super.message]);
 }
 
 class AssetDeleteFailure extends Failure {
-  const AssetDeleteFailure(this.message);
-
-  final String message;
-
-  @override
-  List<Object?> get props => [message];
+  const AssetDeleteFailure(super.message);
 }
 
 class InsertFailure extends Failure {
-  const InsertFailure();
-
-  @override
-  List<Object?> get props => [];
+  const InsertFailure([super.message]);
 }
 
 class UpdateFailure extends Failure {
-  const UpdateFailure();
-
-  @override
-  List<Object?> get props => [];
+  const UpdateFailure([super.message]);
 }

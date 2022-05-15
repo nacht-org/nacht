@@ -6,12 +6,14 @@ abstract class Failure extends Equatable {
   const Failure([this.message]);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [message];
+
+  @override
+  String toString() {
+    return "$runtimeType(message='$message')";
+  }
 }
 
 class CrawlerNotFound extends Failure {
-  const CrawlerNotFound();
-
-  @override
-  List<Object?> get props => [];
+  const CrawlerNotFound([super.message]);
 }

@@ -14,6 +14,7 @@ class CategoryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      padding: const EdgeInsets.all(0),
       itemBuilder: (context, index) {
         final novel = category.novels[index];
 

@@ -24,6 +24,8 @@ abstract class SearchableScrollView extends HookWidget {
     TextEditingController controller,
   );
 
+  void buildInit(BuildContext context);
+
   void beginSearch(BuildContext context, Reader read) {
     ModalRoute.of(context)!.addLocalHistoryEntry(
       LocalHistoryEntry(onRemove: () {

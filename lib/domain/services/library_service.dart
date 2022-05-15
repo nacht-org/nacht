@@ -61,8 +61,6 @@ class LibraryService with LoggerMixin {
     final categories = await _categoryRepository.getAllCategories();
 
     if (fetchNovels) {
-      return categories;
-    } else {
       final entities = <CategoryData>[];
       for (final category in categories) {
         final novels = await _categoryRepository.getNovelsOfCategory(category);
@@ -70,6 +68,8 @@ class LibraryService with LoggerMixin {
       }
 
       return entities;
+    } else {
+      return categories;
     }
   }
 

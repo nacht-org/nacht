@@ -27,6 +27,7 @@ final novelProvider =
     novelServiceProvider,
     libraryServiceProvider,
     dialogServiceProvider,
+    libraryProvider.notifier,
   ],
 );
 
@@ -44,8 +45,6 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
 
   final NovelService novelService;
   final LibraryService libraryService;
-
-  LibraryNotifier get _library => read(libraryProvider.notifier);
 
   Future<void> fetch() async {
     if (crawler == null || crawler is! ParseNovel) {
@@ -104,7 +103,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       log.warning(failure);
     }, (data) {
       state = state.copyWith(favourite: data);
-      _library.reload();
+      read(libraryProvider.notifier).reload();
     });
   }
 

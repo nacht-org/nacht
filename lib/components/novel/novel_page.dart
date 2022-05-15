@@ -23,35 +23,40 @@ class NovelPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(intermediateProvider(either));
 
-    return state.when(
-      partial: (novel, meta, crawler) {
-        final info = EssentialInfo.fromPartial(novel).copyWith(
-          meta: meta == null ? const None() : Some(meta),
-        );
+    return Scaffold(
+      body: state.when(
+        partial: (novel, meta, crawler) {
+          final info = EssentialInfo.fromPartial(novel).copyWith(
+            meta: meta == null ? const None() : Some(meta),
+          );
 
-        return ProviderScope(
-          overrides: [
-            currentEssentialProvider.overrideWithValue(info),
-          ],
-          child: PartialView(either: either, novel: novel),
-        );
-      },
-      complete: (novel, meta, crawler) {
-        final info = EssentialInfo.fromNovel(novel).copyWith(
-          meta: meta == null ? const None() : Some(meta),
-        );
+          return Consumer(builder: (context, ref, child) {
+            return ProviderScope(
+              overrides: [
+                currentEssentialProvider.overrideWithValue(info),
+              ],
+              child: PartialView(either: either, novel: novel),
+            );
+          });
+        },
+        complete: (novel, meta, crawler) {
+          final info = EssentialInfo.fromNovel(novel).copyWith(
+            meta: meta == null ? const None() : Some(meta),
+          );
 
-        return ProviderScope(
-          overrides: [
-            currentEssentialProvider.overrideWithValue(info),
-            currentCrawlerProvider.overrideWithValue(crawler),
-          ],
-          child: NovelView(
-            novel: novel,
-            load: false,
-          ),
-        );
-      },
+          return ProviderScope(
+            overrides: [
+              currentNovelProvider.overrideWithValue(novel),
+              currentEssentialProvider.overrideWithValue(info),
+              currentCrawlerProvider.overrideWithValue(crawler),
+            ],
+            child: NovelView(
+              novel: novel,
+              load: either.maybeMap(complete: (_) => true, orElse: () => false),
+            ),
+          );
+        },
+      ),
     );
   }
 }

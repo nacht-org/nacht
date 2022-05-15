@@ -24,7 +24,6 @@ class SetCategoriesDialog extends ConsumerWidget {
       content: ListView(
         children: (categories.entries.toList()
               ..sort((a, b) => a.key.index.compareTo(b.key.index)))
-            .where((entry) => !entry.key.isDefault)
             .map(
               (entry) => CheckboxListTile(
                 key: Key('${entry.key.id}'),
@@ -36,6 +35,7 @@ class SetCategoriesDialog extends ConsumerWidget {
               ),
             )
             .toList(),
+        shrinkWrap: true,
       ),
       actions: [
         TextButton(

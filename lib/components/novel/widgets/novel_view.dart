@@ -32,15 +32,10 @@ class NovelView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final refreshIndicatorKey =
-        useMemoized(() => GlobalKey<RefreshIndicatorState>());
+    final novel = ref.watch(novelProvider);
 
     useEffect(() {
-      if (load) {
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          refreshIndicatorKey.currentState?.show();
-        });
-      }
+      ref.read(novelProvider.notifier).reload();
       return null;
     }, []);
 
@@ -56,7 +51,6 @@ class NovelView extends HookConsumerWidget {
         }),
       ],
       body: RefreshIndicator(
-        key: refreshIndicatorKey,
         onRefresh: ref.read(novelProvider.notifier).fetch,
         child: CustomScrollView(
           slivers: [

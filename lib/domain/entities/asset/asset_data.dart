@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:chapturn/data/models/models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../data/data.dart';

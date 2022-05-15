@@ -3,13 +3,14 @@ import 'dart:isolate';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../models/models.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+
+import '../../data.dart';
 
 part 'database.g.dart';
 
@@ -30,6 +31,7 @@ final databaseProvider = Provider<AppDatabase>(
   Namespaces,
   Assets,
   AssetTypes,
+  Updates,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

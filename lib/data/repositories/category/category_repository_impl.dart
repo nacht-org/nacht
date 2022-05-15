@@ -1,12 +1,10 @@
-import 'package:chapturn/data/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:chapturn/core/failure.dart';
 import 'package:drift/drift.dart';
 
+import '../../../core/failure.dart';
 import '../../../domain/domain.dart';
-import '../../../domain/repositories/category_repository.dart';
-import '../../datasources/local/database.dart';
-import '../../models/models.dart';
+import '../../data.dart';
+import '../../failure.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   CategoryRepositoryImpl({

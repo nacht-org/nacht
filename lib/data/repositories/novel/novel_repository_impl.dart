@@ -4,10 +4,9 @@ import 'package:drift/drift.dart';
 
 import '../../../core/core.dart';
 import '../../../domain/domain.dart';
-import '../../datasources/local/database.dart';
+import '../../data.dart';
 import '../../failure.dart';
 import '../../misc/into_companion.dart';
-import '../../models/models.dart';
 
 class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
   NovelRepositoryImpl({

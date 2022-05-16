@@ -16,7 +16,7 @@ final novelRepositoryProvider = Provider<NovelRepository>(
 abstract class NovelRepository {
   Future<Either<Failure, NovelData>> getNovel(int id);
   Future<Either<Failure, NovelData>> getNovelByUrl(String url);
-  Future<Either<Failure, NovelData>> saveNovel(sources.Novel novel);
+  Future<Either<Failure, List<int>>> updateNovel(sources.Novel novel);
   Future<void> setFavourite(int novelId, bool value);
   Future<void> setCover(int novelId, AssetData asset);
 }

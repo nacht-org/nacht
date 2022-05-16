@@ -46,13 +46,16 @@ class NovelService with LoggerMixin {
     if (isConnectionAvailable) {
       final parseResult = await _gatewayRepository.parseNovel(parser, url);
 
-      return await parseResult.fold<Future<Either<Failure, NovelData>>>(
+      final updateResult =
+          await parseResult.fold<Future<Either<Failure, List<int>>>>(
         (failure) async => Left(failure),
-        (data) => _novelRepository.saveNovel(data),
+        (data) => _novelRepository.updateNovel(data),
       );
-    } else {
-      return await _novelRepository.getNovelByUrl(url);
+
+      // TODO: add updates
     }
+
+    return await _novelRepository.getNovelByUrl(url);
   }
 
   Future<Either<Failure, AssetData>> downloadCover(NovelData novel) async {

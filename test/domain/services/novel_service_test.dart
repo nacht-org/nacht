@@ -91,13 +91,13 @@ void main() {
             .thenAnswer((_) async => true);
         when(mockGatewayRepository.parseNovel(tParser, tUrl))
             .thenAnswer((_) async => Right(tNovel));
-        when(mockNovelRepository.saveNovel(tNovel))
+        when(mockNovelRepository.updateNovel(tNovel))
             .thenAnswer((_) async => Right(tNovelEntity));
 
         final result = await service.parseOrGet(tParser, tUrl);
 
         expect(result, Right(tNovelEntity));
-        verify(mockNovelRepository.saveNovel(tNovel)).called(1);
+        verify(mockNovelRepository.updateNovel(tNovel)).called(1);
       },
     );
   });

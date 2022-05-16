@@ -132,7 +132,7 @@ class MockNovelRepository extends _i1.Mock implements _i4.NovelRepository {
                   _FakeEither_1<_i5.Failure, _i4.NovelData>()))
           as _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>> saveNovel(
+  _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>> updateNovel(
           _i3.Novel? novel) =>
       (super.noSuchMethod(Invocation.method(#saveNovel, [novel]),
               returnValue: Future<_i2.Either<_i5.Failure, _i4.NovelData>>.value(

@@ -18,42 +18,52 @@ class MockData extends Equatable {
 }
 
 void main() {
-  const prevData = [
-    MockData(1, 'one'),
-    MockData(2, 'two'),
-    MockData(3, 'three'),
-    MockData(4, 'four'),
-    MockData(5, 'five'),
-    MockData(6, 'six'),
-    MockData(7, 'seven'),
-  ];
+  final prevData = IdentityList<MockData, int>(
+    items: const [
+      MockData(1, 'one'),
+      MockData(2, 'two'),
+      MockData(3, 'three'),
+      MockData(4, 'four'),
+      MockData(5, 'five'),
+      MockData(6, 'six'),
+      MockData(7, 'seven'),
+    ],
+    identity: (item) => item.id,
+  );
 
-  const nextData = [
-    MockData(1, 'one'),
-    MockData(2, 'Two'),
-    MockData(3, 'three'),
-    MockData(4, 'Four'),
-    MockData(5, 'five'),
-    MockData(8, 'Eight'),
-  ];
+  final nextData = IdentityList<MockData, int>(
+    items: const [
+      MockData(1, 'one'),
+      MockData(2, 'Two'),
+      MockData(3, 'three'),
+      MockData(4, 'Four'),
+      MockData(5, 'five'),
+      MockData(8, 'Eight'),
+    ],
+    identity: (item) => item.id,
+  );
 
   test('should correctly identify changes', () {
-    final changes = calculateDiff<MockData>(
-      prevData,
-      nextData,
-      identity: (item) => item.id,
+    final changes = calculateDiff<MockData, MockData>(
+      prev: prevData,
+      next: nextData,
       equality: (a, b) => a.value == b.value,
-    );
+    ).toList();
 
-    const expected = [
-      ChangeElement<MockData>.keep(MockData(1, 'one')),
-      ChangeElement<MockData>.replace(MockData(2, 'two'), MockData(2, 'Two')),
-      ChangeElement<MockData>.keep(MockData(3, 'three')),
-      ChangeElement<MockData>.replace(MockData(4, 'four'), MockData(4, 'Four')),
-      ChangeElement<MockData>.keep(MockData(5, 'five')),
-      ChangeElement<MockData>.insert(MockData(8, 'Eight')),
-      ChangeElement<MockData>.remove(MockData(6, 'six')),
-      ChangeElement<MockData>.remove(MockData(7, 'seven')),
+    const expected = <ChangeElement>[
+      ChangeElement<MockData, MockData>.keep(
+          MockData(1, 'one'), MockData(1, 'one')),
+      ChangeElement<MockData, MockData>.replace(
+          MockData(2, 'two'), MockData(2, 'Two')),
+      ChangeElement<MockData, MockData>.keep(
+          MockData(3, 'three'), MockData(3, 'three')),
+      ChangeElement<MockData, MockData>.replace(
+          MockData(4, 'four'), MockData(4, 'Four')),
+      ChangeElement<MockData, MockData>.keep(
+          MockData(5, 'five'), MockData(5, 'five')),
+      ChangeElement<MockData, MockData>.insert(MockData(8, 'Eight')),
+      ChangeElement<MockData, MockData>.remove(MockData(6, 'six')),
+      ChangeElement<MockData, MockData>.remove(MockData(7, 'seven')),
     ];
 
     expect(changes.length, expected.length);

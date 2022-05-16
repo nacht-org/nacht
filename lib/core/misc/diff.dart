@@ -3,44 +3,54 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'diff.freezed.dart';
 
 @freezed
-class ChangeElement<T> with _$ChangeElement<T> {
-  const factory ChangeElement.insert(T data) = _InsertChange;
-  const factory ChangeElement.remove(T data) = _RemoveChange;
-  const factory ChangeElement.replace(T prev, T next) = _ReplaceChange;
-  const factory ChangeElement.keep(T data) = _KeepChange;
+class ChangeElement<P, N> with _$ChangeElement<P, N> {
+  const factory ChangeElement.insert(N data) = _InsertChange;
+  const factory ChangeElement.remove(P data) = _RemoveChange;
+  const factory ChangeElement.replace(P prev, N next) = _ReplaceChange;
+  const factory ChangeElement.keep(P prev, N next) = _KeepChange;
 }
 
-typedef ChangeHistory<T> = List<ChangeElement<T>>;
+typedef ChangeHistory<P, N> = Iterable<ChangeElement<P, N>>;
+
+@freezed
+class IdentityList<T, I> with _$IdentityList<T, I> {
+  const factory IdentityList({
+    required List<T> items,
+    required I Function(T item) identity,
+  }) = _IdentityList;
+
+  const IdentityList._();
+
+  Map<I, T> toMap() {
+    return {for (final item in items) identity(item): item};
+  }
+}
 
 /// Calculate the difference between two lists and changes
 /// required to convert [prev] to [next]
-ChangeHistory<T> calculateDiff<T>(
-  List<T> prev,
-  List<T> next, {
-  dynamic Function(T item)? identity,
-  bool Function(T a, T b)? equality,
-}) {
-  identity ??= (item) => item;
+ChangeHistory<P, N> calculateDiff<P, N>({
+  required IdentityList<N, dynamic> next,
+  required IdentityList<P, dynamic> prev,
+  bool Function(P a, N b)? equality,
+}) sync* {
   equality ??= (a, b) => a == b;
 
-  final changes = <ChangeElement<T>>[];
-
-  final aMap = {for (final item in prev) identity(item): item};
-  for (final nextItem in next) {
-    final prevItem = aMap.remove(identity(nextItem));
+  final prevMap = prev.toMap();
+  for (final nextItem in next.items) {
+    final prevItem = prevMap.remove(next.identity(nextItem));
     if (prevItem == null) {
-      changes.add(ChangeElement.insert(nextItem));
+      yield ChangeElement.insert(nextItem);
       continue;
     }
 
     if (equality(prevItem, nextItem)) {
-      changes.add(ChangeElement.keep(nextItem));
+      yield ChangeElement.keep(prevItem, nextItem);
     } else {
-      changes.add(ChangeElement.replace(prevItem, nextItem));
+      yield ChangeElement.replace(prevItem, nextItem);
     }
   }
 
-  changes.addAll(aMap.values.map(ChangeElement.remove));
-
-  return changes;
+  for (final item in prevMap.values) {
+    yield ChangeElement.remove(item);
+  }
 }

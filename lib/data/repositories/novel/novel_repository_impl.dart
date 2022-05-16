@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
@@ -217,48 +219,53 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
     int novelId,
     List<sources.MetaData> metaData,
   ) async {
-    log.info('Start metadata sync.');
+    log.info('syncing metadata.');
 
-    final currentMetaData = await getMetaData(novelId);
-    final indexedMetaData = {
-      for (final data in currentMetaData) Tuple2(data.name, data.value): data
-    };
+    final diff = calculateDiff<MetaEntry, sources.MetaData>(
+      prev: IdentityList<MetaEntry, Tuple2>(
+        items: await getMetaData(novelId),
+        identity: (item) => Tuple2(item.name, item.value),
+      ),
+      next: IdentityList<sources.MetaData, Tuple2>(
+        items: metaData,
+        identity: (item) => Tuple2(item.name, item.value),
+      ),
+      equality: (prev, next) =>
+          (prev.others == null ? null : json.decode(prev.others!)) ==
+          next.others,
+    );
 
     await database.batch((batch) {
-      final toAdd = <MetaEntriesCompanion>[];
+      for (final change in diff) {
+        change.map(
+          insert: (state) {
+            final companion = metaDataIntoCompanion(state.data)
+                .copyWith(novelId: Value(novelId));
 
-      // Check for required updates.
-      for (final data in metaData) {
-        final companion =
-            metaDataIntoCompanion(data).copyWith(novelId: Value(novelId));
+            batch.insert(database.metaEntries, companion);
+            log.finer(
+                'insert meta entry ${state.data.name}: ${state.data.value}');
+          },
+          remove: (state) {
+            batch.delete(database.metaEntries, state.data);
+            log.finer(
+                'remove meta entry ${state.data.name}: ${state.data.value}');
+          },
+          replace: (state) {
+            final companion = metaDataIntoCompanion(state.next)
+                .copyWith(id: Value(state.prev.id));
 
-        final key = Tuple2(data.name, data.value);
-        if (indexedMetaData.containsKey(key)) {
-          final currentData = indexedMetaData.remove(key)!;
-
-          if (currentData.others != companion.others.value) {
-            batch.replace(
-              database.metaEntries,
-              companion.copyWith(id: Value(currentData.id)),
-            );
-          }
-        } else {
-          toAdd.add(companion);
-        }
+            batch.replace(database.metaEntries, companion);
+            log.finer(
+                'replace meta entry ${state.next.name}: ${state.next.value}');
+          },
+          keep: (state) {
+            log.finer(
+                'keep meta entry ${state.next.name}: ${state.next.value}');
+          },
+        );
       }
-
-      // Add all the new metadata.
-      batch.insertAll(database.metaEntries, toAdd);
-
-      // Delete those that are no longer associated with novel.
-      batch.deleteWhere(
-          database.metaEntries,
-          (tbl) => (tbl as MetaEntries)
-              .id
-              .isIn(indexedMetaData.values.map((data) => data.id)));
     });
-
-    log.info('End metadata sync.');
   }
 
   // Single field updates.

@@ -100,33 +100,52 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
   }
 
   @override
-  Future<Either<Failure, List<int>>> updateNovel(sources.Novel novel) async {
+  Future<Either<Failure, UpdateResult>> updateNovel(sources.Novel novel) async {
     log.fine('starting novel update');
 
     final novelCompanion = novelIntoCompanion(novel);
 
-    // Upsert the novel entity itself
-    final novelModel = await database.into(database.novels).insertReturning(
-          novelCompanion,
-          onConflict: DoUpdate(
-            (old) => novelCompanion,
-            target: [database.novels.url],
-          ),
-        );
-
-    List<int>? insertedIds;
+    UpdateResult result = UpdateResult(initial: true, novel: -1, inserted: []);
 
     await database.transaction(() async {
+      // Upsert the novel entity itself
+      final currentNovel = await (database.select(database.novels)
+            ..where((tbl) => tbl.url.equals(novelCompanion.url.value)))
+          .getSingleOrNull();
+
+      result = result.copyWith(initial: currentNovel == null);
+      if (result.initial) {
+        final id = await database.into(database.novels).insert(novelCompanion);
+
+        result = result.copyWith(novel: id);
+      } else {
+        await (database.update(database.novels)
+              ..where((tbl) => tbl.id.equals(currentNovel!.id)))
+            .replace(novelCompanion);
+
+        result = result.copyWith(novel: currentNovel!.id);
+      }
+
+      final novelModel = await database.into(database.novels).insertReturning(
+            novelCompanion,
+            onConflict: DoUpdate(
+              (old) => novelCompanion,
+              target: [database.novels.url],
+            ),
+          );
+
       // Update volumes and chapters (editing, removing)
       final inserts = await syncVolumes(novelModel.id, novel.volumes);
 
       // Insert chapters.
       log.fine('inserting chapters');
-      insertedIds = <int>[];
+      final insertedIds = <int>[];
       for (final companion in inserts) {
         final id = await database.into(database.chapters).insert(companion);
-        insertedIds!.add(id);
+        insertedIds.add(id);
       }
+
+      result = result.copyWith(inserted: insertedIds);
 
       // Update metadata.
       await syncMetaData(novelModel.id, novel.metadata);
@@ -136,7 +155,7 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
 
     log.fine('ending novel update');
 
-    return Right(insertedIds!);
+    return Right(result);
   }
 
   Future<List<ChaptersCompanion>> syncVolumes(
@@ -308,8 +327,6 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       id: Value(novelId),
       coverId: Value(asset.id),
     );
-
-    print(companion);
 
     await _update(companion);
   }

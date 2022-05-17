@@ -47,7 +47,7 @@ class NovelService with LoggerMixin {
       final parseResult = await _gatewayRepository.parseNovel(parser, url);
 
       final updateResult =
-          await parseResult.fold<Future<Either<Failure, List<int>>>>(
+          await parseResult.fold<Future<Either<Failure, UpdateResult>>>(
         (failure) async => Left(failure),
         (data) => _novelRepository.updateNovel(data),
       );

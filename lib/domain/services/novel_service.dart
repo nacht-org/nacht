@@ -76,12 +76,14 @@ class NovelService with LoggerMixin {
       (data) async {
         if (novel.cover != null) {
           if (novel.cover!.hash == data.hash) {
+            log.fine('asset save skipped, has the same content');
             return const Left(SameAssetError());
           }
 
           await _assetRepository.deleteAsset(novel.cover!);
         }
 
+        log.fine('saving asset');
         return await _assetRepository.addAsset(
             novel.id.toString(), data, novel.coverUrl);
       },

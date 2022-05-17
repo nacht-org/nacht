@@ -86,9 +86,7 @@ class IntermediateNotifier extends StateNotifier<IntermediateState>
       return;
     }
 
-    log.info('Start parse or get novel.');
     final result = await novelService.parseOrGet(crawler as ParseNovel, url);
-    log.info('End parse or get novel.');
 
     result.fold(
       (failure) => read(messageServiceProvider).showText('An error occured'),

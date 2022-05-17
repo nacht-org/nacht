@@ -23,7 +23,9 @@ class MetaEntryData with _$MetaEntryData {
       name: metaData.name,
       value: metaData.value,
       namespace: NamespaceSeed.intoNamespace(metaData.namespaceId),
-      others: metaData.others == null ? {} : json.decode(metaData.others!),
+      others: metaData.others == null
+          ? {}
+          : Map<String, Object>.from(json.decode(metaData.others!)),
       novelId: metaData.novelId,
     );
   }

@@ -24,6 +24,8 @@ void main() {
 
   test('should create MetaData from data.MetaData', () {
     final result = MetaEntryData.fromModel(tMetaData);
+    print(result.others);
+
     expect(result, tData);
   });
 }

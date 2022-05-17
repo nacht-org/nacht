@@ -132,12 +132,12 @@ class MockNovelRepository extends _i1.Mock implements _i4.NovelRepository {
                   _FakeEither_1<_i5.Failure, _i4.NovelData>()))
           as _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>> updateNovel(
+  _i6.Future<_i2.Either<_i5.Failure, List<int>>> updateNovel(
           _i3.Novel? novel) =>
-      (super.noSuchMethod(Invocation.method(#saveNovel, [novel]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i4.NovelData>>.value(
-                  _FakeEither_1<_i5.Failure, _i4.NovelData>()))
-          as _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>>);
+      (super.noSuchMethod(Invocation.method(#updateNovel, [novel]),
+              returnValue: Future<_i2.Either<_i5.Failure, List<int>>>.value(
+                  _FakeEither_1<_i5.Failure, List<int>>()))
+          as _i6.Future<_i2.Either<_i5.Failure, List<int>>>);
   @override
   _i6.Future<void> setFavourite(int? novelId, bool? value) =>
       (super.noSuchMethod(Invocation.method(#setFavourite, [novelId, value]),

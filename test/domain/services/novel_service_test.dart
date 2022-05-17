@@ -92,6 +92,8 @@ void main() {
         when(mockGatewayRepository.parseNovel(tParser, tUrl))
             .thenAnswer((_) async => Right(tNovel));
         when(mockNovelRepository.updateNovel(tNovel))
+            .thenAnswer((_) async => const Right([]));
+        when(mockNovelRepository.getNovelByUrl(tUrl))
             .thenAnswer((_) async => Right(tNovelEntity));
 
         final result = await service.parseOrGet(tParser, tUrl);

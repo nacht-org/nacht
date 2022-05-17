@@ -8,9 +8,13 @@ ChaptersCompanion chapterIntoCompanion(sources.Chapter chapter) {
   return ChaptersCompanion(
     chapterIndex: Value(chapter.index),
     title: Value(chapter.title),
-    content: Value(chapter.content),
+    content: chapter.content == null
+        ? const Value.absent()
+        : Value(chapter.content!),
     url: Value(chapter.url),
-    updated: Value(chapter.updated),
+    updated: chapter.updated == null
+        ? const Value.absent()
+        : Value(chapter.updated!),
   );
 }
 

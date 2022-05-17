@@ -19,35 +19,51 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
 
   @override
   Future<Either<Failure, NovelData>> getNovel(int id) async {
-    final query = database.select(database.novels)
-      ..where((tbl) => tbl.id.equals(id));
+    final query = database.select(database.novels).join([
+      leftOuterJoin(
+        database.assets,
+        database.assets.id.equalsExp(database.novels.coverId),
+      ),
+    ])
+      ..where(database.novels.id.equals(id));
 
     return await _getNovel(query);
   }
 
   @override
   Future<Either<Failure, NovelData>> getNovelByUrl(String url) async {
-    final query = database.select(database.novels)
-      ..where((tbl) => tbl.url.equals(url));
+    final query = database.select(database.novels).join([
+      leftOuterJoin(
+        database.assets,
+        database.assets.id.equalsExp(database.novels.coverId),
+      ),
+    ])
+      ..where(database.novels.url.equals(url));
 
     return await _getNovel(query);
   }
 
   Future<Either<Failure, NovelData>> _getNovel(
-    SimpleSelectStatement<$NovelsTable, Novel> query,
+    JoinedSelectStatement<HasResultSet, dynamic> query,
   ) async {
-    final novel = await query.getSingleOrNull();
-    if (novel == null) {
+    final result = await query.getSingleOrNull();
+    if (result == null) {
       return const Left(NovelNotFound());
     }
+
+    final novel = result.readTable(database.novels);
+    final asset = result.readTableOrNull(database.assets);
 
     final metadata = (await getMetaData(novel.id))
         .map((value) => MetaEntryData.fromModel(value))
         .toList();
     final volumes = await _getVolumesOfNovel(novel.id);
 
-    final entity = NovelData.fromModel(novel)
-        .copyWith(volumes: volumes, metadata: metadata);
+    final entity = NovelData.fromModel(novel).copyWith(
+      volumes: volumes,
+      metadata: metadata,
+      cover: asset == null ? null : AssetData.fromModel(asset),
+    );
 
     return Right(entity);
   }
@@ -106,9 +122,11 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
 
       // Insert chapters.
       log.fine('inserting chapters');
-      insertedIds = await Future.wait(inserts.map(
-        (companion) => database.into(database.chapters).insert(companion),
-      ));
+      insertedIds = <int>[];
+      for (final companion in inserts) {
+        final id = await database.into(database.chapters).insert(companion);
+        insertedIds!.add(id);
+      }
 
       // Update metadata.
       await syncMetaData(novelModel.id, novel.metadata);
@@ -231,7 +249,9 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
         identity: (item) => Tuple2(item.name, item.value),
       ),
       equality: (prev, next) =>
-          (prev.others == null ? null : json.decode(prev.others!)) ==
+          (prev.others == null
+              ? null
+              : Map<String, Object>.from(json.decode(prev.others!))) ==
           next.others,
     );
 
@@ -252,8 +272,10 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
                 'remove meta entry ${state.data.name}: ${state.data.value}');
           },
           replace: (state) {
-            final companion = metaDataIntoCompanion(state.next)
-                .copyWith(id: Value(state.prev.id));
+            final companion = metaDataIntoCompanion(state.next).copyWith(
+              id: Value(state.prev.id),
+              novelId: Value(novelId),
+            );
 
             batch.replace(database.metaEntries, companion);
             log.finer(
@@ -286,6 +308,8 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       id: Value(novelId),
       coverId: Value(asset.id),
     );
+
+    print(companion);
 
     await _update(companion);
   }

@@ -15,6 +15,7 @@ void main() {
   late AssetRepository mockAssetRepository;
   late NetworkRepository mockNetworkRepository;
   late GatewayRepository mockGatewayRepository;
+  late UpdatesRepository mockUpdatesRepository;
   late NovelService service;
 
   setUp(() {
@@ -22,11 +23,13 @@ void main() {
     mockAssetRepository = MockAssetRepository();
     mockNetworkRepository = MockNetworkRepository();
     mockGatewayRepository = MockGatewayRepository();
+    mockUpdatesRepository = MockUpdatesRepository();
     service = NovelService(
       novelRepository: mockNovelRepository,
       assetRepository: mockAssetRepository,
       networkRepository: mockNetworkRepository,
       gatewayRepository: mockGatewayRepository,
+      updatesRepository: mockUpdatesRepository,
     );
   });
 
@@ -70,6 +73,12 @@ void main() {
       favourite: false,
     );
 
+    final tUpdateResult = UpdateResult(
+      initial: false,
+      novel: 1,
+      inserted: [],
+    );
+
     test(
       'should return from local repository when connection is unavailable',
       () async {
@@ -92,7 +101,9 @@ void main() {
         when(mockGatewayRepository.parseNovel(tParser, tUrl))
             .thenAnswer((_) async => Right(tNovel));
         when(mockNovelRepository.updateNovel(tNovel))
-            .thenAnswer((_) async => const Right([]));
+            .thenAnswer((_) async => Right(tUpdateResult));
+        when(mockUpdatesRepository.addAll(tUpdateResult.intoNewUpdates()))
+            .thenAnswer((_) async => const Right(null));
         when(mockNovelRepository.getNovelByUrl(tUrl))
             .thenAnswer((_) async => Right(tNovelEntity));
 

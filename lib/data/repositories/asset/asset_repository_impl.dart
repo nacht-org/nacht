@@ -123,13 +123,6 @@ class AssetRepositoryImpl with LoggerMixin implements AssetRepository {
     return Right(AssetInfo(response.data, mimetype, hash));
   }
 
-  Future<void> _update(AssetsCompanion companion) async {
-    final statement = database.update(database.assets)
-      ..whereSamePrimaryKey(companion);
-
-    await statement.write(companion);
-  }
-
   /// Possible failures:
   /// * [AssetNotFound]
   @override
@@ -143,5 +136,12 @@ class AssetRepositoryImpl with LoggerMixin implements AssetRepository {
     } catch (e) {
       return const Left(AssetNotFound());
     }
+  }
+
+  Future<void> _update(AssetsCompanion companion) async {
+    final statement = database.update(database.assets)
+      ..whereSamePrimaryKey(companion);
+
+    await statement.write(companion);
   }
 }

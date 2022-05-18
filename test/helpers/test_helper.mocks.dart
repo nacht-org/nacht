@@ -132,11 +132,12 @@ class MockNovelRepository extends _i1.Mock implements _i4.NovelRepository {
                   _FakeEither_1<_i5.Failure, _i4.NovelData>()))
           as _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, dynamic>> updateNovel(_i3.Novel? novel) =>
+  _i6.Future<_i2.Either<_i5.Failure, _i4.UpdateResult>> updateNovel(
+          _i3.Novel? novel) =>
       (super.noSuchMethod(Invocation.method(#updateNovel, [novel]),
-              returnValue: Future<_i2.Either<_i5.Failure, dynamic>>.value(
-                  _FakeEither_1<_i5.Failure, dynamic>()))
-          as _i6.Future<_i2.Either<_i5.Failure, dynamic>>);
+          returnValue: Future<_i2.Either<_i5.Failure, _i4.UpdateResult>>.value(
+              _FakeEither_1<_i5.Failure, _i4.UpdateResult>())) as _i6
+          .Future<_i2.Either<_i5.Failure, _i4.UpdateResult>>);
   @override
   _i6.Future<void> setFavourite(int? novelId, bool? value) =>
       (super.noSuchMethod(Invocation.method(#setFavourite, [novelId, value]),
@@ -266,4 +267,21 @@ class MockAssetRepository extends _i1.Mock implements _i4.AssetRepository {
               returnValue: Future<_i2.Either<_i5.Failure, _i4.AssetData>>.value(
                   _FakeEither_1<_i5.Failure, _i4.AssetData>()))
           as _i6.Future<_i2.Either<_i5.Failure, _i4.AssetData>>);
+}
+
+/// A class which mocks [UpdatesRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUpdatesRepository extends _i1.Mock implements _i4.UpdatesRepository {
+  MockUpdatesRepository() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, void>> addAll(
+          List<_i4.NewUpdate>? updates) =>
+      (super.noSuchMethod(Invocation.method(#addAll, [updates]),
+              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
+                  _FakeEither_1<_i5.Failure, void>()))
+          as _i6.Future<_i2.Either<_i5.Failure, void>>);
 }

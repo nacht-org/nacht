@@ -12,6 +12,7 @@ final novelServiceProvider = Provider<NovelService>(
     assetRepository: ref.watch(assetRepositoryProvider),
     networkRepository: ref.watch(networkRepositoryProvider),
     gatewayRepository: ref.watch(gatewayRepositoryProvider),
+    updatesRepository: ref.watch(updatesRepositoryProvider),
   ),
   name: 'NovelServiceProvider',
 );
@@ -22,15 +23,18 @@ class NovelService with LoggerMixin {
     required AssetRepository assetRepository,
     required NetworkRepository networkRepository,
     required GatewayRepository gatewayRepository,
+    required UpdatesRepository updatesRepository,
   })  : _novelRepository = novelRepository,
         _assetRepository = assetRepository,
         _networkRepository = networkRepository,
-        _gatewayRepository = gatewayRepository;
+        _gatewayRepository = gatewayRepository,
+        _updatesRepository = updatesRepository;
 
   final NovelRepository _novelRepository;
   final AssetRepository _assetRepository;
   final NetworkRepository _networkRepository;
   final GatewayRepository _gatewayRepository;
+  final UpdatesRepository _updatesRepository;
 
   Future<Either<Failure, NovelData>> getById(int id) {
     return _novelRepository.getNovel(id);
@@ -52,7 +56,17 @@ class NovelService with LoggerMixin {
         (data) => _novelRepository.updateNovel(data),
       );
 
-      // TODO: add updates
+      // FIXME: Don't update if this is the initial. (currently not implemented for testing purposes.)
+      final insertResult =
+          await updateResult.fold<Future<Either<Failure, void>>>(
+        (failure) async => Left(failure),
+        (data) => _updatesRepository.addAll(data.intoNewUpdates()),
+      );
+
+      final failure = insertResult.maybeLeft();
+      if (failure != null) {
+        return Left(failure);
+      }
     }
 
     return await _novelRepository.getNovelByUrl(url);

@@ -16,3 +16,4 @@ export 'repositories/network_repository_impl.dart';
 export 'repositories/crawler_repository_impl.dart';
 export 'repositories/category/category_repository_impl.dart';
 export 'repositories/asset/asset_repository_impl.dart';
+export 'repositories/updates_repository_impl.dart';

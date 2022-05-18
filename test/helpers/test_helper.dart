@@ -11,5 +11,6 @@ import 'package:mockito/annotations.dart';
   NetworkRepository,
   CategoryRepository,
   AssetRepository,
+  UpdatesRepository,
 ])
 void main() {}

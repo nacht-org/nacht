@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'diff.freezed.dart';
+part 'diff_utils.freezed.dart';
 
 @freezed
 class ChangeElement<P, N> with _$ChangeElement<P, N> {

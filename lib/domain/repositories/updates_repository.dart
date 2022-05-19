@@ -14,4 +14,5 @@ final updatesRepositoryProvider = Provider<UpdatesRepository>(
 
 abstract class UpdatesRepository {
   Future<Either<Failure, void>> addAll(List<NewUpdate> updates);
+  Future<List<UpdateData>> getAll({required int count});
 }

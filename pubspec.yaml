@@ -44,6 +44,7 @@ dependencies:
 
   chapturn_sources:
     path: ../chapturn_sources
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

@@ -15,7 +15,7 @@ class UpdatesRepositoryImpl implements UpdatesRepository {
   final AppDatabase database;
 
   @override
-  Future<Either<Failure, void>> addAll(List<NewUpdate> updates) async {
+  Future<Either<Failure, void>> addAll(Iterable<NewUpdate> updates) async {
     await database.batch((batch) {
       for (final update in updates) {
         batch.insert(database.updates, update.intoCompanion());
@@ -37,7 +37,9 @@ class UpdatesRepositoryImpl implements UpdatesRepository {
         database.chapters.id.equalsExp(database.updates.chapterId),
       ),
     ])
-      ..limit(count);
+      ..where(database.novels.favourite.equals(true))
+      ..limit(count)
+      ..orderBy([OrderingTerm.desc(database.updates.updatedAt)]);
 
     final results = await query.get();
 

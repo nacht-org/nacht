@@ -60,7 +60,7 @@ class NovelService with LoggerMixin {
       final insertResult =
           await updateResult.fold<Future<Either<Failure, void>>>(
         (failure) async => Left(failure),
-        (data) => _updatesRepository.addAll(data.intoNewUpdates()),
+        (data) => _updatesRepository.addAll(data.intoNewUpdates().reversed),
       );
 
       final failure = insertResult.maybeLeft();

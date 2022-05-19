@@ -5,5 +5,5 @@ void usePostFrameCallback(void Function(Duration timeStamp) callback) {
   useEffect(() {
     WidgetsBinding.instance.addPostFrameCallback(callback);
     return null;
-  });
+  }, []);
 }

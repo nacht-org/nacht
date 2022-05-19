@@ -45,6 +45,13 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const CategoryPage());
     },
+    ReaderRoute.name: (routeData) {
+      final args = routeData.argsAs<ReaderRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: ReaderPage(
+              key: args.key, novel: args.novel, chapter: args.chapter));
+    },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const LibraryPage());
@@ -77,7 +84,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(PopularRoute.name, path: 'popular'),
         RouteConfig(NovelRoute.name, path: 'novel'),
         RouteConfig(WebViewRoute.name, path: 'webview'),
-        RouteConfig(CategoryRoute.name, path: 'categories')
+        RouteConfig(CategoryRoute.name, path: 'categories'),
+        RouteConfig(ReaderRoute.name, path: 'reader')
       ];
 }
 
@@ -171,6 +179,33 @@ class CategoryRoute extends PageRouteInfo<void> {
   const CategoryRoute() : super(CategoryRoute.name, path: 'categories');
 
   static const String name = 'CategoryRoute';
+}
+
+/// generated route for
+/// [ReaderPage]
+class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
+  ReaderRoute(
+      {Key? key, required NovelData novel, required ChapterData chapter})
+      : super(ReaderRoute.name,
+            path: 'reader',
+            args: ReaderRouteArgs(key: key, novel: novel, chapter: chapter));
+
+  static const String name = 'ReaderRoute';
+}
+
+class ReaderRouteArgs {
+  const ReaderRouteArgs({this.key, required this.novel, required this.chapter});
+
+  final Key? key;
+
+  final NovelData novel;
+
+  final ChapterData chapter;
+
+  @override
+  String toString() {
+    return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter}';
+  }
 }
 
 /// generated route for

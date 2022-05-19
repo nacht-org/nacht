@@ -15,4 +15,9 @@ abstract class GatewayRepository {
     sources.ParseNovel parser,
     String url,
   );
+
+  Future<Either<Failure, sources.Chapter>> parseChapter(
+    sources.ParseNovel parser,
+    String url,
+  );
 }

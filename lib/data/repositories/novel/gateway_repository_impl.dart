@@ -15,4 +15,16 @@ class GatewayRepositoryImpl implements GatewayRepository {
 
     return Right(novel);
   }
+
+  @override
+  Future<Either<Failure, sources.Chapter>> parseChapter(
+      sources.ParseNovel parser, String url) async {
+    // TODO: test
+    final chapter = sources.Chapter(title: '', url: url, index: -1);
+
+    // TODO: check for parseChapter
+    await parser.parseChapter(chapter);
+
+    return Right(chapter);
+  }
 }

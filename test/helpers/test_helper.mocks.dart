@@ -108,6 +108,13 @@ class MockGatewayRepository extends _i1.Mock implements _i4.GatewayRepository {
               returnValue: Future<_i2.Either<_i5.Failure, _i3.Novel>>.value(
                   _FakeEither_1<_i5.Failure, _i3.Novel>()))
           as _i6.Future<_i2.Either<_i5.Failure, _i3.Novel>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, _i3.Chapter>> parseChapter(
+          _i3.ParseNovel? parser, String? url) =>
+      (super.noSuchMethod(Invocation.method(#parseChapter, [parser, url]),
+              returnValue: Future<_i2.Either<_i5.Failure, _i3.Chapter>>.value(
+                  _FakeEither_1<_i5.Failure, _i3.Chapter>()))
+          as _i6.Future<_i2.Either<_i5.Failure, _i3.Chapter>>);
 }
 
 /// A class which mocks [NovelRepository].
@@ -279,7 +286,7 @@ class MockUpdatesRepository extends _i1.Mock implements _i4.UpdatesRepository {
 
   @override
   _i6.Future<_i2.Either<_i5.Failure, void>> addAll(
-          List<_i4.NewUpdate>? updates) =>
+          Iterable<_i4.NewUpdate>? updates) =>
       (super.noSuchMethod(Invocation.method(#addAll, [updates]),
               returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
                   _FakeEither_1<_i5.Failure, void>()))

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/components/novel/provider/chapter_list_provider.dart';
 import 'package:chapturn/components/novel/provider/description_info_provider.dart';
 import 'package:chapturn/core/core.dart';
@@ -123,7 +124,9 @@ class NovelView extends HookConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(chapter.updated.toString()),
-                        onTap: () {},
+                        onTap: () => context.router.push(
+                          ReaderRoute(novel: novel, chapter: chapter),
+                        ),
                       ),
                     );
                   },

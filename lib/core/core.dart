@@ -1,5 +1,6 @@
 export 'failure.dart';
 export 'hooks/use_refresh.dart';
+export 'hooks/use_post_frame_callback.dart';
 export 'logger/logger.dart';
 export 'misc/error_handler.dart';
 export 'misc/lang_utils.dart';

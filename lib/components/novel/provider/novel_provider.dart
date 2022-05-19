@@ -1,6 +1,7 @@
 import 'package:chapturn/components/novel/set_categories/provider/selected_categories_provider.dart';
 import 'package:chapturn/components/novel/set_categories/set_categories_dialog.dart';
 import 'package:chapturn/components/novel/widgets/novel_view.dart';
+import 'package:chapturn/components/updates/provider/updates_provider.dart';
 import 'package:chapturn/core/services/message_service.dart';
 import 'package:chapturn/domain/services/library_service.dart';
 import 'package:chapturn/domain/services/novel_service.dart';
@@ -28,6 +29,7 @@ final novelProvider =
     libraryServiceProvider,
     dialogServiceProvider,
     libraryProvider.notifier,
+    updatesProvider.notifier,
   ],
 );
 
@@ -70,6 +72,8 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
           },
           (data) => state = state.copyWith(cover: data),
         );
+
+        read(updatesProvider.notifier).fetch();
       },
     );
   }

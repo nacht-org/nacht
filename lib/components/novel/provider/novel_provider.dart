@@ -1,17 +1,13 @@
-import 'package:chapturn/components/novel/set_categories/provider/selected_categories_provider.dart';
-import 'package:chapturn/components/novel/set_categories/set_categories_dialog.dart';
-import 'package:chapturn/components/novel/widgets/novel_view.dart';
-import 'package:chapturn/components/updates/provider/updates_provider.dart';
-import 'package:chapturn/core/services/message_service.dart';
-import 'package:chapturn/domain/services/library_service.dart';
-import 'package:chapturn/domain/services/novel_service.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/core.dart';
 import '../../../domain/domain.dart';
-import '../../../domain/entities/novel/novel_data.dart';
 import '../../library/provider/library_provider.dart';
+import '../../updates/provider/updates_provider.dart';
+import '../set_categories/provider/selected_categories_provider.dart';
+import '../set_categories/set_categories_dialog.dart';
+import '../widgets/novel_view.dart';
 
 final novelProvider =
     StateNotifierProvider.autoDispose<NovelNotifier, NovelData>(
@@ -115,7 +111,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     final result = await novelService.getById(state.id);
 
     result.fold(
-      (failure) => {},
+      (failure) => log.warning(failure),
       (data) => state = data,
     );
   }

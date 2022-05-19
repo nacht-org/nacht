@@ -112,16 +112,14 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       final currentNovel = await (database.select(database.novels)
             ..where((tbl) => tbl.url.equals(novelCompanion.url.value)))
           .getSingleOrNull();
-
       result = result.copyWith(initial: currentNovel == null);
       if (result.initial) {
         final id = await database.into(database.novels).insert(novelCompanion);
-
         result = result.copyWith(novel: id);
       } else {
         await (database.update(database.novels)
               ..where((tbl) => tbl.id.equals(currentNovel!.id)))
-            .replace(novelCompanion);
+            .write(novelCompanion);
 
         result = result.copyWith(novel: currentNovel!.id);
       }
@@ -318,6 +316,7 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       favourite: Value(value),
     );
 
+    log.fine('set novel favourite to $value');
     await _update(companion);
   }
 

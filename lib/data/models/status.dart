@@ -13,7 +13,8 @@ abstract class StatusSeed {
   static const int ongoing = 1;
   static const int hiatus = 2;
   static const int completed = 3;
-  static const int unknown = 4;
+  static const int stub = 4;
+  static const int unknown = 5;
 
   static sources.NovelStatus intoStatus(int statusId) {
     switch (statusId) {
@@ -23,6 +24,8 @@ abstract class StatusSeed {
         return sources.NovelStatus.hiatus;
       case StatusSeed.completed:
         return sources.NovelStatus.completed;
+      case StatusSeed.stub:
+        return sources.NovelStatus.stub;
       case StatusSeed.unknown:
         return sources.NovelStatus.unknown;
       default:
@@ -38,6 +41,8 @@ abstract class StatusSeed {
         return StatusSeed.hiatus;
       case sources.NovelStatus.completed:
         return StatusSeed.completed;
+      case sources.NovelStatus.stub:
+        return StatusSeed.stub;
       case sources.NovelStatus.unknown:
         return StatusSeed.unknown;
     }

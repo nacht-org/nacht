@@ -36,6 +36,10 @@ class StatusInfo extends StatelessWidget {
       case NovelStatus.completed:
         iconData = Icons.cancel;
         break;
+      case NovelStatus.stub:
+        // TODO: change to a more appropriate icon.
+        iconData = Icons.cut;
+        break;
       case NovelStatus.unknown:
         iconData = Icons.question_mark;
         break;

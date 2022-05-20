@@ -94,10 +94,11 @@ class AppDatabase extends _$AppDatabase {
           ]);
 
           batch.insertAll(statuses, [
-            StatusesCompanion.insert(id: const Value(1), value: 'Completed'),
-            StatusesCompanion.insert(id: const Value(2), value: 'Ongoing'),
-            StatusesCompanion.insert(id: const Value(3), value: 'Hiatus'),
-            StatusesCompanion.insert(id: const Value(4), value: 'Unknown'),
+            StatusesCompanion.insert(id: const Value(1), value: 'Ongoing'),
+            StatusesCompanion.insert(id: const Value(2), value: 'Hiatus'),
+            StatusesCompanion.insert(id: const Value(3), value: 'Completed'),
+            StatusesCompanion.insert(id: const Value(4), value: 'stub'),
+            StatusesCompanion.insert(id: const Value(5), value: 'Unknown'),
           ]);
 
           batch.insertAll(namespaces, [

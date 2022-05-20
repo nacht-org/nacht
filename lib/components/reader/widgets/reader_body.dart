@@ -1,5 +1,5 @@
 import 'package:chapturn/components/reader/provider/chapter_provider.dart';
-import 'package:chapturn/core/core.dart';
+import 'package:chapturn/extrinsic/extrinsic.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';

@@ -46,6 +46,7 @@ dependencies:
     path: ../chapturn_sources
   intl: ^0.17.0
   flutter_html: ^3.0.0-alpha.3
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

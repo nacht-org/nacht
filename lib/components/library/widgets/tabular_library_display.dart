@@ -1,6 +1,6 @@
+import 'package:chapturn/extrinsic/extrinsic.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
 import '../../../domain/domain.dart';
 import 'category_grid.dart';
 

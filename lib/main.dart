@@ -2,6 +2,8 @@ import 'package:chapturn/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'extrinsic/extrinsic.dart';
+
 void main() {
   initializeLogger();
 

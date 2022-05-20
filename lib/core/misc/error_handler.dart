@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core.dart';
 
@@ -10,6 +11,7 @@ import '../core.dart';
 /// TODO: Write to file in release mode.
 class ErrorHandler with LoggerMixin {
   ErrorHandler({
+    required this.sharedPreferences,
     required Widget child,
   }) {
     if (kReleaseMode) {
@@ -19,4 +21,6 @@ class ErrorHandler with LoggerMixin {
 
     runApp(child);
   }
+
+  final SharedPreferences sharedPreferences;
 }

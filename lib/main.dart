@@ -1,17 +1,23 @@
 import 'package:chapturn/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'extrinsic/extrinsic.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   initializeLogger();
 
   ErrorHandler(
+    sharedPreferences: sharedPreferences,
     child: ProviderScope(
-      observers: [
-        ProviderLogger(),
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
+      observers: [ProviderLogger()],
       child: const ChapturnApp(),
     ),
   );

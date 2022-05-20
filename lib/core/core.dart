@@ -10,3 +10,4 @@ export 'services/dialog_service.dart';
 export 'misc/diff_utils.dart';
 export 'misc/either_utils.dart';
 export 'misc/time_utils.dart';
+export 'preferences/preferences_provider.dart';

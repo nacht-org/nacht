@@ -20,7 +20,6 @@ class LibraryPage extends HookConsumerWidget {
     }, []);
 
     return view.map(
-      empty: (state) => Container(),
       singular: (state) => SingularLibraryDisplay(category: state.category),
       tabular: (state) => TabularLibraryDisplay(categories: state.categories),
     );

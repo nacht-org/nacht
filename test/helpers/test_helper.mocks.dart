@@ -87,6 +87,10 @@ class MockParsePopular extends _i1.Mock implements _i3.ParsePopular {
   }
 
   @override
+  String buildPopularUrl(int? page) =>
+      (super.noSuchMethod(Invocation.method(#buildPopularUrl, [page]),
+          returnValue: '') as String);
+  @override
   _i6.Future<List<_i3.Novel>> parsePopular(int? page) =>
       (super.noSuchMethod(Invocation.method(#parsePopular, [page]),
               returnValue: Future<List<_i3.Novel>>.value(<_i3.Novel>[]))

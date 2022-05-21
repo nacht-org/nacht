@@ -8,10 +8,9 @@ part 'library_view_provider.freezed.dart';
 
 final libraryViewProvider = Provider<LibraryViewData>((ref) {
   var categories = ref.watch(libraryProvider);
+  assert(categories.isNotEmpty);
 
-  if (categories.isEmpty) {
-    return const LibraryViewData.empty();
-  } else if (categories.length == 1) {
+  if (categories.length == 1) {
     final category = categories.single;
     assert(category.isDefault);
 
@@ -31,5 +30,4 @@ class LibraryViewData with _$LibraryViewData {
   const factory LibraryViewData.tabular(List<CategoryData> categories) =
       _TabView;
   const factory LibraryViewData.singular(CategoryData category) = _SingularView;
-  const factory LibraryViewData.empty() = _EmptyView;
 }

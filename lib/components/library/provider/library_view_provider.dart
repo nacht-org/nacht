@@ -19,7 +19,8 @@ final libraryViewProvider = Provider<LibraryViewData>((ref) {
   } else {
     categories = categories
         .where((category) => !(category.isDefault && category.novels.isEmpty))
-        .sorted(((a, b) => a.index.compareTo(b.index)));
+        .toList()
+      ..sort(((a, b) => a.index.compareTo(b.index)));
 
     return LibraryViewData.tabular(categories);
   }

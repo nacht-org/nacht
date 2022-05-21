@@ -1,45 +1,51 @@
-import 'package:chapturn/components/reader/provider/chapter_provider.dart';
-import 'package:chapturn/extrinsic/extrinsic.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/domain.dart';
+import '../../../extrinsic/extrinsic.dart';
 import '../../../provider/provider.dart';
+import '../model/novel_info.dart';
+import '../provider/active_chapter_provider.dart';
+import 'chapter_page.dart';
 
 class ReaderBody extends HookConsumerWidget {
   const ReaderBody({
     Key? key,
     required this.novel,
     required this.chapter,
-    required this.crawlerFactory,
   }) : super(key: key);
 
-  final NovelData novel;
+  final NovelInfo novel;
   final ChapterData chapter;
-  final CrawlerFactory crawlerFactory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final crawler = ref.watch(crawlerProvider(crawlerFactory));
-    final info = ref.watch(chapterProvider(Tuple2(chapter, crawler)));
-    final notifier =
-        ref.watch(chapterProvider(Tuple2(chapter, crawler)).notifier);
+    final crawlerFactory = ref.watch(crawlerFactoryProvider(novel.data.url));
+    final index = novel.chapters.indexOf(chapter);
 
-    usePostFrameCallback((timeStamp) {
-      notifier.fetch();
+    usePostFrameCallback((_) {
+      ref.read(activeIndexProvider.notifier).state = index;
     });
 
-    return info.content.when(
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
+    final controller = usePageController(initialPage: index);
+
+    return crawlerFactory.fold(
+      () => Center(
+        child: Text('uh oh.'),
       ),
-      data: (content) => Scrollbar(
-        child: SingleChildScrollView(
-          child: Html(data: content),
-        ),
+      (data) => PageView.builder(
+        controller: controller,
+        itemCount: novel.chapters.length,
+        itemBuilder: (context, index) {
+          return ChapterPage(
+            novel: novel,
+            chapter: novel.chapters[index],
+            crawlerFactory: data,
+          );
+        },
+        onPageChanged: (index) =>
+            ref.read(activeIndexProvider.notifier).state = index,
       ),
     );
   }

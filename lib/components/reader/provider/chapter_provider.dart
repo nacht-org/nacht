@@ -37,6 +37,9 @@ class ChapterNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
       state.data.url,
     );
 
+    // The provider may be dismounted before fetch ends.
+    if (!mounted) return;
+
     content.fold(
       (failure) => log.warning(failure.toString()),
       (data) => state = state.copyWith(

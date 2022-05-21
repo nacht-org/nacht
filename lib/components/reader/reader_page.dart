@@ -1,14 +1,12 @@
-import 'package:chapturn/components/reader/provider/chapter_provider.dart';
-import 'package:chapturn/components/reader/widgets/reader_body.dart';
-import 'package:chapturn/provider/crawler_factory_provider.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/domain.dart';
+import 'provider/active_chapter_provider.dart';
+import 'provider/reader_novel_provider.dart';
+import 'widgets/reader_body.dart';
 
-class ReaderPage extends StatelessWidget {
+class ReaderPage extends ConsumerWidget {
   const ReaderPage({
     Key? key,
     required this.novel,
@@ -19,46 +17,38 @@ class ReaderPage extends StatelessWidget {
   final ChapterData chapter;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final novelInfo = ref.watch(readerNovelProvider(novel));
 
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              novel.title,
-              style: theme.textTheme.titleLarge,
-              maxLines: 1,
-            ),
-            Text(
-              chapter.title,
-              style: theme.textTheme.labelMedium?.copyWith(
-                color: theme.hintColor,
+        title: Consumer(builder: (context, ref, child) {
+          final active = ref.watch(activeChapterProvider(novelInfo));
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                novel.title,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: theme.appBarTheme.foregroundColor,
+                ),
+                maxLines: 1,
               ),
-              maxLines: 1,
-            ),
-          ],
-        ),
+              Text(
+                active?.title ?? chapter.title,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.hintColor,
+                ),
+                maxLines: 1,
+              ),
+            ],
+          );
+        }),
       ),
       // extendBodyBehindAppBar: true,
-      body: Consumer(
-        builder: (context, ref, child) {
-          final crawlerFactory = ref.watch(crawlerFactoryProvider(novel.url));
-
-          return crawlerFactory.fold(
-            () => Center(
-              child: Text('uh oh.'),
-            ),
-            (data) => ReaderBody(
-              novel: novel,
-              chapter: chapter,
-              crawlerFactory: data,
-            ),
-          );
-        },
-      ),
+      body: ReaderBody(novel: novelInfo, chapter: chapter),
       extendBody: true,
     );
   }

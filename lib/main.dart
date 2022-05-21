@@ -11,8 +11,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  initializeLogger();
-
   ErrorHandler(
     sharedPreferences: sharedPreferences,
     child: ProviderScope(

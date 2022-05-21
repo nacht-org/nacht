@@ -18,8 +18,12 @@ final routerProvider = Provider<AppRouter>(
   routes: [
     AutoRoute(
       path: '/',
-      page: HomePage,
       initial: true,
+      page: SplashPage,
+    ),
+    AutoRoute(
+      path: '/home',
+      page: HomePage,
       children: [
         AutoRoute(page: LibraryPage),
         AutoRoute(page: UpdatesPage),

@@ -9,3 +9,4 @@ export 'more/more_page.dart';
 export 'category/category_page.dart';
 export 'home/provider/destination_animation_provider.dart';
 export 'reader/reader_page.dart';
+export 'splash/splash_page.dart';

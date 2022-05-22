@@ -41,6 +41,7 @@ class ChapturnApp extends HookConsumerWidget {
         brightness: Brightness.dark,
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       routeInformationParser: router.defaultRouteParser(),
       routerDelegate: router.delegate(),
       routeInformationProvider: router.routeInfoProvider(),

@@ -2,7 +2,8 @@ import 'package:chapturn/components/reader/model/toolbar_info.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final toolbarProvider = StateNotifierProvider<ToolbarNotifier, ToolbarInfo>(
+final toolbarProvider =
+    StateNotifierProvider.autoDispose<ToolbarNotifier, ToolbarInfo>(
   (ref) => ToolbarNotifier(
     state: ToolbarInfo(visible: false),
   ),
@@ -20,6 +21,8 @@ class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
   }
 
   void hide() {
+    if (!state.visible) return;
+
     state = state.copyWith(visible: false);
     setSystemUiMode(state.visible);
   }

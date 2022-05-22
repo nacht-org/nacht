@@ -1,5 +1,4 @@
 import 'package:chapturn/components/reader/provider/chapter_provider.dart';
-import 'package:chapturn/core/widgets/sliding_preferred_size.dart';
 import 'package:chapturn/extrinsic/extrinsic.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
@@ -30,8 +29,6 @@ class ChapterPage extends HookConsumerWidget {
     final info = ref.watch(chapterProvider(Tuple2(chapter, crawler)));
     final notifier =
         ref.watch(chapterProvider(Tuple2(chapter, crawler)).notifier);
-    final toolbarVisible =
-        ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
 
     usePostFrameCallback((timeStamp) {
       notifier.fetch();
@@ -45,10 +42,17 @@ class ChapterPage extends HookConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(0),
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              height: toolbarVisible ? MediaQuery.of(context).padding.top : 0,
-              curve: Curves.fastOutSlowIn,
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 8.0,
+                top: 32.0,
+                right: 8.0,
+                bottom: 8.0,
+              ),
+              child: Text(
+                chapter.title,
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
             ),
             Html(data: content),
           ],

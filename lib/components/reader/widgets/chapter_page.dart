@@ -40,7 +40,7 @@ class ChapterPage extends HookConsumerWidget {
       ),
       data: (content) => Scrollbar(
         child: ListView(
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           children: [
             Padding(
               padding: const EdgeInsets.only(

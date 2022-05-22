@@ -43,8 +43,10 @@ class ReaderBody extends HookConsumerWidget {
               crawlerFactory: data,
             );
           },
-          onPageChanged: (index) =>
-              ref.read(activeIndexProvider.notifier).state = index,
+          onPageChanged: (index) {
+            ref.read(activeIndexProvider.notifier).state = index;
+            ref.read(toolbarProvider.notifier).hide();
+          },
         ),
       ),
     );

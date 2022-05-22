@@ -1,4 +1,5 @@
 import 'package:chapturn/components/reader/provider/chapter_provider.dart';
+import 'package:chapturn/core/widgets/sliding_preferred_size.dart';
 import 'package:chapturn/extrinsic/extrinsic.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
@@ -9,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../domain/domain.dart';
 import '../../../provider/provider.dart';
 import '../model/novel_info.dart';
+import '../provider/toolbar_provider.dart';
 
 class ChapterPage extends HookConsumerWidget {
   const ChapterPage({
@@ -28,6 +30,8 @@ class ChapterPage extends HookConsumerWidget {
     final info = ref.watch(chapterProvider(Tuple2(chapter, crawler)));
     final notifier =
         ref.watch(chapterProvider(Tuple2(chapter, crawler)).notifier);
+    final toolbarVisible =
+        ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
 
     usePostFrameCallback((timeStamp) {
       notifier.fetch();
@@ -38,8 +42,15 @@ class ChapterPage extends HookConsumerWidget {
         child: CircularProgressIndicator(),
       ),
       data: (content) => Scrollbar(
-        child: SingleChildScrollView(
-          child: Html(data: content),
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: toolbarVisible ? MediaQuery.of(context).padding.top : 0,
+            ),
+            Html(data: content),
+          ],
         ),
       ),
     );

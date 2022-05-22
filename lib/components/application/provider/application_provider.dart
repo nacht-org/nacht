@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chapturn/components/library/provider/library_provider.dart';
 import 'package:chapturn/components/updates/provider/updates_provider.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -23,6 +24,12 @@ class Application with LoggerMixin {
     initializeLogger();
 
     if (Platform.isAndroid) WebView.platform = AndroidWebView();
+
+    SystemChrome.setSystemUIChangeCallback((systemOverlaysAreVisible) async {
+      await Future.delayed(const Duration(seconds: 1));
+      SystemChrome.restoreSystemUIOverlays();
+      log.fine('restored system ui overlays');
+    });
 
     await Future.wait([
       _read(libraryProvider.notifier).reload(),

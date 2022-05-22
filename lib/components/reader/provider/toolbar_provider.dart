@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final toolbarProvider = StateNotifierProvider<ToolbarNotifier, ToolbarInfo>(
   (ref) => ToolbarNotifier(
-    state: ToolbarInfo(visible: true),
+    state: ToolbarInfo(visible: false),
   ),
   name: 'ToolbarProvider',
 );
@@ -16,21 +16,21 @@ class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
 
   void toggle() {
     state = state.copyWith(visible: !state.visible);
-    _updateSystemUiMode();
+    setSystemUiMode(state.visible);
   }
 
   void hide() {
     state = state.copyWith(visible: false);
-    _updateSystemUiMode();
+    setSystemUiMode(state.visible);
   }
 
   void show() {
     state = state.copyWith(visible: true);
-    _updateSystemUiMode();
+    setSystemUiMode(state.visible);
   }
 
-  void _updateSystemUiMode() {
-    if (state.visible) {
+  void setSystemUiMode(bool visible) {
+    if (visible) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
         SystemUiOverlay.top,
       ]);

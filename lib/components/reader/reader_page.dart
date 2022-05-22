@@ -30,11 +30,18 @@ class ReaderPage extends HookConsumerWidget {
 
     final controller = useAnimationController(
       duration: const Duration(milliseconds: 300),
+      initialValue: 1,
     );
+
+    useEffect(() {
+      ref.read(toolbarProvider.notifier).setSystemUiMode(toolbarVisible);
+      return null;
+    }, []);
 
     return WillPopScope(
       onWillPop: () async {
-        ref.read(toolbarProvider.notifier).show();
+        // Make sure status bar is visible when exiting reader
+        ref.read(toolbarProvider.notifier).setSystemUiMode(true);
         return true;
       },
       child: Scaffold(
@@ -66,6 +73,12 @@ class ReaderPage extends HookConsumerWidget {
                 ],
               );
             }),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.settings),
+              ),
+            ],
           ),
         ),
         body: ReaderBody(novel: novelInfo, chapter: chapter),

@@ -26,7 +26,7 @@ class Application with LoggerMixin {
     if (Platform.isAndroid) WebView.platform = AndroidWebView();
 
     SystemChrome.setSystemUIChangeCallback((systemOverlaysAreVisible) async {
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 3));
       SystemChrome.restoreSystemUIOverlays();
       log.fine('restored system ui overlays');
     });

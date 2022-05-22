@@ -3,8 +3,11 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 
 class StatusInfo extends StatelessWidget {
-  const StatusInfo({Key? key, required this.status, this.suffix})
-      : super(key: key);
+  const StatusInfo({
+    Key? key,
+    required this.status,
+    this.suffix,
+  }) : super(key: key);
 
   final NovelStatus status;
   final String? suffix;
@@ -37,7 +40,6 @@ class StatusInfo extends StatelessWidget {
         iconData = Icons.cancel;
         break;
       case NovelStatus.stub:
-        // TODO: change to a more appropriate icon.
         iconData = Icons.cut;
         break;
       case NovelStatus.unknown:

@@ -29,7 +29,7 @@ class ReaderPage extends HookConsumerWidget {
         ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
 
     final controller = useAnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
     );
 
     return WillPopScope(

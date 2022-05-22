@@ -46,8 +46,9 @@ class ChapterPage extends HookConsumerWidget {
           padding: const EdgeInsets.all(0),
           children: [
             AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 300),
               height: toolbarVisible ? MediaQuery.of(context).padding.top : 0,
+              curve: Curves.fastOutSlowIn,
             ),
             Html(data: content),
           ],

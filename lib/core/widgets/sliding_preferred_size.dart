@@ -18,7 +18,7 @@ class SlidingPrefferedSize extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    var offset = Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1));
+    final offset = Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1));
 
     visible ? controller.reverse() : controller.forward();
 

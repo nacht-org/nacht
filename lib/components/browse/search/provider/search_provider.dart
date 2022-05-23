@@ -1,10 +1,8 @@
-import 'package:chapturn/components/search/provider/search_fetch_provider.dart';
+import 'package:chapturn/components/browse/model/fetch_state.dart';
+import 'package:chapturn/components/browse/search/search.dart';
+import 'package:chapturn/provider/crawler_provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../provider/provider.dart';
-import '../../browse/model/fetch_state.dart';
 
 final searchProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
   (ref, crawlerFactory) {

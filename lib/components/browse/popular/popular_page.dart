@@ -1,11 +1,11 @@
 import 'package:chapturn/components/browse/widgets/sliver_fetch_grid.dart';
+import 'package:chapturn/components/components.dart';
+import 'package:chapturn/extrinsic/extrinsic.dart';
+import 'package:chapturn/provider/provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../extrinsic/core/core.dart';
-import '../../provider/provider.dart';
-import '../components.dart';
 import '../search/search.dart';
 import 'provider/popular_fetch_provider.dart';
 import 'provider/popular_provider.dart';

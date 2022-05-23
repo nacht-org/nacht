@@ -1,9 +1,8 @@
+import 'package:chapturn/components/browse/model/fetch_info.dart';
+import 'package:chapturn/domain/domain.dart';
+import 'package:chapturn/provider/provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' show ParsePopular;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../domain/domain.dart';
-import '../../../provider/provider.dart';
-import '../../browse/model/fetch_info.dart';
 
 final popularFetchProvider = StateNotifierProvider.autoDispose
     .family<PopularFetchNotifier, FetchInfo, CrawlerHolding>(

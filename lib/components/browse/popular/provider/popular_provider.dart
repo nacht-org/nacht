@@ -1,8 +1,8 @@
+import 'package:chapturn/components/browse/model/fetch_state.dart';
+import 'package:chapturn/provider/provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../provider/provider.dart';
-import '../../browse/model/fetch_state.dart';
 import 'popular_fetch_provider.dart';
 
 final popularProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(

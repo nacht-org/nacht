@@ -1,10 +1,9 @@
+import 'package:chapturn/components/browse/model/fetch_info.dart';
 import 'package:chapturn/core/logger/logger.dart';
+import 'package:chapturn/domain/domain.dart';
+import 'package:chapturn/provider/provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../domain/domain.dart';
-import '../../../provider/provider.dart';
-import '../../browse/model/fetch_info.dart';
 
 final searchFetchProvider = StateNotifierProvider.autoDispose
     .family<SearchFetchNotifier, FetchInfo, CrawlerHolding>(

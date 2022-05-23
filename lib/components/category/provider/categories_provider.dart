@@ -1,5 +1,4 @@
 import 'package:chapturn/components/library/provider/library_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
 
@@ -12,7 +11,6 @@ final categoriesProvider =
     state: null,
     read: ref.read,
     libraryService: ref.watch(libraryServiceProvider),
-    dialogService: ref.watch(dialogServiceProvider),
     messageService: ref.watch(messageServiceProvider),
   ),
   name: 'CategoriesProvider',
@@ -24,17 +22,14 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
     required List<CategoryData>? state,
     required Reader read,
     required LibraryService libraryService,
-    required DialogService dialogService,
     required MessageService messageService,
   })  : _read = read,
         _libraryService = libraryService,
-        _dialogService = dialogService,
         _messageService = messageService,
         super(state);
 
   final Reader _read;
   final LibraryService _libraryService;
-  final DialogService _dialogService;
   final MessageService _messageService;
 
   Future<void> reload() async {

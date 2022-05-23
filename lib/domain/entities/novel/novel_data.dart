@@ -1,7 +1,7 @@
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../data/data.dart' hide MetaData;
+import '../../../data/data.dart';
 import '../asset/asset_data.dart';
 import 'meta_entry_data.dart';
 import 'volume_data.dart';

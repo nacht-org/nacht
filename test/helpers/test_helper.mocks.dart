@@ -56,6 +56,15 @@ class MockCrawlerRepository extends _i1.Mock implements _i4.CrawlerRepository {
               Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>.value(
                   _FakeEither_1<_i5.Failure, List<_i4.PartialNovelData>>())) as _i6
           .Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>);
+  @override
+  _i6.Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>> getSearchNovels(
+          _i3.ParseSearch? parser, String? query, int? page) =>
+      (super.noSuchMethod(
+          Invocation.method(#getSearchNovels, [parser, query, page]),
+          returnValue: Future<
+                  _i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>.value(
+              _FakeEither_1<_i5.Failure, List<_i4.PartialNovelData>>())) as _i6
+          .Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>);
 }
 
 /// A class which mocks [ParseNovel].

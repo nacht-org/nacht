@@ -14,6 +14,15 @@ final crawlerRepositoryProvider = Provider<CrawlerRepository>(
 abstract class CrawlerRepository {
   Option<CrawlerFactory> crawlerFactoryFor(String url);
   Either<Failure, List<CrawlerFactory>> getAllCrawlers();
+
   Future<Either<Failure, List<PartialNovelData>>> getPopularNovels(
-      ParsePopular parser, int page);
+    ParsePopular parser,
+    int page,
+  );
+
+  Future<Either<Failure, List<PartialNovelData>>> getSearchNovels(
+    ParseSearch parser,
+    String query,
+    int page,
+  );
 }

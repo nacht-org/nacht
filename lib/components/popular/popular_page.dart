@@ -1,15 +1,15 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:chapturn/components/browse/widgets/sliver_fetch_grid.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../core/core.dart';
+import '../../extrinsic/core/core.dart';
+import '../../provider/provider.dart';
 import '../components.dart';
-import '../widgets/novel_grid_card.dart';
-import 'provider/crawler_info_provider.dart';
+import '../search/search.dart';
 import 'provider/popular_fetch_provider.dart';
 import 'provider/popular_provider.dart';
+import 'provider/popular_view_provider.dart';
 
 class PopularPage extends HookConsumerWidget {
   const PopularPage({
@@ -21,79 +21,51 @@ class PopularPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final info = ref.watch(crawlerInfoProvider(crawlerFactory));
+    final info = ref.watch(crawlerProvider(crawlerFactory));
+    final isSearching = ref.watch(isSearchingProvider);
 
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    usePostFrameCallback(
+      (timeStamp) {
         ref.watch(popularFetchProvider(info).notifier).fetch();
-      });
-
-      return null;
-    }, []);
+      },
+      condition: info.popularSupported,
+    );
 
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            title: Text(info.meta.name),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-              ),
-            ],
-          )
+          if (!isSearching)
+            SliverAppBar(
+              title: Text(info.meta.name),
+              actions: const [SearchButton()],
+            ),
+          if (isSearching)
+            SearchBar(
+              onSubmitted: (text) =>
+                  ref.read(searchFetchProvider(info).notifier).fetch(),
+            ),
         ],
         body: Consumer(
           builder: (context, ref, child) {
-            final view = ref.watch(popularProvider(crawlerFactory));
+            // prevent auto dispose while this view is active
+            ref.watch(popularProvider(crawlerFactory));
+
+            final view = ref.watch(popularViewProvider(crawlerFactory));
 
             return CustomScrollView(
               slivers: view.when(
                 loading: () => [
-                  const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    hasScrollBody: false,
+                  const SliverFillLoadingIndicator(),
+                ],
+                unsupported: (message) => [
+                  SliverFillLoadingError(
+                    message: Text(message),
                   ),
                 ],
-                unsupported: () => [
-                  const SliverFillRemaining(
-                    child: Center(
-                      child: Text(
-                          'This source has no support to fetch popular novels.'),
-                    ),
-                    hasScrollBody: false,
-                  ),
-                ],
+                empty: () => [],
                 data: (novels) => [
-                  SliverPadding(
-                    padding: const EdgeInsets.all(8.0),
-                    sliver: SliverGrid(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final novel = novels[index];
-                          return NovelGridCard(
-                            title: novel.title,
-                            coverUrl: novel.coverUrl,
-                            onTap: () => context.router.push(NovelRoute(
-                              either: NovelEither.partial(novel, info.crawler),
-                            )),
-                          );
-                        },
-                        childCount: novels.length,
-                      ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 4.0,
-                        crossAxisSpacing: 4.0,
-                        childAspectRatio: 2 / 3,
-                      ),
-                    ),
-                  ),
+                  SliverFetchGrid(items: novels, crawler: info.crawler),
                   SliverToBoxAdapter(
                     child: Container(
                       height: 64,

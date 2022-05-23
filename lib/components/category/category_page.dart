@@ -76,12 +76,12 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
       ),
       floatingActionButton: isLoaded && !selection.active
           ? FloatingActionButton(
-              child: const Icon(Icons.add),
               onPressed: () => showDialog(
                 context: context,
                 builder: (context) => const AddCategoryDialog(),
               ),
               tooltip: 'Add category',
+              child: const Icon(Icons.add),
             )
           : null,
     );

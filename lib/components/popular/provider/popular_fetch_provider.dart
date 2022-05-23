@@ -1,16 +1,15 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:chapturn_sources/chapturn_sources.dart' show ParsePopular;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/domain.dart';
-import 'crawler_info_provider.dart';
-
-part 'popular_fetch_provider.freezed.dart';
+import '../../../provider/provider.dart';
+import '../../browse/model/fetch_info.dart';
 
 final popularFetchProvider = StateNotifierProvider.autoDispose
-    .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(
-  (ref, crawlerInfo) => PopularFetchNotifier(
+    .family<PopularFetchNotifier, FetchInfo, CrawlerHolding>(
+  (ref, holding) => PopularFetchNotifier(
     state: FetchInfo.initial(),
-    crawlerInfo: crawlerInfo,
+    crawlerHolding: holding,
     sourceService: ref.watch(sourceServiceProvider),
   ),
   name: 'PopularFetchProvider',
@@ -19,24 +18,26 @@ final popularFetchProvider = StateNotifierProvider.autoDispose
 class PopularFetchNotifier extends StateNotifier<FetchInfo> {
   PopularFetchNotifier({
     required FetchInfo state,
-    required CrawlerInfo crawlerInfo,
+    required CrawlerHolding crawlerHolding,
     required SourceService sourceService,
-  })  : _crawlerInfo = crawlerInfo,
+  })  : _crawlerInfo = crawlerHolding,
         _sourceService = sourceService,
         super(state);
 
-  final CrawlerInfo _crawlerInfo;
+  final CrawlerHolding _crawlerInfo;
   final SourceService _sourceService;
 
   Future<void> fetch() async {
-    assert(_crawlerInfo.popularParser != null);
+    assert(_crawlerInfo.popularSupported);
 
     state = state.copyWith(isLoading: true);
 
     final result = await _sourceService.popular(
-      _crawlerInfo.popularParser!,
+      _crawlerInfo.crawler as ParsePopular,
       state.page,
     );
+
+    // FIXME: mounted check.
 
     result.fold(
       (failure) {},
@@ -49,27 +50,4 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
       },
     );
   }
-}
-
-@freezed
-class FetchInfo with _$FetchInfo {
-  const factory FetchInfo({
-    required List<PartialNovelData> data,
-    required bool isLoading,
-    required int page,
-  }) = _PopularInfo;
-
-  factory FetchInfo.initial() {
-    return const FetchInfo(
-      data: [],
-      isLoading: true,
-      page: 1,
-    );
-  }
-
-  bool get isInitial {
-    return isLoading && page == 1;
-  }
-
-  const FetchInfo._();
 }

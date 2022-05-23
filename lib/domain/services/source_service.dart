@@ -33,4 +33,12 @@ class SourceService with LoggerMixin {
   ) async {
     return _crawlerRepository.getPopularNovels(parser, page);
   }
+
+  Future<Either<Failure, List<PartialNovelData>>> search(
+    sources.ParseSearch parser,
+    String query,
+    int page,
+  ) {
+    return _crawlerRepository.getSearchNovels(parser, query, page);
+  }
 }

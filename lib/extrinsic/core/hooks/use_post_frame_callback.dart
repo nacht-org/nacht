@@ -1,9 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-void usePostFrameCallback(void Function(Duration timeStamp) callback) {
+void usePostFrameCallback(void Function(Duration timeStamp) callback,
+    {bool condition = true}) {
   useEffect(() {
-    WidgetsBinding.instance.addPostFrameCallback(callback);
+    if (condition) {
+      WidgetsBinding.instance.addPostFrameCallback(callback);
+    }
     return null;
   }, []);
 }

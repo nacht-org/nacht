@@ -29,10 +29,22 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
     ParsePopular parser,
     int page,
   ) async {
+    // TODO: catch errors
     final novels = await parser.parsePopular(page);
 
     final entities =
         novels.map((novel) => PartialNovelData.fromSource(novel)).toList();
+
+    return Right(entities);
+  }
+
+  @override
+  Future<Either<Failure, List<PartialNovelData>>> getSearchNovels(
+      ParseSearch parser, String query, int page) async {
+    // TODO: catch errors
+    final novels = await parser.search(query, page);
+
+    final entities = novels.map(PartialNovelData.fromSource).toList();
 
     return Right(entities);
   }

@@ -21,7 +21,6 @@ class NovelGridCard extends StatelessWidget {
     ImageProvider? image;
     if (cover != null) {
       image = FileImage(cover!.file);
-      print(image);
     } else if (coverUrl != null) {
       image = NetworkImage(coverUrl!);
     } else {
@@ -34,16 +33,17 @@ class NovelGridCard extends StatelessWidget {
         onTap: onTap,
         child: Stack(
           children: [
-            if (coverUrl != null)
+            if (image != null)
               SizedBox.expand(
-                child: image == null
-                    ? Ink()
-                    : Ink.image(
-                        image: image,
-                        fit: BoxFit.fill,
-                      ),
+                child: Ink.image(
+                  image: image,
+                  fit: BoxFit.fill,
+                ),
               ),
             Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -63,9 +63,6 @@ class NovelGridCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              bottom: 0,
-              left: 0,
-              right: 0,
             ),
           ],
         ),

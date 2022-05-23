@@ -21,4 +21,12 @@ class CrawlerHolding with _$CrawlerHolding {
     required Meta meta,
     required Crawler crawler,
   }) = _CrawlerHolding;
+
+  bool get popularSupported => meta.features.contains(Feature.popular);
+  bool get popularNotSupported => !popularSupported;
+
+  bool get searchSupported => meta.features.contains(Feature.search);
+  bool get searchNotSupported => !searchSupported;
+
+  CrawlerHolding._();
 }

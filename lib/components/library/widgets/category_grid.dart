@@ -14,7 +14,7 @@ class CategoryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: const EdgeInsets.all(0),
+      padding: const EdgeInsets.all(8),
       itemBuilder: (context, index) {
         final novel = category.novels[index];
 
@@ -32,6 +32,8 @@ class CategoryGrid extends StatelessWidget {
       itemCount: category.novels.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 4.0,
         childAspectRatio: 2 / 3,
       ),
     );

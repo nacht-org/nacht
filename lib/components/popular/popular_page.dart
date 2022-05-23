@@ -69,24 +69,29 @@ class PopularPage extends HookConsumerWidget {
                   ),
                 ],
                 data: (novels) => [
-                  SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final novel = novels[index];
-                        return NovelGridCard(
-                          title: novel.title,
-                          coverUrl: novel.coverUrl,
-                          onTap: () => context.router.push(NovelRoute(
-                            either: NovelEither.partial(novel, info.crawler),
-                          )),
-                        );
-                      },
-                      childCount: novels.length,
-                    ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 2 / 3,
+                  SliverPadding(
+                    padding: const EdgeInsets.all(8.0),
+                    sliver: SliverGrid(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final novel = novels[index];
+                          return NovelGridCard(
+                            title: novel.title,
+                            coverUrl: novel.coverUrl,
+                            onTap: () => context.router.push(NovelRoute(
+                              either: NovelEither.partial(novel, info.crawler),
+                            )),
+                          );
+                        },
+                        childCount: novels.length,
+                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4.0,
+                        crossAxisSpacing: 4.0,
+                        childAspectRatio: 2 / 3,
+                      ),
                     ),
                   ),
                   SliverToBoxAdapter(

@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/core.dart';
-import '../provider/novel_provider.dart';
+import '../../../provider/provider.dart';
 
 class ActionBar extends StatelessWidget {
-  const ActionBar({Key? key}) : super(key: key);
+  const ActionBar({
+    Key? key,
+    required this.input,
+  }) : super(key: key);
+
+  final NovelInput input;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +22,8 @@ class ActionBar extends StatelessWidget {
           Expanded(
             child: Consumer(
               builder: (context, ref, child) {
-                final favourite =
-                    ref.watch(novelProvider.select((novel) => novel.favourite));
+                final favourite = ref.watch(
+                    novelProvider(input).select((novel) => novel.favourite));
 
                 final icon =
                     favourite ? Icons.favorite : Icons.favorite_outline;
@@ -27,7 +32,7 @@ class ActionBar extends StatelessWidget {
                 return ActionItem(
                   icon: icon,
                   label: label,
-                  onTap: ref.read(novelProvider.notifier).toggleLibrary,
+                  onTap: ref.read(novelProvider(input).notifier).toggleLibrary,
                   active: favourite,
                 );
               },
@@ -35,7 +40,7 @@ class ActionBar extends StatelessWidget {
           ),
           Expanded(
             child: Consumer(builder: (context, ref, child) {
-              final novel = ref.watch(novelProvider);
+              final novel = ref.watch(novelProvider(input));
 
               return ActionItem(
                 icon: Icons.open_in_browser,

@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   flutter_html: ^3.0.0-alpha.3
   shared_preferences: ^2.0.15
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_test:

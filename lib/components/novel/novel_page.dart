@@ -30,14 +30,12 @@ class NovelPage extends ConsumerWidget {
             meta: meta == null ? const None() : Some(meta),
           );
 
-          return Consumer(builder: (context, ref, child) {
-            return ProviderScope(
-              overrides: [
-                currentEssentialProvider.overrideWithValue(info),
-              ],
-              child: PartialView(either: either, novel: novel),
-            );
-          });
+          return ProviderScope(
+            overrides: [
+              currentEssentialProvider.overrideWithValue(info),
+            ],
+            child: PartialView(either: either, novel: novel),
+          );
         },
         complete: (novel, meta, crawler) {
           final info = EssentialInfo.fromNovel(novel).copyWith(
@@ -46,12 +44,11 @@ class NovelPage extends ConsumerWidget {
 
           return ProviderScope(
             overrides: [
-              currentNovelProvider.overrideWithValue(novel),
               currentEssentialProvider.overrideWithValue(info),
-              currentCrawlerProvider.overrideWithValue(crawler),
             ],
             child: NovelView(
-              novel: novel,
+              data: novel,
+              crawler: crawler,
               load: either.maybeMap(complete: (_) => true, orElse: () => false),
             ),
           );

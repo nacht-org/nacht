@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chapturn/components/novel/provider/chapter_list_provider.dart';
 import 'package:chapturn/components/novel/provider/description_info_provider.dart';
 import 'package:chapturn/core/core.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
@@ -8,35 +7,32 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/entities/novel/novel_data.dart';
-import '../provider/chapter_count_provider.dart';
-import '../provider/novel_provider.dart';
+import '../../../provider/provider.dart';
 import 'action_bar.dart';
 import 'description.dart';
 import 'info.dart';
 import 'tags.dart';
 
-final currentNovelProvider =
-    Provider<NovelData>((ref) => throw UnimplementedError());
-
-final currentCrawlerProvider =
-    Provider<Crawler?>((ref) => throw UnimplementedError());
-
 class NovelView extends HookConsumerWidget {
   const NovelView({
     Key? key,
-    required this.novel,
+    required this.data,
+    required this.crawler,
     required this.load,
   }) : super(key: key);
 
-  final NovelData novel;
+  final NovelData data;
+  final Crawler? crawler;
   final bool load;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final novel = ref.watch(novelProvider);
+    final input = NovelInput(data, crawler);
+    final novel = ref.watch(novelProvider(input));
+    final notifier = ref.watch(novelProvider(input).notifier);
 
     useEffect(() {
-      ref.read(novelProvider.notifier).reload();
+      notifier.reload();
       return null;
     }, []);
 
@@ -52,13 +48,13 @@ class NovelView extends HookConsumerWidget {
         }),
       ],
       body: RefreshIndicator(
-        onRefresh: ref.read(novelProvider.notifier).fetch,
+        onRefresh: notifier.fetch,
         child: CustomScrollView(
           slivers: [
             buildPadding(sliver: const EssentialSection(), top: 24, bottom: 8),
-            buildPadding(sliver: const ActionBar(), top: 0, bottom: 8),
+            buildPadding(sliver: ActionBar(input: input), top: 0, bottom: 8),
             HookConsumer(builder: (context, ref, child) {
-              final description = ref.watch(descriptionInfoProvider);
+              final description = ref.watch(descriptionInfoProvider(novel));
               final expanded = useState(false);
 
               return buildPadding(
@@ -86,7 +82,7 @@ class NovelView extends HookConsumerWidget {
               );
             }),
             Consumer(builder: (context, ref, child) {
-              final chapterCount = ref.watch(chapterCountProvider);
+              final chapterCount = ref.watch(chapterCountProvider(novel));
 
               return SliverToBoxAdapter(
                 child: ListTile(
@@ -103,7 +99,7 @@ class NovelView extends HookConsumerWidget {
               );
             }),
             Consumer(builder: (context, ref, child) {
-              final items = ref.watch(chapterListProvider);
+              final items = ref.watch(chapterListProvider(novel));
 
               return SliverList(
                 delegate: SliverChildBuilderDelegate(

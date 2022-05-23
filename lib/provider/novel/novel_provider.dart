@@ -1,33 +1,35 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../core/core.dart';
-import '../../../domain/domain.dart';
-import '../../library/provider/library_provider.dart';
-import '../../updates/provider/updates_provider.dart';
-import '../set_categories/provider/selected_categories_provider.dart';
-import '../set_categories/set_categories_dialog.dart';
-import '../widgets/novel_view.dart';
+import '../../components/category/set_categories/provider/selected_categories_provider.dart';
+import '../../components/category/set_categories/set_categories_dialog.dart';
+import '../../components/library/provider/library_provider.dart';
+import '../../components/updates/provider/updates_provider.dart';
+import '../../core/core.dart';
+import '../../domain/domain.dart';
 
-final novelProvider =
-    StateNotifierProvider.autoDispose<NovelNotifier, NovelData>(
-  (ref) => NovelNotifier(
+part 'novel_provider.freezed.dart';
+
+final novelProvider = StateNotifierProvider.autoDispose
+    .family<NovelNotifier, NovelData, NovelInput>(
+  (ref, data) => NovelNotifier(
     read: ref.read,
-    state: ref.watch(currentNovelProvider),
-    crawler: ref.watch(currentCrawlerProvider),
+    state: data.novel,
+    crawler: data.crawler,
     novelService: ref.watch(novelServiceProvider),
     libraryService: ref.watch(libraryServiceProvider),
   ),
-  dependencies: [
-    currentNovelProvider,
-    currentCrawlerProvider,
-    novelServiceProvider,
-    libraryServiceProvider,
-    dialogServiceProvider,
-    libraryProvider.notifier,
-    updatesProvider.notifier,
-  ],
+  name: 'NovelProvider',
 );
+
+@freezed
+class NovelInput with _$NovelInput {
+  factory NovelInput(
+    NovelData novel,
+    Crawler? crawler,
+  ) = _NovelInput;
+}
 
 class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   NovelNotifier({

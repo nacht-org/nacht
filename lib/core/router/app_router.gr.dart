@@ -54,7 +54,10 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child: ReaderPage(
-              key: args.key, novel: args.novel, chapter: args.chapter));
+              key: args.key,
+              novel: args.novel,
+              chapter: args.chapter,
+              incomplete: args.incomplete));
     },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -198,16 +201,27 @@ class CategoryRoute extends PageRouteInfo<void> {
 /// [ReaderPage]
 class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
   ReaderRoute(
-      {Key? key, required NovelData novel, required ChapterData chapter})
+      {Key? key,
+      required NovelData novel,
+      required ChapterData chapter,
+      required bool incomplete})
       : super(ReaderRoute.name,
             path: 'reader',
-            args: ReaderRouteArgs(key: key, novel: novel, chapter: chapter));
+            args: ReaderRouteArgs(
+                key: key,
+                novel: novel,
+                chapter: chapter,
+                incomplete: incomplete));
 
   static const String name = 'ReaderRoute';
 }
 
 class ReaderRouteArgs {
-  const ReaderRouteArgs({this.key, required this.novel, required this.chapter});
+  const ReaderRouteArgs(
+      {this.key,
+      required this.novel,
+      required this.chapter,
+      required this.incomplete});
 
   final Key? key;
 
@@ -215,9 +229,11 @@ class ReaderRouteArgs {
 
   final ChapterData chapter;
 
+  final bool incomplete;
+
   @override
   String toString() {
-    return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter}';
+    return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter, incomplete: $incomplete}';
   }
 }
 

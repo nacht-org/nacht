@@ -121,7 +121,11 @@ class NovelView extends HookConsumerWidget {
                         ),
                         subtitle: Text(chapter.updated.toString()),
                         onTap: () => context.router.push(
-                          ReaderRoute(novel: novel, chapter: chapter),
+                          ReaderRoute(
+                            novel: novel,
+                            chapter: chapter,
+                            incomplete: false,
+                          ),
                         ),
                       ),
                     );

@@ -29,21 +29,21 @@ class UpdatesPage extends StatelessWidget {
 
         return ListView.builder(
           padding: const EdgeInsets.all(0),
-          itemBuilder: (context, index) => updates[index].map(
-            date: (state) => ListTile(
+          itemBuilder: (context, index) => updates[index].when(
+            date: (date) => ListTile(
               title: Text(
-                state.date,
+                date,
                 style: Theme.of(context).textTheme.labelLarge,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               dense: true,
             ),
-            chapter: (state) => ListTile(
+            chapter: (novel, chapter) => ListTile(
               leading: GestureDetector(
                 onTap: () => context.router.push(
                   NovelRoute(
-                    either: NovelEither.complete(state.novel),
+                    either: NovelEither.complete(novel),
                   ),
                 ),
                 child: AspectRatio(
@@ -51,22 +51,31 @@ class UpdatesPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      state.novel.coverUrl!,
+                      novel.coverUrl!,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
               title: Text(
-                state.novel.title,
+                novel.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               subtitle: Text(
-                state.chapter.title,
+                chapter.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
+              onTap: () {
+                context.router.push(
+                  ReaderRoute(
+                    novel: novel,
+                    chapter: chapter,
+                    incomplete: true,
+                  ),
+                );
+              },
             ),
           ),
           itemCount: updates.length,

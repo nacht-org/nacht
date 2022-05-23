@@ -50,96 +50,100 @@ class NovelView extends HookConsumerWidget {
       ],
       body: RefreshIndicator(
         onRefresh: notifier.fetch,
-        child: CustomScrollView(
-          slivers: [
-            buildPadding(sliver: const EssentialSection(), top: 24, bottom: 8),
-            buildPadding(sliver: ActionBar(input: input), top: 0, bottom: 8),
-            HookConsumer(builder: (context, ref, child) {
-              final description = ref.watch(descriptionInfoProvider(novel));
-              final expanded = useState(false);
+        child: Scrollbar(
+          interactive: true,
+          child: CustomScrollView(
+            slivers: [
+              buildPadding(
+                  sliver: const EssentialSection(), top: 24, bottom: 8),
+              buildPadding(sliver: ActionBar(input: input), top: 0, bottom: 8),
+              HookConsumer(builder: (context, ref, child) {
+                final description = ref.watch(descriptionInfoProvider(novel));
+                final expanded = useState(false);
 
-              return buildPadding(
-                top: 0,
-                bottom: 8,
-                sliver: SliverToBoxAdapter(
-                  child: GestureDetector(
-                    onTap: () => expanded.value = !expanded.value,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Description(
-                          description: description.description,
-                          expanded: expanded,
-                        ),
-                        const SizedBox(height: 8),
-                        Tags(
-                          tags: description.tags,
-                          expanded: expanded,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }),
-            Consumer(builder: (context, ref, child) {
-              final chapterCount = ref.watch(chapterCountProvider(novel));
-
-              return SliverToBoxAdapter(
-                child: ListTile(
-                  title: Text(
-                    '$chapterCount Chapter'.pluralize(
-                      test: (_) => chapterCount > 1,
-                    ),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  trailing: const Icon(Icons.filter_list),
-                  onTap: () {},
-                  dense: true,
-                ),
-              );
-            }),
-            Consumer(builder: (context, ref, child) {
-              final items = ref.watch(chapterListProvider(novel));
-              final timeService = ref.watch(timeServiceProvider);
-
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return items[index].when(
-                      volume: (volume) => ListTile(
-                        title: Text(
-                          volume.name.toUpperCase(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        dense: true,
+                return buildPadding(
+                  top: 0,
+                  bottom: 8,
+                  sliver: SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () => expanded.value = !expanded.value,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Description(
+                            description: description.description,
+                            expanded: expanded,
+                          ),
+                          const SizedBox(height: 8),
+                          Tags(
+                            tags: description.tags,
+                            expanded: expanded,
+                          )
+                        ],
                       ),
-                      chapter: (chapter) => ListTile(
-                        title: Text(
-                          chapter.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                );
+              }),
+              Consumer(builder: (context, ref, child) {
+                final chapterCount = ref.watch(chapterCountProvider(novel));
+
+                return SliverToBoxAdapter(
+                  child: ListTile(
+                    title: Text(
+                      '$chapterCount Chapter'.pluralize(
+                        test: (_) => chapterCount > 1,
+                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    trailing: const Icon(Icons.filter_list),
+                    onTap: () {},
+                    dense: true,
+                  ),
+                );
+              }),
+              Consumer(builder: (context, ref, child) {
+                final items = ref.watch(chapterListProvider(novel));
+                final timeService = ref.watch(timeServiceProvider);
+
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return items[index].when(
+                        volume: (volume) => ListTile(
+                          title: Text(
+                            volume.name.toUpperCase(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          dense: true,
                         ),
-                        subtitle: chapter.updated == null
-                            ? null
-                            : Text(timeService
-                                .formatChapterUpdated(chapter.updated!)),
-                        onTap: () => context.router.push(
-                          ReaderRoute(
-                            novel: novel,
-                            chapter: chapter,
-                            incomplete: false,
+                        chapter: (chapter) => ListTile(
+                          title: Text(
+                            chapter.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: chapter.updated == null
+                              ? null
+                              : Text(timeService
+                                  .formatChapterUpdated(chapter.updated!)),
+                          onTap: () => context.router.push(
+                            ReaderRoute(
+                              novel: novel,
+                              chapter: chapter,
+                              incomplete: false,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                  childCount: items.length,
-                ),
-              );
-            }),
-          ],
+                      );
+                    },
+                    childCount: items.length,
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );

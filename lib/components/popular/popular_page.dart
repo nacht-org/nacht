@@ -108,8 +108,8 @@ class PopularPage extends HookConsumerWidget {
                             return const CircularProgressIndicator();
                           } else {
                             return TextButton(
-                              child: const Text('Load more'),
                               onPressed: notifier.fetch,
+                              child: const Text('Load more'),
                             );
                           }
                         },

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/components/novel/provider/description_info_provider.dart';
 import 'package:chapturn/core/core.dart';
+import 'package:chapturn/domain/services/time_service.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -100,6 +101,7 @@ class NovelView extends HookConsumerWidget {
             }),
             Consumer(builder: (context, ref, child) {
               final items = ref.watch(chapterListProvider(novel));
+              final timeService = ref.watch(timeServiceProvider);
 
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
@@ -119,7 +121,10 @@ class NovelView extends HookConsumerWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        subtitle: Text(chapter.updated.toString()),
+                        subtitle: chapter.updated == null
+                            ? null
+                            : Text(timeService
+                                .formatChapterUpdated(chapter.updated!)),
                         onTap: () => context.router.push(
                           ReaderRoute(
                             novel: novel,

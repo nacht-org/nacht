@@ -10,6 +10,10 @@ final timeServiceProvider = Provider<TimeService>(
 class TimeService {
   final DateFormat _dateFormat = DateFormat.yMd();
 
+  String formatChapterUpdated(DateTime dateTime) {
+    return relativeDay(dateTime);
+  }
+
   String relativeDay(DateTime dateTime) {
     return dateTime.relativeDay.when(
       yesterday: () => 'Yesterday',

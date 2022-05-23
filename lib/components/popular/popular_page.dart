@@ -43,7 +43,7 @@ class PopularPage extends HookConsumerWidget {
           if (isSearching)
             SearchBar(
               onSubmitted: (text) =>
-                  ref.read(searchFetchProvider(info).notifier).fetch(),
+                  ref.read(searchFetchProvider(info).notifier).fetch(text),
             ),
         ],
         body: Consumer(

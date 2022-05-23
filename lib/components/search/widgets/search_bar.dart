@@ -1,11 +1,9 @@
-import 'package:chapturn/components/search/provider/search_text_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../components.dart';
 
-class SearchBar extends HookConsumerWidget {
+class SearchBar extends HookWidget {
   const SearchBar({
     Key? key,
     this.onSubmitted,
@@ -19,8 +17,7 @@ class SearchBar extends HookConsumerWidget {
   final bool forceElevated;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(searchTextProvider.notifier);
+  Widget build(BuildContext context) {
     final controller = useTextEditingController();
 
     return SliverAppBar(
@@ -35,7 +32,6 @@ class SearchBar extends HookConsumerWidget {
         ),
         textInputAction: TextInputAction.search,
         autofocus: true,
-        onChanged: (value) => notifier.state = value,
         onSubmitted: onSubmitted,
       ),
       floating: floating,

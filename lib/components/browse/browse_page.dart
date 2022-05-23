@@ -42,7 +42,7 @@ class BrowsePage extends ConsumerWidget {
 
                 return ListTile(
                   title: Text(meta.name),
-                  subtitle: Text(lang),
+                  subtitle: Text('$lang ${meta.version.version}'),
                   trailing: TextButton(
                     child: const Text('Latest'),
                     onPressed: () {},

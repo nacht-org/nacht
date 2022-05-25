@@ -20,7 +20,7 @@ class SearchBar extends HookWidget {
     final controller = useTextEditingController();
 
     return SliverAppBar(
-      leading: buildSearchBackButton(context, controller),
+      leading: const BackButton(),
       title: ClearableTextField(
         controller: controller,
         decoration: const InputDecoration(
@@ -35,20 +35,6 @@ class SearchBar extends HookWidget {
       ),
       floating: floating,
       forceElevated: forceElevated,
-    );
-  }
-
-  Widget buildSearchBackButton(
-    BuildContext context,
-    TextEditingController controller,
-  ) {
-    return IconButton(
-      onPressed: () {
-        controller.clear();
-        Navigator.maybePop(context);
-      },
-      icon: const Icon(Icons.close),
-      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
     );
   }
 }

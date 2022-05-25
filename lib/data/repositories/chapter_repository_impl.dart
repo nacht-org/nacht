@@ -3,7 +3,7 @@ import 'package:chapturn/domain/domain.dart';
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 
-import '../datasources/local/database.dart';
+import '../data.dart';
 
 class ChapterRepositoryImpl implements ChapterRepository {
   ChapterRepositoryImpl({
@@ -20,11 +20,14 @@ class ChapterRepositoryImpl implements ChapterRepository {
     await database.batch((batch) {
       for (final chapter in chapters) {
         final companion = ChaptersCompanion(
-          id: Value(chapter.id),
           readAt: Value(readAt),
         );
 
-        batch.update(database.chapters, companion);
+        batch.update<Chapters, Chapter>(
+          database.chapters,
+          companion,
+          where: (tbl) => tbl.id.equals(chapter.id),
+        );
       }
     });
 

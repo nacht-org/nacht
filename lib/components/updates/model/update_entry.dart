@@ -1,5 +1,5 @@
-import 'package:chapturn/domain/entities/novel/chapter_data.dart';
-import 'package:chapturn/domain/entities/novel/novel_data.dart';
+import 'package:nacht/domain/entities/novel/chapter_data.dart';
+import 'package:nacht/domain/entities/novel/novel_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'update_entry.freezed.dart';

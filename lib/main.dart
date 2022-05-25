@@ -1,5 +1,5 @@
-import 'package:chapturn/components/application/provider/application_provider.dart';
-import 'package:chapturn/core/core.dart';
+import 'package:nacht/components/application/provider/application_provider.dart';
+import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,13 +18,13 @@ Future<void> main() async {
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
       observers: [ProviderLogger()],
-      child: const ChapturnApp(),
+      child: const nachtApp(),
     ),
   );
 }
 
-class ChapturnApp extends HookConsumerWidget {
-  const ChapturnApp({Key? key}) : super(key: key);
+class nachtApp extends HookConsumerWidget {
+  const nachtApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +36,7 @@ class ChapturnApp extends HookConsumerWidget {
     }, []);
 
     return MaterialApp.router(
-      title: 'Chapturn',
+      title: 'nacht',
       theme: ThemeData(
         brightness: Brightness.dark,
         useMaterial3: true,

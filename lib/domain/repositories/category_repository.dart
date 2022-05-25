@@ -1,4 +1,4 @@
-import 'package:chapturn/core/failure.dart';
+import 'package:nacht/core/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

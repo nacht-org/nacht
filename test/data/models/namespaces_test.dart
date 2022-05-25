@@ -1,4 +1,4 @@
-import 'package:chapturn/data/models/namespaces.dart';
+import 'package:nacht/data/models/namespaces.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 

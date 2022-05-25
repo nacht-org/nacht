@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chapturn/components/novel/provider/description_info_provider.dart';
-import 'package:chapturn/components/novel/widgets/chapter_list.dart';
-import 'package:chapturn/core/core.dart';
-import 'package:chapturn/domain/services/time_service.dart';
+import 'package:nacht/components/novel/provider/description_info_provider.dart';
+import 'package:nacht/components/novel/widgets/chapter_list.dart';
+import 'package:nacht/core/core.dart';
+import 'package:nacht/domain/services/time_service.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

@@ -1,5 +1,5 @@
-import 'package:chapturn/domain/entities/category/category_data.dart';
-import 'package:chapturn/domain/services/library_service.dart';
+import 'package:nacht/domain/entities/category/category_data.dart';
+import 'package:nacht/domain/services/library_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final libraryProvider =

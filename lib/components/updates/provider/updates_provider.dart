@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/services/updates_service.dart';
+import 'package:nacht/domain/services/updates_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/domain.dart';

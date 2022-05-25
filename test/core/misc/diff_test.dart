@@ -1,4 +1,4 @@
-import 'package:chapturn/core/misc/diff_utils.dart';
+import 'package:nacht/core/misc/diff_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
 

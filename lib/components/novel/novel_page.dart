@@ -1,6 +1,6 @@
-import 'package:chapturn/components/novel/model/essential_info.dart';
-import 'package:chapturn/components/novel/provider/intermediate_provider.dart';
-import 'package:chapturn/components/novel/widgets/info.dart';
+import 'package:nacht/components/novel/model/essential_info.dart';
+import 'package:nacht/components/novel/provider/intermediate_provider.dart';
+import 'package:nacht/components/novel/widgets/info.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

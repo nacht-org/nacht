@@ -1,6 +1,6 @@
-import 'package:chapturn/components/reader/model/chapter_info.dart';
-import 'package:chapturn/components/reader/provider/chapter_provider.dart';
-import 'package:chapturn/extrinsic/extrinsic.dart';
+import 'package:nacht/components/reader/model/chapter_info.dart';
+import 'package:nacht/components/reader/provider/chapter_provider.dart';
+import 'package:nacht/extrinsic/extrinsic.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';

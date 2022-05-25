@@ -1,9 +1,9 @@
-import 'package:chapturn/components/library/provider/library_provider.dart';
+import 'package:nacht/components/library/provider/library_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
 
-import 'package:chapturn/core/core.dart';
-import 'package:chapturn/domain/domain.dart';
+import 'package:nacht/core/core.dart';
+import 'package:nacht/domain/domain.dart';
 
 final categoriesProvider =
     StateNotifierProvider<CategoriesNotifier, List<CategoryData>?>(

@@ -1,4 +1,4 @@
-import 'package:chapturn/data/models/reading_direction.dart';
+import 'package:nacht/data/models/reading_direction.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 

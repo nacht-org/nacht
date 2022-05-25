@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:chapturn/components/library/provider/library_provider.dart';
-import 'package:chapturn/components/updates/provider/updates_provider.dart';
+import 'package:nacht/components/library/provider/library_provider.dart';
+import 'package:nacht/components/updates/provider/updates_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';

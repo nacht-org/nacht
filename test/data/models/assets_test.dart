@@ -1,4 +1,4 @@
-import 'package:chapturn/data/models/assets.dart';
+import 'package:nacht/data/models/assets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

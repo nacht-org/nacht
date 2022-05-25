@@ -1,6 +1,6 @@
-import 'package:chapturn/components/browse/model/fetch_info.dart';
-import 'package:chapturn/domain/domain.dart';
-import 'package:chapturn/provider/provider.dart';
+import 'package:nacht/components/browse/model/fetch_info.dart';
+import 'package:nacht/domain/domain.dart';
+import 'package:nacht/provider/provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' show ParsePopular;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

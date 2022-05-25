@@ -1,6 +1,6 @@
-import 'package:chapturn/data/models/reading_direction.dart';
-import 'package:chapturn/data/models/status.dart';
-import 'package:chapturn/data/models/work_type.dart';
+import 'package:nacht/data/models/reading_direction.dart';
+import 'package:nacht/data/models/status.dart';
+import 'package:nacht/data/models/work_type.dart';
 import 'package:drift/drift.dart';
 
 import 'assets.dart';

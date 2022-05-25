@@ -1,5 +1,5 @@
-import 'package:chapturn/components/novel/model/description_info.dart';
-import 'package:chapturn/domain/entities/novel/novel_data.dart';
+import 'package:nacht/components/novel/model/description_info.dart';
+import 'package:nacht/domain/entities/novel/novel_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final descriptionInfoProvider =

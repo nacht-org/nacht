@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/entities/update/new_update.dart';
+import 'package:nacht/domain/entities/update/new_update.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'update_result.freezed.dart';

@@ -1,4 +1,4 @@
-import 'package:chapturn/core/core.dart';
+import 'package:nacht/core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

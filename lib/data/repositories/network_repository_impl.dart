@@ -1,5 +1,5 @@
-import 'package:chapturn/domain/entities/network/network_connection_data.dart';
-import 'package:chapturn/domain/repositories/network_repository.dart';
+import 'package:nacht/domain/entities/network/network_connection_data.dart';
+import 'package:nacht/domain/repositories/network_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../../core/core.dart';

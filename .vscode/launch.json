@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "chapturn",
+            "name": "nacht",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "chapturn (profile mode)",
+            "name": "nacht (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "chapturn (release mode)",
+            "name": "nacht (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

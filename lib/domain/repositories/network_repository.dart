@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/entities/network/network_connection_data.dart';
+import 'package:nacht/domain/entities/network/network_connection_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/data.dart';

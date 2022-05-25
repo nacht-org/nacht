@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/entities/network/network_connection_data.dart';
+import 'package:nacht/domain/entities/network/network_connection_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 

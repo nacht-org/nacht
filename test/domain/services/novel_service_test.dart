@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:chapturn/data/failure.dart';
-import 'package:chapturn/domain/domain.dart';
+import 'package:nacht/data/failure.dart';
+import 'package:nacht/domain/domain.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';

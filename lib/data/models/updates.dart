@@ -1,5 +1,5 @@
-import 'package:chapturn/data/models/chapter.dart';
-import 'package:chapturn/data/models/novel.dart';
+import 'package:nacht/data/models/chapter.dart';
+import 'package:nacht/data/models/novel.dart';
 import 'package:drift/drift.dart';
 
 class Updates extends Table {

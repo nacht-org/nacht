@@ -1,4 +1,4 @@
-import 'package:chapturn/core/failure.dart';
+import 'package:nacht/core/failure.dart';
 
 class NovelNotFound extends Failure {
   const NovelNotFound([super.message]);

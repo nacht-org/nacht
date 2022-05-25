@@ -1,5 +1,5 @@
-import 'package:chapturn/domain/services/novel_service.dart';
-import 'package:chapturn/domain/services/source_service.dart';
+import 'package:nacht/domain/services/novel_service.dart';
+import 'package:nacht/domain/services/source_service.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

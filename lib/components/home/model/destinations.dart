@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import 'package:chapturn/core/core.dart';
+import 'package:nacht/core/core.dart';
 
 class Destination {
   final PageRouteInfo route;

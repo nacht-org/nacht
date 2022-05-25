@@ -1,5 +1,5 @@
-import 'package:chapturn/components/browse/model/fetch_state.dart';
-import 'package:chapturn/provider/provider.dart';
+import 'package:nacht/components/browse/model/fetch_state.dart';
+import 'package:nacht/provider/provider.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

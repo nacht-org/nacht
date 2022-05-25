@@ -1,4 +1,4 @@
-import 'package:chapturn/extrinsic/extrinsic.dart';
+import 'package:nacht/extrinsic/extrinsic.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/domain.dart';

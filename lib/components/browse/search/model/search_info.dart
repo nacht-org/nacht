@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/domain.dart';
+import 'package:nacht/domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'search_info.freezed.dart';

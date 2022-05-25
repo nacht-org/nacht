@@ -1,5 +1,5 @@
-import 'package:chapturn/data/data.dart';
-import 'package:chapturn/data/misc/into_companion.dart';
+import 'package:nacht/data/data.dart';
+import 'package:nacht/data/misc/into_companion.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
 

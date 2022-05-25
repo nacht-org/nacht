@@ -1,4 +1,4 @@
-import 'package:chapturn/core/failure.dart';
+import 'package:nacht/core/failure.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 

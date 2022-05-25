@@ -1,4 +1,4 @@
-import 'package:chapturn/domain/domain.dart';
+import 'package:nacht/domain/domain.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

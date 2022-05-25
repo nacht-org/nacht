@@ -10,6 +10,7 @@ void main() {
     content: null,
     url: 'https://website.com/novel/123/1',
     updated: DateTime(2022, 4, 23),
+    readAt: DateTime(2022, 5, 25),
     volumeId: 2,
   );
 
@@ -20,6 +21,7 @@ void main() {
     content: null,
     url: 'https://website.com/novel/123/1',
     updated: DateTime(2022, 4, 23),
+    readAt: DateTime(2022, 5, 25),
     volumeId: 2,
   );
 

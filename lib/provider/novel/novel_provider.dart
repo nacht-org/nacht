@@ -1,4 +1,5 @@
 import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -23,12 +24,17 @@ final novelProvider = StateNotifierProvider.autoDispose
   name: 'NovelProvider',
 );
 
-@freezed
-class NovelInput with _$NovelInput {
+@Freezed(equal: false)
+class NovelInput extends Equatable with _$NovelInput {
   factory NovelInput(
-    NovelData novel,
+    NovelData novel, [
     Crawler? crawler,
-  ) = _NovelInput;
+  ]) = _NovelInput;
+
+  NovelInput._();
+
+  @override
+  List<Object?> get props => [novel.id];
 }
 
 class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
@@ -116,5 +122,15 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       (failure) => log.warning(failure),
       (data) => state = data,
     );
+  }
+
+  void setReadAt(int id, DateTime? readAt) {
+    state = state.copyWith(volumes: [
+      for (final volume in state.volumes)
+        volume.copyWith(chapters: [
+          for (final chapter in volume.chapters)
+            if (chapter.id == id) chapter.copyWith(readAt: readAt) else chapter
+        ])
+    ]);
   }
 }

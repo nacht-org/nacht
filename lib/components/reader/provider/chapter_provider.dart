@@ -1,6 +1,5 @@
 import 'package:chapturn/domain/domain.dart';
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
-import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/core.dart';
@@ -9,9 +8,10 @@ import '../model/chapter_info.dart';
 import '../model/content_info.dart';
 
 final chapterProvider = StateNotifierProvider.autoDispose
-    .family<ChapterNotifier, ChapterInfo, Tuple2<ChapterData, CrawlerHolding>>(
-  (ref, tuple) => ChapterNotifier(
-    state: ChapterInfo.fromChapterData(tuple.value1, tuple.value2),
+    .family<ChapterNotifier, ChapterInfo, ChapterInfo>(
+  (ref, info) => ChapterNotifier(
+    read: ref.read,
+    state: info,
     chapterService: ref.watch(chapterServiceProvider),
   ),
   name: 'ContentProvider',
@@ -19,11 +19,14 @@ final chapterProvider = StateNotifierProvider.autoDispose
 
 class ChapterNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
   ChapterNotifier({
+    required Reader read,
     required ChapterInfo state,
     required ChapterService chapterService,
-  })  : _chapterService = chapterService,
+  })  : _read = read,
+        _chapterService = chapterService,
         super(state);
 
+  final Reader _read;
   final ChapterService _chapterService;
 
   Future<void> fetch() async {
@@ -33,7 +36,7 @@ class ChapterNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
 
     // TODO: check for crawler support
     final content = await _chapterService.fetchContent(
-      state.crawlerHolding.crawler as sources.ParseNovel,
+      state.crawlerInfo.crawler as sources.ParseNovel,
       state.data.url,
     );
 
@@ -68,7 +71,10 @@ class ChapterNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
         log.warning(failure);
         _readAt = oldReadAt;
       },
-      (_) {},
+      (_) {
+        _read(novelProvider(NovelInput(state.novel)).notifier)
+            .setReadAt(state.data.id, state.data.readAt);
+      },
     );
   }
 

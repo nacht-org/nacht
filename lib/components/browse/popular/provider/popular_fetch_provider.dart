@@ -5,7 +5,7 @@ import 'package:chapturn_sources/chapturn_sources.dart' show ParsePopular;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final popularFetchProvider = StateNotifierProvider.autoDispose
-    .family<PopularFetchNotifier, FetchInfo, CrawlerHolding>(
+    .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, holding) => PopularFetchNotifier(
     state: FetchInfo.initial(),
     crawlerHolding: holding,
@@ -17,13 +17,13 @@ final popularFetchProvider = StateNotifierProvider.autoDispose
 class PopularFetchNotifier extends StateNotifier<FetchInfo> {
   PopularFetchNotifier({
     required FetchInfo state,
-    required CrawlerHolding crawlerHolding,
+    required CrawlerInfo crawlerHolding,
     required SourceService sourceService,
   })  : _crawlerInfo = crawlerHolding,
         _sourceService = sourceService,
         super(state);
 
-  final CrawlerHolding _crawlerInfo;
+  final CrawlerInfo _crawlerInfo;
   final SourceService _sourceService;
 
   Future<void> fetch() async {

@@ -5,19 +5,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 part 'crawler_provider.freezed.dart';
 
 final crawlerProvider =
-    Provider.autoDispose.family<CrawlerHolding, CrawlerFactory>(
+    Provider.autoDispose.family<CrawlerInfo, CrawlerFactory>(
   (ref, crawlerFactory) {
     final meta = crawlerFactory.meta();
     final crawler = crawlerFactory.basic();
 
-    return CrawlerHolding(meta: meta, crawler: crawler);
+    return CrawlerInfo(meta: meta, crawler: crawler);
   },
   name: 'CrawlerFactory',
 );
 
 @freezed
-class CrawlerHolding with _$CrawlerHolding {
-  factory CrawlerHolding({
+class CrawlerInfo with _$CrawlerInfo {
+  factory CrawlerInfo({
     required Meta meta,
     required Crawler crawler,
   }) = _CrawlerHolding;
@@ -28,5 +28,5 @@ class CrawlerHolding with _$CrawlerHolding {
   bool get searchSupported => meta.features.contains(Feature.search);
   bool get searchNotSupported => !searchSupported;
 
-  CrawlerHolding._();
+  CrawlerInfo._();
 }

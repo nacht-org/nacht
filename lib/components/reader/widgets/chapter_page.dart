@@ -1,7 +1,7 @@
+import 'package:chapturn/components/reader/model/chapter_info.dart';
 import 'package:chapturn/components/reader/provider/chapter_provider.dart';
 import 'package:chapturn/extrinsic/extrinsic.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,9 +25,9 @@ class ChapterPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final crawler = ref.watch(crawlerProvider(crawlerFactory));
-    final info = ref.watch(chapterProvider(Tuple2(chapter, crawler)));
-    final notifier =
-        ref.watch(chapterProvider(Tuple2(chapter, crawler)).notifier);
+    final input = ChapterInfo.fromChapterData(chapter, novel.data, crawler);
+    final info = ref.watch(chapterProvider(input));
+    final notifier = ref.watch(chapterProvider(input).notifier);
 
     usePostFrameCallback((timeStamp) {
       notifier.fetch();

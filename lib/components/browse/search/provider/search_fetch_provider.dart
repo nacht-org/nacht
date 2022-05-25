@@ -6,10 +6,10 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final searchFetchProvider = StateNotifierProvider.autoDispose
-    .family<SearchFetchNotifier, FetchInfo, CrawlerHolding>(
+    .family<SearchFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, holding) {
     var notifier = SearchFetchNotifier(
-      crawlerHolding: holding,
+      crawlerInfo: holding,
       sourceService: ref.watch(sourceServiceProvider),
     );
 
@@ -20,19 +20,19 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
 
 class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   SearchFetchNotifier({
-    required CrawlerHolding crawlerHolding,
+    required CrawlerInfo crawlerInfo,
     required SourceService sourceService,
-  })  : _crawlerHolding = crawlerHolding,
+  })  : _crawlerInfo = crawlerInfo,
         _sourceService = sourceService,
         super(FetchInfo.initial());
 
   String _query = '';
 
-  final CrawlerHolding _crawlerHolding;
+  final CrawlerInfo _crawlerInfo;
   final SourceService _sourceService;
 
   Future<void> fetch(String query) async {
-    if (_crawlerHolding.searchNotSupported) {
+    if (_crawlerInfo.searchNotSupported) {
       log.warning('crawler search cancelled, not supported');
       return;
     }
@@ -45,7 +45,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
     }
 
     final result = await _sourceService.search(
-      _crawlerHolding.crawler as ParseSearch,
+      _crawlerInfo.crawler as ParseSearch,
       _query,
       state.page,
     );

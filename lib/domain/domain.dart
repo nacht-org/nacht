@@ -16,6 +16,7 @@ export 'repositories/gateway_repository.dart';
 export 'repositories/network_repository.dart';
 export 'repositories/novel_repository.dart';
 export 'repositories/updates_repository.dart';
+export 'repositories/chapter_repository.dart';
 export 'services/library_service.dart';
 export 'services/novel_service.dart';
 export 'services/source_service.dart';

@@ -8,6 +8,7 @@ class Chapters extends Table {
   TextColumn get content => text().nullable()();
   TextColumn get url => text()();
   DateTimeColumn get updated => dateTime().nullable()();
+  DateTimeColumn get readAt => dateTime().nullable()();
   IntColumn get volumeId => integer().references(Volumes, #id)();
 
   @override

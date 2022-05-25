@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chapturn/components/novel/provider/description_info_provider.dart';
+import 'package:chapturn/components/novel/widgets/chapter_list.dart';
 import 'package:chapturn/core/core.dart';
 import 'package:chapturn/domain/services/time_service.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
@@ -102,46 +103,7 @@ class NovelView extends HookConsumerWidget {
                   ),
                 );
               }),
-              Consumer(builder: (context, ref, child) {
-                final items = ref.watch(chapterListProvider(novel));
-                final timeService = ref.watch(timeServiceProvider);
-
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return items[index].when(
-                        volume: (volume) => ListTile(
-                          title: Text(
-                            volume.name.toUpperCase(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          dense: true,
-                        ),
-                        chapter: (chapter) => ListTile(
-                          title: Text(
-                            chapter.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          subtitle: chapter.updated == null
-                              ? null
-                              : Text(timeService
-                                  .formatChapterUpdated(chapter.updated!)),
-                          onTap: () => context.router.push(
-                            ReaderRoute(
-                              novel: novel,
-                              chapter: chapter,
-                              incomplete: false,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    childCount: items.length,
-                  ),
-                );
-              }),
+              ChapterList(novel: novel),
             ],
           ),
         ),

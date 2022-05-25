@@ -31,9 +31,11 @@ class Application with LoggerMixin {
     );
 
     SystemChrome.setSystemUIChangeCallback((systemOverlaysAreVisible) async {
-      await Future.delayed(const Duration(seconds: 3));
-      SystemChrome.restoreSystemUIOverlays();
-      log.fine('restored system ui overlays');
+      if (!systemOverlaysAreVisible) {
+        await Future.delayed(const Duration(seconds: 3));
+        SystemChrome.restoreSystemUIOverlays();
+        log.fine('restored system ui overlays');
+      }
     });
 
     await Future.wait([

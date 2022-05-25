@@ -9,7 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../domain/domain.dart';
 import '../../../provider/provider.dart';
 import '../model/novel_info.dart';
-import '../provider/toolbar_provider.dart';
 
 class ChapterPage extends HookConsumerWidget {
   const ChapterPage({
@@ -38,24 +37,30 @@ class ChapterPage extends HookConsumerWidget {
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      data: (content) => Scrollbar(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 8.0,
-                top: 32.0,
-                right: 8.0,
-                bottom: 8.0,
+      data: (content) => NotificationListener<ScrollEndNotification>(
+        onNotification: (notification) {
+          notifier.readToEnd();
+          return false;
+        },
+        child: Scrollbar(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  top: 32.0,
+                  right: 8.0,
+                  bottom: 8.0,
+                ),
+                child: Text(
+                  chapter.title,
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
               ),
-              child: Text(
-                chapter.title,
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-            ),
-            Html(data: content),
-          ],
+              Html(data: content),
+            ],
+          ),
         ),
       ),
     );

@@ -48,4 +48,31 @@ class ChapterNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
       ),
     );
   }
+
+  Future<void> readToEnd() async {
+    // Limit readAt updates to once every 5 minutes
+    if (state.data.readAt != null &&
+        DateTime.now().difference(state.data.readAt!).inMinutes < 5) {
+      return;
+    }
+
+    log.fine('updating read at to now');
+
+    final oldReadAt = state.data.readAt;
+    _readAt = DateTime.now();
+
+    final result = await _chapterService.setReadAt([state.data], true);
+
+    result.fold(
+      (failure) {
+        log.warning(failure);
+        _readAt = oldReadAt;
+      },
+      (_) {},
+    );
+  }
+
+  /// Helper setter to update [readAt] of chapter state
+  set _readAt(DateTime? value) =>
+      state = state.copyWith(data: state.data.copyWith(readAt: value));
 }

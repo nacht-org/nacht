@@ -48,7 +48,7 @@ class ChapterList extends ConsumerWidget {
                     doFetch: false,
                   ),
                 ),
-                discreet: chapter.readAt != null,
+                muted: chapter.readAt != null,
               );
             }),
           );

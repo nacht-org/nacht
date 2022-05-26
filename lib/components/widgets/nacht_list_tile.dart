@@ -32,7 +32,7 @@ class NachtListTile extends StatelessWidget {
     this.textColor,
     this.contentPadding,
     this.enabled = true,
-    this.discreet = false,
+    this.muted = false,
     this.onTap,
     this.onLongPress,
     this.mouseCursor,
@@ -199,7 +199,7 @@ class NachtListTile extends StatelessWidget {
   ///
   /// If false, this list tile is styled with the disabled color from the
   /// current [Theme].
-  final bool discreet;
+  final bool muted;
 
   /// Called when the user taps this list tile.
   ///
@@ -338,7 +338,7 @@ class NachtListTile extends StatelessWidget {
   }
 
   Color? _iconColor(ThemeData theme, ListTileThemeData tileTheme) {
-    if (!enabled || discreet) return theme.disabledColor;
+    if (!enabled || muted) return theme.disabledColor;
 
     if (selected) {
       return selectedColor ??
@@ -363,7 +363,7 @@ class NachtListTile extends StatelessWidget {
 
   Color? _textColor(
       ThemeData theme, ListTileThemeData tileTheme, Color? defaultColor) {
-    if (!enabled || discreet) return theme.disabledColor;
+    if (!enabled || muted) return theme.disabledColor;
 
     if (selected) {
       return selectedColor ??

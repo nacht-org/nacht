@@ -1,5 +1,5 @@
 import 'package:nacht/components/category/provider/categories_provider.dart';
-import 'package:nacht/components/category/provider/selection_provider.dart';
+import 'package:nacht/components/category/provider/categories_selection_provider.dart';
 import 'package:nacht/components/category/widgets/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,8 +13,8 @@ class CategoryList extends HookConsumerWidget {
     final categories = ref.watch(categoriesProvider);
     final categoriesNotifier = ref.watch(categoriesProvider.notifier);
 
-    final selection = ref.watch(selectionProvider);
-    final selectionNotifier = ref.watch(selectionProvider.notifier);
+    final selection = ref.watch(categoriesSelectionProvider);
+    final selectionNotifier = ref.watch(categoriesSelectionProvider.notifier);
 
     useEffect(() {
       categoriesNotifier.reload();
@@ -39,14 +39,14 @@ class CategoryList extends HookConsumerWidget {
           return Consumer(
             key: Key('${category.id}'),
             builder: (context, ref, child) {
-              final selected = ref.watch(selectionProvider
+              final selected = ref.watch(categoriesSelectionProvider
                   .select((value) => value.contains(category.id)));
 
               return ListTile(
                 leading: ReorderableDelayedDragStartListener(
                   index: index,
-                  child: const Icon(Icons.drag_handle),
                   enabled: !selection.active,
+                  child: const Icon(Icons.drag_handle),
                 ),
                 title: Text(category.name),
                 onTap: selection.active

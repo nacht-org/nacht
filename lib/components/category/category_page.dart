@@ -1,9 +1,10 @@
 import 'package:nacht/core/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/provider/provider.dart';
 
 import 'provider/categories_provider.dart';
-import 'provider/selection_provider.dart';
+import 'provider/categories_selection_provider.dart';
 import 'widgets/add_dialog.dart';
 import 'widgets/category_list.dart';
 
@@ -15,27 +16,8 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
     final isLoaded =
         ref.watch(categoriesProvider.select((value) => value != null));
 
-    final selection = ref.watch(selectionProvider);
-    ref.listen<SelectionInfo>(selectionProvider, (previous, next) {
-      if ((previous == null || previous.selected.isEmpty) &&
-          next.selected.isNotEmpty) {
-        log.fine('an item has been newly selected, entering selecting mode');
-        ModalRoute.of(context)!.addLocalHistoryEntry(LocalHistoryEntry(
-          onRemove: () {
-            log.fine('exiting selecting mode');
-            ref.read(selectionProvider.notifier).deactivate();
-          },
-        ));
-      }
-
-      if (previous != null &&
-          previous.selected.isNotEmpty &&
-          next.active &&
-          next.selected.isEmpty) {
-        log.fine('all items have been unselected, popping local route context');
-        Navigator.of(context).pop();
-      }
-    });
+    final selection = ref.watch(categoriesSelectionProvider);
+    SelectionNotifier.handleRoute(categoriesSelectionProvider, ref, context);
 
     return Scaffold(
       body: NestedScrollView(
@@ -58,8 +40,8 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
               forceElevated: innerBoxIsScrolled,
               actions: [
                 Consumer(builder: (context, ref, child) {
-                  final selected = ref.watch(
-                      selectionProvider.select((value) => value.selected));
+                  final selected = ref.watch(categoriesSelectionProvider
+                      .select((value) => value.selected));
 
                   return IconButton(
                     icon: const Icon(Icons.delete),

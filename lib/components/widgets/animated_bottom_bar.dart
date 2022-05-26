@@ -17,8 +17,8 @@ class AnimatedBottomBar extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final controller = useAnimationController(
-      initialValue: 1,
-      duration: kLongAnimationDuration,
+      initialValue: visible ? 1.0 : 0.0,
+      duration: kShortAnimationDuration,
     );
 
     final animation = useMemoized(

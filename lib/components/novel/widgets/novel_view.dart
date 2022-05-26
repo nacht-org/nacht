@@ -5,6 +5,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/components/novel/model/head_info.dart';
 import 'package:nacht/components/novel/provider/description_info_provider.dart';
+import 'package:nacht/components/novel/provider/novel_selection_provider.dart';
 import 'package:nacht/components/novel/widgets/action_bar.dart';
 import 'package:nacht/components/novel/widgets/chapter_list.dart';
 import 'package:nacht/components/novel/widgets/description.dart';
@@ -35,22 +36,44 @@ class NovelView extends HookConsumerWidget {
     final novel = ref.watch(novelProvider(input));
     final notifier = ref.watch(novelProvider(input).notifier);
 
+    final selection = ref.watch(novelSelectionProvider);
+    SelectionNotifier.handleRoute(novelSelectionProvider, ref, context);
+
     useEffect(() {
       notifier.reload();
       return null;
     }, []);
 
+    //? optimize with provider?
+    Iterable<int> getChapterIds() {
+      final ids = <int>[];
+      for (final v in novel.volumes) {
+        ids.addAll(v.chapters.map((c) => c.id));
+      }
+
+      return ids;
+    }
+
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          Consumer(builder: (context, ref, child) {
-            return SliverAppBar(
+          if (!selection.active)
+            SliverAppBar(
               title: innerBoxIsScrolled ? Text(novel.title) : null,
               floating: true,
               forceElevated: innerBoxIsScrolled,
-            );
-          }),
+            ),
+          if (selection.active)
+            SliverSelectionAppBar(
+              title: Text('${selection.selected.length}'),
+              onSelectAllPressed: () => ref
+                  .read(novelSelectionProvider.notifier)
+                  .addAll(getChapterIds()),
+              onInversePressed: () => ref
+                  .read(novelSelectionProvider.notifier)
+                  .flipAll(getChapterIds()),
+            )
         ],
         body: RefreshIndicator(
           onRefresh: notifier.fetch,
@@ -108,15 +131,35 @@ class NovelView extends HookConsumerWidget {
                 }),
                 ChapterList(novel: novel),
                 const SliverFloatingActionButtonPadding(),
-                const SliverBottomPadding(),
               ],
             ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.play_arrow),
-        onPressed: () => notifier.pushUnread(),
+      floatingActionButton: selection.active
+          ? null
+          : FloatingActionButton(
+              child: const Icon(Icons.play_arrow),
+              onPressed: () => notifier.pushUnread(),
+            ),
+      extendBody: true,
+      bottomNavigationBar: AnimatedBottomBar(
+        visible: selection.active,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () {},
+              tooltip: 'Mark read',
+            ),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {},
+              tooltip: 'Mark unread',
+            ),
+          ],
+        ),
       ),
     );
   }

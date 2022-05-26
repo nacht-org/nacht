@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/components/novel/provider/novel_selection_provider.dart';
 
 import '../../../core/core.dart';
 import '../../../domain/domain.dart';
@@ -17,6 +18,10 @@ class ChapterList extends ConsumerWidget {
     final items = ref.watch(chapterListProvider(novel));
     final timeService = ref.watch(timeServiceProvider);
 
+    final selectionActive =
+        ref.watch(novelSelectionProvider.select((value) => value.active));
+    final selectionNotifier = ref.watch(novelSelectionProvider.notifier);
+
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
@@ -31,6 +36,10 @@ class ChapterList extends ConsumerWidget {
             ),
             chapter: (data) => Consumer(builder: (context, ref, child) {
               final chapter = ref.watch(chapterProvider(ChapterInput(data)));
+              final selected = ref.watch(novelSelectionProvider
+                  .select((value) => value.contains(chapter.id)));
+
+              void select() => selectionNotifier.toggle(chapter.id);
 
               return NachtListTile(
                 title: Text(
@@ -41,13 +50,17 @@ class ChapterList extends ConsumerWidget {
                 subtitle: chapter.updated == null
                     ? null
                     : Text(timeService.formatChapterUpdated(chapter.updated!)),
-                onTap: () => context.router.push(
-                  ReaderRoute(
-                    novel: novel,
-                    chapter: chapter,
-                    doFetch: false,
-                  ),
-                ),
+                onTap: selectionActive
+                    ? select
+                    : () => context.router.push(
+                          ReaderRoute(
+                            novel: novel,
+                            chapter: chapter,
+                            doFetch: false,
+                          ),
+                        ),
+                onLongPress: selectionActive ? null : select,
+                selected: selected,
                 muted: chapter.readAt != null,
               );
             }),

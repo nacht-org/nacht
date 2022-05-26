@@ -6,7 +6,7 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/domain/domain.dart';
 
 final categoriesProvider =
-    StateNotifierProvider<CategoriesNotifier, List<CategoryData>?>(
+    StateNotifierProvider.autoDispose<CategoriesNotifier, List<CategoryData>?>(
   (ref) => CategoriesNotifier(
     state: null,
     read: ref.read,

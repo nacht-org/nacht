@@ -26,7 +26,8 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   SelectionNotifier(super.state);
 
   static void handleRoute(
-    StateNotifierProvider<SelectionNotifier, SelectionInfo> selectionProvider,
+    AutoDisposeStateNotifierProvider<SelectionNotifier, SelectionInfo>
+        selectionProvider,
     WidgetRef ref,
     BuildContext context,
   ) {
@@ -78,6 +79,17 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
     state = state.copyWith(
       selected: selected,
     );
+  }
+
+  void addAll(Iterable<int> ids) {
+    state = state.copyWith(selected: {...state.selected, ...ids});
+  }
+
+  void flipAll(Iterable<int> ids) {
+    state = state.copyWith(selected: {
+      for (final id in ids)
+        if (!state.selected.contains(id)) id
+    });
   }
 
   void deactivate() {

@@ -124,7 +124,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     );
   }
 
-  Future<void> pushUnread() async {
+  Future<void> readFirstUnread() async {
     final unread = await novelService.firstUnread(state.id);
 
     unread.fold(

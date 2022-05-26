@@ -3,6 +3,7 @@ import 'package:nacht/components/updates/provider/updates_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/components/updates/widgets/chapter_update_tile.dart';
 
 import '../../core/core.dart';
 import '../components.dart';
@@ -39,44 +40,8 @@ class UpdatesPage extends StatelessWidget {
               ),
               dense: true,
             ),
-            chapter: (novel, chapter) => ListTile(
-              leading: GestureDetector(
-                onTap: () => context.router.push(
-                  NovelRoute(
-                    either: NovelEither.complete(novel),
-                  ),
-                ),
-                child: AspectRatio(
-                  aspectRatio: 2 / 3,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      novel.coverUrl!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              title: Text(
-                novel.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: Text(
-                chapter.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              onTap: () {
-                context.router.push(
-                  ReaderRoute(
-                    novel: novel,
-                    chapter: chapter,
-                    doFetch: true,
-                  ),
-                );
-              },
-            ),
+            chapter: (novel, chapter) =>
+                ChapterUpdateTile(novel: novel, chapter: chapter),
           ),
           itemCount: updates.length,
         );

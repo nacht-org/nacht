@@ -22,3 +22,4 @@ export 'widgets/bottom_bar.dart';
 export 'widgets/animated_bottom_bar.dart';
 export 'widgets/close_back_button.dart';
 export 'selection/widgets/sliver_selection_app_bar.dart';
+export 'selection/provider/selection_provider.dart';

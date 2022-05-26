@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../provider/provider.dart';
+import 'package:nacht/components/components.dart';
 
 final novelSelectionProvider =
     StateNotifierProvider.autoDispose<SelectionNotifier, SelectionInfo>(

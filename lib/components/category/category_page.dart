@@ -2,7 +2,6 @@ import 'package:nacht/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/provider/provider.dart';
 
 import 'provider/categories_provider.dart';
 import 'provider/categories_selection_provider.dart';

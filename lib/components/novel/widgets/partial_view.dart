@@ -25,35 +25,37 @@ class PartialView extends HookWidget {
   Widget build(BuildContext context) {
     final refreshKey = useRefresh();
 
-    return NestedScrollView(
-      floatHeaderSlivers: true,
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverAppBar(
-          title: Text(novel.title),
-          floating: true,
-          forceElevated: innerBoxIsScrolled,
-        )
-      ],
-      body: Consumer(
-        builder: (context, ref, child) {
-          return RefreshIndicator(
-            onRefresh: ref.read(intermediateProvider(either).notifier).reload,
-            key: refreshKey,
-            child: child!,
-          );
-        },
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.only(
-                left: 16.0,
-                top: 24.0,
-                right: 16.0,
-                bottom: 16.0,
+    return Scaffold(
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            title: Text(novel.title),
+            floating: true,
+            forceElevated: innerBoxIsScrolled,
+          )
+        ],
+        body: Consumer(
+          builder: (context, ref, child) {
+            return RefreshIndicator(
+              onRefresh: ref.read(intermediateProvider(either).notifier).reload,
+              key: refreshKey,
+              child: child!,
+            );
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.only(
+                  left: 16.0,
+                  top: 24.0,
+                  right: 16.0,
+                  bottom: 16.0,
+                ),
+                sliver: NovelHead(head: head),
               ),
-              sliver: NovelHead(head: head),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

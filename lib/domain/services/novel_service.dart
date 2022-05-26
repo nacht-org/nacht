@@ -111,4 +111,8 @@ class NovelService with LoggerMixin {
       },
     );
   }
+
+  Future<Either<Failure, ChapterData>> firstUnread(int novelId) {
+    return _novelRepository.firstUnread(novelId);
+  }
 }

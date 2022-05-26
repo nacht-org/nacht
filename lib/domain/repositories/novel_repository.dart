@@ -17,6 +17,8 @@ abstract class NovelRepository {
   Future<Either<Failure, NovelData>> getNovel(int id);
   Future<Either<Failure, NovelData>> getNovelByUrl(String url);
   Future<Either<Failure, UpdateResult>> updateNovel(sources.Novel novel);
+  Future<Either<Failure, ChapterData>> firstUnread(int novelId);
+
   Future<void> setFavourite(int novelId, bool value);
   Future<void> setCover(int novelId, AssetData asset);
 }

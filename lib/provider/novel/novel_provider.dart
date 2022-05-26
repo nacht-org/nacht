@@ -123,4 +123,15 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       (data) => state = data,
     );
   }
+
+  Future<void> pushUnread() async {
+    final unread = await novelService.firstUnread(state.id);
+
+    unread.fold(
+      (failure) => read(messageServiceProvider).showText('No chapters unread'),
+      (data) => read(routerProvider).push(
+        ReaderRoute(novel: state, chapter: data, doFetch: false),
+      ),
+    );
+  }
 }

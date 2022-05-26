@@ -22,24 +22,22 @@ class NovelPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(intermediateProvider(either));
 
-    return Scaffold(
-      body: state.when(
-        partial: (novel, meta, crawler) {
-          return PartialView(
-            either: either,
-            novel: novel,
-            head: HeadInfo.fromPartial(novel, meta),
-          );
-        },
-        complete: (novel, meta, crawler) {
-          return NovelView(
-            data: novel,
-            crawler: crawler,
-            head: HeadInfo.fromNovel(novel, meta),
-            load: either.maybeMap(complete: (_) => true, orElse: () => false),
-          );
-        },
-      ),
+    return state.when(
+      partial: (novel, meta, crawler) {
+        return PartialView(
+          either: either,
+          novel: novel,
+          head: HeadInfo.fromPartial(novel, meta),
+        );
+      },
+      complete: (novel, meta, crawler) {
+        return NovelView(
+          data: novel,
+          crawler: crawler,
+          head: HeadInfo.fromNovel(novel, meta),
+          load: either.maybeMap(complete: (_) => true, orElse: () => false),
+        );
+      },
     );
   }
 }

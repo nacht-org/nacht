@@ -307,6 +307,38 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
     });
   }
 
+  // No side effects
+
+  /// Failures:
+  /// - [SelectFailure], when there is no unread chapter
+  @override
+  Future<Either<Failure, ChapterData>> firstUnread(int novelId) async {
+    final query = database.select(database.chapters).join([
+      leftOuterJoin(
+        database.volumes,
+        database.volumes.id.equalsExp(database.chapters.volumeId),
+        useColumns: false,
+      ),
+      leftOuterJoin(
+        database.novels,
+        database.novels.id.equalsExp(database.volumes.novelId),
+        useColumns: false,
+      )
+    ])
+      ..where(database.novels.id.equals(novelId) &
+          database.chapters.readAt.isNull())
+      ..orderBy([OrderingTerm.asc(database.chapters.chapterIndex)])
+      ..limit(1);
+
+    final result = await query.getSingleOrNull();
+    if (result == null) {
+      return Left(SelectFailure());
+    }
+
+    final model = result.readTable(database.chapters);
+    return Right(ChapterData.fromModel(model));
+  }
+
   // Single field updates.
 
   @override

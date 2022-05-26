@@ -43,3 +43,5 @@ class InsertFailure extends Failure {
 class UpdateFailure extends Failure {
   const UpdateFailure([super.message]);
 }
+
+class SelectFailure extends Failure {}

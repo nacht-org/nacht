@@ -41,74 +41,81 @@ class NovelView extends HookConsumerWidget {
       return null;
     }, []);
 
-    return NestedScrollView(
-      floatHeaderSlivers: true,
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        Consumer(builder: (context, ref, child) {
-          return SliverAppBar(
-            title: innerBoxIsScrolled ? Text(novel.title) : null,
-            floating: true,
-            forceElevated: innerBoxIsScrolled,
-          );
-        }),
-      ],
-      body: RefreshIndicator(
-        onRefresh: notifier.fetch,
-        child: Scrollbar(
-          interactive: true,
-          child: CustomScrollView(
-            slivers: [
-              buildPadding(sliver: NovelHead(head: head), top: 24, bottom: 8),
-              buildPadding(sliver: ActionBar(input: input), top: 0, bottom: 8),
-              HookConsumer(builder: (context, ref, child) {
-                final description = ref.watch(descriptionInfoProvider(novel));
-                final expanded = useState(false);
+    return Scaffold(
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          Consumer(builder: (context, ref, child) {
+            return SliverAppBar(
+              title: innerBoxIsScrolled ? Text(novel.title) : null,
+              floating: true,
+              forceElevated: innerBoxIsScrolled,
+            );
+          }),
+        ],
+        body: RefreshIndicator(
+          onRefresh: notifier.fetch,
+          child: Scrollbar(
+            interactive: true,
+            child: CustomScrollView(
+              slivers: [
+                buildPadding(sliver: NovelHead(head: head), top: 24, bottom: 8),
+                buildPadding(
+                    sliver: ActionBar(input: input), top: 0, bottom: 8),
+                HookConsumer(builder: (context, ref, child) {
+                  final description = ref.watch(descriptionInfoProvider(novel));
+                  final expanded = useState(false);
 
-                return buildPadding(
-                  top: 0,
-                  bottom: 8,
-                  sliver: SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () => expanded.value = !expanded.value,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Description(
-                            description: description.description,
-                            expanded: expanded,
-                          ),
-                          const SizedBox(height: 8),
-                          Tags(
-                            tags: description.tags,
-                            expanded: expanded,
-                          )
-                        ],
+                  return buildPadding(
+                    top: 0,
+                    bottom: 8,
+                    sliver: SliverToBoxAdapter(
+                      child: GestureDetector(
+                        onTap: () => expanded.value = !expanded.value,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Description(
+                              description: description.description,
+                              expanded: expanded,
+                            ),
+                            const SizedBox(height: 8),
+                            Tags(
+                              tags: description.tags,
+                              expanded: expanded,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
-              Consumer(builder: (context, ref, child) {
-                final chapterCount = ref.watch(chapterCountProvider(novel));
+                  );
+                }),
+                Consumer(builder: (context, ref, child) {
+                  final chapterCount = ref.watch(chapterCountProvider(novel));
 
-                return SliverToBoxAdapter(
-                  child: ListTile(
-                    title: Text(
-                      '$chapterCount Chapter'.pluralize(
-                        test: (_) => chapterCount > 1,
+                  return SliverToBoxAdapter(
+                    child: ListTile(
+                      title: Text(
+                        '$chapterCount Chapter'.pluralize(
+                          test: (_) => chapterCount > 1,
+                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
+                      trailing: const Icon(Icons.filter_list),
+                      onTap: () {},
+                      dense: true,
                     ),
-                    trailing: const Icon(Icons.filter_list),
-                    onTap: () {},
-                    dense: true,
-                  ),
-                );
-              }),
-              ChapterList(novel: novel),
-            ],
+                  );
+                }),
+                ChapterList(novel: novel),
+              ],
+            ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.play_arrow),
+        onPressed: () => notifier.pushUnread(),
       ),
     );
   }

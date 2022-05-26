@@ -29,24 +29,28 @@ class ChapterList extends ConsumerWidget {
               ),
               dense: true,
             ),
-            chapter: (chapter) => NachtListTile(
-              title: Text(
-                chapter.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: chapter.updated == null
-                  ? null
-                  : Text(timeService.formatChapterUpdated(chapter.updated!)),
-              onTap: () => context.router.push(
-                ReaderRoute(
-                  novel: novel,
-                  chapter: chapter,
-                  incomplete: false,
+            chapter: (data) => Consumer(builder: (context, ref, child) {
+              final chapter = ref.watch(chapterProvider(ChapterInput(data)));
+
+              return NachtListTile(
+                title: Text(
+                  chapter.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              discreet: chapter.readAt != null,
-            ),
+                subtitle: chapter.updated == null
+                    ? null
+                    : Text(timeService.formatChapterUpdated(chapter.updated!)),
+                onTap: () => context.router.push(
+                  ReaderRoute(
+                    novel: novel,
+                    chapter: chapter,
+                    incomplete: false,
+                  ),
+                ),
+                discreet: chapter.readAt != null,
+              );
+            }),
           );
         },
         childCount: items.length,

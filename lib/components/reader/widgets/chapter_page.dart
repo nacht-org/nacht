@@ -26,8 +26,8 @@ class ChapterPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final crawler = ref.watch(crawlerProvider(crawlerFactory));
     final input = ChapterInfo.fromChapterData(chapter, novel.data, crawler);
-    final info = ref.watch(chapterProvider(input));
-    final notifier = ref.watch(chapterProvider(input).notifier);
+    final info = ref.watch(readerProvider(input));
+    final notifier = ref.watch(readerProvider(input).notifier);
 
     usePostFrameCallback((timeStamp) {
       notifier.fetch();
@@ -39,7 +39,9 @@ class ChapterPage extends HookConsumerWidget {
       ),
       data: (content) => NotificationListener<ScrollEndNotification>(
         onNotification: (notification) {
-          notifier.readToEnd();
+          ref
+              .read(chapterProvider(ChapterInput(chapter)).notifier)
+              .markAsRead();
           return false;
         },
         child: Scrollbar(

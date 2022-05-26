@@ -6,15 +6,18 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/entities/novel/partial_novel_data.dart';
-import 'info.dart';
+import '../model/head_info.dart';
+import 'novel_head.dart';
 
 class PartialView extends HookWidget {
   const PartialView({
     Key? key,
+    required this.head,
     required this.either,
     required this.novel,
   }) : super(key: key);
 
+  final HeadInfo head;
   final NovelEither either;
   final PartialNovelData novel;
 
@@ -39,16 +42,16 @@ class PartialView extends HookWidget {
             child: child!,
           );
         },
-        child: const CustomScrollView(
+        child: CustomScrollView(
           slivers: [
             SliverPadding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 left: 16.0,
                 top: 24.0,
                 right: 16.0,
                 bottom: 16.0,
               ),
-              sliver: EssentialSection(),
+              sliver: NovelHead(head: head),
             ),
           ],
         ),

@@ -4,21 +4,21 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/domain.dart';
 
-part 'essential_info.freezed.dart';
+part 'head_info.freezed.dart';
 
 @freezed
-class EssentialInfo with _$EssentialInfo {
-  factory EssentialInfo({
+class HeadInfo with _$HeadInfo {
+  factory HeadInfo({
     required String title,
     required Option<String> coverUrl,
     required Option<AssetData> cover,
     required Option<String> author,
     required NovelStatus status,
     required Option<Meta> meta,
-  }) = _EssentialInfo;
+  }) = _HeadInfo;
 
-  factory EssentialInfo.fromPartial(PartialNovelData novel) {
-    return EssentialInfo(
+  factory HeadInfo.fromPartial(PartialNovelData novel, Meta? meta) {
+    return HeadInfo(
       title: novel.title,
       coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
       cover: const None(),
@@ -28,8 +28,8 @@ class EssentialInfo with _$EssentialInfo {
     );
   }
 
-  factory EssentialInfo.fromNovel(NovelData novel) {
-    return EssentialInfo(
+  factory HeadInfo.fromNovel(NovelData novel, Meta? meta) {
+    return HeadInfo(
       title: novel.title,
       coverUrl: novel.coverUrl == null ? const None() : Some(novel.coverUrl!),
       cover: novel.cover == null ? const None() : Some(novel.cover!),
@@ -39,5 +39,5 @@ class EssentialInfo with _$EssentialInfo {
     );
   }
 
-  EssentialInfo._();
+  HeadInfo._();
 }

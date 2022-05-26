@@ -1,7 +1,6 @@
-import 'package:nacht/components/novel/model/essential_info.dart';
+import 'package:nacht/components/novel/model/head_info.dart';
 import 'package:nacht/components/novel/provider/intermediate_provider.dart';
-import 'package:nacht/components/novel/widgets/info.dart';
-import 'package:dartz/dartz.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -26,31 +25,18 @@ class NovelPage extends ConsumerWidget {
     return Scaffold(
       body: state.when(
         partial: (novel, meta, crawler) {
-          final info = EssentialInfo.fromPartial(novel).copyWith(
-            meta: meta == null ? const None() : Some(meta),
-          );
-
-          return ProviderScope(
-            overrides: [
-              currentEssentialProvider.overrideWithValue(info),
-            ],
-            child: PartialView(either: either, novel: novel),
+          return PartialView(
+            either: either,
+            novel: novel,
+            head: HeadInfo.fromPartial(novel, meta),
           );
         },
         complete: (novel, meta, crawler) {
-          final info = EssentialInfo.fromNovel(novel).copyWith(
-            meta: meta == null ? const None() : Some(meta),
-          );
-
-          return ProviderScope(
-            overrides: [
-              currentEssentialProvider.overrideWithValue(info),
-            ],
-            child: NovelView(
-              data: novel,
-              crawler: crawler,
-              load: either.maybeMap(complete: (_) => true, orElse: () => false),
-            ),
+          return NovelView(
+            data: novel,
+            crawler: crawler,
+            head: HeadInfo.fromNovel(novel, meta),
+            load: either.maybeMap(complete: (_) => true, orElse: () => false),
           );
         },
       ),

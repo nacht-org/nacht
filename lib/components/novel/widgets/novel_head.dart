@@ -1,23 +1,21 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../model/essential_info.dart';
+import '../model/head_info.dart';
 import 'status.dart';
 
 final currentEssentialProvider =
-    Provider.autoDispose<EssentialInfo>((ref) => throw UnimplementedError());
+    Provider.autoDispose<NovelHead>((ref) => throw UnimplementedError());
 
-class EssentialSection extends ConsumerWidget {
-  const EssentialSection({Key? key}) : super(key: key);
+class NovelHead extends StatelessWidget {
+  const NovelHead({Key? key, required this.head}) : super(key: key);
+
+  final HeadInfo head;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final info = ref.watch(currentEssentialProvider);
-
-    final image = info.cover.fold(
-      () => info.coverUrl.fold(
+  Widget build(BuildContext context) {
+    final image = head.cover.fold(
+      () => head.coverUrl.fold(
         () => null,
         (url) => Image.network(url),
       ),
@@ -44,18 +42,18 @@ class EssentialSection extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    info.title,
+                    head.title,
                     style: Theme.of(context).textTheme.titleLarge,
                     maxLines: 3,
                   ),
                   Text(
-                    info.author.toNullable() ?? 'Unknown',
+                    head.author.toNullable() ?? 'Unknown',
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
                   ),
                   StatusInfo(
-                    status: info.status,
-                    suffix: info.meta.toNullable()?.name,
+                    status: head.status,
+                    suffix: head.meta.toNullable()?.name,
                   ),
                 ],
               ),

@@ -1,30 +1,33 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+
+import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/components/novel/provider/description_info_provider.dart';
 import 'package:nacht/components/novel/widgets/chapter_list.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/services/time_service.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../domain/entities/novel/novel_data.dart';
-import '../../../provider/provider.dart';
-import 'action_bar.dart';
-import 'description.dart';
-import 'info.dart';
-import 'tags.dart';
+import 'package:nacht/domain/entities/novel/novel_data.dart';
+import 'package:nacht/provider/provider.dart';
+import 'package:nacht/components/novel/model/head_info.dart';
+
+import 'package:nacht/components/novel/widgets/action_bar.dart';
+import 'package:nacht/components/novel/widgets/description.dart';
+import 'package:nacht/components/novel/widgets/novel_head.dart';
+import 'package:nacht/components/novel/widgets/tags.dart';
 
 class NovelView extends HookConsumerWidget {
   const NovelView({
     Key? key,
     required this.data,
     required this.crawler,
+    required this.head,
     required this.load,
   }) : super(key: key);
 
   final NovelData data;
   final Crawler? crawler;
+  final HeadInfo head;
   final bool load;
 
   @override
@@ -55,8 +58,7 @@ class NovelView extends HookConsumerWidget {
           interactive: true,
           child: CustomScrollView(
             slivers: [
-              buildPadding(
-                  sliver: const EssentialSection(), top: 24, bottom: 8),
+              buildPadding(sliver: NovelHead(head: head), top: 24, bottom: 8),
               buildPadding(sliver: ActionBar(input: input), top: 0, bottom: 8),
               HookConsumer(builder: (context, ref, child) {
                 final description = ref.watch(descriptionInfoProvider(novel));

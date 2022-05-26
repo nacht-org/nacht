@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -140,7 +141,7 @@ class NovelView extends HookConsumerWidget {
           ? null
           : FloatingActionButton(
               child: const Icon(Icons.play_arrow),
-              onPressed: () => notifier.pushUnread(),
+              onPressed: () => notifier.readFirstUnread(),
             ),
       extendBody: true,
       bottomNavigationBar: AnimatedBottomBar(
@@ -150,13 +151,21 @@ class NovelView extends HookConsumerWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.check),
-              onPressed: () {},
-              tooltip: 'Mark read',
+              onPressed: () {
+                final selection = ref.read(novelSelectionProvider);
+                notifier.setReadAt(selection.selected, true);
+                context.router.pop();
+              },
+              tooltip: 'Mark as read',
             ),
             IconButton(
               icon: const Icon(Icons.close),
-              onPressed: () {},
-              tooltip: 'Mark unread',
+              onPressed: () {
+                final selection = ref.read(novelSelectionProvider);
+                notifier.setReadAt(selection.selected, false);
+                context.router.pop();
+              },
+              tooltip: 'Mark as unread',
             ),
           ],
         ),

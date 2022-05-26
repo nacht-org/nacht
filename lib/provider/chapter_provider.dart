@@ -21,6 +21,10 @@ class ChapterNotifier extends StateNotifier<ChapterData> with LoggerMixin {
 
   final ChapterService _chapterService;
 
+  set readAt(DateTime? dateTime) {
+    state = state.copyWith(readAt: dateTime);
+  }
+
   Future<void> markAsRead() async {
     // Limit readAt updates to once every 5 minutes
     if (state.readAt != null &&

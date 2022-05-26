@@ -2,6 +2,7 @@ import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/provider/provider.dart';
 
 import '../../components/category/set_categories/provider/selected_categories_provider.dart';
 import '../../components/category/set_categories/set_categories_dialog.dart';
@@ -20,6 +21,7 @@ final novelProvider = StateNotifierProvider.autoDispose
     crawler: data.crawler,
     novelService: ref.watch(novelServiceProvider),
     libraryService: ref.watch(libraryServiceProvider),
+    chapterService: ref.watch(chapterServiceProvider),
   ),
   name: 'NovelProvider',
 );
@@ -44,13 +46,16 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     required this.crawler,
     required this.novelService,
     required this.libraryService,
-  }) : super(state);
+    required ChapterService chapterService,
+  })  : _chapterService = chapterService,
+        super(state);
 
   final Reader read;
   final Crawler? crawler;
 
   final NovelService novelService;
   final LibraryService libraryService;
+  final ChapterService _chapterService;
 
   Future<void> fetch() async {
     if (crawler == null || crawler is! ParseNovel) {
@@ -132,6 +137,24 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       (data) => read(routerProvider).push(
         ReaderRoute(novel: state, chapter: data, doFetch: false),
       ),
+    );
+  }
+
+  Future<void> setReadAt(Set<int> ids, bool isRead) async {
+    final chapters =
+        state.chapters.where((element) => ids.contains(element.id)).toList();
+
+    final result = await _chapterService.setReadAt(chapters, isRead);
+
+    result.fold(
+      (failure) {},
+      (_) {
+        final now = DateTime.now();
+        for (final chapter in chapters) {
+          read(chapterProvider(ChapterInput(chapter)).notifier).readAt =
+              isRead ? now : null;
+        }
+      },
     );
   }
 }

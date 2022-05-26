@@ -1,10 +1,7 @@
 import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../data/data.dart';
-import '../asset/asset_data.dart';
-import 'meta_entry_data.dart';
-import 'volume_data.dart';
+import 'package:nacht/domain/domain.dart';
+import 'package:nacht/data/data.dart';
 
 part 'novel_data.freezed.dart';
 
@@ -47,4 +44,12 @@ class NovelData with _$NovelData {
   }
 
   NovelData._();
+
+  Iterable<ChapterData> get chapters sync* {
+    for (final volume in volumes) {
+      for (final chapter in volume.chapters) {
+        yield chapter;
+      }
+    }
+  }
 }

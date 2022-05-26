@@ -39,6 +39,9 @@ class nachtApp extends HookConsumerWidget {
       title: 'nacht',
       theme: ThemeData(
         brightness: Brightness.dark,
+        listTileTheme: ListTileThemeData(
+          selectedTileColor: ThemeData.dark().cardColor,
+        ),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

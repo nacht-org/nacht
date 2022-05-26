@@ -27,7 +27,6 @@ class NachtListTile extends StatelessWidget {
     this.visualDensity,
     this.shape,
     this.style,
-    this.selectedColor,
     this.iconColor,
     this.textColor,
     this.contentPadding,
@@ -136,17 +135,6 @@ class NachtListTile extends StatelessWidget {
   /// * [ListTileTheme.of], which returns the nearest [ListTileTheme]'s
   ///   [ListTileThemeData].
   final ShapeBorder? shape;
-
-  /// Defines the color used for icons and text when the list tile is selected.
-  ///
-  /// If this property is null then [ListTileThemeData.selectedColor]
-  /// is used. If that is also null then [ColorScheme.primary] is used.
-  ///
-  /// See also:
-  ///
-  /// * [ListTileTheme.of], which returns the nearest [ListTileTheme]'s
-  ///   [ListTileThemeData].
-  final Color? selectedColor;
 
   /// Defines the default color for [leading] and [trailing] icons.
   ///
@@ -340,13 +328,6 @@ class NachtListTile extends StatelessWidget {
   Color? _iconColor(ThemeData theme, ListTileThemeData tileTheme) {
     if (!enabled || muted) return theme.disabledColor;
 
-    if (selected) {
-      return selectedColor ??
-          tileTheme.selectedColor ??
-          theme.listTileTheme.selectedColor ??
-          theme.colorScheme.primary;
-    }
-
     final Color? color =
         iconColor ?? tileTheme.iconColor ?? theme.listTileTheme.iconColor;
     if (color != null) return color;
@@ -364,13 +345,6 @@ class NachtListTile extends StatelessWidget {
   Color? _textColor(
       ThemeData theme, ListTileThemeData tileTheme, Color? defaultColor) {
     if (!enabled || muted) return theme.disabledColor;
-
-    if (selected) {
-      return selectedColor ??
-          tileTheme.selectedColor ??
-          theme.listTileTheme.selectedColor ??
-          theme.colorScheme.primary;
-    }
 
     return textColor ??
         tileTheme.textColor ??

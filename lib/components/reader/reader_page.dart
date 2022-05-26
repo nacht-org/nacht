@@ -27,7 +27,7 @@ class ReaderPage extends ConsumerWidget {
       return state.when(
         loading: () => const Scaffold(),
         error: (error, stack) => Text('Error: $error'),
-        data: (data) => ReaderView(info: ReaderInfo.from(novel, chapter)),
+        data: (data) => ReaderView(info: ReaderInfo.from(data, chapter)),
       );
     } else {
       return ReaderView(info: ReaderInfo.from(novel, chapter));

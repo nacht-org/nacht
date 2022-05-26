@@ -3,18 +3,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/novel/provider/description_info_provider.dart';
-import 'package:nacht/components/novel/widgets/chapter_list.dart';
-import 'package:nacht/core/core.dart';
-
-import 'package:nacht/domain/entities/novel/novel_data.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht/components/novel/model/head_info.dart';
-
+import 'package:nacht/components/novel/provider/description_info_provider.dart';
 import 'package:nacht/components/novel/widgets/action_bar.dart';
+import 'package:nacht/components/novel/widgets/chapter_list.dart';
 import 'package:nacht/components/novel/widgets/description.dart';
 import 'package:nacht/components/novel/widgets/novel_head.dart';
 import 'package:nacht/components/novel/widgets/tags.dart';
+import 'package:nacht/components/components.dart';
+import 'package:nacht/core/core.dart';
+import 'package:nacht/domain/entities/novel/novel_data.dart';
+import 'package:nacht/provider/provider.dart';
 
 class NovelView extends HookConsumerWidget {
   const NovelView({
@@ -108,6 +107,8 @@ class NovelView extends HookConsumerWidget {
                   );
                 }),
                 ChapterList(novel: novel),
+                const SliverFloatingActionButtonPadding(),
+                const SliverBottomPadding(),
               ],
             ),
           ),

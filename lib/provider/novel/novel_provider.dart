@@ -147,12 +147,24 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     final result = await _chapterService.setReadAt(chapters, isRead);
 
     result.fold(
-      (failure) {},
+      (failure) => log.warning(failure),
       (_) {
-        final now = DateTime.now();
+        final readAt = isRead ? DateTime.now() : null;
+
+        state = state.copyWith(
+          volumes: [
+            for (final v in state.volumes)
+              v.copyWith(
+                chapters: [
+                  for (final c in v.chapters)
+                    if (ids.contains(c.id)) c.copyWith(readAt: readAt) else c
+                ],
+              ),
+          ],
+        );
+
         for (final chapter in chapters) {
-          read(chapterProvider(ChapterInput(chapter)).notifier).readAt =
-              isRead ? now : null;
+          read(chapterProvider(ChapterInput(chapter)).notifier).readAt = readAt;
         }
       },
     );

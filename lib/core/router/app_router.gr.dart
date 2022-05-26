@@ -57,7 +57,7 @@ class _$AppRouter extends RootStackRouter {
               key: args.key,
               novel: args.novel,
               chapter: args.chapter,
-              incomplete: args.incomplete));
+              doFetch: args.doFetch));
     },
     LibraryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -204,14 +204,11 @@ class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
       {Key? key,
       required NovelData novel,
       required ChapterData chapter,
-      required bool incomplete})
+      required bool doFetch})
       : super(ReaderRoute.name,
             path: 'reader',
             args: ReaderRouteArgs(
-                key: key,
-                novel: novel,
-                chapter: chapter,
-                incomplete: incomplete));
+                key: key, novel: novel, chapter: chapter, doFetch: doFetch));
 
   static const String name = 'ReaderRoute';
 }
@@ -221,7 +218,7 @@ class ReaderRouteArgs {
       {this.key,
       required this.novel,
       required this.chapter,
-      required this.incomplete});
+      required this.doFetch});
 
   final Key? key;
 
@@ -229,11 +226,11 @@ class ReaderRouteArgs {
 
   final ChapterData chapter;
 
-  final bool incomplete;
+  final bool doFetch;
 
   @override
   String toString() {
-    return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter, incomplete: $incomplete}';
+    return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter, doFetch: $doFetch}';
   }
 }
 

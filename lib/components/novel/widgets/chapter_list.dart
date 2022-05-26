@@ -45,7 +45,7 @@ class ChapterList extends ConsumerWidget {
                   ReaderRoute(
                     novel: novel,
                     chapter: chapter,
-                    incomplete: false,
+                    doFetch: false,
                   ),
                 ),
                 discreet: chapter.readAt != null,

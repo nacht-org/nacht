@@ -9,7 +9,7 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
     .family<SearchFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, holding) {
     var notifier = SearchFetchNotifier(
-      crawlerInfo: holding,
+      crawler: holding,
       sourceService: ref.watch(sourceServiceProvider),
     );
 
@@ -20,19 +20,19 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
 
 class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   SearchFetchNotifier({
-    required CrawlerInfo crawlerInfo,
+    required CrawlerInfo crawler,
     required SourceService sourceService,
-  })  : _crawlerInfo = crawlerInfo,
+  })  : _crawler = crawler,
         _sourceService = sourceService,
         super(FetchInfo.initial());
 
   String _query = '';
 
-  final CrawlerInfo _crawlerInfo;
+  final CrawlerInfo _crawler;
   final SourceService _sourceService;
 
   Future<void> fetch(String query) async {
-    if (_crawlerInfo.searchNotSupported) {
+    if (_crawler.searchNotSupported) {
       log.warning('crawler search cancelled, not supported');
       return;
     }
@@ -45,7 +45,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
     }
 
     final result = await _sourceService.search(
-      _crawlerInfo.crawler as ParseSearch,
+      _crawler.instance as ParseSearch,
       _query,
       state.page,
     );

@@ -10,7 +10,7 @@ final crawlerProvider =
     final meta = crawlerFactory.meta();
     final crawler = crawlerFactory.basic();
 
-    return CrawlerInfo(meta: meta, crawler: crawler);
+    return CrawlerInfo(meta: meta, instance: crawler);
   },
   name: 'CrawlerFactory',
 );
@@ -19,7 +19,7 @@ final crawlerProvider =
 class CrawlerInfo with _$CrawlerInfo {
   factory CrawlerInfo({
     required Meta meta,
-    required Crawler crawler,
+    required Crawler instance,
   }) = _CrawlerHolding;
 
   bool get popularSupported => meta.features.contains(Feature.popular);

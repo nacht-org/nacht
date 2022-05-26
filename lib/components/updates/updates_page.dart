@@ -72,7 +72,7 @@ class UpdatesPage extends StatelessWidget {
                   ReaderRoute(
                     novel: novel,
                     chapter: chapter,
-                    incomplete: true,
+                    doFetch: true,
                   ),
                 );
               },

@@ -23,14 +23,14 @@ class PopularPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final info = ref.watch(crawlerProvider(crawlerFactory));
+    final crawler = ref.watch(crawlerProvider(crawlerFactory));
     final isSearching = ref.watch(isSearchingProvider);
 
     usePostFrameCallback(
       (timeStamp) {
-        ref.watch(popularFetchProvider(info).notifier).fetch();
+        ref.watch(popularFetchProvider(crawler).notifier).fetch();
       },
-      condition: info.popularSupported,
+      condition: crawler.popularSupported,
     );
 
     return Scaffold(
@@ -39,14 +39,14 @@ class PopularPage extends HookConsumerWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           if (!isSearching)
             SliverAppBar(
-              title: Text(info.meta.name),
+              title: Text(crawler.meta.name),
               actions: [
                 const SearchButton(),
                 IconButton(
                   icon: const Icon(Icons.web),
                   onPressed: () => context.router.push(WebViewRoute(
-                    title: info.meta.name,
-                    initialUrl: info.meta.baseUrl,
+                    title: crawler.meta.name,
+                    initialUrl: crawler.meta.baseUrl,
                   )),
                 ),
               ],
@@ -54,7 +54,7 @@ class PopularPage extends HookConsumerWidget {
           if (isSearching)
             SearchBar(
               onSubmitted: (text) =>
-                  ref.read(searchFetchProvider(info).notifier).fetch(text),
+                  ref.read(searchFetchProvider(crawler).notifier).fetch(text),
             ),
         ],
         body: Consumer(
@@ -76,16 +76,17 @@ class PopularPage extends HookConsumerWidget {
                 ],
                 empty: () => [],
                 data: (novels) => [
-                  SliverFetchGrid(items: novels, crawler: info.crawler),
+                  SliverFetchGrid(items: novels, crawler: crawler.instance),
                   SliverToBoxAdapter(
                     child: Container(
                       height: 64,
                       alignment: Alignment.center,
                       child: Consumer(
                         builder: (context, ref, child) {
-                          final fetch = ref.watch(popularFetchProvider(info));
+                          final fetch =
+                              ref.watch(popularFetchProvider(crawler));
                           final notifier =
-                              ref.watch(popularFetchProvider(info).notifier);
+                              ref.watch(popularFetchProvider(crawler).notifier);
 
                           if (fetch.isLoading) {
                             return const CircularProgressIndicator();

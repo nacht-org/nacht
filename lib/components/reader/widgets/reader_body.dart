@@ -1,31 +1,27 @@
+import 'package:nacht/components/reader/model/reader_info.dart';
 import 'package:nacht/components/reader/provider/toolbar_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../domain/domain.dart';
 import '../../../provider/provider.dart';
-import '../model/novel_info.dart';
-import '../provider/active_chapter_provider.dart';
+import '../provider/reader_provider.dart';
 import 'chapter_page.dart';
 
 class ReaderBody extends HookConsumerWidget {
   const ReaderBody({
     Key? key,
-    required this.novel,
-    required this.chapter,
+    required this.reader,
   }) : super(key: key);
 
-  final NovelInfo novel;
-  final ChapterData chapter;
+  final ReaderInfo reader;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final crawlerFactory = ref.watch(crawlerFactoryProvider(novel.data.url));
-    final index = novel.chapters.indexOf(chapter);
+    final crawlerFactory = ref.watch(crawlerFactoryProvider(reader.novel.url));
     final toolbarNotifier = ref.watch(toolbarProvider.notifier);
 
-    final controller = usePageController(initialPage: index);
+    final controller = usePageController(initialPage: reader.initialIndex);
 
     return crawlerFactory.fold(
       () => Center(
@@ -35,16 +31,16 @@ class ReaderBody extends HookConsumerWidget {
         onTap: toolbarNotifier.toggle,
         child: PageView.builder(
           controller: controller,
-          itemCount: novel.chapters.length,
+          itemCount: reader.chapters.length,
           itemBuilder: (context, index) {
             return ChapterPage(
-              novel: novel,
-              chapter: novel.chapters[index],
+              novel: reader.novel,
+              chapter: reader.chapters[index],
               crawlerFactory: data,
             );
           },
           onPageChanged: (index) =>
-              ref.read(activeIndexProvider.notifier).state = index,
+              ref.read(readerProvider(reader).notifier).setCurrentIndex,
         ),
       ),
     );

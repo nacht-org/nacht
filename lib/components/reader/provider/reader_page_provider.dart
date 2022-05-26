@@ -3,23 +3,23 @@ import 'package:chapturn_sources/chapturn_sources.dart' as sources;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/core.dart';
-import '../model/chapter_info.dart';
-import '../model/content_info.dart';
+import '../model/reader_page_info.dart';
 
-final readerProvider = StateNotifierProvider.autoDispose
-    .family<ReaderNotifier, ChapterInfo, ChapterInfo>(
-  (ref, info) => ReaderNotifier(
+final readerPageProvider = StateNotifierProvider.autoDispose
+    .family<ReaderPageNotifier, ReaderPageInfo, ReaderPageInfo>(
+  (ref, info) => ReaderPageNotifier(
     read: ref.read,
     state: info,
     chapterService: ref.watch(chapterServiceProvider),
   ),
-  name: 'ContentProvider',
+  name: 'ReaderPageProvider',
 );
 
-class ReaderNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
-  ReaderNotifier({
+class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
+    with LoggerMixin {
+  ReaderPageNotifier({
     required Reader read,
-    required ChapterInfo state,
+    required ReaderPageInfo state,
     required ChapterService chapterService,
   })  : _read = read,
         _chapterService = chapterService,
@@ -35,8 +35,8 @@ class ReaderNotifier extends StateNotifier<ChapterInfo> with LoggerMixin {
 
     // TODO: check for crawler support
     final content = await _chapterService.fetchContent(
-      state.crawlerInfo.crawler as sources.ParseNovel,
-      state.data.url,
+      state.crawler.instance as sources.ParseNovel,
+      state.chapter.url,
     );
 
     // The provider may be dismounted before fetch ends.

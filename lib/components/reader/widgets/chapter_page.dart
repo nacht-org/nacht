@@ -1,5 +1,4 @@
-import 'package:nacht/components/reader/model/chapter_info.dart';
-import 'package:nacht/components/reader/provider/chapter_provider.dart';
+import 'package:nacht/components/reader/model/reader_page_info.dart';
 import 'package:nacht/extrinsic/extrinsic.dart';
 import 'package:chapturn_sources/chapturn_sources.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/domain.dart';
 import '../../../provider/provider.dart';
-import '../model/novel_info.dart';
+import '../provider/reader_page_provider.dart';
 
 class ChapterPage extends HookConsumerWidget {
   const ChapterPage({
@@ -18,22 +17,23 @@ class ChapterPage extends HookConsumerWidget {
     required this.crawlerFactory,
   }) : super(key: key);
 
-  final NovelInfo novel;
+  final NovelData novel;
   final ChapterData chapter;
   final CrawlerFactory crawlerFactory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final crawler = ref.watch(crawlerProvider(crawlerFactory));
-    final input = ChapterInfo.fromChapterData(chapter, novel.data, crawler);
-    final info = ref.watch(readerProvider(input));
-    final notifier = ref.watch(readerProvider(input).notifier);
+    final input = ReaderPageInfo.from(chapter, crawler);
+
+    final page = ref.watch(readerPageProvider(input));
+    final notifier = ref.watch(readerPageProvider(input).notifier);
 
     usePostFrameCallback((timeStamp) {
       notifier.fetch();
     });
 
-    return info.content.when(
+    return page.content.when(
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),

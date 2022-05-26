@@ -6,9 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final popularFetchProvider = StateNotifierProvider.autoDispose
     .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(
-  (ref, holding) => PopularFetchNotifier(
+  (ref, crawler) => PopularFetchNotifier(
     state: FetchInfo.initial(),
-    crawlerHolding: holding,
+    crawler: crawler,
     sourceService: ref.watch(sourceServiceProvider),
   ),
   name: 'PopularFetchProvider',
@@ -17,22 +17,22 @@ final popularFetchProvider = StateNotifierProvider.autoDispose
 class PopularFetchNotifier extends StateNotifier<FetchInfo> {
   PopularFetchNotifier({
     required FetchInfo state,
-    required CrawlerInfo crawlerHolding,
+    required CrawlerInfo crawler,
     required SourceService sourceService,
-  })  : _crawlerInfo = crawlerHolding,
+  })  : _crawler = crawler,
         _sourceService = sourceService,
         super(state);
 
-  final CrawlerInfo _crawlerInfo;
+  final CrawlerInfo _crawler;
   final SourceService _sourceService;
 
   Future<void> fetch() async {
-    assert(_crawlerInfo.popularSupported);
+    assert(_crawler.popularSupported);
 
     state = state.copyWith(isLoading: true);
 
     final result = await _sourceService.popular(
-      _crawlerInfo.crawler as ParsePopular,
+      _crawler.instance as ParsePopular,
       state.page,
     );
 

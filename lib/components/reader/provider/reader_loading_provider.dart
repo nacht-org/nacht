@@ -1,9 +1,8 @@
-import 'package:nacht/domain/services/novel_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/domain.dart';
 
-final readerIntermediateProvider =
+final readerLoadingProvider =
     FutureProvider.autoDispose.family<NovelData, NovelData>(
   (ref, data) async {
     final novelService = ref.watch(novelServiceProvider);
@@ -15,5 +14,5 @@ final readerIntermediateProvider =
       (data) => data,
     );
   },
-  name: 'ReaderIntermediateProvider',
+  name: 'ReaderLoadingProvider',
 );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/components/reader/model/reader_info.dart';
 
 import '../../domain/domain.dart';
-import 'provider/reader_intermediate_provider.dart';
+import 'provider/reader_loading_provider.dart';
 import 'widgets/reader_view.dart';
 
 class ReaderPage extends ConsumerWidget {
@@ -10,26 +11,26 @@ class ReaderPage extends ConsumerWidget {
     Key? key,
     required this.novel,
     required this.chapter,
-    required this.incomplete,
+    required this.doFetch,
   }) : super(key: key);
 
   final NovelData novel;
   final ChapterData chapter;
-  final bool incomplete;
+  final bool doFetch;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (incomplete) {
+    if (doFetch) {
       // retrieve the complete novel information from database
-      final state = ref.watch(readerIntermediateProvider(novel));
+      final state = ref.watch(readerLoadingProvider(novel));
 
       return state.when(
         loading: () => const Scaffold(),
         error: (error, stack) => Text('Error: $error'),
-        data: (data) => ReaderView(novel: data, chapter: chapter),
+        data: (data) => ReaderView(info: ReaderInfo.from(novel, chapter)),
       );
     } else {
-      return ReaderView(novel: novel, chapter: chapter);
+      return ReaderView(info: ReaderInfo.from(novel, chapter));
     }
   }
 }

@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../core/core.dart';
-import '../../../domain/domain.dart';
-import '../provider/active_chapter_provider.dart';
-import '../provider/reader_novel_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/components/reader/provider/reader_provider.dart';
+import 'package:nacht/core/core.dart';
+
+import '../model/reader_info.dart';
 import '../provider/toolbar_provider.dart';
+
 import 'reader_body.dart';
 
 class ReaderView extends HookConsumerWidget {
   const ReaderView({
     Key? key,
-    required this.novel,
-    required this.chapter,
+    required this.info,
   }) : super(key: key);
 
-  final NovelData novel;
-  final ChapterData chapter;
+  final ReaderInfo info;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final novelInfo = ref.watch(readerNovelProvider(novel));
-    final toolbarVisible =
+    final reader = ref.watch(readerProvider(info));
+
+    final isToolbarVisible =
         ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
 
     final controller = useAnimationController(
@@ -32,7 +32,7 @@ class ReaderView extends HookConsumerWidget {
     );
 
     useEffect(() {
-      ref.read(toolbarProvider.notifier).setSystemUiMode(toolbarVisible);
+      ref.read(toolbarProvider.notifier).setSystemUiMode(isToolbarVisible);
       return null;
     }, []);
 
@@ -46,23 +46,24 @@ class ReaderView extends HookConsumerWidget {
         extendBodyBehindAppBar: true,
         appBar: SlidingPrefferedSize(
           controller: controller,
-          visible: toolbarVisible,
+          visible: isToolbarVisible,
           child: AppBar(
             title: Consumer(builder: (context, ref, child) {
-              final active = ref.watch(activeChapterProvider(novelInfo));
+              final current = ref
+                  .watch(readerProvider(info).select((value) => value.current));
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    novel.title,
+                    reader.novel.title,
                     style: theme.textTheme.titleLarge?.copyWith(
                       color: theme.appBarTheme.foregroundColor,
                     ),
                     maxLines: 1,
                   ),
                   Text(
-                    active?.title ?? chapter.title,
+                    current.title,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.hintColor,
                     ),
@@ -79,7 +80,7 @@ class ReaderView extends HookConsumerWidget {
             ],
           ),
         ),
-        body: ReaderBody(novel: novelInfo, chapter: chapter),
+        body: ReaderBody(reader: reader),
       ),
     );
   }

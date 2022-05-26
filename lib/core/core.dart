@@ -12,3 +12,4 @@ export 'misc/either_utils.dart';
 export 'misc/time_utils.dart';
 export 'preferences/preferences_provider.dart';
 export 'widgets/sliding_preferred_size.dart';
+export 'nacht_theme/nacht_theme.dart';

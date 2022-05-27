@@ -1,6 +1,6 @@
 import 'package:nacht/components/reader/model/reader_page_info.dart';
 import 'package:nacht/extrinsic/extrinsic.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

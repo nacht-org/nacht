@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:nacht/domain/domain.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';

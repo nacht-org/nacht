@@ -25,7 +25,7 @@ packages:
   annotations:
     dependency: transitive
     description:
-      path: "../chapturn_sources/packages/annotations"
+      path: "../nacht_sources/packages/annotations"
       relative: true
     source: path
     version: "1.0.0"
@@ -120,13 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.1.4"
-  chapturn_sources:
-    dependency: "direct main"
-    description:
-      path: "../chapturn_sources"
-      relative: true
-    source: path
-    version: "0.0.1"
   characters:
     dependency: transitive
     description:
@@ -506,6 +499,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.0"
+  nacht_sources:
+    dependency: "direct main"
+    description:
+      path: "../nacht_sources"
+      relative: true
+    source: path
+    version: "0.0.1"
   nm:
     dependency: transitive
     description:

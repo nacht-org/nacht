@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:nacht/data/data.dart';
-import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:drift/drift.dart';
 
 ChaptersCompanion chapterIntoCompanion(sources.Chapter chapter) {

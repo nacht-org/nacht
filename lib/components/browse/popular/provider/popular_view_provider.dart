@@ -1,7 +1,7 @@
 import 'package:nacht/components/browse/model/fetch_state.dart';
 import 'package:nacht/components/browse/popular/provider/popular_provider.dart';
 import 'package:nacht/components/browse/search/search.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final popularViewProvider =

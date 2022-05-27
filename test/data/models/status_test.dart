@@ -1,5 +1,5 @@
 import 'package:nacht/data/models/status.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

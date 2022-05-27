@@ -1,7 +1,7 @@
 import 'package:nacht/components/browse/model/fetch_info.dart';
 import 'package:nacht/domain/domain.dart';
 import 'package:nacht/provider/provider.dart';
-import 'package:chapturn_sources/chapturn_sources.dart' show ParsePopular;
+import 'package:nacht_sources/nacht_sources.dart' show ParsePopular;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final popularFetchProvider = StateNotifierProvider.autoDispose

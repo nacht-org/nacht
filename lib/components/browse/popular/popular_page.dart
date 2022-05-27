@@ -3,7 +3,7 @@ import 'package:nacht/components/browse/widgets/sliver_fetch_grid.dart';
 import 'package:nacht/components/components.dart';
 import 'package:nacht/extrinsic/extrinsic.dart';
 import 'package:nacht/provider/provider.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

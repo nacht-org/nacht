@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 import '../exception.dart';
 

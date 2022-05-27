@@ -42,8 +42,8 @@ dependencies:
   webview_flutter: ^3.0.2
   permission_handler: ^9.2.0
 
-  chapturn_sources:
-    path: ../chapturn_sources
+  nacht_sources:
+    path: ../nacht_sources
   intl: ^0.17.0
   flutter_html: ^3.0.0-alpha.3
   shared_preferences: ^2.0.15

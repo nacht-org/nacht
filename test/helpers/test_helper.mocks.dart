@@ -4,7 +4,7 @@
 
 import 'dart:async' as _i6;
 
-import 'package:chapturn_sources/chapturn_sources.dart' as _i3;
+import 'package:nacht_sources/nacht_sources.dart' as _i3;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:nacht/core/failure.dart' as _i5;

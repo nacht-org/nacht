@@ -1,6 +1,6 @@
 import 'package:nacht/components/browse/model/fetch_state.dart';
 import 'package:nacht/provider/provider.dart';
-import 'package:chapturn_sources/chapturn_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'popular_fetch_provider.dart';

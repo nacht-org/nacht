@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 

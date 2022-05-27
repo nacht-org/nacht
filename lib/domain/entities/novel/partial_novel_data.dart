@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'partial_novel_data.freezed.dart';

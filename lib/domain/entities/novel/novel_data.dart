@@ -1,4 +1,4 @@
-import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/domain/domain.dart';
 import 'package:nacht/data/data.dart';

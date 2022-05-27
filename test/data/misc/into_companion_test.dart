@@ -3,7 +3,7 @@ import 'package:nacht/data/misc/into_companion.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:chapturn_sources/chapturn_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 void main() {
   group('chapterIntoCompanion', () {

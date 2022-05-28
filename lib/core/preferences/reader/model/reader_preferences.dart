@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/core/preferences/reader/model/reader_font_family.dart';
-import 'package:nacht/extrinsic/core/preferences/preferences.dart';
+import 'package:nacht/nht/nht.dart';
 
 part 'reader_preferences.freezed.dart';
 

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:nacht/components/browse/widgets/sliver_fetch_grid.dart';
 import 'package:nacht/components/components.dart';
-import 'package:nacht/extrinsic/extrinsic.dart';
+import 'package:nacht/nht/nht.dart';
 import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';

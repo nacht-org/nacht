@@ -7,7 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'extrinsic/extrinsic.dart';
+import 'nht/nht.dart';
 
 Future<void> main() async {
   // Disable http font downloads in release mode.

@@ -1,5 +1,5 @@
 import 'package:nacht/components/reader/model/reader_page_info.dart';
-import 'package:nacht/extrinsic/extrinsic.dart';
+import 'package:nacht/nht/nht.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';

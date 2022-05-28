@@ -1,4 +1,4 @@
-library extrinsic;
+library nht;
 
 export 'core/core.dart';
 

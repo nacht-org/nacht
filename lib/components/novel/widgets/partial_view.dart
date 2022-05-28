@@ -1,6 +1,6 @@
 import 'package:nacht/components/novel/novel_page.dart';
 import 'package:nacht/components/novel/provider/intermediate_provider.dart';
-import 'package:nacht/extrinsic/extrinsic.dart';
+import 'package:nacht/nht/nht.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

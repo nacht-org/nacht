@@ -1,4 +1,4 @@
-import 'package:nacht/extrinsic/extrinsic.dart';
+import 'package:nacht/nht/nht.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

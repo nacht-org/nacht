@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../domain/domain.dart';
 import '../../../provider/provider.dart';
 import '../provider/reader_page_provider.dart';
+import 'reader_theme.dart';
 
 class ChapterPage extends HookConsumerWidget {
   const ChapterPage({
@@ -60,7 +61,14 @@ class ChapterPage extends HookConsumerWidget {
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
               ),
-              Html(data: content),
+              ReaderTheme(
+                child: Html(
+                  data: content,
+                  style: {
+                    "p": Style(),
+                  },
+                ),
+              ),
             ],
           ),
         ),

@@ -89,7 +89,7 @@ class MenuListTile<T> extends HookWidget {
         final previous = selected.value;
         selected.value = result;
         if (previous != result) {
-          onChanged?.call(result);
+          onChanged.call(result);
         }
       },
     );

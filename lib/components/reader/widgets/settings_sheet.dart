@@ -27,7 +27,6 @@ class SettingsSheet extends ConsumerWidget {
           items: ReaderFontFamily.values
               .map((font) => MenuListTileItem(value: font, label: font.name))
               .toList(),
-          itemText: (item) => item.name,
           onChanged: notifier.setFontFamily,
         ),
       ],

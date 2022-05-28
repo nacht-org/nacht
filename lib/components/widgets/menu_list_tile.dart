@@ -15,14 +15,12 @@ class MenuListTile<T> extends HookWidget {
     required this.value,
     required this.items,
     required this.onChanged,
-    this.itemText,
   }) : super(key: key);
 
   final String title;
   final String value;
   final List<MenuListTileItem<T>> items;
   final void Function(T value) onChanged;
-  final String Function(T item)? itemText;
 
   @override
   Widget build(BuildContext context) {

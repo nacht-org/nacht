@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nacht/components/application/provider/application_provider.dart';
 import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'extrinsic/extrinsic.dart';
 
 Future<void> main() async {
+  // Disable http font downloads in release mode.
+  GoogleFonts.config.allowRuntimeFetching = kDebugMode;
+
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
 

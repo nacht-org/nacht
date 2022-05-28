@@ -2,8 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 
-import 'reader.dart';
-
 final readerPreferencesProvider =
     StateNotifierProvider<ReaderPreferencesNotifier, ReaderPreferences>(
   (ref) => ReaderPreferencesNotifier(

@@ -20,7 +20,7 @@ class BrowsePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final crawlerFactories = ref.watch(crawlersProvider);
+    final crawlers = ref.watch(crawlersProvider);
 
     return NestedScrollView(
       floatHeaderSlivers: true,
@@ -36,23 +36,33 @@ class BrowsePage extends ConsumerWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final meta = crawlerFactories[index].meta();
-                final lang =
-                    langFromCode(meta.lang)?['name'] ?? meta.lang.capitalize();
+                return crawlers[index].when(language: (language) {
+                  final lang =
+                      langFromCode(language)?['name'] ?? language.capitalize();
 
-                return ListTile(
-                  title: Text(meta.name),
-                  subtitle: Text('$lang ${meta.version.version}'),
-                  trailing: TextButton(
-                    child: const Text('Latest'),
-                    onPressed: () {},
-                  ),
-                  onTap: () => context.router.push(
-                    PopularRoute(crawlerFactory: crawlerFactories[index]),
-                  ),
-                );
+                  return ListTile(
+                    title: Text(
+                      lang,
+                      style: Theme.of(context).textTheme.labelLarge,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    dense: true,
+                  );
+                }, crawler: (entry) {
+                  final lang = langFromCode(entry.meta.lang)?['name'] ??
+                      entry.meta.lang.capitalize();
+
+                  return ListTile(
+                    title: Text(entry.meta.name),
+                    subtitle: Text('$lang ${entry.meta.version.version}'),
+                    onTap: () => context.router.push(
+                      PopularRoute(crawlerFactory: entry.factory),
+                    ),
+                  );
+                });
               },
-              childCount: crawlerFactories.length,
+              childCount: crawlers.length,
             ),
           )
         ],

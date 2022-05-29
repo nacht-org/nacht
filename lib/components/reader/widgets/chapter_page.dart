@@ -57,9 +57,13 @@ class ChapterPage extends HookConsumerWidget {
                   right: 8.0,
                   bottom: 8.0,
                 ),
-                child: Text(
-                  chapter.title,
-                  style: Theme.of(context).textTheme.displayLarge,
+                child: ReaderTheme(
+                  child: Builder(builder: (context) {
+                    return Text(
+                      chapter.title,
+                      style: Theme.of(context).textTheme.displayLarge,
+                    );
+                  }),
                 ),
               ),
               ReaderTheme(
@@ -69,7 +73,9 @@ class ChapterPage extends HookConsumerWidget {
                   return Html(
                     data: content,
                     style: {
-                      "p": Style(fontSize: FontSize(preferences.fontSize)),
+                      "p": Style(
+                        fontSize: FontSize(preferences.fontSize),
+                      ),
                     },
                   );
                 }),

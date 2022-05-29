@@ -16,7 +16,6 @@ class ReaderTheme extends ConsumerWidget {
     final theme = Theme.of(context);
     final preferences = ref.watch(readerPreferencesProvider);
 
-    // TODO: check if default text theme applies
     return Theme(
       data: theme.copyWith(
         textTheme: textTheme(theme, preferences.fontFamily),

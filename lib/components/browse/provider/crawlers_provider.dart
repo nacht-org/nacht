@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/domain.dart';
 import '../model/crawler_entry.dart';
-import '../model/crawler_language_group.dart';
 import '../model/crawler_list_item.dart';
 
 final crawlersProvider = Provider<List<CrawlerListItem>>((ref) {

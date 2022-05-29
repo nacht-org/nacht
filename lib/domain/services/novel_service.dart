@@ -56,11 +56,17 @@ class NovelService with LoggerMixin {
         (data) => _novelRepository.updateNovel(data),
       );
 
-      // FIXME: Don't update if this is the initial. (currently not implemented for testing purposes.)
       final insertResult =
           await updateResult.fold<Future<Either<Failure, void>>>(
         (failure) async => Left(failure),
-        (data) => _updatesRepository.addAll(data.intoNewUpdates().reversed),
+        (data) async {
+          if (!data.initial) {
+            return await _updatesRepository
+                .addAll(data.intoNewUpdates().reversed);
+          }
+
+          return const Right(null);
+        },
       );
 
       final failure = insertResult.maybeLeft();

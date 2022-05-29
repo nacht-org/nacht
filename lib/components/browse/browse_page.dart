@@ -59,6 +59,7 @@ class BrowsePage extends ConsumerWidget {
                     onTap: () => context.router.push(
                       PopularRoute(crawlerFactory: entry.factory),
                     ),
+                    enabled: entry.isSupported,
                   );
                 });
               },

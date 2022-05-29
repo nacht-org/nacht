@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 
 part 'crawler_entry.freezed.dart';
@@ -12,10 +13,12 @@ class CrawlerEntry with _$CrawlerEntry {
   }) = _CrawlerEntry;
 
   factory CrawlerEntry.from(CrawlerFactory factory) {
+    final current = currentPlatform();
+
     return CrawlerEntry(
       meta: factory.meta(),
       factory: factory,
-      isSupported: true,
+      isSupported: factory.meta().support.isPlatformSupported(current),
     );
   }
 

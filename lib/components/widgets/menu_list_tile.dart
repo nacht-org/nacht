@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 class MenuListTileItem<T> {
   final T value;
@@ -8,26 +7,23 @@ class MenuListTileItem<T> {
   MenuListTileItem({required this.value, required this.label});
 }
 
-class MenuListTile<T> extends HookWidget {
+class MenuListTile<T> extends StatelessWidget {
   const MenuListTile({
     Key? key,
     required this.title,
-    required this.value,
+    required this.active,
     required this.items,
     required this.onChanged,
   }) : super(key: key);
 
   final String title;
-  final String value;
+  final MenuListTileItem active;
   final List<MenuListTileItem<T>> items;
   final void Function(T value) onChanged;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final overlay = Overlay.of(context)!.context.findRenderObject()!;
-
-    final selected = useState<T?>(null);
 
     return ListTile(
       title: Text(title),
@@ -38,7 +34,7 @@ class MenuListTile<T> extends HookWidget {
           children: [
             Expanded(
               child: Text(
-                value,
+                active.label,
                 style: theme.textTheme.labelLarge?.copyWith(
                   color: theme.textTheme.caption?.color,
                 ),
@@ -49,6 +45,7 @@ class MenuListTile<T> extends HookWidget {
         ),
       ),
       onTap: () async {
+        final overlay = Overlay.of(context)!.context.findRenderObject()!;
         final tile = context.findRenderObject() as RenderBox;
 
         final position = RelativeRect.fromRect(
@@ -77,17 +74,15 @@ class MenuListTile<T> extends HookWidget {
                 ),
               )
               .toList(),
-          initialValue: selected.value,
+          initialValue: active.value,
         );
 
         if (result == null) {
           return;
         }
 
-        final previous = selected.value;
-        selected.value = result;
-        if (previous != result) {
-          onChanged.call(result);
+        if (active.value != result) {
+          onChanged(result);
         }
       },
     );

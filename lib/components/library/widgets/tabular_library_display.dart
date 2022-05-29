@@ -43,6 +43,7 @@ class _TabularLibraryDisplayState extends State<TabularLibraryDisplay>
         SliverAppBar(
           title: const Text('Library'),
           floating: true,
+          pinned: true,
           forceElevated: innerBoxIsScrolled,
           bottom: AlignTabBar(
             child: TabBar(

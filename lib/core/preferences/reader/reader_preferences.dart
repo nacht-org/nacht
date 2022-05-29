@@ -18,8 +18,13 @@ class ReaderPreferencesNotifier extends StateNotifier<ReaderPreferences> {
 
   final Preferences _preferences;
 
-  Future<void> setFontFamily(ReaderFontFamily fontFamily) async {
+  void setFontFamily(ReaderFontFamily fontFamily) {
     _preferences.setInt(ReaderPreferences.fontFamilyKey, fontFamily.value);
     state = state.copyWith(fontFamily: fontFamily);
+  }
+
+  void setFontSize(double value) {
+    _preferences.setDouble(ReaderPreferences.fontSizeKey, value);
+    state = state.copyWith(fontSize: value);
   }
 }

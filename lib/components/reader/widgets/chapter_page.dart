@@ -1,4 +1,5 @@
 import 'package:nacht/components/reader/model/reader_page_info.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
@@ -62,12 +63,16 @@ class ChapterPage extends HookConsumerWidget {
                 ),
               ),
               ReaderTheme(
-                child: Html(
-                  data: content,
-                  style: {
-                    "p": Style(),
-                  },
-                ),
+                child: Consumer(builder: (context, ref, child) {
+                  final preferences = ref.watch(readerPreferencesProvider);
+
+                  return Html(
+                    data: content,
+                    style: {
+                      "p": Style(fontSize: FontSize(preferences.fontSize)),
+                    },
+                  );
+                }),
               ),
             ],
           ),

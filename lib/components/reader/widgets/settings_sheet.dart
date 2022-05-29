@@ -29,6 +29,30 @@ class SettingsSheet extends ConsumerWidget {
               .toList(),
           onChanged: notifier.setFontFamily,
         ),
+        Consumer(builder: (context, ref, child) {
+          final size = ref.watch(
+            readerPreferencesProvider.select((value) => value.fontSize),
+          );
+
+          return ListTile(
+            title: Row(
+              children: [
+                const Icon(Icons.text_decrease),
+                Expanded(
+                  child: Slider(
+                    value: size,
+                    onChanged: notifier.setFontSize,
+                    min: 8,
+                    max: 24,
+                    divisions: 24 - 8,
+                    label: '$size',
+                  ),
+                ),
+                const Icon(Icons.text_increase),
+              ],
+            ),
+          );
+        })
       ],
     );
   }

@@ -37,7 +37,7 @@ class AnimatedBottomBar extends HookWidget {
       sizeFactor: animation,
       child: SlideTransition(
         position: offset.animate(animation),
-        child: BottomBar(child: child),
+        child: child,
       ),
     );
   }

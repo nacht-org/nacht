@@ -146,28 +146,30 @@ class NovelView extends HookConsumerWidget {
       extendBody: true,
       bottomNavigationBar: AnimatedBottomBar(
         visible: selection.active,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.check),
-              onPressed: () {
-                final selection = ref.read(novelSelectionProvider);
-                notifier.setReadAt(selection.selected, true);
-                context.router.pop();
-              },
-              tooltip: 'Mark as read',
-            ),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                final selection = ref.read(novelSelectionProvider);
-                notifier.setReadAt(selection.selected, false);
-                context.router.pop();
-              },
-              tooltip: 'Mark as unread',
-            ),
-          ],
+        child: BottomBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.check),
+                onPressed: () {
+                  final selection = ref.read(novelSelectionProvider);
+                  notifier.setReadAt(selection.selected, true);
+                  context.router.pop();
+                },
+                tooltip: 'Mark as read',
+              ),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  final selection = ref.read(novelSelectionProvider);
+                  notifier.setReadAt(selection.selected, false);
+                  context.router.pop();
+                },
+                tooltip: 'Mark as unread',
+              ),
+            ],
+          ),
         ),
       ),
     );

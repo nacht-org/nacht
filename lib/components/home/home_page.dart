@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:nacht/components/components.dart';
 import 'package:nacht/components/home/provider/destination_animation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,17 +24,21 @@ class HomePage extends StatelessWidget {
             ],
             child: child,
           ),
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: tabsRouter.activeIndex,
-            onDestinationSelected: (index) => tabsRouter.setActiveIndex(index),
-            destinations: List.generate(destinations.length, (index) {
-              final destination = destinations[index];
-              return NavigationDestination(
-                icon: destination.icon,
-                selectedIcon: destination.selectedIcon,
-                label: destination.label,
-              );
-            }),
+          bottomNavigationBar: AnimatedBottomBar(
+            visible: true,
+            child: NavigationBar(
+              selectedIndex: tabsRouter.activeIndex,
+              onDestinationSelected: (index) =>
+                  tabsRouter.setActiveIndex(index),
+              destinations: List.generate(destinations.length, (index) {
+                final destination = destinations[index];
+                return NavigationDestination(
+                  icon: destination.icon,
+                  selectedIcon: destination.selectedIcon,
+                  label: destination.label,
+                );
+              }),
+            ),
           ),
         );
       },

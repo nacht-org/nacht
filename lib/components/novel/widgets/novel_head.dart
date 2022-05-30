@@ -14,12 +14,12 @@ class NovelHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = head.cover.fold(
+    final ImageProvider? image = head.cover.fold(
       () => head.coverUrl.fold(
         () => null,
-        (url) => Image.network(url),
+        (url) => NetworkImage(url),
       ),
-      (cover) => Image.file(cover.file),
+      (cover) => FileImage(cover.file),
     );
 
     return SliverToBoxAdapter(
@@ -32,7 +32,12 @@ class NovelHead extends StatelessWidget {
               aspectRatio: 2 / 3,
               child: Card(
                 clipBehavior: Clip.antiAlias,
-                child: image,
+                child: image != null
+                    ? Image(
+                        image: image,
+                        fit: BoxFit.fill,
+                      )
+                    : null,
               ),
             ),
             const SizedBox(width: 16.0),

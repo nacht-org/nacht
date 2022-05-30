@@ -146,7 +146,7 @@ class NovelView extends HookConsumerWidget {
       extendBody: true,
       bottomNavigationBar: AnimatedBottomBar(
         visible: selection.active,
-        child: BottomBar(
+        child: CustomBottomBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

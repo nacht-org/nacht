@@ -18,7 +18,7 @@ export 'widgets/slivers/sliver_fill_loading_indicator.dart';
 export 'widgets/nacht_list_tile.dart';
 export 'widgets/slivers/sliver_bottom_padding.dart';
 export 'widgets/slivers/sliver_floating_action_button_padding.dart';
-export 'widgets/bottom_bar.dart';
+export 'widgets/custom_bottom_bar.dart';
 export 'widgets/animated_bottom_bar.dart';
 export 'widgets/close_back_button.dart';
 export 'selection/widgets/sliver_selection_app_bar.dart';

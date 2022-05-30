@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nacht/core/core.dart';
 
-import 'bottom_bar.dart';
+import 'custom_bottom_bar.dart';
 
 class AnimatedBottomBar extends HookWidget {
   const AnimatedBottomBar({

@@ -24,3 +24,5 @@ export 'widgets/close_back_button.dart';
 export 'selection/widgets/sliver_selection_app_bar.dart';
 export 'selection/provider/selection_provider.dart';
 export 'widgets/menu_list_tile.dart';
+export 'home/provider/navigation_visible_provider.dart';
+export 'browse/provider/browse_search_provider.dart';

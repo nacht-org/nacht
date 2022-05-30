@@ -20,7 +20,6 @@ class SearchBar extends HookWidget {
     final controller = useTextEditingController();
 
     return SliverAppBar(
-      leading: const BackButton(),
       title: ClearableTextField(
         controller: controller,
         decoration: const InputDecoration(

@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/components/browse/search/widgets/search_bar.dart';
+import 'package:nacht/components/components.dart';
 
 import '../../../core/core.dart';
 import 'provider/crawlers_provider.dart';
+import 'widgets/browse_search_button.dart';
 
 List<Widget> buildBrowseHeader(BuildContext context, bool innerBoxIsScrolled) {
   return [
@@ -21,15 +24,21 @@ class BrowsePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final crawlers = ref.watch(crawlersProvider);
+    final search = ref.watch(browseSearchProvider);
 
     return NestedScrollView(
       floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverAppBar(
-          title: const Text('Browse'),
-          floating: true,
-          forceElevated: innerBoxIsScrolled,
-        )
+        if (!search.active)
+          SliverAppBar(
+            title: const Text('Browse'),
+            floating: true,
+            forceElevated: innerBoxIsScrolled,
+            actions: const [
+              BrowseSearchButton(),
+            ],
+          ),
+        if (search.active) const SearchBar()
       ],
       body: CustomScrollView(
         slivers: [

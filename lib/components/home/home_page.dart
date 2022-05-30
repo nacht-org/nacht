@@ -24,22 +24,26 @@ class HomePage extends StatelessWidget {
             ],
             child: child,
           ),
-          bottomNavigationBar: AnimatedBottomBar(
-            visible: true,
-            child: NavigationBar(
-              selectedIndex: tabsRouter.activeIndex,
-              onDestinationSelected: (index) =>
-                  tabsRouter.setActiveIndex(index),
-              destinations: List.generate(destinations.length, (index) {
-                final destination = destinations[index];
-                return NavigationDestination(
-                  icon: destination.icon,
-                  selectedIcon: destination.selectedIcon,
-                  label: destination.label,
-                );
-              }),
-            ),
-          ),
+          bottomNavigationBar: Consumer(builder: (context, ref, child) {
+            final visible = ref.watch(navigationVisibleProvider);
+
+            return AnimatedBottomBar(
+              visible: visible,
+              child: NavigationBar(
+                selectedIndex: tabsRouter.activeIndex,
+                onDestinationSelected: (index) =>
+                    tabsRouter.setActiveIndex(index),
+                destinations: List.generate(destinations.length, (index) {
+                  final destination = destinations[index];
+                  return NavigationDestination(
+                    icon: destination.icon,
+                    selectedIcon: destination.selectedIcon,
+                    label: destination.label,
+                  );
+                }),
+              ),
+            );
+          }),
         );
       },
     );

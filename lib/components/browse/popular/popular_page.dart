@@ -52,7 +52,7 @@ class PopularPage extends HookConsumerWidget {
               ],
             ),
           if (isSearching)
-            SearchBar(
+            SliverSearchBar(
               onSubmitted: (text) =>
                   ref.read(searchFetchProvider(crawler).notifier).fetch(text),
             ),

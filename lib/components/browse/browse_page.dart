@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/browse/search/widgets/search_bar.dart';
 import 'package:nacht/components/components.dart';
 
 import '../../../core/core.dart';
@@ -38,7 +37,7 @@ class BrowsePage extends ConsumerWidget {
               BrowseSearchButton(),
             ],
           ),
-        if (search.active) const SearchBar()
+        if (search.active) const SliverSearchBar()
       ],
       body: CustomScrollView(
         slivers: [

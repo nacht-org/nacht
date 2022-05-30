@@ -26,3 +26,4 @@ export 'selection/provider/selection_provider.dart';
 export 'widgets/menu_list_tile.dart';
 export 'home/provider/navigation_visible_provider.dart';
 export 'browse/provider/browse_search_provider.dart';
+export 'widgets/slivers/sliver_search_bar.dart';

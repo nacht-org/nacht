@@ -23,13 +23,13 @@ Future<void> main() async {
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
       observers: [ProviderLogger()],
-      child: const nachtApp(),
+      child: const NachtApp(),
     ),
   );
 }
 
-class nachtApp extends HookConsumerWidget {
-  const nachtApp({Key? key}) : super(key: key);
+class NachtApp extends HookConsumerWidget {
+  const NachtApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

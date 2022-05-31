@@ -20,10 +20,12 @@ class SourceService with LoggerMixin {
   final CrawlerRepository _crawlerRepository;
 
   Option<sources.CrawlerFactory> crawlerFactoryFor({required String url}) {
+    // TODO: check for connection
     return _crawlerRepository.crawlerFactoryFor(url);
   }
 
   Either<Failure, List<sources.CrawlerFactory>> crawlers() {
+    // TODO: check for connection
     return _crawlerRepository.getAllCrawlers();
   }
 
@@ -31,6 +33,7 @@ class SourceService with LoggerMixin {
     sources.ParsePopular parser,
     int page,
   ) async {
+    // TODO: check for connection
     return _crawlerRepository.getPopularNovels(parser, page);
   }
 
@@ -39,6 +42,7 @@ class SourceService with LoggerMixin {
     String query,
     int page,
   ) {
+    // TODO: check for connection
     return _crawlerRepository.getSearchNovels(parser, query, page);
   }
 }

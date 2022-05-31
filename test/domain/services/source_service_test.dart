@@ -8,11 +8,16 @@ import '../../helpers/test_helper.mocks.dart';
 
 void main() {
   late CrawlerRepository mockCrawlerRepository;
+  late NetworkRepository mockNetworkRepository;
   late SourceService service;
 
   setUp(() {
     mockCrawlerRepository = MockCrawlerRepository();
-    service = SourceService(crawlerRepository: mockCrawlerRepository);
+    mockNetworkRepository = MockNetworkRepository();
+    service = SourceService(
+      crawlerRepository: mockCrawlerRepository,
+      networkRepository: mockNetworkRepository,
+    );
   });
 
   group('crawlerFactoryFor', () {

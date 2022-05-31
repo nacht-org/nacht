@@ -20,12 +20,10 @@ class SourceService with LoggerMixin {
   final CrawlerRepository _crawlerRepository;
 
   Option<sources.CrawlerFactory> crawlerFactoryFor({required String url}) {
-    // TODO: check for connection
     return _crawlerRepository.crawlerFactoryFor(url);
   }
 
   Either<Failure, List<sources.CrawlerFactory>> crawlers() {
-    // TODO: check for connection
     return _crawlerRepository.getAllCrawlers();
   }
 

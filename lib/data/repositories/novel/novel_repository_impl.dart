@@ -124,16 +124,8 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
         result = result.copyWith(novel: currentNovel!.id);
       }
 
-      final novelModel = await database.into(database.novels).insertReturning(
-            novelCompanion,
-            onConflict: DoUpdate(
-              (old) => novelCompanion,
-              target: [database.novels.url],
-            ),
-          );
-
       // Update volumes and chapters (editing, removing)
-      final inserts = await syncVolumes(novelModel.id, novel.volumes);
+      final inserts = await syncVolumes(result.novel, novel.volumes);
 
       // Insert chapters.
       log.fine('inserting chapters');
@@ -146,7 +138,7 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       result = result.copyWith(inserted: insertedIds);
 
       // Update metadata.
-      await syncMetaData(novelModel.id, novel.metadata);
+      await syncMetaData(result.novel, novel.metadata);
     });
 
     // FIXME: handle where transaction failed

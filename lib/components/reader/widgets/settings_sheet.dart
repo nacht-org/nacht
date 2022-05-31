@@ -34,26 +34,21 @@ class SettingsSheet extends ConsumerWidget {
         ),
         Consumer(builder: (context, ref, child) {
           final size = ref.watch(
-            readerPreferencesProvider.select((value) => value.fontSize),
-          );
+              readerPreferencesProvider.select((reader) => reader.fontSize));
 
           return ListTile(
-            title: Row(
-              children: [
-                const Icon(Icons.text_decrease),
-                Expanded(
-                  child: Slider(
-                    value: size,
-                    onChanged: notifier.setFontSize,
-                    min: 8,
-                    max: 24,
-                    divisions: 24 - 8,
-                    label: '$size',
-                  ),
-                ),
-                const Icon(Icons.text_increase),
-              ],
-            ),
+            title: const Text('Font size'),
+            subtitle: Text('$size'),
+            trailing: Row(children: [
+              IconButton(
+                onPressed: () => notifier.setFontSize(size - 1),
+                icon: const Icon(Icons.remove),
+              ),
+              IconButton(
+                onPressed: () => notifier.setFontSize(size + 1),
+                icon: const Icon(Icons.add),
+              ),
+            ]),
           );
         })
       ],

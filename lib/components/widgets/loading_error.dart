@@ -4,9 +4,11 @@ class LoadingError extends StatelessWidget {
   const LoadingError({
     Key? key,
     required this.message,
+    this.onRetry,
   }) : super(key: key);
 
   final Widget message;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,11 @@ class LoadingError extends StatelessWidget {
             textAlign: TextAlign.center,
             child: message,
           ),
+          if (onRetry != null)
+            TextButton(
+              onPressed: onRetry,
+              child: const Text('Retry'),
+            ),
         ],
       ),
     );

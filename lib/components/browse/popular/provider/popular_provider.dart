@@ -14,6 +14,10 @@ final popularProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
 
     final fetch = ref.watch(popularFetchProvider(info));
     if (fetch.page == 1) {
+      if (fetch.error != null) {
+        return FetchState.error(fetch.error!);
+      }
+
       return const FetchState.loading();
     }
 

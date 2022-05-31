@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:nacht/data/failure.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
@@ -29,8 +31,12 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
     ParsePopular parser,
     int page,
   ) async {
-    // TODO: catch errors
-    final novels = await parser.parsePopular(page);
+    final List<Novel> novels;
+    try {
+      novels = await parser.parsePopular(page);
+    } on DioError catch (e) {
+      return Left(NetworkFailure(e.message));
+    }
 
     final entities =
         novels.map((novel) => PartialNovelData.fromSource(novel)).toList();

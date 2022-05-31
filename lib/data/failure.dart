@@ -45,3 +45,7 @@ class UpdateFailure extends Failure {
 }
 
 class SelectFailure extends Failure {}
+
+class NetworkFailure extends Failure {
+  const NetworkFailure(String message) : super(message);
+}

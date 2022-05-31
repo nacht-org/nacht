@@ -63,6 +63,7 @@ class PopularPage extends HookConsumerWidget {
             ref.watch(popularProvider(crawlerFactory));
 
             final view = ref.watch(popularViewProvider(crawlerFactory));
+            final crawlerInfo = ref.watch(crawlerProvider(crawlerFactory));
 
             return CustomScrollView(
               slivers: view.when(
@@ -73,6 +74,22 @@ class PopularPage extends HookConsumerWidget {
                   SliverFillLoadingError(
                     message: Text(message),
                   ),
+                ],
+                error: (message) => [
+                  SliverFillLoadingError(
+                      message: Text(message),
+                      onRetry: () {
+                        final isSearching = ref.read(isSearchingProvider);
+                        if (isSearching) {
+                          ref
+                              .read(searchFetchProvider(crawlerInfo).notifier)
+                              .restart();
+                        } else {
+                          ref
+                              .read(popularFetchProvider(crawlerInfo).notifier)
+                              .restart();
+                        }
+                      }),
                 ],
                 empty: () => [],
                 data: (novels) => [

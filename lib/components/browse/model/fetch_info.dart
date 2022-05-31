@@ -10,6 +10,7 @@ class FetchInfo with _$FetchInfo {
     required List<PartialNovelData> data,
     required bool isLoading,
     required int page,
+    required String? error,
   }) = _PopularInfo;
 
   factory FetchInfo.initial() {
@@ -17,6 +18,7 @@ class FetchInfo with _$FetchInfo {
       data: [],
       isLoading: false,
       page: 1,
+      error: null,
     );
   }
 

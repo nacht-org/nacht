@@ -12,10 +12,14 @@ final searchProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
     }
 
     final fetch = ref.watch(searchFetchProvider(info));
-    if (fetch.isInitial) {
-      return const FetchState.empty();
-    } else if (fetch.isInitialLoading) {
-      return const FetchState.loading();
+    if (fetch.page == 1) {
+      if (fetch.isLoading) {
+        return const FetchState.loading();
+      } else if (fetch.error != null) {
+        return FetchState.error(fetch.error!);
+      } else {
+        return const FetchState.empty();
+      }
     }
 
     return FetchState.data(fetch.data);

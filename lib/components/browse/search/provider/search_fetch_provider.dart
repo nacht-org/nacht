@@ -31,6 +31,11 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   final CrawlerInfo _crawler;
   final SourceService _sourceService;
 
+  void restart() {
+    state = FetchInfo.initial().copyWith(isLoading: true);
+    fetch(_query);
+  }
+
   Future<void> fetch(String query) async {
     if (_crawler.searchNotSupported) {
       log.warning('crawler search cancelled, not supported');

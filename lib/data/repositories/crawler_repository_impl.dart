@@ -6,7 +6,6 @@ import 'package:dartz/dartz.dart';
 
 import '../../core/failure.dart';
 import '../../domain/domain.dart';
-import '../../domain/repositories/crawler_repository.dart';
 
 class CrawlerRepositoryImpl implements CrawlerRepository {
   CrawlerRepositoryImpl();
@@ -47,8 +46,12 @@ class CrawlerRepositoryImpl implements CrawlerRepository {
   @override
   Future<Either<Failure, List<PartialNovelData>>> getSearchNovels(
       ParseSearch parser, String query, int page) async {
-    // TODO: catch errors
-    final novels = await parser.search(query, page);
+    final List<Novel> novels;
+    try {
+      novels = await parser.search(query, page);
+    } on DioError catch (e) {
+      return Left(NetworkFailure(e.message));
+    }
 
     final entities = novels.map(PartialNovelData.fromSource).toList();
 

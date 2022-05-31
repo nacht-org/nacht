@@ -1,5 +1,5 @@
 import 'package:nacht/components/browse/model/fetch_info.dart';
-import 'package:nacht/core/logger/logger.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/domain/domain.dart';
 import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
@@ -9,6 +9,7 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
     .family<SearchFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, holding) {
     var notifier = SearchFetchNotifier(
+      read: ref.read,
       crawler: holding,
       sourceService: ref.watch(sourceServiceProvider),
     );
@@ -20,14 +21,17 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
 
 class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   SearchFetchNotifier({
+    required Reader read,
     required CrawlerInfo crawler,
     required SourceService sourceService,
-  })  : _crawler = crawler,
+  })  : _read = read,
+        _crawler = crawler,
         _sourceService = sourceService,
         super(FetchInfo.initial());
 
   String _query = '';
 
+  final Reader _read;
   final CrawlerInfo _crawler;
   final SourceService _sourceService;
 
@@ -56,7 +60,15 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
     );
 
     result.fold(
-      (failure) {},
+      (failure) {
+        if (state.page == 1) {
+          state = state.copyWith(error: failure.message, isLoading: false);
+        } else {
+          state = state.copyWith(isLoading: false);
+          _read(messageServiceProvider)
+              .showText(failure.message ?? "Unexpected error");
+        }
+      },
       (data) {
         state = state.copyWith(
           data: [...state.data, ...data],

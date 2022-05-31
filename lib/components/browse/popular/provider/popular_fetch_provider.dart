@@ -33,10 +33,10 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
 
   void restart() {
     state = FetchInfo.initial();
-    fetch();
+    next();
   }
 
-  Future<void> fetch() async {
+  Future<void> next() async {
     assert(_crawler.popularSupported);
 
     state = state.copyWith(isLoading: true);

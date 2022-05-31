@@ -13,7 +13,7 @@ import 'provider/popular_fetch_provider.dart';
 import 'provider/popular_provider.dart';
 import 'provider/popular_view_provider.dart';
 
-class PopularPage extends HookConsumerWidget {
+class PopularPage extends HookConsumerWidget with LoggerMixin {
   const PopularPage({
     Key? key,
     required this.crawlerFactory,
@@ -28,7 +28,7 @@ class PopularPage extends HookConsumerWidget {
 
     usePostFrameCallback(
       (timeStamp) {
-        ref.watch(popularFetchProvider(crawler).notifier).fetch();
+        ref.watch(popularFetchProvider(crawler).notifier).next();
       },
       condition: crawler.popularSupported,
     );
@@ -63,66 +63,80 @@ class PopularPage extends HookConsumerWidget {
             ref.watch(popularProvider(crawlerFactory));
 
             final view = ref.watch(popularViewProvider(crawlerFactory));
-            final crawlerInfo = ref.watch(crawlerProvider(crawlerFactory));
 
-            return CustomScrollView(
-              slivers: view.when(
-                loading: () => [
-                  const SliverFillLoadingIndicator(),
-                ],
-                unsupported: (message) => [
-                  SliverFillLoadingError(
-                    message: Text(message),
-                  ),
-                ],
-                error: (message) => [
-                  SliverFillLoadingError(
+            return NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification.metrics.pixels ==
+                    notification.metrics.maxScrollExtent) {
+                  log.info(
+                      'scroll to end notification recieved in popular page');
+                  onScrollEnd(ref, isSearching, crawler);
+                }
+                return false;
+              },
+              child: CustomScrollView(
+                slivers: view.when(
+                  loading: () => [
+                    const SliverFillLoadingIndicator(),
+                  ],
+                  unsupported: (message) => [
+                    SliverFillLoadingError(
+                      message: Text(message),
+                    ),
+                  ],
+                  error: (message) => [
+                    SliverFillLoadingError(
                       message: Text(message),
                       onRetry: () {
                         final isSearching = ref.read(isSearchingProvider);
                         if (isSearching) {
                           ref
-                              .read(searchFetchProvider(crawlerInfo).notifier)
+                              .read(searchFetchProvider(crawler).notifier)
                               .restart();
                         } else {
                           ref
-                              .read(popularFetchProvider(crawlerInfo).notifier)
+                              .read(popularFetchProvider(crawler).notifier)
                               .restart();
                         }
-                      }),
-                ],
-                empty: () => [],
-                data: (novels) => [
-                  SliverFetchGrid(items: novels, crawler: crawler.instance),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      height: 64,
-                      alignment: Alignment.center,
-                      child: Consumer(
-                        builder: (context, ref, child) {
-                          final fetch =
-                              ref.watch(popularFetchProvider(crawler));
-                          final notifier =
-                              ref.watch(popularFetchProvider(crawler).notifier);
-
-                          if (fetch.isLoading) {
-                            return const CircularProgressIndicator();
-                          } else {
-                            return TextButton(
-                              onPressed: notifier.fetch,
-                              child: const Text('Load more'),
-                            );
-                          }
-                        },
-                      ),
+                      },
                     ),
-                  ),
-                ],
+                  ],
+                  empty: () => [],
+                  data: (novels) => [
+                    SliverFetchGrid(items: novels, crawler: crawler.instance),
+                  ],
+                ),
               ),
             );
           },
         ),
       ),
+      extendBody: true,
+      bottomNavigationBar: Consumer(builder: (context, ref, child) {
+        final fetch = ref.watch(popularFetchProvider(crawler));
+
+        return AnimatedBottomBar(
+          visible: fetch.isLoading,
+          child: const PreferredSize(
+            preferredSize: Size.fromHeight(4.0),
+            child: LinearProgressIndicator(),
+          ),
+        );
+      }),
     );
+  }
+
+  void onScrollEnd(WidgetRef ref, bool isSearching, CrawlerInfo crawler) {
+    if (isSearching) {
+      final fetch = ref.read(searchFetchProvider(crawler));
+      if (fetch.page > 1 && !fetch.isLoading) {
+        ref.read(searchFetchProvider(crawler).notifier).next();
+      }
+    } else {
+      final fetch = ref.read(popularFetchProvider(crawler));
+      if (fetch.page > 1 && !fetch.isLoading) {
+        ref.read(popularFetchProvider(crawler).notifier).next();
+      }
+    }
   }
 }

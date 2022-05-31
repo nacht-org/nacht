@@ -29,7 +29,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
         _sourceService = sourceService,
         super(FetchInfo.initial());
 
-  String _query = '';
+  String _currentQuery = '';
 
   final Reader _read;
   final CrawlerInfo _crawler;
@@ -37,7 +37,12 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
 
   void restart() {
     state = FetchInfo.initial().copyWith(isLoading: true);
-    fetch(_query);
+    next();
+  }
+
+  @override
+  Future<void> next() {
+    return fetch(_currentQuery);
   }
 
   Future<void> fetch(String query) async {
@@ -46,16 +51,16 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
       return;
     }
 
-    if (query == _query) {
+    if (query == _currentQuery) {
       state = state.copyWith(isLoading: true);
     } else {
-      _query = query;
+      _currentQuery = query;
       state = FetchInfo.initial().copyWith(isLoading: true);
     }
 
     final result = await _sourceService.search(
       _crawler.instance as ParseSearch,
-      _query,
+      _currentQuery,
       state.page,
     );
 

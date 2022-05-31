@@ -1,4 +1,5 @@
 import 'package:nacht/core/core.dart';
+import 'package:nacht/data/failure.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,6 +9,7 @@ import '../domain.dart';
 final sourceServiceProvider = Provider<SourceService>(
   (ref) => SourceService(
     crawlerRepository: ref.watch(crawlerRepositoryProvider),
+    networkRepository: ref.watch(networkRepositoryProvider),
   ),
   name: 'SourceServiceProvider',
 );
@@ -15,9 +17,12 @@ final sourceServiceProvider = Provider<SourceService>(
 class SourceService with LoggerMixin {
   SourceService({
     required CrawlerRepository crawlerRepository,
-  }) : _crawlerRepository = crawlerRepository;
+    required NetworkRepository networkRepository,
+  })  : _crawlerRepository = crawlerRepository,
+        _networkRepository = networkRepository;
 
   final CrawlerRepository _crawlerRepository;
+  final NetworkRepository _networkRepository;
 
   Option<sources.CrawlerFactory> crawlerFactoryFor({required String url}) {
     return _crawlerRepository.crawlerFactoryFor(url);
@@ -31,7 +36,10 @@ class SourceService with LoggerMixin {
     sources.ParsePopular parser,
     int page,
   ) async {
-    // TODO: check for connection
+    if (!await _networkRepository.isConnectionAvailable()) {
+      return const Left(NetworkFailure("Connection not available"));
+    }
+
     return _crawlerRepository.getPopularNovels(parser, page);
   }
 
@@ -39,8 +47,11 @@ class SourceService with LoggerMixin {
     sources.ParseSearch parser,
     String query,
     int page,
-  ) {
-    // TODO: check for connection
+  ) async {
+    if (!await _networkRepository.isConnectionAvailable()) {
+      return const Left(NetworkFailure("Connection not available"));
+    }
+
     return _crawlerRepository.getSearchNovels(parser, query, page);
   }
 }

@@ -14,6 +14,7 @@ class ChapterData with _$ChapterData {
     required String url,
     required DateTime? updated,
     required DateTime? readAt,
+    required int novelId,
     required int volumeId,
   }) = _ChapterData;
 
@@ -26,6 +27,7 @@ class ChapterData with _$ChapterData {
       url: chapter.url,
       updated: chapter.updated,
       readAt: chapter.readAt,
+      novelId: chapter.novelId,
       volumeId: chapter.volumeId,
     );
   }

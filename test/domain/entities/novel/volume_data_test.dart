@@ -7,15 +7,12 @@ void main() {
     id: 3,
     volumeIndex: 3,
     name: 'Volume 3',
-    novelId: 3,
   );
 
   final tData = VolumeData(
     id: 3,
     index: 3,
     name: 'Volume 3',
-    chapters: [],
-    novelId: 3,
   );
 
   test('should create VolumeData from Volume', () {

@@ -11,8 +11,6 @@ class VolumeData with _$VolumeData {
     required int id,
     required int index,
     required String name,
-    required List<ChapterData> chapters,
-    required int novelId,
   }) = _VolumeData;
 
   factory VolumeData.fromModel(Volume volume) {
@@ -20,8 +18,6 @@ class VolumeData with _$VolumeData {
       id: volume.id,
       index: volume.volumeIndex,
       name: volume.name,
-      chapters: [],
-      novelId: volume.novelId,
     );
   }
 

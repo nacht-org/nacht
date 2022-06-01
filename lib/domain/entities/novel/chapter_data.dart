@@ -10,7 +10,7 @@ class ChapterData with _$ChapterData {
     required int id,
     required int index,
     required String title,
-    required String? content,
+    required int? content,
     required String url,
     required DateTime? updated,
     required DateTime? readAt,

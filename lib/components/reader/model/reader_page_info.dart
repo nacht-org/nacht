@@ -16,11 +16,7 @@ class ReaderPageInfo with _$ReaderPageInfo {
 
   factory ReaderPageInfo.from(ChapterData data, CrawlerInfo crawler) {
     final ContentInfo content;
-    if (data.content == null) {
-      content = const ContentInfo.loading();
-    } else {
-      content = ContentInfo.data(data.content!);
-    }
+    content = const ContentInfo.loading();
 
     return ReaderPageInfo(
       chapter: data,

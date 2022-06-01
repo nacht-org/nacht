@@ -1,11 +1,13 @@
-import 'package:nacht/data/models/volume.dart';
 import 'package:drift/drift.dart';
+
+import 'assets.dart';
+import 'volume.dart';
 
 class Chapters extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get chapterIndex => integer()();
   TextColumn get title => text()();
-  TextColumn get content => text().nullable()();
+  IntColumn get content => integer().nullable().references(Assets, #id)();
   TextColumn get url => text()();
   DateTimeColumn get updated => dateTime().nullable()();
   DateTimeColumn get readAt => dateTime().nullable()();

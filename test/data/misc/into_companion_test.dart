@@ -20,7 +20,6 @@ void main() {
         final tCompanion = ChaptersCompanion(
           chapterIndex: const Value(2),
           title: const Value('my chapter'),
-          content: const Value('<div>content</div>'),
           url: const Value('https://website.com/novel/123/1'),
           updated: Value(DateTime(2022, 04, 23)),
         );

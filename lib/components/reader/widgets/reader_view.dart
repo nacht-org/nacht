@@ -3,7 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/components/reader/provider/reader_provider.dart';
-import 'package:nacht/components/reader/widgets/settings_sheet.dart';
+import 'package:nacht/components/reader/widgets/reader_bottom_bar.dart';
+import 'package:nacht/components/widgets/animated_bottom_bar.dart';
 import 'package:nacht/core/core.dart';
 
 import '../model/reader_info.dart';
@@ -73,18 +74,14 @@ class ReaderView extends HookConsumerWidget {
                 ],
               );
             }),
-            actions: [
-              IconButton(
-                onPressed: () => showModalBottomSheet(
-                  context: context,
-                  builder: (context) => const SettingsSheet(),
-                ),
-                icon: const Icon(Icons.settings),
-              ),
-            ],
           ),
         ),
         body: ReaderBody(reader: reader),
+        extendBody: true,
+        bottomNavigationBar: AnimatedBottomBar(
+          visible: isToolbarVisible,
+          child: const ReaderBottomBar(),
+        ),
       ),
     );
   }

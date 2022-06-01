@@ -27,12 +27,13 @@ class Tags extends StatelessWidget {
       return const SizedBox.shrink();
     } else if (expanded.value) {
       return Wrap(
-        children: children,
         spacing: 8.0,
         runSpacing: 8.0,
+        children: children,
       );
     } else {
       return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Row(
           children: children
               .map((child) => Padding(
@@ -41,7 +42,6 @@ class Tags extends StatelessWidget {
                   ))
               .toList(),
         ),
-        scrollDirection: Axis.horizontal,
       );
     }
   }

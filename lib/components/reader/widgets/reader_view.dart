@@ -29,7 +29,7 @@ class ReaderView extends HookConsumerWidget {
         ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
 
     final controller = useAnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: kShortAnimationDuration,
       initialValue: 1,
     );
 

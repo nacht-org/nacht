@@ -54,13 +54,12 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
     final novel = result.readTable(database.novels);
     final asset = result.readTableOrNull(database.assets);
 
-    final metadata = (await getMetaData(novel.id))
-        .map((value) => MetaEntryData.fromModel(value))
-        .toList();
-    final volumes = await _getVolumesOfNovel(novel.id);
+    final metadata =
+        (await getMetaData(novel.id)).map(MetaEntryData.fromModel).toList();
+    final chapters = await _getChapterModelsOfVolume(novel.id);
 
     final entity = NovelData.fromModel(novel).copyWith(
-      volumes: volumes,
+      chapters: chapters,
       metadata: metadata,
       cover: asset == null ? null : AssetData.fromModel(asset),
     );
@@ -68,29 +67,25 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
     return Right(entity);
   }
 
-  Future<List<VolumeData>> _getVolumesOfNovel(
+  Future<List<ChapterData>> _getChapterModelsOfVolume(
     int novelId,
   ) async {
-    final query = database.select(database.volumes)
-      ..where((tbl) => tbl.novelId.equals(novelId));
-    final volumes = await query.get();
+    final query = database.select(database.chapters).join([
+      leftOuterJoin(
+        database.volumes,
+        database.chapters.volumeId.equalsExp(database.volumes.id),
+      )
+    ])
+      ..where(database.chapters.novelId.equals(novelId));
 
-    final entities = <VolumeData>[];
-    for (final volume in volumes) {
-      final entity = VolumeData.fromModel(volume)
-          .copyWith(chapters: await _getChapterModelsOfVolume(volume.id));
-      entities.add(entity);
-    }
+    final results = await query.get();
 
-    return entities;
-  }
+    return results.map((row) {
+      final chapter = row.readTable(database.chapters);
+      final volume = row.readTable(database.volumes);
 
-  Future<List<ChapterData>> _getChapterModelsOfVolume(
-    int volumeId,
-  ) async {
-    return (await _getChaptersOfVolume(volumeId))
-        .map(ChapterData.fromModel)
-        .toList();
+      return ChapterData.fromModel(chapter, VolumeData.fromModel(volume));
+    }).toList();
   }
 
   Future<List<Chapter>> _getChaptersOfVolume(int volumeId) async {

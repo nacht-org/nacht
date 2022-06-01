@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../data/data.dart';
+import 'volume_data.dart';
 
 part 'chapter_data.freezed.dart';
 
@@ -15,10 +16,10 @@ class ChapterData with _$ChapterData {
     required DateTime? updated,
     required DateTime? readAt,
     required int novelId,
-    required int volumeId,
+    required VolumeData volume,
   }) = _ChapterData;
 
-  factory ChapterData.fromModel(Chapter chapter) {
+  factory ChapterData.fromModel(Chapter chapter, VolumeData volume) {
     return ChapterData(
       id: chapter.id,
       index: chapter.chapterIndex,
@@ -28,7 +29,7 @@ class ChapterData with _$ChapterData {
       updated: chapter.updated,
       readAt: chapter.readAt,
       novelId: chapter.novelId,
-      volumeId: chapter.volumeId,
+      volume: volume,
     );
   }
 

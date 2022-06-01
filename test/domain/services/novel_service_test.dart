@@ -66,7 +66,7 @@ void main() {
       coverUrl: 'https://assets.website.com/novel/123/cover.jpg',
       status: NovelStatus.unknown,
       lang: 'en',
-      volumes: [],
+      chapters: [],
       metadata: [],
       workType: const OriginalWork(),
       readingDirection: ReadingDirection.ltr,

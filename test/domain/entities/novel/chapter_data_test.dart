@@ -15,6 +15,13 @@ void main() {
     volumeId: 2,
   );
 
+  final tVolumeData = VolumeData(
+    id: 2,
+    index: 1,
+    name: '',
+    novelId: 1,
+  );
+
   final tData = ChapterData(
     id: 2,
     index: 2,
@@ -24,11 +31,11 @@ void main() {
     updated: DateTime(2022, 4, 23),
     readAt: DateTime(2022, 5, 25),
     novelId: 1,
-    volumeId: 2,
+    volume: tVolumeData,
   );
 
   test('should create chapter data from data.chapter', () {
-    final result = ChapterData.fromModel(tChapter);
+    final result = ChapterData.fromModel(tChapter, tVolumeData);
     expect(result, tData);
   });
 }

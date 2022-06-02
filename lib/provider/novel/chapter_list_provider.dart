@@ -5,29 +5,28 @@ import '../../domain/domain.dart';
 
 part 'chapter_list_provider.freezed.dart';
 
-final chapterListProvider = StateNotifierProvider.autoDispose
-    .family<ChapterListNotifier, List<ChapterListEntry>, NovelData>(
+final chapterListProvider =
+    Provider.autoDispose.family<List<ChapterListEntry>, NovelData>(
   (ref, data) {
+    final map = <VolumeData, List<ChapterData>>{};
+    for (final chapter in data.chapters) {
+      map.putIfAbsent(chapter.volume, () => []).add(chapter);
+    }
+
     final state = <ChapterListEntry>[];
-    if (data.volumes.length == 1) {
-      state.addAll(data.volumes.single.chapters.map(ChapterListEntry.chapter));
+    if (map.length == 1) {
+      state.addAll(map.values.single.map(ChapterListEntry.chapter));
     } else {
-      for (final volume in data.volumes) {
-        state.add(ChapterListEntry.volume(volume));
-        state.addAll(volume.chapters.map(ChapterListEntry.chapter));
+      for (final entry in map.entries) {
+        state.add(ChapterListEntry.volume(entry.key));
+        state.addAll(entry.value.map(ChapterListEntry.chapter));
       }
     }
 
-    return ChapterListNotifier(state: state);
+    return state;
   },
   name: 'ChapterListProvider',
 );
-
-class ChapterListNotifier extends StateNotifier<List<ChapterListEntry>> {
-  ChapterListNotifier({
-    required List<ChapterListEntry> state,
-  }) : super(state);
-}
 
 @freezed
 class ChapterListEntry with _$ChapterListEntry {

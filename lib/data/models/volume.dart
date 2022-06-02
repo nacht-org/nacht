@@ -1,5 +1,5 @@
-import 'package:nacht/data/models/novel.dart';
 import 'package:drift/drift.dart';
+import 'package:nacht/data/data.dart';
 
 class Volumes extends Table {
   IntColumn get id => integer().autoIncrement()();

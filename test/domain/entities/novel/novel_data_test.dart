@@ -31,7 +31,7 @@ void main() {
     workType: const sources.TranslatedWork.mtl(),
     status: sources.NovelStatus.completed,
     metadata: [],
-    volumes: [],
+    chapters: [],
     favourite: true,
   );
 

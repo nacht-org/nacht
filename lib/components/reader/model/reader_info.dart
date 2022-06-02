@@ -8,19 +8,13 @@ class ReaderInfo with _$ReaderInfo {
   factory ReaderInfo({
     required NovelData novel,
     required ChapterData initial,
-    required List<ChapterData> chapters,
     required int? currentIndex,
   }) = _ReaderInfo;
 
   factory ReaderInfo.from(NovelData novel, ChapterData initial) {
-    final chapters = novel.volumes
-        .map((volume) => volume.chapters)
-        .reduce((value, element) => [...value, ...element]);
-
     return ReaderInfo(
       novel: novel,
       initial: initial,
-      chapters: chapters,
       currentIndex: null,
     );
   }
@@ -28,7 +22,7 @@ class ReaderInfo with _$ReaderInfo {
   ReaderInfo._();
 
   ChapterData get current =>
-      currentIndex == null ? initial : chapters[currentIndex!];
+      currentIndex == null ? initial : novel.chapters[currentIndex!];
 
-  int get initialIndex => chapters.indexOf(initial);
+  int get initialIndex => novel.chapters.indexOf(initial);
 }

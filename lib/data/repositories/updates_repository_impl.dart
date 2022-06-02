@@ -36,6 +36,10 @@ class UpdatesRepositoryImpl implements UpdatesRepository {
         database.chapters,
         database.chapters.id.equalsExp(database.updates.chapterId),
       ),
+      innerJoin(
+        database.volumes,
+        database.volumes.id.equalsExp(database.chapters.volumeId),
+      )
     ])
       ..where(database.novels.favourite.equals(true))
       ..limit(count)
@@ -47,11 +51,12 @@ class UpdatesRepositoryImpl implements UpdatesRepository {
       final update = row.readTable(database.updates);
       final novel = row.readTable(database.novels);
       final chapter = row.readTable(database.chapters);
+      final volume = row.readTable(database.volumes);
 
       return UpdateData.fromModel(
         update,
         NovelData.fromModel(novel),
-        ChapterData.fromModel(chapter),
+        ChapterData.fromModel(chapter, VolumeData.fromModel(volume)),
       );
     }).toList();
   }

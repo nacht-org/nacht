@@ -17,7 +17,7 @@ class NovelData with _$NovelData {
     AssetData? cover,
     required sources.NovelStatus status,
     required String lang,
-    required List<VolumeData> volumes,
+    required List<ChapterData> chapters,
     required List<MetaEntryData> metadata,
     required sources.WorkType workType,
     required sources.ReadingDirection readingDirection,
@@ -34,7 +34,7 @@ class NovelData with _$NovelData {
       coverUrl: novel.coverUrl,
       status: StatusSeed.intoStatus(novel.statusId),
       lang: novel.lang,
-      volumes: [],
+      chapters: [],
       metadata: [],
       workType: WorkTypeSeed.intoWorkType(novel.workTypeId),
       readingDirection:
@@ -44,12 +44,4 @@ class NovelData with _$NovelData {
   }
 
   NovelData._();
-
-  Iterable<ChapterData> get chapters sync* {
-    for (final volume in volumes) {
-      for (final chapter in volume.chapters) {
-        yield chapter;
-      }
-    }
-  }
 }

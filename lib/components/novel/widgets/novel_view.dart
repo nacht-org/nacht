@@ -45,16 +45,6 @@ class NovelView extends HookConsumerWidget {
       return null;
     }, []);
 
-    //? optimize with provider?
-    Iterable<int> getChapterIds() {
-      final ids = <int>[];
-      for (final v in novel.volumes) {
-        ids.addAll(v.chapters.map((c) => c.id));
-      }
-
-      return ids;
-    }
-
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
@@ -70,10 +60,10 @@ class NovelView extends HookConsumerWidget {
               title: Text('${selection.selected.length}'),
               onSelectAllPressed: () => ref
                   .read(novelSelectionProvider.notifier)
-                  .addAll(getChapterIds()),
+                  .addAll(novel.chapters.map((c) => c.id)),
               onInversePressed: () => ref
                   .read(novelSelectionProvider.notifier)
-                  .flipAll(getChapterIds()),
+                  .flipAll(novel.chapters.map((c) => c.id)),
             )
         ],
         body: RefreshIndicator(
@@ -113,23 +103,19 @@ class NovelView extends HookConsumerWidget {
                     ),
                   );
                 }),
-                Consumer(builder: (context, ref, child) {
-                  final chapterCount = ref.watch(chapterCountProvider(novel));
-
-                  return SliverToBoxAdapter(
-                    child: ListTile(
-                      title: Text(
-                        '$chapterCount Chapter'.pluralize(
-                          test: (_) => chapterCount > 1,
-                        ),
-                        style: Theme.of(context).textTheme.titleMedium,
+                SliverToBoxAdapter(
+                  child: ListTile(
+                    title: Text(
+                      '${novel.chapters.length} Chapter'.pluralize(
+                        test: (_) => novel.chapters.length > 1,
                       ),
-                      trailing: const Icon(Icons.filter_list),
-                      onTap: () {},
-                      dense: true,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                  );
-                }),
+                    trailing: const Icon(Icons.filter_list),
+                    onTap: () {},
+                    dense: true,
+                  ),
+                ),
                 ChapterList(novel: novel),
                 const SliverFloatingActionButtonPadding(),
               ],

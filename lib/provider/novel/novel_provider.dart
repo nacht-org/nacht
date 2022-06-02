@@ -152,14 +152,9 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
         final readAt = isRead ? DateTime.now() : null;
 
         state = state.copyWith(
-          volumes: [
-            for (final v in state.volumes)
-              v.copyWith(
-                chapters: [
-                  for (final c in v.chapters)
-                    if (ids.contains(c.id)) c.copyWith(readAt: readAt) else c
-                ],
-              ),
+          chapters: [
+            for (final c in state.chapters)
+              if (ids.contains(c.id)) c.copyWith(readAt: readAt) else c
           ],
         );
 

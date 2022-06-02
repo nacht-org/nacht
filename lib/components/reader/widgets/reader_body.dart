@@ -31,11 +31,11 @@ class ReaderBody extends HookConsumerWidget {
         onTap: toolbarNotifier.toggle,
         child: PageView.builder(
           controller: controller,
-          itemCount: reader.chapters.length,
+          itemCount: reader.novel.chapters.length,
           itemBuilder: (context, index) {
             return ChapterPage(
               novel: reader.novel,
-              chapter: reader.chapters[index],
+              chapter: reader.novel.chapters[index],
               crawlerFactory: data,
             );
           },

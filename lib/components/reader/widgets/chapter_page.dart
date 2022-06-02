@@ -39,11 +39,14 @@ class ChapterPage extends HookConsumerWidget {
       loading: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      data: (content) => NotificationListener<ScrollEndNotification>(
+      data: (content) => NotificationListener<ScrollNotification>(
         onNotification: (notification) {
-          ref
-              .read(chapterProvider(ChapterInput(chapter)).notifier)
-              .markAsRead();
+          if (notification.metrics.pixels ==
+              notification.metrics.maxScrollExtent) {
+            ref
+                .read(chapterProvider(ChapterInput(chapter)).notifier)
+                .markAsRead();
+          }
           return false;
         },
         child: Scrollbar(

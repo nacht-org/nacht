@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:nacht/data/misc/wrappers.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
@@ -56,7 +57,7 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
 
     final metadata =
         (await getMetaData(novel.id)).map(MetaEntryData.fromModel).toList();
-    final chapters = await _getChapterModelsOfVolume(novel.id);
+    final chapters = await _getChapterModels(novel.id);
 
     final entity = NovelData.fromModel(novel).copyWith(
       chapters: chapters,
@@ -67,7 +68,7 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
     return Right(entity);
   }
 
-  Future<List<ChapterData>> _getChapterModelsOfVolume(
+  Future<List<ChapterData>> _getChapterModels(
     int novelId,
   ) async {
     final query = database.select(database.chapters).join([
@@ -88,9 +89,9 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
     }).toList();
   }
 
-  Future<List<Chapter>> _getChaptersOfVolume(int volumeId) async {
+  Future<List<Chapter>> _getChapters(int novelId) async {
     final query = database.select(database.chapters)
-      ..where((tbl) => tbl.volumeId.equals(volumeId));
+      ..where((tbl) => tbl.novelId.equals(novelId));
     return await query.get();
   }
 
@@ -168,60 +169,68 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       volumeModels[model] = volume.chapters;
     }
 
+    final newChapters = <SourceChapterWrapper>[];
+    for (final entry in volumeModels.entries) {
+      newChapters.addAll(
+        entry.value
+            .map((chapter) => SourceChapterWrapper(chapter, entry.key.id)),
+      );
+    }
+
+    final currentChapters = await _getChapters(novelId);
+
     log.fine('updating and removing chapters');
     await database.batch((batch) async {
-      for (final entry in volumeModels.entries) {
-        final volume = entry.key;
-        final chapters = entry.value;
+      final diff = calculateDiff<Chapter, SourceChapterWrapper>(
+        prev: IdentityList<Chapter, String>(
+          items: currentChapters,
+          identity: (item) => item.url,
+        ),
+        next: IdentityList<SourceChapterWrapper, String>(
+          items: newChapters,
+          identity: (item) => item.chapter.url,
+        ),
+        equality: (prev, next) {
+          return prev.title == next.chapter.title &&
+              prev.updated == next.chapter.updated &&
+              prev.chapterIndex == next.chapter.index &&
+              prev.volumeId == next.volumeId;
+        },
+      );
 
-        final diff = calculateDiff<Chapter, sources.Chapter>(
-          prev: IdentityList<Chapter, String>(
-            items: await _getChaptersOfVolume(volume.id),
-            identity: (item) => item.url,
-          ),
-          next: IdentityList<sources.Chapter, String>(
-            items: chapters,
-            identity: (item) => item.url,
-          ),
-          equality: (prev, next) {
-            return prev.title == next.title &&
-                prev.updated == next.updated &&
-                prev.chapterIndex == next.index;
+      for (final change in diff) {
+        change.when(
+          insert: (next) async {
+            final chapterCompanion =
+                chapterIntoCompanion(next.chapter).copyWith(
+              volumeId: Value(next.volumeId),
+              novelId: Value(novelId),
+            );
+
+            insertCompanions.add(chapterCompanion);
+            log.finer(
+                'insert chapter ${next.chapter.index} ${next.chapter.title}');
+          },
+          remove: (prev) {
+            batch.delete(database.chapters, prev);
+            log.finer('remove chapter ${prev.chapterIndex} ${prev.title}');
+          },
+          replace: (prev, next) {
+            final chapterCompanion =
+                chapterIntoCompanion(next.chapter).copyWith(
+              id: Value(prev.id),
+              volumeId: Value(next.volumeId),
+            );
+
+            batch.replace(database.chapters, chapterCompanion);
+            log.finer(
+                'replace chapter ${next.chapter.index} ${next.chapter.title}');
+          },
+          keep: (prev, next) {
+            log.finer(
+                'keep chapter ${next.chapter.index} ${next.chapter.title}');
           },
         );
-
-        for (final change in diff) {
-          change.map(
-            insert: (state) async {
-              final chapterCompanion = chapterIntoCompanion(state.data)
-                  .copyWith(volumeId: Value(volume.id));
-
-              insertCompanions.add(chapterCompanion);
-              log.finer(
-                  'insert chapter ${state.data.index} ${state.data.title}');
-            },
-            remove: (state) {
-              batch.delete(database.chapters, state.data);
-              log.finer(
-                  'remove chapter ${state.data.chapterIndex} ${state.data.title}');
-            },
-            replace: (state) {
-              final chapterCompanion =
-                  chapterIntoCompanion(state.next).copyWith(
-                id: Value(state.prev.id),
-                volumeId: Value(volume.id),
-                content: const Value.absent(),
-              );
-
-              batch.replace(database.chapters, chapterCompanion);
-              log.finer(
-                  'replace chapter ${state.next.index} ${state.next.title}');
-            },
-            keep: (state) {
-              log.finer('keep chapter ${state.next.index} ${state.next.title}');
-            },
-          );
-        }
       }
     });
 

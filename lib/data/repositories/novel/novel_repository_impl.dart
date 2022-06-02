@@ -313,11 +313,10 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       leftOuterJoin(
         database.volumes,
         database.volumes.id.equalsExp(database.chapters.volumeId),
-        useColumns: false,
       ),
       leftOuterJoin(
         database.novels,
-        database.novels.id.equalsExp(database.volumes.novelId),
+        database.novels.id.equalsExp(database.chapters.novelId),
         useColumns: false,
       )
     ])
@@ -326,13 +325,15 @@ class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
       ..orderBy([OrderingTerm.asc(database.chapters.chapterIndex)])
       ..limit(1);
 
-    final result = await query.getSingleOrNull();
-    if (result == null) {
+    final row = await query.getSingleOrNull();
+    if (row == null) {
       return Left(SelectFailure());
     }
 
-    final model = result.readTable(database.chapters);
-    return Right(ChapterData.fromModel(model));
+    final chapter = row.readTable(database.chapters);
+    final volume = row.readTable(database.volumes);
+
+    return Right(ChapterData.fromModel(chapter, VolumeData.fromModel(volume)));
   }
 
   // Single field updates.

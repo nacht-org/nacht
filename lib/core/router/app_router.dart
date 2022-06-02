@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../components/components.dart';
 import '../../domain/domain.dart';
+import '../../features/features.dart';
 
 part 'app_router.gr.dart';
 

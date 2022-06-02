@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 
 final applicationProvider = Provider<Application>(
   (ref) => Application(read: ref.read),

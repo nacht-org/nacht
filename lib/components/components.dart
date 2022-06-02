@@ -1,8 +1,6 @@
 export 'browse/browse_page.dart';
 export 'browse/popular/popular_page.dart';
 export 'category/category_page.dart';
-export 'home/home_page.dart';
-export 'home/provider/destination_animation_provider.dart';
 export 'library/library_page.dart';
 export 'more/more_page.dart';
 export 'novel/novel_page.dart';
@@ -23,6 +21,5 @@ export 'widgets/close_back_button.dart';
 export 'selection/widgets/sliver_selection_app_bar.dart';
 export 'selection/provider/selection_provider.dart';
 export 'widgets/menu_list_tile.dart';
-export 'home/provider/navigation_visible_provider.dart';
 export 'browse/provider/browse_search_provider.dart';
 export 'widgets/slivers/sliver_search_bar.dart';

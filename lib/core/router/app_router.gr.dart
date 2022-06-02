@@ -58,37 +58,13 @@ class _$AppRouter extends RootStackRouter {
               novel: args.novel,
               chapter: args.chapter,
               doFetch: args.doFetch));
-    },
-    LibraryRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const LibraryPage());
-    },
-    UpdatesRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const UpdatesPage());
-    },
-    BrowseRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const BrowsePage());
-    },
-    MoreRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const MorePage());
     }
   };
 
   @override
   List<RouteConfig> get routes => [
         RouteConfig(SplashRoute.name, path: '/'),
-        RouteConfig(HomeRoute.name, path: '/home', children: [
-          RouteConfig(LibraryRoute.name,
-              path: 'library-page', parent: HomeRoute.name),
-          RouteConfig(UpdatesRoute.name,
-              path: 'updates-page', parent: HomeRoute.name),
-          RouteConfig(BrowseRoute.name,
-              path: 'browse-page', parent: HomeRoute.name),
-          RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
-        ]),
+        RouteConfig(HomeRoute.name, path: '/home'),
         RouteConfig(PopularRoute.name, path: 'popular'),
         RouteConfig(NovelRoute.name, path: 'novel'),
         RouteConfig(WebViewRoute.name, path: 'webview'),
@@ -108,8 +84,7 @@ class SplashRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(HomeRoute.name, path: '/home', initialChildren: children);
+  const HomeRoute() : super(HomeRoute.name, path: '/home');
 
   static const String name = 'HomeRoute';
 }
@@ -232,36 +207,4 @@ class ReaderRouteArgs {
   String toString() {
     return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter, doFetch: $doFetch}';
   }
-}
-
-/// generated route for
-/// [LibraryPage]
-class LibraryRoute extends PageRouteInfo<void> {
-  const LibraryRoute() : super(LibraryRoute.name, path: 'library-page');
-
-  static const String name = 'LibraryRoute';
-}
-
-/// generated route for
-/// [UpdatesPage]
-class UpdatesRoute extends PageRouteInfo<void> {
-  const UpdatesRoute() : super(UpdatesRoute.name, path: 'updates-page');
-
-  static const String name = 'UpdatesRoute';
-}
-
-/// generated route for
-/// [BrowsePage]
-class BrowseRoute extends PageRouteInfo<void> {
-  const BrowseRoute() : super(BrowseRoute.name, path: 'browse-page');
-
-  static const String name = 'BrowseRoute';
-}
-
-/// generated route for
-/// [MorePage]
-class MoreRoute extends PageRouteInfo<void> {
-  const MoreRoute() : super(MoreRoute.name, path: 'more-page');
-
-  static const String name = 'MoreRoute';
 }

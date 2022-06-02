@@ -18,6 +18,7 @@ class Chapters extends Table {
 
   @override
   List<String> get customConstraints => [
-        'UNIQUE(volume_id, url)',
+        'UNIQUE(novel_id, url)',
+        'UNIQUE(novel_id, chapter_index)',
       ];
 }

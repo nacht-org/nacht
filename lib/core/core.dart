@@ -16,7 +16,6 @@ export 'misc/diff_utils.dart';
 export 'misc/either_utils.dart';
 export 'misc/time_utils.dart';
 export 'misc/platform_utils.dart';
-export 'misc/mediator_utils.dart';
 
 // Widgets.
 export 'widgets/sliding_preferred_size.dart';

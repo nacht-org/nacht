@@ -4,7 +4,6 @@ typedef DestinationBuilder = Widget Function(BuildContext context);
 typedef ChildBuilder = Widget Function(
     BuildContext context, Widget child, Animation<double> animation);
 
-// TODO: move to core
 class LazyIndexedStack extends StatefulWidget {
   const LazyIndexedStack({
     Key? key,

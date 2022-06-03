@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/components/components.dart';
 import 'package:nacht/features/browse/browse.dart';
-import 'package:nacht/features/home/home.dart';
 
 import '../../../../core/core.dart';
 import 'provider/crawlers_provider.dart';

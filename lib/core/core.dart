@@ -11,7 +11,11 @@ export 'misc/diff_utils.dart';
 export 'misc/either_utils.dart';
 export 'misc/time_utils.dart';
 export 'preferences/preferences_provider.dart';
-export 'widgets/sliding_preferred_size.dart';
 export 'nacht_theme/nacht_theme.dart';
 export 'preferences/reader/reader.dart';
 export 'misc/platform_utils.dart';
+
+export 'widgets/sliding_preferred_size.dart';
+export 'widgets/animation_provider.dart';
+export 'widgets/destination_transition.dart';
+export 'widgets/lazy_indexed_stack.dart';

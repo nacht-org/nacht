@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: move to core
 class AnimationProvider extends InheritedWidget {
   const AnimationProvider({
     Key? key,

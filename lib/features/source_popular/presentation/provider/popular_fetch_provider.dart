@@ -1,6 +1,6 @@
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/domain.dart';
 import 'package:nacht/features/browse/browse.dart';
+import 'package:nacht/features/source_popular/domain/services/fetch_popular.dart';
 import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart' show ParsePopular;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +11,7 @@ final popularFetchProvider = StateNotifierProvider.autoDispose
     read: ref.read,
     state: FetchInfo.initial(),
     crawler: crawler,
-    sourceService: ref.watch(sourceServiceProvider),
+    fetchPopular: ref.watch(fetchPopularProvider),
   ),
   name: 'PopularFetchProvider',
 );
@@ -21,15 +21,15 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
     required Reader read,
     required FetchInfo state,
     required CrawlerInfo crawler,
-    required SourceService sourceService,
+    required FetchPopular fetchPopular,
   })  : _read = read,
         _crawler = crawler,
-        _sourceService = sourceService,
+        _fetchPopular = fetchPopular,
         super(state);
 
   final Reader _read;
   final CrawlerInfo _crawler;
-  final SourceService _sourceService;
+  final FetchPopular _fetchPopular;
 
   void restart() {
     state = FetchInfo.initial();
@@ -41,7 +41,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
 
     state = state.copyWith(isLoading: true);
 
-    final result = await _sourceService.popular(
+    final result = await _fetchPopular.execute(
       _crawler.instance as ParsePopular,
       state.page,
     );

@@ -19,8 +19,8 @@ class HomePage extends HookWidget {
       duration: kShortAnimationDuration,
       builder: (context, child, animation) {
         return Scaffold(
-          body: FadeTransition(
-            opacity: animation,
+          body: AnimationProvider(
+            animation: animation,
             child: child,
           ),
           bottomNavigationBar: Consumer(builder: (context, ref, child) {

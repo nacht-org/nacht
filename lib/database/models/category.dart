@@ -1,5 +1,6 @@
-import 'package:nacht/data/models/novel.dart';
 import 'package:drift/drift.dart';
+
+import 'novel.dart';
 
 @DataClassName('NovelCategory')
 class NovelCategories extends Table {

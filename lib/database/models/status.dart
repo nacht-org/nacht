@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
-import '../exception.dart';
+import '../exceptions/seed_exception.dart';
 
 @DataClassName('Status')
 class Statuses extends Table {

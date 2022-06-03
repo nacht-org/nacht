@@ -1,6 +1,7 @@
-import 'package:nacht/data/models/chapter.dart';
-import 'package:nacht/data/models/novel.dart';
 import 'package:drift/drift.dart';
+
+import 'chapter.dart';
+import 'novel.dart';
 
 class Updates extends Table {
   IntColumn get id => integer().autoIncrement()();

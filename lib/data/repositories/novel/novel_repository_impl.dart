@@ -9,7 +9,7 @@ import '../../../core/core.dart';
 import '../../../domain/domain.dart';
 import '../../data.dart';
 import '../../failure.dart';
-import '../../misc/into_companion.dart';
+import '../../../database/misc/companion_utils.dart';
 
 class NovelRepositoryImpl with LoggerMixin implements NovelRepository {
   NovelRepositoryImpl({

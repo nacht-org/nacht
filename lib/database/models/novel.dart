@@ -1,9 +1,9 @@
-import 'package:nacht/data/models/reading_direction.dart';
-import 'package:nacht/data/models/status.dart';
-import 'package:nacht/data/models/work_type.dart';
 import 'package:drift/drift.dart';
 
 import 'assets.dart';
+import 'reading_direction.dart';
+import 'status.dart';
+import 'work_type.dart';
 
 class Novels extends Table {
   IntColumn get id => integer().autoIncrement()();

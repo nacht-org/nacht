@@ -1,5 +1,5 @@
 import 'package:nacht/data/data.dart';
-import 'package:nacht/data/misc/into_companion.dart';
+import 'package:nacht/database/misc/companion_utils.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
 

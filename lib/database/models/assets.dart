@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-import '../exception.dart';
+import '../exceptions/seed_exception.dart';
 
 class Assets extends Table {
   IntColumn get id => integer().autoIncrement()();

@@ -10,9 +10,9 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import '../../data.dart';
+import 'database.dart';
 
-part 'database.g.dart';
+part 'app_database.g.dart';
 
 final databaseProvider = Provider<AppDatabase>(
   (ref) => AppDatabase(),

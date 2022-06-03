@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 typedef DestinationBuilder = Widget Function(BuildContext context);
-typedef ChildBuilder = Widget Function(BuildContext context, Widget child);
+typedef ChildBuilder = Widget Function(
+    BuildContext context, Widget child, Animation<double> animation);
 
 class LazyIndexedStack extends StatefulWidget {
   const LazyIndexedStack({
@@ -10,28 +11,42 @@ class LazyIndexedStack extends StatefulWidget {
     required this.currentIndex,
     required this.builder,
     required this.destinations,
+    required this.duration,
+    this.curve = Curves.ease,
   }) : super(key: key);
 
   final int initialIndex;
   final ChildBuilder builder;
   final List<DestinationBuilder> destinations;
   final int currentIndex;
+  final Duration duration;
+  final Curve curve;
 
   @override
   State<LazyIndexedStack> createState() => _LazyIndexedStackState();
 }
 
-class _LazyIndexedStackState extends State<LazyIndexedStack> {
+class _LazyIndexedStackState extends State<LazyIndexedStack>
+    with SingleTickerProviderStateMixin {
   late int _index;
 
   final _dummyWidget = const SizedBox.shrink();
   final _initializedPagesTracker = <int, bool>{};
+
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _index = widget.initialIndex;
     _initializedPagesTracker[_index] = true;
+
+    _animationController =
+        AnimationController(vsync: this, value: 1.0, duration: widget.duration);
+    _animation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: widget.curve),
+    );
   }
 
   @override
@@ -41,12 +56,13 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
     if (oldWidget.currentIndex != widget.currentIndex) {
       _index = widget.currentIndex;
       _initializedPagesTracker[_index] = true;
+      _animationController.forward(from: 0.0);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final stack = IndexedStack(
+    final child = IndexedStack(
       index: _index,
       sizing: StackFit.expand,
       children: List.generate(widget.destinations.length, (index) {
@@ -59,7 +75,7 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
       }),
     );
 
-    return widget.builder(context, stack);
+    return widget.builder(context, child, _animation);
   }
 }
 

@@ -1,7 +1,6 @@
 export '../features/browse/presentation/browse_page.dart';
 export 'category/category_page.dart';
 export 'library/library_page.dart';
-export 'more/more_page.dart';
 export 'novel/novel_page.dart';
 export 'reader/reader_page.dart';
 export 'updates/updates_page.dart';

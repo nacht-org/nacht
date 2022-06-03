@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nacht/components/components.dart';
 
-import 'package:nacht/features/home/home.dart';
+import 'package:nacht/features/features.dart';
 
 class Destination {
   final DestinationBuilder builder;

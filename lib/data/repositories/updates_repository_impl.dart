@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:nacht/data/datasources/local/database.dart';
-
 import 'package:nacht/core/failure.dart';
 import 'package:drift/drift.dart';
+import 'package:nacht/database/database.dart';
 
 import '../../domain/domain.dart';
 

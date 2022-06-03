@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nacht/database/database.dart';
 
-import '../../../data/data.dart';
 import '../novel/novel_data.dart';
 
 part 'category_data.freezed.dart';

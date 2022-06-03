@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
+import 'package:nacht/database/database.dart';
 
 import '../../../core/failure.dart';
 import '../../../domain/domain.dart';
-import '../../data.dart';
 import '../../failure.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {

@@ -1,4 +1,5 @@
 import 'package:nacht/core/failure.dart';
+import 'package:nacht/database/database.dart';
 import 'package:nacht/domain/domain.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

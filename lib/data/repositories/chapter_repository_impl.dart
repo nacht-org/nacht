@@ -1,9 +1,8 @@
 import 'package:nacht/core/failure.dart';
+import 'package:nacht/database/database.dart';
 import 'package:nacht/domain/domain.dart';
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
-
-import '../data.dart';
 
 class ChapterRepositoryImpl implements ChapterRepository {
   ChapterRepositoryImpl({

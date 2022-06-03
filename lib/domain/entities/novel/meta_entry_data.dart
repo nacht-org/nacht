@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/data/data.dart';
+import 'package:nacht/database/database.dart';
 
 part 'meta_entry_data.freezed.dart';
 

@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
+import 'package:nacht/database/database.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
@@ -12,7 +13,6 @@ import '../../../core/core.dart';
 import '../../../domain/domain.dart';
 import '../../../domain/repositories/asset_repository.dart';
 import '../../data.dart';
-import '../../datasources/local/database.dart';
 import '../../failure.dart';
 
 class AssetRepositoryImpl with LoggerMixin implements AssetRepository {

@@ -1,6 +1,7 @@
 import 'package:nacht/data/data.dart';
 import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nacht/database/database.dart';
 
 part 'new_update.freezed.dart';
 

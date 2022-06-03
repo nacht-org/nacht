@@ -2,6 +2,7 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/data/data.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 import '../domain.dart';

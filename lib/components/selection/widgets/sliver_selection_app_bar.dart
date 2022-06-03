@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nacht/components/components.dart';
+import 'package:nacht/core/core.dart';
 
 class SliverSelectionAppBar extends StatelessWidget {
   const SliverSelectionAppBar({

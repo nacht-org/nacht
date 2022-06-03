@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../data/data.dart';
+import 'package:nacht/database/database.dart';
 
 part 'asset_data.freezed.dart';
 

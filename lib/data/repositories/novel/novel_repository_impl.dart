@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:nacht/data/misc/wrappers.dart';
+import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
 
 import '../../../core/core.dart';
 import '../../../domain/domain.dart';
-import '../../data.dart';
 import '../../failure.dart';
 import '../../../database/misc/companion_utils.dart';
 

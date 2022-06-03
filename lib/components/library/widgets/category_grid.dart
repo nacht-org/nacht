@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import '../../../domain/domain.dart';
 import '../../components.dart';
-import '../../widgets/novel_grid_card.dart';
 
 class CategoryGrid extends StatelessWidget {
   const CategoryGrid({Key? key, required this.category}) : super(key: key);

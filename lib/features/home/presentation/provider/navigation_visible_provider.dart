@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/components.dart';
+import 'package:nacht/features/browse/browse.dart';
 
 final navigationVisibleProvider = Provider<bool>((ref) {
   final browseSearchActive =

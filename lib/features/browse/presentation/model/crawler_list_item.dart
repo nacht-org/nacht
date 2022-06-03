@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/components/browse/model/crawler_entry.dart';
+
+import 'crawler_entry.dart';
 
 part 'crawler_list_item.freezed.dart';
 

@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/browse/model/browse_search_info.dart';
+
+import '../model/browse_search_info.dart';
 
 final browseSearchProvider =
     StateNotifierProvider<BrowseSearchNotifier, BrowseSearchInfo>(

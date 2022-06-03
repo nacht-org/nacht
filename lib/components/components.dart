@@ -1,5 +1,4 @@
-export 'browse/browse_page.dart';
-export 'browse/popular/popular_page.dart';
+export '../features/browse/presentation/browse_page.dart';
 export 'category/category_page.dart';
 export 'library/library_page.dart';
 export 'more/more_page.dart';
@@ -21,5 +20,4 @@ export 'widgets/close_back_button.dart';
 export 'selection/widgets/sliver_selection_app_bar.dart';
 export 'selection/provider/selection_provider.dart';
 export 'widgets/menu_list_tile.dart';
-export 'browse/provider/browse_search_provider.dart';
 export 'widgets/slivers/sliver_search_bar.dart';

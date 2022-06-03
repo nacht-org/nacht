@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/components/components.dart';
+import 'package:nacht/features/browse/browse.dart';
 
-import '../../../core/core.dart';
+import '../../../../core/core.dart';
 import 'provider/crawlers_provider.dart';
-import 'widgets/browse_search_button.dart';
 
 List<Widget> buildBrowseHeader(BuildContext context, bool innerBoxIsScrolled) {
   return [

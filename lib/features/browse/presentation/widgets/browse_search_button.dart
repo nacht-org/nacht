@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/components/components.dart';
+import 'package:nacht/features/browse/browse.dart';
 
 class BrowseSearchButton extends ConsumerWidget {
   const BrowseSearchButton({

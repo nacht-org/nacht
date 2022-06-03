@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/domain/domain.dart';
 
-import '../../../domain/domain.dart';
 import '../model/crawler_entry.dart';
 import '../model/crawler_list_item.dart';
 

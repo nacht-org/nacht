@@ -1,8 +1,9 @@
-import 'package:nacht/components/browse/model/fetch_state.dart';
-import 'package:nacht/components/browse/popular/provider/popular_provider.dart';
-import 'package:nacht/components/browse/search/search.dart';
+import 'package:nacht/features/browse/browse.dart';
+import 'package:nacht/features/source_search/source_search.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'popular_provider.dart';
 
 final popularViewProvider =
     Provider.autoDispose.family<FetchState, CrawlerFactory>(

@@ -1,8 +1,9 @@
-import 'package:nacht/components/browse/model/fetch_state.dart';
-import 'package:nacht/components/browse/search/search.dart';
+import 'package:nacht/features/browse/browse.dart';
 import 'package:nacht/provider/crawler_provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'search_fetch_provider.dart';
 
 final searchProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
   (ref, crawlerFactory) {

@@ -1,6 +1,6 @@
-import 'package:nacht/components/browse/model/fetch_info.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/domain/domain.dart';
+import 'package:nacht/features/browse/browse.dart';
 import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

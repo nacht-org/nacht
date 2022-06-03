@@ -1,20 +1,24 @@
 export 'failure.dart';
 export 'logger/logger.dart';
+export 'router/app_router.dart';
+export 'services/message_service.dart';
+export 'services/dialog_service.dart';
+export 'preferences/preferences_provider.dart';
+export 'nacht_theme/nacht_theme.dart';
+export 'preferences/reader/reader.dart';
+
+// Misc.
 export 'misc/error_handler.dart';
 export 'misc/lang_utils.dart';
 export 'misc/string_utils.dart';
 export 'misc/uri_utils.dart';
-export 'router/app_router.dart';
-export 'services/message_service.dart';
-export 'services/dialog_service.dart';
 export 'misc/diff_utils.dart';
 export 'misc/either_utils.dart';
 export 'misc/time_utils.dart';
-export 'preferences/preferences_provider.dart';
-export 'nacht_theme/nacht_theme.dart';
-export 'preferences/reader/reader.dart';
 export 'misc/platform_utils.dart';
+export 'misc/mediator_utils.dart';
 
+// Widgets.
 export 'widgets/sliding_preferred_size.dart';
 export 'widgets/animation_provider.dart';
 export 'widgets/destination_transition.dart';

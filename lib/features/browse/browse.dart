@@ -1,3 +1,6 @@
+// Domain.
+
+// Presentation.
 export 'presentation/provider/browse_search_provider.dart';
 export 'presentation/model/browse_search_info.dart';
 export 'presentation/model/crawler_entry.dart';

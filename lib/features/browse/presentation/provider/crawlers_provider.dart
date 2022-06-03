@@ -1,13 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/domain/domain.dart';
+import 'package:nacht/features/browse/domain/domain.dart';
 
 import '../model/crawler_entry.dart';
 import '../model/crawler_list_item.dart';
 
 final crawlersProvider = Provider<List<CrawlerListItem>>((ref) {
-  final sourceService = ref.watch(sourceServiceProvider);
-  final crawlers =
-      sourceService.crawlers().fold((failure) => [], (data) => data);
+  final crawlers = ref.watch(getCrawlersProvider).execute();
 
   final map = <String, List<CrawlerEntry>>{};
   for (final crawler in crawlers) {

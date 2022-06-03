@@ -1,5 +1,6 @@
-import 'package:nacht/components/widgets/loading_error.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../loading_error.dart';
 
 class SliverFillLoadingError extends StatelessWidget {
   const SliverFillLoadingError({

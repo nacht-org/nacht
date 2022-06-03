@@ -1,9 +1,10 @@
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/domain.dart';
 import 'package:nacht/features/browse/browse.dart';
 import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../domain/domain.dart';
 
 final searchFetchProvider = StateNotifierProvider.autoDispose
     .family<SearchFetchNotifier, FetchInfo, CrawlerInfo>(
@@ -11,7 +12,7 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
     var notifier = SearchFetchNotifier(
       read: ref.read,
       crawler: holding,
-      sourceService: ref.watch(sourceServiceProvider),
+      fetchSearch: ref.watch(fetchSearchProvider),
     );
 
     return notifier;
@@ -23,17 +24,17 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   SearchFetchNotifier({
     required Reader read,
     required CrawlerInfo crawler,
-    required SourceService sourceService,
+    required FetchSearch fetchSearch,
   })  : _read = read,
         _crawler = crawler,
-        _sourceService = sourceService,
+        _fetchSearch = fetchSearch,
         super(FetchInfo.initial());
 
   String _currentQuery = '';
 
   final Reader _read;
   final CrawlerInfo _crawler;
-  final SourceService _sourceService;
+  final FetchSearch _fetchSearch;
 
   void restart() {
     state = FetchInfo.initial().copyWith(isLoading: true);
@@ -58,7 +59,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
       state = FetchInfo.initial().copyWith(isLoading: true);
     }
 
-    final result = await _sourceService.search(
+    final result = await _fetchSearch.execute(
       _crawler.instance as ParseSearch,
       _currentQuery,
       state.page,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:nacht/common/common.dart';
 import 'package:nacht/components/library/provider/library_provider.dart';
 import 'package:nacht/components/updates/provider/updates_provider.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,7 @@ class Application with LoggerMixin {
     await Future.wait([
       _read(libraryProvider.notifier).reload(),
       _read(updatesProvider.notifier).fetch(),
+      _read(categoriesProvider.notifier).initialize(),
     ]);
 
     _read(routerProvider).replace(const HomeRoute());

@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 
-import '../../../domain/domain.dart';
 import 'library_provider.dart';
 
 part 'library_view_provider.freezed.dart';
 
 final libraryViewProvider = Provider<LibraryViewData>((ref) {
-  var categories = ref.watch(libraryProvider);
+  var categories = ref.watch(categoriesProvider);
   assert(categories.isNotEmpty);
 
   if (categories.length == 1) {
@@ -17,7 +17,7 @@ final libraryViewProvider = Provider<LibraryViewData>((ref) {
     return LibraryViewData.singular(category);
   } else {
     categories = categories
-        .where((category) => !(category.isDefault && category.novels.isEmpty))
+        .where((category) => !(category.isDefault && category.novelCount == 0))
         .toList()
       ..sort(((a, b) => a.index.compareTo(b.index)));
 

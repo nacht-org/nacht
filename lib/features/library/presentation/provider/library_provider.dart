@@ -1,4 +1,4 @@
-import 'package:nacht/domain/entities/category/category_data.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/domain/services/library_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,8 +17,4 @@ class LibraryNotifier extends StateNotifier<List<CategoryData>> {
         super([]);
 
   final LibraryService _libraryService;
-
-  Future<void> reload() async {
-    state = await _libraryService.categories(fetchNovels: true);
-  }
 }

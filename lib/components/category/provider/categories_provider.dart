@@ -1,5 +1,5 @@
-import 'package:nacht/components/library/provider/library_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 import 'dart:math' as math;
 
 import 'package:nacht/core/core.dart';
@@ -52,7 +52,6 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
       },
       (data) {
         state = _sort([...?state, data]);
-        _read(libraryProvider.notifier).reload();
       },
     );
   }
@@ -79,8 +78,6 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
         newCategory,
         ...state!.sublist(newCategory.index),
       ];
-
-      _read(libraryProvider.notifier).reload();
     });
   }
 
@@ -108,7 +105,7 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
             log.warning(failure);
             state = oldState;
           },
-          (data) => _read(libraryProvider.notifier).reload(),
+          (data) => {},
         );
       },
     );
@@ -149,9 +146,7 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
         log.warning(failure);
         state = oldState;
       },
-      (_) {
-        _read(libraryProvider.notifier).reload();
-      },
+      (_) {},
     );
   }
 

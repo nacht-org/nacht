@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 
-import '../../../domain/domain.dart';
 import 'provider/selected_categories_provider.dart';
 
 class SetCategoriesDialog extends ConsumerWidget {

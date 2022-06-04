@@ -10,6 +10,7 @@ class CategoryData with _$CategoryData {
     required int index,
     required String name,
     required bool isDefault,
+    required int novelCount,
   }) = _CategoryData;
 
   factory CategoryData.fromModel(NovelCategory category) {
@@ -18,6 +19,7 @@ class CategoryData with _$CategoryData {
       index: category.categoryIndex,
       name: category.name,
       isDefault: category.id == NovelCategorySeed.defaultCategory,
+      novelCount: 0,
     );
   }
 

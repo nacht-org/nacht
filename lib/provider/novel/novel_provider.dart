@@ -1,3 +1,4 @@
+import 'package:nacht/common/common.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -6,7 +7,6 @@ import 'package:nacht/provider/provider.dart';
 
 import '../../components/category/set_categories/provider/selected_categories_provider.dart';
 import '../../components/category/set_categories/set_categories_dialog.dart';
-import '../../components/library/provider/library_provider.dart';
 import '../../components/updates/provider/updates_provider.dart';
 import '../../core/core.dart';
 import '../../domain/domain.dart';
@@ -116,7 +116,6 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       log.warning(failure);
     }, (data) {
       state = state.copyWith(favourite: data);
-      read(libraryProvider.notifier).reload();
     });
   }
 

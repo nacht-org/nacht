@@ -1,9 +1,10 @@
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/browse/browse.dart';
-import 'package:nacht/features/source_popular/domain/services/fetch_popular.dart';
 import 'package:nacht/provider/provider.dart';
-import 'package:nacht_sources/nacht_sources.dart' show ParsePopular;
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../domain/domain.dart';
 
 final popularFetchProvider = StateNotifierProvider.autoDispose
     .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(
@@ -42,7 +43,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
     state = state.copyWith(isLoading: true);
 
     final result = await _fetchPopular.execute(
-      _crawler.instance as ParsePopular,
+      _crawler.instance as sources.ParsePopular,
       state.page,
     );
 

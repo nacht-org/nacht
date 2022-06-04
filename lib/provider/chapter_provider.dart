@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/logger/logger.dart';
 import 'package:nacht/domain/domain.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nacht/common/common.dart';
 
-import '../../../domain/domain.dart';
 import 'category_grid.dart';
 
 class SingularLibraryDisplay extends StatelessWidget {

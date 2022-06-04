@@ -41,7 +41,6 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
     next();
   }
 
-  @override
   Future<void> next() {
     return fetch(_currentQuery);
   }

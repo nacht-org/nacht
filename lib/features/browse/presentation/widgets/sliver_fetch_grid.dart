@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/domain.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 

@@ -5,3 +5,4 @@ export 'source_popular/source_popular.dart';
 export 'source_search/source_search.dart';
 export 'more/more.dart';
 export 'library/library.dart';
+export 'novel/novel.dart';

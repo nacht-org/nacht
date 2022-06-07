@@ -69,7 +69,7 @@ class NovelService with LoggerMixin {
         },
       );
 
-      final failure = insertResult.maybeLeft();
+      final failure = insertResult.getLeft();
       if (failure != null) {
         return Left(failure);
       }

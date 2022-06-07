@@ -1,10 +1,7 @@
+import 'package:nacht/common/common.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/domain/domain.dart';
 import 'package:nacht/database/database.dart';
-
-import 'chapter_data.dart';
-import 'meta_entry_data.dart';
 
 part 'novel_data.freezed.dart';
 

@@ -4,8 +4,6 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 
-import 'package:nacht/components/components.dart';
-
 class SliverFetchGrid extends StatelessWidget {
   const SliverFetchGrid({
     Key? key,
@@ -28,7 +26,7 @@ class SliverFetchGrid extends StatelessWidget {
               title: item.title,
               coverUrl: item.coverUrl,
               onTap: () => context.router.push(NovelRoute(
-                either: NovelEither.partial(item, crawler),
+                type: NovelType.partial(item),
               )),
             );
           },

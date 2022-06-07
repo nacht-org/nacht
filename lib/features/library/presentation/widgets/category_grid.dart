@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
-import 'package:nacht/components/components.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/library/presentation/provider/category_novels_family.dart';
 
@@ -32,10 +31,9 @@ class CategoryGrid extends ConsumerWidget {
             return NovelGridCard(
               title: novel.title,
               coverUrl: novel.coverUrl,
-              cover: novel.cover,
               onTap: () => context.router.push(
                 NovelRoute(
-                  either: NovelEither.complete(novel),
+                  type: NovelType.complete(novel),
                 ),
               ),
             );

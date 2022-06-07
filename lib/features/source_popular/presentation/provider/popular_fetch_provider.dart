@@ -1,8 +1,8 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/browse/browse.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../domain/domain.dart';
 
@@ -38,7 +38,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
   }
 
   Future<void> next() async {
-    assert(_crawler.popularSupported);
+    assert(_crawler.isPopularSupported);
 
     state = state.copyWith(isLoading: true);
 
@@ -55,8 +55,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
           state = state.copyWith(error: failure.message, isLoading: false);
         } else {
           state = state.copyWith(isLoading: false);
-          _read(messageServiceProvider)
-              .showText(failure.message ?? "Unexpected error");
+          _read(messageServiceProvider).showText(failure.message);
         }
       },
       (data) {

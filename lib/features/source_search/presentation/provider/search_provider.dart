@@ -1,5 +1,5 @@
+import 'package:nacht/common/common.dart';
 import 'package:nacht/features/browse/browse.dart';
-import 'package:nacht/provider/crawler_provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -7,8 +7,8 @@ import 'search_fetch_provider.dart';
 
 final searchProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
   (ref, crawlerFactory) {
-    final info = ref.watch(crawlerProvider(crawlerFactory));
-    if (info.searchNotSupported) {
+    final info = ref.watch(crawlerFamily(crawlerFactory));
+    if (info.isSearchNotSupported) {
       return const FetchState.unsupported("Search not supported");
     }
 

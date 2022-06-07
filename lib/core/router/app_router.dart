@@ -1,10 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:nacht_sources/nacht_sources.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../components/components.dart';
-import '../../domain/domain.dart';
 import '../../features/features.dart';
 
 part 'app_router.gr.dart';

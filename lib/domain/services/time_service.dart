@@ -7,6 +7,7 @@ final timeServiceProvider = Provider<TimeService>(
   name: 'TimeServiceProvider',
 );
 
+// TODO: move date time formatting into core.
 class TimeService {
   final DateFormat _dateFormat = DateFormat.yMd();
 

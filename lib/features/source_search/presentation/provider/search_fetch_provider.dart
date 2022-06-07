@@ -1,6 +1,6 @@
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/browse/browse.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -46,7 +46,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   }
 
   Future<void> fetch(String query) async {
-    if (_crawler.searchNotSupported) {
+    if (_crawler.isSearchNotSupported) {
       log.warning('crawler search cancelled, not supported');
       return;
     }
@@ -70,8 +70,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
           state = state.copyWith(error: failure.message, isLoading: false);
         } else {
           state = state.copyWith(isLoading: false);
-          _read(messageServiceProvider)
-              .showText(failure.message ?? "Unexpected error");
+          _read(messageServiceProvider).showText(failure.message);
         }
       },
       (data) {

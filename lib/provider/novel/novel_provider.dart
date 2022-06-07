@@ -72,51 +72,41 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       (failure) => read(messageServiceProvider).showText('An error occured'),
       (data) async {
         state = data;
-
-        log.info('Downloading cover.');
-        final coverResult = await novelService.downloadCover(state);
-        coverResult.fold(
-          (failure) {
-            log.warning(failure.toString());
-          },
-          (data) => state = state.copyWith(cover: data),
-        );
-
-        read(updatesProvider.notifier).fetch();
       },
     );
   }
 
   Future<void> toggleLibrary() async {
-    Map<CategoryData, bool>? categories =
-        await libraryService.novelCategories(state);
+    throw UnimplementedError();
+    // Map<CategoryData, bool>? categories =
+    //     await libraryService.novelCategories(state);
 
-    // There must always be one category.
-    assert(categories.isNotEmpty);
+    // // There must always be one category.
+    // assert(categories.isNotEmpty);
 
-    if (categories.length == 1) {
-      // if there is only one category (default) dont show the dialog
-      // just reverse the state.
-      categories = {
-        for (final entry in categories.entries) entry.key: !entry.value
-      };
-    } else {
-      categories = await read(dialogServiceProvider).show<CategorySelection?>(
-        child: SetCategoriesDialog(categories: categories),
-      );
-    }
+    // if (categories.length == 1) {
+    //   // if there is only one category (default) dont show the dialog
+    //   // just reverse the state.
+    //   categories = {
+    //     for (final entry in categories.entries) entry.key: !entry.value
+    //   };
+    // } else {
+    //   categories = await read(dialogServiceProvider).show<CategorySelection?>(
+    //     child: SetCategoriesDialog(categories: categories),
+    //   );
+    // }
 
-    // Dont do anything if the dialog was cancelled.
-    if (categories == null) {
-      return;
-    }
+    // // Dont do anything if the dialog was cancelled.
+    // if (categories == null) {
+    //   return;
+    // }
 
-    final result = await libraryService.changeCategory(state, categories);
-    result.fold((failure) {
-      log.warning(failure);
-    }, (data) {
-      state = state.copyWith(favourite: data);
-    });
+    // final result = await libraryService.changeCategory(state, categories);
+    // result.fold((failure) {
+    //   log.warning(failure);
+    // }, (data) {
+    //   state = state.copyWith(favourite: data);
+    // });
   }
 
   Future<void> reload() async {

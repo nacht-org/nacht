@@ -36,7 +36,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<NovelRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: NovelPage(key: args.key, either: args.either));
+          child: NovelPage(key: args.key, type: args.type));
     },
     WebViewRoute.name: (routeData) {
       final args = routeData.argsAs<WebViewRouteArgs>();
@@ -116,23 +116,23 @@ class PopularRouteArgs {
 /// generated route for
 /// [NovelPage]
 class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
-  NovelRoute({Key? key, required NovelEither either})
+  NovelRoute({Key? key, required NovelType type})
       : super(NovelRoute.name,
-            path: 'novel', args: NovelRouteArgs(key: key, either: either));
+            path: 'novel', args: NovelRouteArgs(key: key, type: type));
 
   static const String name = 'NovelRoute';
 }
 
 class NovelRouteArgs {
-  const NovelRouteArgs({this.key, required this.either});
+  const NovelRouteArgs({this.key, required this.type});
 
   final Key? key;
 
-  final NovelEither either;
+  final NovelType type;
 
   @override
   String toString() {
-    return 'NovelRouteArgs{key: $key, either: $either}';
+    return 'NovelRouteArgs{key: $key, type: $type}';
   }
 }
 
@@ -177,8 +177,8 @@ class CategoryRoute extends PageRouteInfo<void> {
 class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
   ReaderRoute(
       {Key? key,
-      required NovelData novel,
-      required ChapterData chapter,
+      required dynamic novel,
+      required dynamic chapter,
       required bool doFetch})
       : super(ReaderRoute.name,
             path: 'reader',
@@ -197,9 +197,9 @@ class ReaderRouteArgs {
 
   final Key? key;
 
-  final NovelData novel;
+  final dynamic novel;
 
-  final ChapterData chapter;
+  final dynamic chapter;
 
   final bool doFetch;
 

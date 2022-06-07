@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:nacht/components/components.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/features/browse/browse.dart';
 import 'package:nacht/features/source_search/source_search.dart';
 import 'package:nacht/nht/nht.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,14 +22,14 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final crawler = ref.watch(crawlerProvider(crawlerFactory));
+    final crawler = ref.watch(crawlerFamily(crawlerFactory));
     final isSearching = ref.watch(isSearchingProvider);
 
     usePostFrameCallback(
       (timeStamp) {
         ref.watch(popularFetchProvider(crawler).notifier).next();
       },
-      condition: crawler.popularSupported,
+      condition: crawler.isPopularSupported,
     );
 
     return Scaffold(

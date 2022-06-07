@@ -13,7 +13,7 @@ export 'misc/lang_utils.dart';
 export 'misc/string_utils.dart';
 export 'misc/uri_utils.dart';
 export 'misc/diff_utils.dart';
-export 'misc/either_utils.dart';
+export 'misc/dartz_utils.dart';
 export 'misc/time_utils.dart';
 export 'misc/platform_utils.dart';
 

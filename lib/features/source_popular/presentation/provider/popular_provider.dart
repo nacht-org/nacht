@@ -1,5 +1,5 @@
+import 'package:nacht/common/common.dart';
 import 'package:nacht/features/browse/browse.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -7,8 +7,8 @@ import 'popular_fetch_provider.dart';
 
 final popularProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
   (ref, crawlerFactory) {
-    final info = ref.watch(crawlerProvider(crawlerFactory));
-    if (info.popularNotSupported) {
+    final info = ref.watch(crawlerFamily(crawlerFactory));
+    if (info.isPopularNotSupported) {
       return const FetchState.unsupported("Popular not supported");
     }
 

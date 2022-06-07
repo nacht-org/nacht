@@ -1,9 +1,5 @@
 import 'package:nacht/core/failure.dart';
 
-class NovelNotFound extends Failure {
-  const NovelNotFound([super.message]);
-}
-
 class CoverNotAvailable extends Failure {
   const CoverNotAvailable([super.message]);
 }

@@ -48,23 +48,20 @@ class MockCrawlerRepository extends _i1.Mock implements _i4.CrawlerRepository {
                   _FakeEither_1<_i5.Failure, List<_i3.CrawlerFactory>>())
           as _i2.Either<_i5.Failure, List<_i3.CrawlerFactory>>);
   @override
-  _i6.Future<
-      _i2.Either<_i5.Failure, List<_i4.PartialNovelData>>> getPopularNovels(
+  _i6.Future<_i2.Either<_i5.Failure, List<dynamic>>> getPopularNovels(
           _i3.ParsePopular? parser, int? page) =>
       (super.noSuchMethod(Invocation.method(#getPopularNovels, [parser, page]),
-          returnValue:
-              Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>.value(
-                  _FakeEither_1<_i5.Failure, List<_i4.PartialNovelData>>())) as _i6
-          .Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>);
+              returnValue: Future<_i2.Either<_i5.Failure, List<dynamic>>>.value(
+                  _FakeEither_1<_i5.Failure, List<dynamic>>()))
+          as _i6.Future<_i2.Either<_i5.Failure, List<dynamic>>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>> getSearchNovels(
+  _i6.Future<_i2.Either<_i5.Failure, List<dynamic>>> getSearchNovels(
           _i3.ParseSearch? parser, String? query, int? page) =>
       (super.noSuchMethod(
-          Invocation.method(#getSearchNovels, [parser, query, page]),
-          returnValue: Future<
-                  _i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>.value(
-              _FakeEither_1<_i5.Failure, List<_i4.PartialNovelData>>())) as _i6
-          .Future<_i2.Either<_i5.Failure, List<_i4.PartialNovelData>>>);
+              Invocation.method(#getSearchNovels, [parser, query, page]),
+              returnValue: Future<_i2.Either<_i5.Failure, List<dynamic>>>.value(
+                  _FakeEither_1<_i5.Failure, List<dynamic>>()))
+          as _i6.Future<_i2.Either<_i5.Failure, List<dynamic>>>);
 }
 
 /// A class which mocks [ParseNovel].
@@ -139,18 +136,17 @@ class MockNovelRepository extends _i1.Mock implements _i4.NovelRepository {
   }
 
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>> getNovel(int? id) =>
+  _i6.Future<_i2.Either<_i5.Failure, dynamic>> getNovel(int? id) =>
       (super.noSuchMethod(Invocation.method(#getNovel, [id]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i4.NovelData>>.value(
-                  _FakeEither_1<_i5.Failure, _i4.NovelData>()))
-          as _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>>);
+              returnValue: Future<_i2.Either<_i5.Failure, dynamic>>.value(
+                  _FakeEither_1<_i5.Failure, dynamic>()))
+          as _i6.Future<_i2.Either<_i5.Failure, dynamic>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>> getNovelByUrl(
-          String? url) =>
+  _i6.Future<_i2.Either<_i5.Failure, dynamic>> getNovelByUrl(String? url) =>
       (super.noSuchMethod(Invocation.method(#getNovelByUrl, [url]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i4.NovelData>>.value(
-                  _FakeEither_1<_i5.Failure, _i4.NovelData>()))
-          as _i6.Future<_i2.Either<_i5.Failure, _i4.NovelData>>);
+              returnValue: Future<_i2.Either<_i5.Failure, dynamic>>.value(
+                  _FakeEither_1<_i5.Failure, dynamic>()))
+          as _i6.Future<_i2.Either<_i5.Failure, dynamic>>);
   @override
   _i6.Future<_i2.Either<_i5.Failure, _i4.UpdateResult>> updateNovel(
           _i3.Novel? novel) =>
@@ -159,12 +155,11 @@ class MockNovelRepository extends _i1.Mock implements _i4.NovelRepository {
               _FakeEither_1<_i5.Failure, _i4.UpdateResult>())) as _i6
           .Future<_i2.Either<_i5.Failure, _i4.UpdateResult>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i4.ChapterData>> firstUnread(
-          int? novelId) =>
+  _i6.Future<_i2.Either<_i5.Failure, dynamic>> firstUnread(int? novelId) =>
       (super.noSuchMethod(Invocation.method(#firstUnread, [novelId]),
-          returnValue: Future<_i2.Either<_i5.Failure, _i4.ChapterData>>.value(
-              _FakeEither_1<_i5.Failure, _i4.ChapterData>())) as _i6
-          .Future<_i2.Either<_i5.Failure, _i4.ChapterData>>);
+              returnValue: Future<_i2.Either<_i5.Failure, dynamic>>.value(
+                  _FakeEither_1<_i5.Failure, dynamic>()))
+          as _i6.Future<_i2.Either<_i5.Failure, dynamic>>);
   @override
   _i6.Future<void> setFavourite(int? novelId, bool? value) =>
       (super.noSuchMethod(Invocation.method(#setFavourite, [novelId, value]),
@@ -207,51 +202,46 @@ class MockCategoryRepository extends _i1.Mock
   }
 
   @override
-  _i6.Future<_i2.Either<_i5.Failure, _i4.CategoryData>> add(
-          int? index, String? name) =>
+  _i6.Future<_i2.Either<_i5.Failure, dynamic>> add(int? index, String? name) =>
       (super.noSuchMethod(Invocation.method(#add, [index, name]),
-          returnValue: Future<_i2.Either<_i5.Failure, _i4.CategoryData>>.value(
-              _FakeEither_1<_i5.Failure, _i4.CategoryData>())) as _i6
-          .Future<_i2.Either<_i5.Failure, _i4.CategoryData>>);
+              returnValue: Future<_i2.Either<_i5.Failure, dynamic>>.value(
+                  _FakeEither_1<_i5.Failure, dynamic>()))
+          as _i6.Future<_i2.Either<_i5.Failure, dynamic>>);
   @override
-  _i6.Future<_i2.Either<_i5.Failure, void>> edit(_i4.CategoryData? category) =>
+  _i6.Future<_i2.Either<_i5.Failure, void>> edit(dynamic category) =>
       (super.noSuchMethod(Invocation.method(#edit, [category]),
               returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
                   _FakeEither_1<_i5.Failure, void>()))
           as _i6.Future<_i2.Either<_i5.Failure, void>>);
   @override
   _i6.Future<_i2.Either<_i5.Failure, void>> updateIndex(
-          List<_i4.CategoryData>? categories) =>
+          List<dynamic>? categories) =>
       (super.noSuchMethod(Invocation.method(#updateIndex, [categories]),
               returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
                   _FakeEither_1<_i5.Failure, void>()))
           as _i6.Future<_i2.Either<_i5.Failure, void>>);
   @override
-  _i6.Future<List<_i4.CategoryData>> getAllCategories() =>
+  _i6.Future<List<dynamic>> getAllCategories() =>
       (super.noSuchMethod(Invocation.method(#getAllCategories, []),
-              returnValue:
-                  Future<List<_i4.CategoryData>>.value(<_i4.CategoryData>[]))
-          as _i6.Future<List<_i4.CategoryData>>);
+              returnValue: Future<List<dynamic>>.value(<dynamic>[]))
+          as _i6.Future<List<dynamic>>);
   @override
-  _i6.Future<List<_i4.CategoryData>> getCategoriesOfNovel(
-          _i4.NovelData? novel) =>
+  _i6.Future<List<dynamic>> getCategoriesOfNovel(dynamic novel) =>
       (super.noSuchMethod(Invocation.method(#getCategoriesOfNovel, [novel]),
-              returnValue:
-                  Future<List<_i4.CategoryData>>.value(<_i4.CategoryData>[]))
-          as _i6.Future<List<_i4.CategoryData>>);
+              returnValue: Future<List<dynamic>>.value(<dynamic>[]))
+          as _i6.Future<List<dynamic>>);
   @override
   _i6.Future<void> changeNovelCategories(
-          _i4.NovelData? novel, Map<_i4.CategoryData, bool>? categories) =>
+          dynamic novel, Map<dynamic, bool>? categories) =>
       (super.noSuchMethod(
           Invocation.method(#changeNovelCategories, [novel, categories]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i6.Future<void>);
   @override
-  _i6.Future<List<_i4.NovelData>> getNovelsOfCategory(
-          _i4.CategoryData? category) =>
+  _i6.Future<List<dynamic>> getNovelsOfCategory(dynamic category) =>
       (super.noSuchMethod(Invocation.method(#getNovelsOfCategory, [category]),
-              returnValue: Future<List<_i4.NovelData>>.value(<_i4.NovelData>[]))
-          as _i6.Future<List<_i4.NovelData>>);
+              returnValue: Future<List<dynamic>>.value(<dynamic>[]))
+          as _i6.Future<List<dynamic>>);
   @override
   _i6.Future<_i2.Either<_i5.Failure, void>> remove(Iterable<int>? ids) =>
       (super.noSuchMethod(Invocation.method(#remove, [ids]),

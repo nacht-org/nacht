@@ -207,7 +207,7 @@ class UpdateNovel with LoggerMixin {
       for (final change in diff) {
         change.map(
           insert: (state) {
-            final companion = metaDataIntoCompanion(state.data)
+            final companion = sourceMetaDataIntoCompanion(state.data)
                 .copyWith(novelId: Value(novelId));
 
             batch.insert(_database.metaEntries, companion);
@@ -220,7 +220,7 @@ class UpdateNovel with LoggerMixin {
                 'remove meta entry ${state.data.name}: ${state.data.value}');
           },
           replace: (state) {
-            final companion = metaDataIntoCompanion(state.next).copyWith(
+            final companion = sourceMetaDataIntoCompanion(state.next).copyWith(
               id: Value(state.prev.id),
               novelId: Value(novelId),
             );

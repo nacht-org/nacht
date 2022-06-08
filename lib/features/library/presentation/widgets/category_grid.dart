@@ -4,7 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/library/presentation/provider/category_novels_family.dart';
+
+import '../presentation.dart';
 
 class CategoryGrid extends ConsumerWidget {
   const CategoryGrid({Key? key, required this.category}) : super(key: key);

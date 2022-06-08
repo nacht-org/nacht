@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../domain/domain.dart';
+import 'package:nacht/common/common.dart';
 
 class NovelGridCard extends StatelessWidget {
   const NovelGridCard({

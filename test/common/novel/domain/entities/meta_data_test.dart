@@ -1,14 +1,14 @@
-import 'package:nacht/data/data.dart' as data;
-import 'package:nacht/domain/domain.dart';
+import 'package:nacht/common/common.dart';
+import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tMetaData = data.MetaEntry(
+  final tMetaData = MetaEntry(
     id: 6,
     name: 'subject',
     value: 'tvalue',
-    namespaceId: data.NamespaceSeed.opf,
+    namespaceId: NamespaceSeed.opf,
     others: '{"href":"https://website.com/link"}',
     novelId: 2,
   );

@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
-MetaEntriesCompanion metaDataIntoCompanion(sources.MetaData input) {
+MetaEntriesCompanion sourceMetaDataIntoCompanion(sources.MetaData input) {
   return MetaEntriesCompanion(
     name: Value(input.name),
     value: Value(input.value),

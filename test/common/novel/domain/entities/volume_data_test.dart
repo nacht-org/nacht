@@ -1,5 +1,5 @@
-import 'package:nacht/data/data.dart';
-import 'package:nacht/domain/domain.dart';
+import 'package:nacht/common/common.dart';
+import 'package:nacht/database/database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

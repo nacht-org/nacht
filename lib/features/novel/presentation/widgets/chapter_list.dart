@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/domain.dart';
 import 'package:nacht/provider/provider.dart';
 
 import '../presentation.dart';
@@ -18,8 +17,10 @@ class ChapterList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
+
     final items = ref.watch(chapterListProvider(novel));
-    final timeService = ref.watch(timeServiceProvider);
+    final timeService = ref.watch(dateFormatServiceFamily(locale));
 
     final selectionActive =
         ref.watch(novelSelectionProvider.select((value) => value.active));
@@ -52,7 +53,7 @@ class ChapterList extends ConsumerWidget {
                 ),
                 subtitle: chapter.updated == null
                     ? null
-                    : Text(timeService.formatChapterUpdated(chapter.updated!)),
+                    : Text(timeService.relativeDay(chapter.updated!)),
                 onTap: selectionActive
                     ? select
                     : () => context.router.push(

@@ -1,12 +1,12 @@
-import 'package:nacht/data/models/reading_direction.dart';
-import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht/database/database.dart';
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ReadingDirectionSeed', () {
     final map = {
-      ReadingDirectionSeed.ltr: ReadingDirection.ltr,
-      ReadingDirectionSeed.rtl: ReadingDirection.rtl,
+      ReadingDirectionSeed.ltr: sources.ReadingDirection.ltr,
+      ReadingDirectionSeed.rtl: sources.ReadingDirection.rtl,
     };
 
     test(

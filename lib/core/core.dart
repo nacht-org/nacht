@@ -1,8 +1,6 @@
 export 'failure.dart';
 export 'logger/logger.dart';
 export 'router/app_router.dart';
-export 'services/message_service.dart';
-export 'services/dialog_service.dart';
 export 'preferences/preferences_provider.dart';
 export 'nacht_theme/nacht_theme.dart';
 
@@ -19,6 +17,11 @@ export 'misc/diff_utils.dart';
 export 'misc/dartz_utils.dart';
 export 'misc/time_utils.dart';
 export 'misc/platform_utils.dart';
+
+// Services.
+export 'services/message_service.dart';
+export 'services/dialog_service.dart';
+export 'services/date_format_service.dart';
 
 // Widgets.
 export 'widgets/sliding_preferred_size.dart';

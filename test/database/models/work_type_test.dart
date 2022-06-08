@@ -1,4 +1,4 @@
-import 'package:nacht/data/data.dart';
+import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,6 +1,6 @@
-import 'package:nacht/domain/entities/network/network_connection_data.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:nacht/common/network/domain/entities/network_connection_data.dart';
 
 void main() {
   const map = {

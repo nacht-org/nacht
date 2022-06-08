@@ -2,8 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
-import 'library_provider.dart';
-
 part 'library_view_provider.freezed.dart';
 
 final libraryViewProvider = Provider<LibraryViewData>((ref) {

@@ -5,9 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/provider/provider.dart';
 
-import '../../components/category/set_categories/provider/selected_categories_provider.dart';
-import '../../components/category/set_categories/set_categories_dialog.dart';
-import '../../components/updates/provider/updates_provider.dart';
 import '../../core/core.dart';
 import '../../domain/domain.dart';
 

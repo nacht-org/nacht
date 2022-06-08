@@ -8,3 +8,4 @@ export 'library/library.dart';
 export 'novel/novel.dart';
 export 'updates/updates.dart';
 export 'category/category.dart';
+export 'webview/webview.dart';

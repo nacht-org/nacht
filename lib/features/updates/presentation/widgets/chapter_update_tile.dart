@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 class ChapterUpdateTile extends ConsumerWidget {
@@ -18,7 +17,7 @@ class ChapterUpdateTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(chapterProvider(ChapterInput(chapter)));
+    final data = ref.watch(chapterFamily(ChapterInput(chapter)));
 
     return NachtListTile(
       leading: GestureDetector(

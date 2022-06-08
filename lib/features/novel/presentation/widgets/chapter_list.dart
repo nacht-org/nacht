@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../presentation.dart';
@@ -20,7 +19,7 @@ class ChapterList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context);
 
-    final items = ref.watch(chapterListProvider(novel));
+    final items = ref.watch(chapterListFamily(novel));
     final timeService = ref.watch(dateFormatServiceFamily(locale));
 
     final selectionActive =
@@ -40,7 +39,7 @@ class ChapterList extends ConsumerWidget {
               dense: true,
             ),
             chapter: (data) => Consumer(builder: (context, ref, child) {
-              final chapter = ref.watch(chapterProvider(ChapterInput(data)));
+              final chapter = ref.watch(chapterFamily(ChapterInput(data)));
               final selected = ref.watch(novelSelectionProvider
                   .select((value) => value.contains(chapter.id)));
 

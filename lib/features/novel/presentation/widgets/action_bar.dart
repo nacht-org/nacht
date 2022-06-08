@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/provider/provider.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({
@@ -22,7 +22,7 @@ class ActionBar extends StatelessWidget {
             child: Consumer(
               builder: (context, ref, child) {
                 final favourite = ref.watch(
-                    novelProvider(input).select((novel) => novel.favourite));
+                    novelFamily(input).select((novel) => novel.favourite));
 
                 final icon =
                     favourite ? Icons.favorite : Icons.favorite_outline;
@@ -31,7 +31,7 @@ class ActionBar extends StatelessWidget {
                 return ActionItem(
                   icon: icon,
                   label: label,
-                  onTap: ref.read(novelProvider(input).notifier).toggleLibrary,
+                  onTap: ref.read(novelFamily(input).notifier).toggleLibrary,
                   active: favourite,
                 );
               },
@@ -39,7 +39,7 @@ class ActionBar extends StatelessWidget {
           ),
           Expanded(
             child: Consumer(builder: (context, ref, child) {
-              final novel = ref.watch(novelProvider(input));
+              final novel = ref.watch(novelFamily(input));
 
               return ActionItem(
                 icon: Icons.open_in_browser,

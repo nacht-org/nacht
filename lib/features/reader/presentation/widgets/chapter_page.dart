@@ -1,7 +1,6 @@
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -42,7 +41,7 @@ class ChapterPage extends HookConsumerWidget {
           if (notification.metrics.pixels ==
               notification.metrics.maxScrollExtent) {
             ref
-                .read(chapterProvider(ChapterInput(chapter)).notifier)
+                .read(chapterFamily(ChapterInput(chapter)).notifier)
                 .markAsRead();
           }
           return false;

@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
+import 'package:nacht/common/novel/domain/services/set_read_at.dart';
 import 'package:nacht/core/logger/logger.dart';
-import 'package:nacht/domain/domain.dart';
 
-final chapterProvider = StateNotifierProvider.autoDispose
+final chapterFamily = StateNotifierProvider.autoDispose
     .family<ChapterNotifier, ChapterData, ChapterInput>(
   (ref, input) => ChapterNotifier(
     state: input.data,
-    chapterService: ref.watch(chapterServiceProvider),
+    setReadAt: ref.watch(setReadAtProvider),
   ),
   name: 'ChapterProvider',
 );
@@ -16,11 +16,11 @@ final chapterProvider = StateNotifierProvider.autoDispose
 class ChapterNotifier extends StateNotifier<ChapterData> with LoggerMixin {
   ChapterNotifier({
     required ChapterData state,
-    required ChapterService chapterService,
-  })  : _chapterService = chapterService,
+    required SetReadAt setReadAt,
+  })  : _setReadAt = setReadAt,
         super(state);
 
-  final ChapterService _chapterService;
+  final SetReadAt _setReadAt;
 
   set readAt(DateTime? dateTime) {
     state = state.copyWith(readAt: dateTime);
@@ -38,15 +38,11 @@ class ChapterNotifier extends StateNotifier<ChapterData> with LoggerMixin {
     final oldReadAt = state.readAt;
     state = state.copyWith(readAt: DateTime.now());
 
-    final result = await _chapterService.setReadAt([state], true);
-
-    result.fold(
-      (failure) {
-        log.warning(failure);
-        state = state.copyWith(readAt: oldReadAt);
-      },
-      (_) {},
-    );
+    final failure = await _setReadAt.execute([state], true);
+    if (failure != null) {
+      log.warning(failure);
+      state = state.copyWith(readAt: oldReadAt);
+    }
   }
 }
 

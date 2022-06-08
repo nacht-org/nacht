@@ -2,9 +2,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
-part 'chapter_list_provider.freezed.dart';
+part 'chapter_list_family.freezed.dart';
 
-final chapterListProvider =
+final chapterListFamily =
     Provider.autoDispose.family<List<ChapterListEntry>, NovelData>(
   (ref, data) {
     final map = <VolumeData, List<ChapterData>>{};

@@ -5,7 +5,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/provider/provider.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../presentation.dart';
@@ -23,8 +22,13 @@ class NovelView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final input = NovelInput(data);
-    final novel = ref.watch(novelProvider(input));
-    final notifier = ref.watch(novelProvider(input).notifier);
+    final novel = ref.watch(novelFamily(input));
+    final notifier = ref.watch(novelFamily(input).notifier);
+
+    final crawlerFactory = ref.watch(crawlerFactoryFamily(novel.url));
+    final crawler = crawlerFactory != null
+        ? ref.watch(crawlerFamily(crawlerFactory))
+        : null;
 
     final selection = ref.watch(novelSelectionProvider);
     SelectionNotifier.handleRoute(novelSelectionProvider, ref, context);
@@ -56,7 +60,7 @@ class NovelView extends HookConsumerWidget {
             )
         ],
         body: RefreshIndicator(
-          onRefresh: notifier.fetch,
+          onRefresh: () async => notifier.fetch(crawler?.instance),
           child: Scrollbar(
             interactive: true,
             child: CustomScrollView(

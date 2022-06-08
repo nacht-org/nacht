@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/components.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 class SettingsSheet extends ConsumerWidget {
   const SettingsSheet({Key? key}) : super(key: key);

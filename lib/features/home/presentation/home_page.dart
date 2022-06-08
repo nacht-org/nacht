@@ -1,9 +1,9 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:nacht/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/home/home.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 class HomePage extends HookWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -4,9 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
-import 'package:nacht/components/components.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/provider/provider.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import '../presentation.dart';
 

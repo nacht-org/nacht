@@ -1,8 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/features/browse/domain/domain.dart';
 
-import '../model/crawler_entry.dart';
-import '../model/crawler_list_item.dart';
+import '../../domain/domain.dart';
+import '../presentation.dart';
 
 final crawlersProvider = Provider<List<CrawlerListItem>>((ref) {
   final crawlers = ref.watch(getCrawlersProvider).execute();

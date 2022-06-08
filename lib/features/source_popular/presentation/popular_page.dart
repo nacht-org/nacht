@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:nacht/common/common.dart';
-import 'package:nacht/features/browse/browse.dart';
 import 'package:nacht/features/source_search/source_search.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';

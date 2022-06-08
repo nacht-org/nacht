@@ -16,20 +16,13 @@ final routerProvider = Provider<AppRouter>(
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: [
-    AutoRoute(
-      path: '/',
-      initial: true,
-      page: SplashPage,
-    ),
-    AutoRoute(
-      path: '/home',
-      page: HomePage,
-    ),
-    AutoRoute(page: PopularPage, path: 'popular'),
-    AutoRoute(page: NovelPage, path: 'novel'),
-    AutoRoute(page: WebViewPage, path: 'webview'),
-    AutoRoute(page: CategoryPage, path: 'categories'),
-    AutoRoute(page: ReaderPage, path: 'reader'),
+    AutoRoute(path: '', page: SplashPage, initial: true),
+    AutoRoute(path: 'home', page: HomePage),
+    AutoRoute(path: 'popular', page: PopularPage),
+    AutoRoute(path: 'novel', page: NovelPage),
+    AutoRoute(path: 'webview', page: WebViewPage),
+    AutoRoute(path: 'categories', page: CategoryPage),
+    AutoRoute(path: 'reader', page: ReaderPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

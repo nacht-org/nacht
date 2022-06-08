@@ -19,12 +19,12 @@ class ReaderPreferencesNotifier extends StateNotifier<ReaderPreferences> {
   final Preferences _preferences;
 
   void setFontFamily(ReaderFontFamily fontFamily) {
-    _preferences.setInt(ReaderPreferences.fontFamilyKey, fontFamily.value);
+    ReaderPreferences.fontFamilyKey.setValue(_preferences, fontFamily);
     state = state.copyWith(fontFamily: fontFamily);
   }
 
   void setFontSize(double value) {
-    _preferences.setDouble(ReaderPreferences.fontSizeKey, value);
+    ReaderPreferences.fontSizeKey.setValue(_preferences, value);
     state = state.copyWith(fontSize: value);
   }
 }

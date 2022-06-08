@@ -5,7 +5,10 @@ export 'services/message_service.dart';
 export 'services/dialog_service.dart';
 export 'preferences/preferences_provider.dart';
 export 'nacht_theme/nacht_theme.dart';
+
+// Preferences.
 export 'preferences/reader/reader.dart';
+export 'preferences/date_format/date_format.dart';
 
 // Misc.
 export 'misc/error_handler.dart';

@@ -3,6 +3,7 @@ export 'entities/network_connection_data.dart';
 
 // Failures.
 export 'failures/network_failure.dart';
+export 'failures/connection_not_available.dart';
 
 // Services.
 export 'services/get_connection_status.dart';

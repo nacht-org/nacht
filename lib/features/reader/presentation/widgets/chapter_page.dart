@@ -1,4 +1,4 @@
-import 'package:nacht/components/reader/model/reader_page_info.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht_sources/nacht_sources.dart';
@@ -6,10 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../domain/domain.dart';
-import '../../../provider/provider.dart';
-import '../provider/reader_page_provider.dart';
-import 'reader_theme.dart';
+import '../presentation.dart';
 
 class ChapterPage extends HookConsumerWidget {
   const ChapterPage({
@@ -25,11 +22,11 @@ class ChapterPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final crawler = ref.watch(crawlerProvider(crawlerFactory));
+    final crawler = ref.watch(crawlerFamily(crawlerFactory));
     final input = ReaderPageInfo.from(chapter, crawler);
 
-    final page = ref.watch(readerPageProvider(input));
-    final notifier = ref.watch(readerPageProvider(input).notifier);
+    final page = ref.watch(readerPageFamily(input));
+    final notifier = ref.watch(readerPageFamily(input).notifier);
 
     usePostFrameCallback((timeStamp) {
       notifier.fetch();

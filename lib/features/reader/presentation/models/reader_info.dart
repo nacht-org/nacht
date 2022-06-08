@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/domain/domain.dart';
+import 'package:nacht/common/common.dart';
 
 part 'reader_info.freezed.dart';
 

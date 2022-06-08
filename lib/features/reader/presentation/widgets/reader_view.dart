@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/reader/provider/reader_provider.dart';
-import 'package:nacht/components/reader/widgets/reader_bottom_bar.dart';
 import 'package:nacht/core/core.dart';
 
-import '../model/reader_info.dart';
-import '../provider/toolbar_provider.dart';
-
-import 'reader_body.dart';
+import '../presentation.dart';
 
 class ReaderView extends HookConsumerWidget {
   const ReaderView({
@@ -22,7 +17,7 @@ class ReaderView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final reader = ref.watch(readerProvider(info));
+    final reader = ref.watch(readerFamily(info));
 
     final isToolbarVisible =
         ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
@@ -51,7 +46,7 @@ class ReaderView extends HookConsumerWidget {
           child: AppBar(
             title: Consumer(builder: (context, ref, child) {
               final current = ref
-                  .watch(readerProvider(info).select((value) => value.current));
+                  .watch(readerFamily(info).select((value) => value.current));
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

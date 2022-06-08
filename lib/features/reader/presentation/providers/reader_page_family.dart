@@ -1,16 +1,16 @@
-import 'package:nacht/domain/domain.dart';
+import 'package:nacht/common/common.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../core/core.dart';
-import '../model/reader_page_info.dart';
+import '../presentation.dart';
 
-final readerPageProvider = StateNotifierProvider.autoDispose
+final readerPageFamily = StateNotifierProvider.autoDispose
     .family<ReaderPageNotifier, ReaderPageInfo, ReaderPageInfo>(
   (ref, info) => ReaderPageNotifier(
     read: ref.read,
     state: info,
-    chapterService: ref.watch(chapterServiceProvider),
+    fetchChapterContent: ref.watch(fetchChapterContentProvider),
   ),
   name: 'ReaderPageProvider',
 );
@@ -20,13 +20,13 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
   ReaderPageNotifier({
     required Reader read,
     required ReaderPageInfo state,
-    required ChapterService chapterService,
+    required FetchChapterContent fetchChapterContent,
   })  : _read = read,
-        _chapterService = chapterService,
+        _fetchChapterContent = fetchChapterContent,
         super(state);
 
   final Reader _read;
-  final ChapterService _chapterService;
+  final FetchChapterContent _fetchChapterContent;
 
   Future<void> fetch() async {
     if (state.fetched) {
@@ -34,7 +34,7 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
     }
 
     // TODO: check for crawler support
-    final content = await _chapterService.fetchContent(
+    final content = await _fetchChapterContent.execute(
       state.crawler.instance as sources.ParseNovel,
       state.chapter.url,
     );

@@ -1,13 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
 
-import '../../../domain/domain.dart';
-
-final readerLoadingProvider =
+final readerLoadingFamily =
     FutureProvider.autoDispose.family<NovelData, NovelData>(
   (ref, data) async {
-    final novelService = ref.watch(novelServiceProvider);
+    final getNovelById = ref.watch(getNovelByIdProvider);
 
-    final result = await novelService.getById(data.id);
+    final result = await getNovelById.execute(data.id);
 
     return result.fold(
       (failure) => throw failure,

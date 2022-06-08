@@ -19,6 +19,7 @@ class SliverSelectionAppBar extends StatelessWidget {
       leading: const CloseBackButton(),
       title: title,
       pinned: true,
+      forceElevated: true,
       actions: [
         if (onSelectAllPressed != null)
           IconButton(

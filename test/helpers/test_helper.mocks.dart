@@ -302,8 +302,8 @@ class MockUpdatesRepository extends _i1.Mock implements _i4.UpdatesRepository {
                   _FakeEither_1<_i5.Failure, void>()))
           as _i6.Future<_i2.Either<_i5.Failure, void>>);
   @override
-  _i6.Future<List<_i4.UpdateData>> getAll({int? count}) => (super.noSuchMethod(
-          Invocation.method(#getAll, [], {#count: count}),
-          returnValue: Future<List<_i4.UpdateData>>.value(<_i4.UpdateData>[]))
-      as _i6.Future<List<_i4.UpdateData>>);
+  _i6.Future<List<dynamic>> getAll({int? count}) =>
+      (super.noSuchMethod(Invocation.method(#getAll, [], {#count: count}),
+              returnValue: Future<List<dynamic>>.value(<dynamic>[]))
+          as _i6.Future<List<dynamic>>);
 }

@@ -1,12 +1,11 @@
-import 'package:nacht/domain/entities/novel/chapter_data.dart';
-import 'package:nacht/domain/entities/novel/novel_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nacht/common/common.dart';
 
 part 'update_entry.freezed.dart';
 
 @freezed
 class UpdateEntry with _$UpdateEntry {
-  factory UpdateEntry.date(String date) = _DateEntry;
+  factory UpdateEntry.date(DateTime date) = _DateEntry;
   factory UpdateEntry.chapter(NovelData novel, ChapterData chapter) =
       _ChapterEntry;
 }

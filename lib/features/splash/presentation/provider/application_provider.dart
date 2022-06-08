@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:nacht/common/common.dart';
-import 'package:nacht/components/updates/provider/updates_provider.dart';
 import 'package:flutter/services.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../../core/core.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
+import 'package:nacht/core/core.dart';
+import 'package:nacht/features/features.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 final applicationProvider = Provider<Application>(
   (ref) => Application(read: ref.read),
@@ -39,7 +39,7 @@ class Application with LoggerMixin {
     });
 
     await Future.wait([
-      _read(updatesProvider.notifier).fetch(),
+      _read(updatesProvider.notifier).initialize(),
       _read(categoriesProvider.notifier).initialize(),
     ]);
 

@@ -6,3 +6,4 @@ export 'source_search/source_search.dart';
 export 'more/more.dart';
 export 'library/library.dart';
 export 'novel/novel.dart';
+export 'updates/updates.dart';

@@ -1,15 +1,14 @@
-import 'package:nacht/domain/services/updates_service.dart';
+import 'package:nacht/domain/domain.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../domain/domain.dart';
-import '../model/update_entry.dart';
+import '../../domain/domain.dart';
+import '../presentation.dart';
 
 final updatesProvider =
     StateNotifierProvider<UpdatesNotifier, List<UpdateEntry>>(
   (ref) => UpdatesNotifier(
     state: [],
-    updatesService: ref.watch(updatesServiceProvider),
-    timeService: ref.watch(timeServiceProvider),
+    watchUpdates: ref.watch(watchUpdatesProvider),
   ),
   name: 'UpdatesProvider',
 );
@@ -17,18 +16,16 @@ final updatesProvider =
 class UpdatesNotifier extends StateNotifier<List<UpdateEntry>> {
   UpdatesNotifier({
     required List<UpdateEntry> state,
-    required UpdatesService updatesService,
-    required TimeService timeService,
-  })  : _updatesService = updatesService,
-        _timeService = timeService,
+    required WatchUpdates watchUpdates,
+  })  : _watchUpdates = watchUpdates,
         super(state);
 
-  final UpdatesService _updatesService;
-  final TimeService _timeService;
+  final WatchUpdates _watchUpdates;
 
-  Future<void> fetch() async {
-    final data = await _updatesService.getUpdates();
-    state = _map(data);
+  Future<void> initialize() async {
+    _watchUpdates.execute().listen((data) {
+      state = _map(data);
+    });
   }
 
   List<UpdateEntry> _map(List<UpdateData> data) {
@@ -48,7 +45,7 @@ class UpdatesNotifier extends StateNotifier<List<UpdateEntry>> {
 
     final sortedKeys = map.keys.toList()..sort();
     for (final date in sortedKeys.reversed) {
-      entries.add(UpdateEntry.date(_timeService.relativeDay(date)));
+      entries.add(UpdateEntry.date(date));
 
       final updates = map[date]!;
       for (final update in updates) {

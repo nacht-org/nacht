@@ -1,30 +1,29 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/components/components.dart';
+import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/domain.dart';
 import 'package:nacht/provider/provider.dart';
 
 class ChapterUpdateTile extends ConsumerWidget {
   const ChapterUpdateTile({
     super.key,
     required this.novel,
-    required ChapterData chapter,
-  }) : _chapter = chapter;
+    required this.chapter,
+  });
 
   final NovelData novel;
-  final ChapterData _chapter;
+  final ChapterData chapter;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chapter = ref.watch(chapterProvider(ChapterInput(_chapter)));
+    final data = ref.watch(chapterProvider(ChapterInput(chapter)));
 
     return NachtListTile(
       leading: GestureDetector(
         onTap: () => context.router.push(
           NovelRoute(
-            type: NovelEither.complete(novel),
+            type: NovelType.complete(novel),
           ),
         ),
         child: AspectRatio(
@@ -44,7 +43,7 @@ class ChapterUpdateTile extends ConsumerWidget {
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
-        chapter.title,
+        data.title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -52,12 +51,12 @@ class ChapterUpdateTile extends ConsumerWidget {
         context.router.push(
           ReaderRoute(
             novel: novel,
-            chapter: chapter,
+            chapter: data,
             doFetch: true,
           ),
         );
       },
-      muted: chapter.readAt != null,
+      muted: data.readAt != null,
     );
   }
 }

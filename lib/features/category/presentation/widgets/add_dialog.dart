@@ -2,34 +2,24 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/common/common.dart';
 
-class EditCategoryDialog extends HookConsumerWidget {
-  const EditCategoryDialog({Key? key, required this.categoryData})
-      : super(key: key);
+import '../presentation.dart';
 
-  final CategoryData categoryData;
+class AddCategoryDialog extends HookConsumerWidget {
+  const AddCategoryDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(categoriesProvider.notifier);
+    final notifier = ref.watch(categoriesPageProvider.notifier);
     final controller = useTextEditingController();
 
-    useEffect(() {
-      controller.text = categoryData.name;
-      return null;
-    });
-
     void submit() {
-      // TODO: Add proper validation.
-      assert(controller.value.text.isNotEmpty);
-
-      notifier.edit(categoryData, controller.value.text);
+      notifier.add(controller.value.text);
       context.router.pop();
     }
 
     return AlertDialog(
-      title: const Text('Edit category'),
+      title: const Text('Add category'),
       content: TextField(
         autofocus: true,
         controller: controller,

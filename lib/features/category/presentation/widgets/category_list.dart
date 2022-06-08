@@ -1,29 +1,21 @@
-import 'package:nacht/components/category/provider/categories_provider.dart';
-import 'package:nacht/components/category/provider/categories_selection_provider.dart';
-import 'package:nacht/components/category/widgets/edit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../presentation.dart';
 
 class CategoryList extends HookConsumerWidget {
   const CategoryList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categories = ref.watch(categoriesProvider);
-    final categoriesNotifier = ref.watch(categoriesProvider.notifier);
+    final categories = ref.watch(categoriesPageProvider);
+    final categoriesNotifier = ref.watch(categoriesPageProvider.notifier);
 
     final selection = ref.watch(categoriesSelectionProvider);
     final selectionNotifier = ref.watch(categoriesSelectionProvider.notifier);
 
-    useEffect(() {
-      categoriesNotifier.reload();
-      return null;
-    }, []);
-
-    if (categories == null) {
-      return Container();
-    } else if (categories.isEmpty) {
+    if (categories.isEmpty) {
       return const Icon(
         Icons.category,
         size: 48,

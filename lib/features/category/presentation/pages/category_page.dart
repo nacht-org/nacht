@@ -3,19 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 
-import 'provider/categories_provider.dart';
-import 'provider/categories_selection_provider.dart';
-import 'widgets/add_dialog.dart';
-import 'widgets/category_list.dart';
+import '../presentation.dart';
 
 class CategoryPage extends ConsumerWidget with LoggerMixin {
   const CategoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoaded =
-        ref.watch(categoriesProvider.select((value) => value != null));
-
     final selection = ref.watch(categoriesSelectionProvider);
     SelectionNotifier.handleRoute(categoriesSelectionProvider, ref, context);
 
@@ -43,7 +37,9 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
                   return IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
-                      ref.read(categoriesProvider.notifier).remove(selected);
+                      ref
+                          .read(categoriesPageProvider.notifier)
+                          .remove(selected);
                       Navigator.of(context).pop();
                     },
                   );
@@ -53,7 +49,7 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
         ],
         body: const CategoryList(),
       ),
-      floatingActionButton: isLoaded && !selection.active
+      floatingActionButton: !selection.active
           ? FloatingActionButton(
               onPressed: () => showDialog(
                 context: context,

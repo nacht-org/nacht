@@ -3,62 +3,80 @@ import 'package:nacht/common/common.dart';
 import 'dart:math' as math;
 
 import 'package:nacht/core/core.dart';
-import 'package:nacht/domain/domain.dart';
 
-final categoriesProvider =
-    StateNotifierProvider.autoDispose<CategoriesNotifier, List<CategoryData>?>(
-  (ref) => CategoriesNotifier(
-    state: null,
-    read: ref.read,
-    libraryService: ref.watch(libraryServiceProvider),
-    messageService: ref.watch(messageServiceProvider),
-  ),
+import '../../domain/domain.dart';
+
+final categoriesPageProvider =
+    StateNotifierProvider.autoDispose<CategoriesNotifier, List<CategoryData>>(
+  (ref) {
+    final categoriesNotifier = CategoriesNotifier(
+      read: ref.read,
+      state: [],
+      addCategory: ref.watch(addCategoryProvider),
+      editCategory: ref.watch(editCategoryProvider),
+      removeCategory: ref.watch(removeCategoryProvider),
+      updateCategoriesIndex: ref.watch(updateCategoriesIndexProvider),
+    );
+
+    categoriesNotifier.reload();
+
+    return categoriesNotifier;
+  },
   name: 'CategoriesProvider',
 );
 
-class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
+class CategoriesNotifier extends StateNotifier<List<CategoryData>>
     with LoggerMixin {
   CategoriesNotifier({
-    required List<CategoryData>? state,
+    required List<CategoryData> state,
     required Reader read,
-    required LibraryService libraryService,
-    required MessageService messageService,
+    required AddCategory addCategory,
+    required EditCategory editCategory,
+    required RemoveCategory removeCategory,
+    required UpdateCategoriesIndex updateCategoriesIndex,
   })  : _read = read,
-        _libraryService = libraryService,
-        _messageService = messageService,
+        _addCategory = addCategory,
+        _editCategory = editCategory,
+        _removeCategory = removeCategory,
+        _updateCategoriesIndex = updateCategoriesIndex,
         super(state);
 
   final Reader _read;
-  final LibraryService _libraryService;
-  final MessageService _messageService;
+
+  final AddCategory _addCategory;
+  final EditCategory _editCategory;
+  final RemoveCategory _removeCategory;
+  final UpdateCategoriesIndex _updateCategoriesIndex;
 
   Future<void> reload() async {
-    final categories = await _libraryService.categories();
-    final data = categories.where((element) => !element.isDefault).toList();
+    final data = _read(categoriesProvider)
+        .where((element) => !element.isDefault)
+        .toList();
+
     state = _sort(data);
   }
 
   Future<void> add(String name) async {
     if (name.isEmpty) {
-      _messageService.showText('Category name cannot be empty.');
+      _read(messageServiceProvider).showText('Category name cannot be empty.');
       return;
     }
 
-    final result = await _libraryService.addCategory(_highestIndex() + 1, name);
+    final result = await _addCategory.execute(_highestIndex() + 1, name);
 
     result.fold(
       (failure) {
         log.warning(failure);
       },
       (data) {
-        state = _sort([...?state, data]);
+        state = _sort([...state, data]);
       },
     );
   }
 
   Future<void> edit(CategoryData category, String name) async {
     if (name.isEmpty) {
-      _messageService.showText('Category name cannot be empty.');
+      _read(messageServiceProvider).showText('Category name cannot be empty.');
       return;
     } else if (category.name == name) {
       return;
@@ -66,31 +84,27 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
 
     final newCategory = category.copyWith(name: name);
 
-    final result = await _libraryService.editCategory(newCategory);
+    final result = await _editCategory.execute(newCategory);
 
     result.fold((failure) {
       log.warning(failure);
     }, (data) {
-      assert(state != null);
-
       state = [
-        ...state!.sublist(0, newCategory.index - 1),
+        ...state.sublist(0, newCategory.index - 1),
         newCategory,
-        ...state!.sublist(newCategory.index),
+        ...state.sublist(newCategory.index),
       ];
     });
   }
 
   Future<void> remove(Set<int> ids) async {
-    assert(state != null);
-
     final oldState = state;
     state = [
-      for (final category in state!)
+      for (final category in state)
         if (!ids.contains(category.id)) category
     ];
 
-    _messageService.showUndo(
+    _read(messageServiceProvider).showUndo(
       '${ids.length} categories removed',
       onUndo: () {
         log.fine('undid ${ids.length} category removes');
@@ -98,7 +112,7 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
       },
       orElse: () async {
         log.fine('commited ${ids.length} category removes');
-        final result = await _libraryService.removeCategories(ids);
+        final result = await _removeCategory.execute(ids);
 
         result.fold(
           (failure) {
@@ -112,14 +126,13 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
   }
 
   Future<void> reorder(int oldIndex, int newIndex) async {
-    assert(state != null);
     assert(oldIndex != newIndex);
 
-    final category = state![oldIndex];
+    final category = state[oldIndex];
 
     final newState = [
-      ...state!.sublist(0, oldIndex),
-      ...state!.sublist(oldIndex + 1, state!.length),
+      ...state.sublist(0, oldIndex),
+      ...state.sublist(oldIndex + 1, state.length),
     ];
 
     if (oldIndex > newIndex) {
@@ -140,24 +153,19 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>?>
       }
     }
 
-    final result = await _libraryService.updateCategoriesOrder(changed);
-    result.fold(
-      (failure) {
-        log.warning(failure);
-        state = oldState;
-      },
-      (_) {},
-    );
+    final failure = await _updateCategoriesIndex.execute(changed);
+    if (failure != null) {
+      log.warning(failure);
+      state = oldState;
+    }
   }
 
   int _highestIndex() {
-    assert(state != null);
-
-    if (state!.isEmpty) {
+    if (state.isEmpty) {
       return 0;
     }
 
-    return state!.map((e) => e.index).reduce(math.max);
+    return state.map((e) => e.index).reduce(math.max);
   }
 
   List<CategoryData> _sort(List<CategoryData> data) {

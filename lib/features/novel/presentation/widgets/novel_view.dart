@@ -126,8 +126,8 @@ class NovelView extends HookConsumerWidget {
       floatingActionButton: selection.active
           ? null
           : FloatingActionButton(
+              onPressed: notifier.readFirstUnread,
               child: const Icon(Icons.play_arrow),
-              onPressed: () => notifier.readFirstUnread(),
             ),
       extendBody: true,
       bottomNavigationBar: AnimatedBottomBar(

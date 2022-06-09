@@ -1,5 +1,4 @@
 import 'package:nacht/common/common.dart';
-import 'package:nacht/common/novel/domain/services/set_read_at.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:equatable/equatable.dart';
@@ -16,6 +15,7 @@ final novelFamily = StateNotifierProvider.autoDispose
     setReadAt: ref.watch(setReadAtProvider),
     getNovelCategoryMap: ref.watch(getNovelCategoryMapProvider),
     changeNovelCategories: ref.watch(changeNovelCategoriesProvider),
+    getFirstUnreadChapter: ref.watch(getFirstUnreadChapterProvider),
   ),
   name: 'NovelProvider',
 );
@@ -41,6 +41,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     required SetReadAt setReadAt,
     required GetNovelCategoryMap getNovelCategoryMap,
     required ChangeNovelCategories changeNovelCategories,
+    required GetFirstUnreadChapter getFirstUnreadChapter,
   })  : _read = read,
         _invalidate = invalidate,
         _fetchNovel = fetchNovel,
@@ -48,6 +49,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
         _setReadAt = setReadAt,
         _getNovelCategoryMap = getNovelCategoryMap,
         _changeNovelCategories = changeNovelCategories,
+        _getFirstUnreadChapter = getFirstUnreadChapter,
         super(state);
 
   final Reader _read;
@@ -58,6 +60,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   final SetReadAt _setReadAt;
   final GetNovelCategoryMap _getNovelCategoryMap;
   final ChangeNovelCategories _changeNovelCategories;
+  final GetFirstUnreadChapter _getFirstUnreadChapter;
 
   Future<void> fetch(Crawler? crawler) async {
     if (crawler == null || crawler is! ParseNovel) {
@@ -87,7 +90,8 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   }
 
   Future<void> toggleLibrary() async {
-    Map<CategoryData, bool>? categories = await _getNovelCategoryMap.execute(state.id);
+    Map<CategoryData, bool>? categories =
+        await _getNovelCategoryMap.execute(state.id);
 
     // There must always be one category.
     assert(categories.isNotEmpty);
@@ -127,14 +131,14 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   }
 
   Future<void> readFirstUnread() async {
-    // final unread = await novelService.firstUnread(state.id);
+    final unread = await _getFirstUnreadChapter.execute(state.id);
 
-    // unread.fold(
-    //   (failure) => _read(messageServiceProvider).showText('No chapters unread'),
-    //   (data) => _read(routerProvider).push(
-    //     ReaderRoute(novel: state, chapter: data, doFetch: false),
-    //   ),
-    // );
+    unread.fold(
+      (failure) => _read(messageServiceProvider).showText(failure.message),
+      (data) => _read(routerProvider).push(
+        ReaderRoute(novel: state, chapter: data, doFetch: false),
+      ),
+    );
   }
 
   Future<void> setReadAt(Set<int> ids, bool isRead) async {

@@ -18,25 +18,20 @@ class WatchCategories {
   final AppDatabase _database;
 
   Stream<List<CategoryData>> execute() {
-    final novelCount = _database.novelCategoriesJunction.novelId.count();
-
-    final query = _database.select(_database.novelCategories).join([
-      leftOuterJoin(
-        _database.novelCategoriesJunction,
-        _database.novelCategoriesJunction.categoryId
-            .equalsExp(_database.novelCategories.id),
-        useColumns: false,
-      ),
-    ])
-      ..addColumns([novelCount]);
+    final query = _database.customSelect(
+      "SELECT *, "
+      "(SELECT COUNT(*) FROM novel_categories_junction nc WHERE nc.category_id = c.id) AS 'amount' "
+      "FROM novel_categories c;",
+      readsFrom: {_database.novelCategoriesJunction, _database.novelCategories},
+    );
 
     final stream = query.watch();
     return stream.map(
-      (rows) => rows.map((row) {
-        final category = row.readTable(_database.novelCategories);
-        final count = row.read(novelCount);
+      (event) => event.map((row) {
+        final category = NovelCategory.fromData(row.data);
+        final novelCount = row.read<int>('amount');
 
-        return CategoryData.fromModel(category).copyWith(novelCount: count);
+        return CategoryData.fromModel(category, novelCount: novelCount);
       }).toList(),
     );
   }

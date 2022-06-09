@@ -21,10 +21,6 @@ class UpdatesPage extends StatelessWidget {
       body: HookConsumer(builder: (context, ref, child) {
         final updates = ref.watch(updatesProvider);
 
-        usePostFrameCallback((timeStamp) {
-          ref.read(updatesProvider.notifier).initialize();
-        });
-
         return ListView.builder(
           padding: const EdgeInsets.all(0),
           itemBuilder: (context, index) => updates[index].when(

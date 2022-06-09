@@ -65,11 +65,11 @@ class _$AppRouter extends RootStackRouter {
   List<RouteConfig> get routes => [
         RouteConfig(SplashRoute.name, path: '/'),
         RouteConfig(HomeRoute.name, path: '/home'),
-        RouteConfig(PopularRoute.name, path: 'popular'),
-        RouteConfig(NovelRoute.name, path: 'novel'),
-        RouteConfig(WebViewRoute.name, path: 'webview'),
-        RouteConfig(CategoryRoute.name, path: 'categories'),
-        RouteConfig(ReaderRoute.name, path: 'reader')
+        RouteConfig(PopularRoute.name, path: '/popular'),
+        RouteConfig(NovelRoute.name, path: '/novel'),
+        RouteConfig(WebViewRoute.name, path: '/webview'),
+        RouteConfig(CategoryRoute.name, path: '/categories'),
+        RouteConfig(ReaderRoute.name, path: '/reader')
       ];
 }
 
@@ -94,7 +94,7 @@ class HomeRoute extends PageRouteInfo<void> {
 class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
   PopularRoute({Key? key, required CrawlerFactory crawlerFactory})
       : super(PopularRoute.name,
-            path: 'popular',
+            path: '/popular',
             args: PopularRouteArgs(key: key, crawlerFactory: crawlerFactory));
 
   static const String name = 'PopularRoute';
@@ -118,7 +118,7 @@ class PopularRouteArgs {
 class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
   NovelRoute({Key? key, required NovelType type})
       : super(NovelRoute.name,
-            path: 'novel', args: NovelRouteArgs(key: key, type: type));
+            path: '/novel', args: NovelRouteArgs(key: key, type: type));
 
   static const String name = 'NovelRoute';
 }
@@ -141,7 +141,7 @@ class NovelRouteArgs {
 class WebViewRoute extends PageRouteInfo<WebViewRouteArgs> {
   WebViewRoute({Key? key, required String title, required String initialUrl})
       : super(WebViewRoute.name,
-            path: 'webview',
+            path: '/webview',
             args: WebViewRouteArgs(
                 key: key, title: title, initialUrl: initialUrl));
 
@@ -167,7 +167,7 @@ class WebViewRouteArgs {
 /// generated route for
 /// [CategoryPage]
 class CategoryRoute extends PageRouteInfo<void> {
-  const CategoryRoute() : super(CategoryRoute.name, path: 'categories');
+  const CategoryRoute() : super(CategoryRoute.name, path: '/categories');
 
   static const String name = 'CategoryRoute';
 }
@@ -177,11 +177,11 @@ class CategoryRoute extends PageRouteInfo<void> {
 class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
   ReaderRoute(
       {Key? key,
-      required dynamic novel,
-      required dynamic chapter,
+      required NovelData novel,
+      required ChapterData chapter,
       required bool doFetch})
       : super(ReaderRoute.name,
-            path: 'reader',
+            path: '/reader',
             args: ReaderRouteArgs(
                 key: key, novel: novel, chapter: chapter, doFetch: doFetch));
 
@@ -197,9 +197,9 @@ class ReaderRouteArgs {
 
   final Key? key;
 
-  final dynamic novel;
+  final NovelData novel;
 
-  final dynamic chapter;
+  final ChapterData chapter;
 
   final bool doFetch;
 

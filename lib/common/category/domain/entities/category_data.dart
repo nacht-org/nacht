@@ -13,13 +13,16 @@ class CategoryData with _$CategoryData {
     required int novelCount,
   }) = _CategoryData;
 
-  factory CategoryData.fromModel(NovelCategory category) {
+  factory CategoryData.fromModel(
+    NovelCategory category, {
+    int novelCount = 0,
+  }) {
     return CategoryData(
       id: category.id,
       index: category.categoryIndex,
       name: category.name,
       isDefault: category.id == NovelCategorySeed.defaultCategory,
-      novelCount: 0,
+      novelCount: novelCount,
     );
   }
 

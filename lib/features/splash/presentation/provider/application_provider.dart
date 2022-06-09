@@ -43,6 +43,6 @@ class Application with LoggerMixin {
       _read(categoriesProvider.notifier).initialize(),
     ]);
 
-    _read(routerProvider).replace(const HomeRoute());
+    await _read(routerProvider).replace(const HomeRoute());
   }
 }

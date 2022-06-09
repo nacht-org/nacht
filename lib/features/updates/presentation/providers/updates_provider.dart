@@ -22,9 +22,15 @@ class UpdatesNotifier extends StateNotifier<List<UpdateEntry>> {
   final WatchUpdates _watchUpdates;
 
   Future<void> initialize() async {
-    _watchUpdates.execute().listen((data) {
+    final stream = _watchUpdates.execute();
+    final data = await stream.firstWhere((element) => true);
+    state = _map(data);
+
+    stream.listen((data) {
       state = _map(data);
     });
+
+    print('initialized updates');
   }
 
   List<UpdateEntry> _map(List<UpdateData> data) {

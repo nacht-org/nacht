@@ -4,9 +4,16 @@ part 'diff_utils.freezed.dart';
 
 @freezed
 class ChangeElement<P, N> with _$ChangeElement<P, N> {
+  /// New data that does not exist in previous.
   const factory ChangeElement.insert(N data) = _InsertChange;
+
+  /// Old data that does not exist in new list.
   const factory ChangeElement.remove(P data) = _RemoveChange;
+
+  /// Data that exists in both but the values are different.
   const factory ChangeElement.replace(P prev, N next) = _ReplaceChange;
+
+  /// Data that exists in both and has the same value.
   const factory ChangeElement.keep(P prev, N next) = _KeepChange;
 }
 

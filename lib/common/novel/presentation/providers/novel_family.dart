@@ -14,6 +14,8 @@ final novelFamily = StateNotifierProvider.autoDispose
     fetchNovel: ref.watch(fetchNovelProvider),
     getNovelById: ref.watch(getNovelByIdProvider),
     setReadAt: ref.watch(setReadAtProvider),
+    getNovelCategoryMap: ref.watch(getNovelCategoryMapProvider),
+    changeNovelCategories: ref.watch(changeNovelCategoriesProvider),
   ),
   name: 'NovelProvider',
 );
@@ -37,11 +39,15 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     required FetchNovel fetchNovel,
     required GetNovelById getNovelById,
     required SetReadAt setReadAt,
+    required GetNovelCategoryMap getNovelCategoryMap,
+    required ChangeNovelCategories changeNovelCategories,
   })  : _read = read,
         _invalidate = invalidate,
         _fetchNovel = fetchNovel,
         _getNovelById = getNovelById,
         _setReadAt = setReadAt,
+        _getNovelCategoryMap = getNovelCategoryMap,
+        _changeNovelCategories = changeNovelCategories,
         super(state);
 
   final Reader _read;
@@ -50,6 +56,8 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   final FetchNovel _fetchNovel;
   final GetNovelById _getNovelById;
   final SetReadAt _setReadAt;
+  final GetNovelCategoryMap _getNovelCategoryMap;
+  final ChangeNovelCategories _changeNovelCategories;
 
   Future<void> fetch(Crawler? crawler) async {
     if (crawler == null || crawler is! ParseNovel) {
@@ -79,36 +87,34 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   }
 
   Future<void> toggleLibrary() async {
-    throw UnimplementedError();
-    // Map<CategoryData, bool>? categories =
-    //     await libraryService.novelCategories(state);
+    Map<CategoryData, bool>? categories = await _getNovelCategoryMap.execute(state.id);
 
-    // // There must always be one category.
-    // assert(categories.isNotEmpty);
+    // There must always be one category.
+    assert(categories.isNotEmpty);
 
-    // if (categories.length == 1) {
-    //   // if there is only one category (default) dont show the dialog
-    //   // just reverse the state.
-    //   categories = {
-    //     for (final entry in categories.entries) entry.key: !entry.value
-    //   };
-    // } else {
-    //   categories = await read(dialogServiceProvider).show<CategorySelection?>(
-    //     child: SetCategoriesDialog(categories: categories),
-    //   );
-    // }
+    if (categories.length == 1) {
+      // if there is only one category (default) dont show the dialog
+      // just reverse the state.
+      categories = {
+        for (final entry in categories.entries) entry.key: !entry.value
+      };
+    } else {
+      categories = await _read(dialogServiceProvider).show<CategorySelection?>(
+        child: SetCategoriesDialog(categories: categories),
+      );
+    }
 
-    // // Dont do anything if the dialog was cancelled.
-    // if (categories == null) {
-    //   return;
-    // }
+    // Dont do anything if the dialog was cancelled.
+    if (categories == null) {
+      return;
+    }
 
-    // final result = await libraryService.changeCategory(state, categories);
-    // result.fold((failure) {
-    //   log.warning(failure);
-    // }, (data) {
-    //   state = state.copyWith(favourite: data);
-    // });
+    final result = await _changeNovelCategories.execute(state, categories);
+    result.fold((failure) {
+      log.warning(failure);
+    }, (data) {
+      state = state.copyWith(favourite: data);
+    });
   }
 
   Future<void> reload() async {

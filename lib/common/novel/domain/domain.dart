@@ -13,3 +13,7 @@ export 'services/fetch_chapter_content.dart';
 export 'services/fetch_novel.dart';
 export 'services/get_novel_by_id.dart';
 export 'services/get_novel_by_url.dart';
+export 'services/get_novel_categories.dart';
+export 'services/get_novel_category_map.dart';
+export 'services/set_read_at.dart';
+export 'services/change_novel_categories.dart';

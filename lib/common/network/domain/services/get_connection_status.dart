@@ -11,8 +11,7 @@ final getConnectionStatusProvider = Provider<GetConnectionStatus>(
 class GetConnectionStatus {
   final Connectivity connectivity = Connectivity();
 
-  Future<NetworkConnectionData> execute() async {
-    final result = await connectivity.checkConnectivity();
-    return NetworkConnectionData.fromConnectivity(result);
+  Future<ConnectivityResult> execute() async {
+    return await connectivity.checkConnectivity();
   }
 }

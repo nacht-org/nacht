@@ -4,21 +4,16 @@ import 'package:nacht/common/network/domain/entities/network_connection_data.dar
 
 void main() {
   const map = {
-    ConnectivityResult.wifi:
-        NetworkConnectionData(type: NetworkConnectionType.wifi),
-    ConnectivityResult.mobile:
-        NetworkConnectionData(type: NetworkConnectionType.mobile),
-    ConnectivityResult.bluetooth:
-        NetworkConnectionData(type: NetworkConnectionType.none),
-    ConnectivityResult.ethernet:
-        NetworkConnectionData(type: NetworkConnectionType.none),
-    ConnectivityResult.none:
-        NetworkConnectionData(type: NetworkConnectionType.none),
+    ConnectivityResult.wifi: NetworkConnectionType.wifi,
+    ConnectivityResult.mobile: NetworkConnectionType.mobile,
+    ConnectivityResult.bluetooth: NetworkConnectionType.none,
+    ConnectivityResult.ethernet: NetworkConnectionType.none,
+    ConnectivityResult.none: NetworkConnectionType.none,
   };
 
   test('should create NetworkConnectionData from ConnectivityResult', () {
     for (final entry in map.entries) {
-      final result = NetworkConnectionData.fromConnectivity(entry.key);
+      final result = NetworkConnectionType.fromConnectivity(entry.key);
       expect(result, entry.value);
     }
   });

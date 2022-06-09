@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
-import 'presentation.dart';
+import '../presentation.dart';
 
 class NovelPage extends ConsumerWidget {
   const NovelPage({

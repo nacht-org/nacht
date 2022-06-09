@@ -2,6 +2,9 @@
 export 'models/description_info.dart';
 export 'models/head_info.dart';
 
+// Pages.
+export 'pages/novel_page.dart';
+
 // Providers.
 export 'providers/description_info_provider.dart';
 export 'providers/intermediate_provider.dart';

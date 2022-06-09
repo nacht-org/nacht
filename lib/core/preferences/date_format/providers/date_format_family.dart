@@ -8,7 +8,8 @@ final dateFormatFamily = Provider.autoDispose.family<DateFormat, Locale>(
     final dateFormatPattern = ref.watch(dateFormatPreferencesProvider
         .select((preferences) => preferences.pattern));
 
-    return DateFormat(dateFormatPattern.pattern, locale.languageCode);
+    // FIXME: LocaleDataException (LocaleDataException: Locale data has not been initialized, call initializeDateFormatting(<locale>).)
+    return DateFormat(dateFormatPattern.pattern);
   },
   name: 'DateFormatFamily',
 );

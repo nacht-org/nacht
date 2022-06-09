@@ -61,7 +61,7 @@ class IntermediateNotifier extends StateNotifier<IntermediateState>
   final GetNovelByUrl _getNovelByUrl;
 
   Future<void> reload() async {
-    if (_crawler == null || _crawler is! ParseNovel) {
+    if (_crawler == null || _crawler!.instance is! ParseNovel) {
       _read(messageServiceProvider).showText('Unable to parse.');
       return;
     }

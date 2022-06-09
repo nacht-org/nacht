@@ -26,7 +26,6 @@ class UpdateNovel with LoggerMixin {
 
   final AppDatabase _database;
 
-  @override
   Future<Either<Failure, UpdateResult>> execute(sources.Novel novel) async {
     UpdateResult result =
         UpdateResult(isInitial: true, novelId: -1, insertedIds: []);
@@ -163,6 +162,7 @@ class UpdateNovel with LoggerMixin {
                 sourceChapterIntoCompanion(next.chapter).copyWith(
               id: Value(prev.id),
               volumeId: Value(next.volumeId),
+              novelId: Value(novelId),
             );
 
             batch.replace(_database.chapters, chapterCompanion);

@@ -58,12 +58,12 @@ class NovelHead extends ConsumerWidget {
                   Text(
                     head.title,
                     style: Theme.of(context).textTheme.titleLarge,
-                    maxLines: 3,
                   ),
                   Text(
-                    head.author ?? 'Unknown',
+                    head.author ?? 'Unknown author',
                     style: Theme.of(context).textTheme.bodyLarge,
                     maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   StatusInfo(
                     status: head.status,

@@ -5,7 +5,7 @@ import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 import '../../domain/domain.dart';
 
-final popularFetchProvider = StateNotifierProvider.autoDispose
+final popularFetchFamily = StateNotifierProvider.autoDispose
     .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, crawler) => PopularFetchNotifier(
     read: ref.read,

@@ -21,9 +21,7 @@ class FetchInfo with _$FetchInfo {
     );
   }
 
-  // TODO: change isInitial to `page == 1` and remove isInitialLoading.
-  bool get isInitial => !isLoading && page == 1;
-  bool get isInitialLoading => isLoading && page == 1;
+  bool get isInitial => page == 1;
 
   const FetchInfo._();
 }

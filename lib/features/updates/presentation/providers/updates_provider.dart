@@ -29,8 +29,6 @@ class UpdatesNotifier extends StateNotifier<List<UpdateEntry>> {
     stream.listen((data) {
       state = _map(data);
     });
-
-    print('initialized updates');
   }
 
   List<UpdateEntry> _map(List<UpdateData> data) {

@@ -30,6 +30,7 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
 
   Future<void> fetch() async {
     if (state.fetched) {
+      log.warning('chapter content already fetched.');
       return;
     }
 
@@ -43,7 +44,10 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
     if (!mounted) return;
 
     content.fold(
-      (failure) => log.warning(failure.toString()),
+      (failure) {
+        log.warning(failure.message);
+        _read(messageServiceProvider).showText(failure.message);
+      },
       (data) => state = state.copyWith(
         content: ContentInfo.data(data),
         fetched: true,

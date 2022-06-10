@@ -38,8 +38,7 @@ class ChapterPage extends HookConsumerWidget {
       ),
       data: (content) => NotificationListener<ScrollNotification>(
         onNotification: (notification) {
-          if (notification.metrics.pixels ==
-              notification.metrics.maxScrollExtent) {
+          if (notification.isAtEnd) {
             ref
                 .read(chapterFamily(ChapterInput(chapter)).notifier)
                 .markAsRead();

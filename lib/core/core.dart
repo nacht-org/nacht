@@ -17,6 +17,7 @@ export 'misc/diff_utils.dart';
 export 'misc/dartz_utils.dart';
 export 'misc/time_utils.dart';
 export 'misc/platform_utils.dart';
+export 'misc/scroll_utils.dart';
 
 // Services.
 export 'services/message_service.dart';

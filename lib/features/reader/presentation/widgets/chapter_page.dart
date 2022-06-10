@@ -60,24 +60,26 @@ class ChapterPage extends HookConsumerWidget {
                   child: Builder(builder: (context) {
                     return Text(
                       chapter.title,
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style: Theme.of(context).textTheme.displaySmall,
                     );
                   }),
                 ),
               ),
               ReaderTheme(
-                child: Consumer(builder: (context, ref, child) {
-                  final preferences = ref.watch(readerPreferencesProvider);
+                child: Consumer(
+                  builder: (context, ref, child) {
+                    final preferences = ref.watch(readerPreferencesProvider);
 
-                  return Html(
-                    data: content,
-                    style: {
-                      "p": Style(
-                        fontSize: FontSize(preferences.fontSize),
-                      ),
-                    },
-                  );
-                }),
+                    return Html(
+                      data: content,
+                      style: {
+                        "p": Style(
+                          fontSize: FontSize(preferences.fontSize),
+                        ),
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),

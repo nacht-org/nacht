@@ -24,7 +24,7 @@ dependencies:
   auto_route: ^4.0.1
 
   # State management.
-  hooks_riverpod: ^2.0.0-dev.5
+  hooks_riverpod: ^2.0.0-dev.9
   flutter_hooks: ^0.18.3
 
   # Database.

@@ -348,7 +348,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.5"
+    version: "2.0.0-dev.9"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -407,7 +407,7 @@ packages:
       name: hooks_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.5"
+    version: "2.0.0-dev.9"
   html:
     dependency: transitive
     description:
@@ -694,7 +694,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.5"
+    version: "2.0.0-dev.9"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1016,5 +1016,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.17.0-206.0.dev <3.0.0"
-  flutter: ">=2.10.0"
+  dart: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"

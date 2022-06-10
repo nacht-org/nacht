@@ -23,3 +23,4 @@ export 'misc/scroll_utils.dart';
 export 'services/message_service.dart';
 export 'services/dialog_service.dart';
 export 'services/date_format_service.dart';
+export 'services/platform_brightness_provider.dart';

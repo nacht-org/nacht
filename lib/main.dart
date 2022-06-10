@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nacht/core/preferences/theme/theme.dart';
 import 'package:nacht/features/splash/presentation/provider/application_provider.dart';
 import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class NachtApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    final brightness = ref.watch(brightnessProvider);
 
     useEffect(() {
       ref.read(applicationProvider).init();
@@ -42,17 +44,32 @@ class NachtApp extends HookConsumerWidget {
 
     return MaterialApp.router(
       title: 'nacht',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        listTileTheme: ListTileThemeData(
-          selectedTileColor: ThemeData.dark().cardColor,
-        ),
-        useMaterial3: true,
-      ),
+      theme: themeFromBrightness(brightness),
       debugShowCheckedModeBanner: false,
       routeInformationParser: router.defaultRouteParser(),
       routerDelegate: router.delegate(),
       routeInformationProvider: router.routeInfoProvider(),
     );
+  }
+
+  ThemeData themeFromBrightness(Brightness brightness) {
+    switch (brightness) {
+      case Brightness.dark:
+        return ThemeData(
+          brightness: Brightness.dark,
+          listTileTheme: ListTileThemeData(
+            selectedTileColor: ThemeData.dark().cardColor,
+          ),
+          useMaterial3: true,
+        );
+      case Brightness.light:
+        return ThemeData(
+          brightness: Brightness.light,
+          listTileTheme: ListTileThemeData(
+            selectedTileColor: ThemeData.light().cardColor,
+          ),
+          useMaterial3: true,
+        );
+    }
   }
 }

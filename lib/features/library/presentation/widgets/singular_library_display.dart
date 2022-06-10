@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nacht/common/common.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import 'category_grid.dart';
 
@@ -22,7 +23,9 @@ class SingularLibraryDisplay extends StatelessWidget {
           forceElevated: innerBoxIsScrolled,
         ),
       ],
-      body: CategoryGrid(category: category),
+      body: DestinationTransition(
+        child: CategoryGrid(category: category),
+      ),
     );
   }
 }

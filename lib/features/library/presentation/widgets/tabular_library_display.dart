@@ -1,6 +1,7 @@
 import 'package:nacht/common/common.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:flutter/material.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import 'category_grid.dart';
 
@@ -56,11 +57,13 @@ class _TabularLibraryDisplayState extends State<TabularLibraryDisplay>
           ),
         ),
       ],
-      body: TabBarView(
-        controller: controller,
-        children: widget.categories
-            .map((category) => CategoryGrid(category: category))
-            .toList(),
+      body: DestinationTransition(
+        child: TabBarView(
+          controller: controller,
+          children: widget.categories
+              .map((category) => CategoryGrid(category: category))
+              .toList(),
+        ),
       ),
     );
   }

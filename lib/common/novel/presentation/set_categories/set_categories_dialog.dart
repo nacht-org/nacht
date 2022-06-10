@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
-import 'provider/selected_categories_provider.dart';
-
 class SetCategoriesDialog extends ConsumerWidget {
   const SetCategoriesDialog({
     Key? key,
@@ -33,10 +31,12 @@ class SetCategoriesDialog extends ConsumerWidget {
                 onChanged: (value) =>
                     notifier.setSelected(entry.key.id, value!),
                 dense: true,
+                controlAffinity: ListTileControlAffinity.leading,
               ),
             )
             .toList(),
       ),
+      contentPadding: const EdgeInsets.only(top: 20, bottom: 24.0),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

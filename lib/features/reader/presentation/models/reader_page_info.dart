@@ -31,4 +31,5 @@ class ReaderPageInfo with _$ReaderPageInfo {
 class ContentInfo with _$ContentInfo {
   const factory ContentInfo.loading() = _ContentLoading;
   const factory ContentInfo.data(String content) = _ContentData;
+  // TODO: add error state.
 }

@@ -29,7 +29,7 @@ class ReaderPreferencesNotifier extends StateNotifier<ReaderPreferences> {
   }
 
   void setLineHeight(double value) {
-    value = double.parse(value.toStringAsFixed(1));
+    value = (value * 10).round() / 10;
     ReaderPreferences.lineHeightKey.setValue(_preferences, value);
     state = state.copyWith(lineHeight: value);
   }

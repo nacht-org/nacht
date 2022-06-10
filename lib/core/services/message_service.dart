@@ -24,7 +24,7 @@ class MessageService {
     String message, {
     required VoidCallback onUndo,
     required VoidCallback orElse,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 2),
   }) async {
     final handle = showSnackBar(SnackBar(
       content: Text(message),

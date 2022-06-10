@@ -1,10 +1,10 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../components/components.dart';
-import '../../domain/domain.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/common/common.dart';
+import 'package:nacht/features/features.dart';
+import 'package:nacht_sources/nacht_sources.dart';
 
 part 'app_router.gr.dart';
 
@@ -16,26 +16,13 @@ final routerProvider = Provider<AppRouter>(
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: [
-    AutoRoute(
-      path: '/',
-      initial: true,
-      page: SplashPage,
-    ),
-    AutoRoute(
-      path: '/home',
-      page: HomePage,
-      children: [
-        AutoRoute(page: LibraryPage),
-        AutoRoute(page: UpdatesPage),
-        AutoRoute(page: BrowsePage),
-        AutoRoute(page: MorePage),
-      ],
-    ),
-    AutoRoute(page: PopularPage, path: 'popular'),
-    AutoRoute(page: NovelPage, path: 'novel'),
-    AutoRoute(page: WebViewPage, path: 'webview'),
-    AutoRoute(page: CategoryPage, path: 'categories'),
-    AutoRoute(page: ReaderPage, path: 'reader'),
+    AutoRoute(path: '/', page: SplashPage, initial: true),
+    AutoRoute(path: '/home', page: HomePage),
+    AutoRoute(path: '/popular', page: PopularPage),
+    AutoRoute(path: '/novel', page: NovelPage),
+    AutoRoute(path: '/webview', page: WebViewPage),
+    AutoRoute(path: '/categories', page: CategoryPage),
+    AutoRoute(path: '/reader', page: ReaderPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

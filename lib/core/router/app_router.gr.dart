@@ -36,7 +36,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<NovelRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: NovelPage(key: args.key, either: args.either));
+          child: NovelPage(key: args.key, type: args.type));
     },
     WebViewRoute.name: (routeData) {
       final args = routeData.argsAs<WebViewRouteArgs>();
@@ -58,42 +58,18 @@ class _$AppRouter extends RootStackRouter {
               novel: args.novel,
               chapter: args.chapter,
               doFetch: args.doFetch));
-    },
-    LibraryRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const LibraryPage());
-    },
-    UpdatesRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const UpdatesPage());
-    },
-    BrowseRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const BrowsePage());
-    },
-    MoreRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const MorePage());
     }
   };
 
   @override
   List<RouteConfig> get routes => [
         RouteConfig(SplashRoute.name, path: '/'),
-        RouteConfig(HomeRoute.name, path: '/home', children: [
-          RouteConfig(LibraryRoute.name,
-              path: 'library-page', parent: HomeRoute.name),
-          RouteConfig(UpdatesRoute.name,
-              path: 'updates-page', parent: HomeRoute.name),
-          RouteConfig(BrowseRoute.name,
-              path: 'browse-page', parent: HomeRoute.name),
-          RouteConfig(MoreRoute.name, path: 'more-page', parent: HomeRoute.name)
-        ]),
-        RouteConfig(PopularRoute.name, path: 'popular'),
-        RouteConfig(NovelRoute.name, path: 'novel'),
-        RouteConfig(WebViewRoute.name, path: 'webview'),
-        RouteConfig(CategoryRoute.name, path: 'categories'),
-        RouteConfig(ReaderRoute.name, path: 'reader')
+        RouteConfig(HomeRoute.name, path: '/home'),
+        RouteConfig(PopularRoute.name, path: '/popular'),
+        RouteConfig(NovelRoute.name, path: '/novel'),
+        RouteConfig(WebViewRoute.name, path: '/webview'),
+        RouteConfig(CategoryRoute.name, path: '/categories'),
+        RouteConfig(ReaderRoute.name, path: '/reader')
       ];
 }
 
@@ -108,8 +84,7 @@ class SplashRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(HomeRoute.name, path: '/home', initialChildren: children);
+  const HomeRoute() : super(HomeRoute.name, path: '/home');
 
   static const String name = 'HomeRoute';
 }
@@ -119,7 +94,7 @@ class HomeRoute extends PageRouteInfo<void> {
 class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
   PopularRoute({Key? key, required CrawlerFactory crawlerFactory})
       : super(PopularRoute.name,
-            path: 'popular',
+            path: '/popular',
             args: PopularRouteArgs(key: key, crawlerFactory: crawlerFactory));
 
   static const String name = 'PopularRoute';
@@ -141,23 +116,23 @@ class PopularRouteArgs {
 /// generated route for
 /// [NovelPage]
 class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
-  NovelRoute({Key? key, required NovelEither either})
+  NovelRoute({Key? key, required NovelType type})
       : super(NovelRoute.name,
-            path: 'novel', args: NovelRouteArgs(key: key, either: either));
+            path: '/novel', args: NovelRouteArgs(key: key, type: type));
 
   static const String name = 'NovelRoute';
 }
 
 class NovelRouteArgs {
-  const NovelRouteArgs({this.key, required this.either});
+  const NovelRouteArgs({this.key, required this.type});
 
   final Key? key;
 
-  final NovelEither either;
+  final NovelType type;
 
   @override
   String toString() {
-    return 'NovelRouteArgs{key: $key, either: $either}';
+    return 'NovelRouteArgs{key: $key, type: $type}';
   }
 }
 
@@ -166,7 +141,7 @@ class NovelRouteArgs {
 class WebViewRoute extends PageRouteInfo<WebViewRouteArgs> {
   WebViewRoute({Key? key, required String title, required String initialUrl})
       : super(WebViewRoute.name,
-            path: 'webview',
+            path: '/webview',
             args: WebViewRouteArgs(
                 key: key, title: title, initialUrl: initialUrl));
 
@@ -192,7 +167,7 @@ class WebViewRouteArgs {
 /// generated route for
 /// [CategoryPage]
 class CategoryRoute extends PageRouteInfo<void> {
-  const CategoryRoute() : super(CategoryRoute.name, path: 'categories');
+  const CategoryRoute() : super(CategoryRoute.name, path: '/categories');
 
   static const String name = 'CategoryRoute';
 }
@@ -206,7 +181,7 @@ class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
       required ChapterData chapter,
       required bool doFetch})
       : super(ReaderRoute.name,
-            path: 'reader',
+            path: '/reader',
             args: ReaderRouteArgs(
                 key: key, novel: novel, chapter: chapter, doFetch: doFetch));
 
@@ -232,36 +207,4 @@ class ReaderRouteArgs {
   String toString() {
     return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter, doFetch: $doFetch}';
   }
-}
-
-/// generated route for
-/// [LibraryPage]
-class LibraryRoute extends PageRouteInfo<void> {
-  const LibraryRoute() : super(LibraryRoute.name, path: 'library-page');
-
-  static const String name = 'LibraryRoute';
-}
-
-/// generated route for
-/// [UpdatesPage]
-class UpdatesRoute extends PageRouteInfo<void> {
-  const UpdatesRoute() : super(UpdatesRoute.name, path: 'updates-page');
-
-  static const String name = 'UpdatesRoute';
-}
-
-/// generated route for
-/// [BrowsePage]
-class BrowseRoute extends PageRouteInfo<void> {
-  const BrowseRoute() : super(BrowseRoute.name, path: 'browse-page');
-
-  static const String name = 'BrowseRoute';
-}
-
-/// generated route for
-/// [MorePage]
-class MoreRoute extends PageRouteInfo<void> {
-  const MoreRoute() : super(MoreRoute.name, path: 'more-page');
-
-  static const String name = 'MoreRoute';
 }

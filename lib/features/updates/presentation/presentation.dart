@@ -9,3 +9,4 @@ export 'providers/updates_provider.dart';
 
 // Widgets.
 export 'widgets/chapter_update_tile.dart';
+export 'widgets/date_update_tile.dart';

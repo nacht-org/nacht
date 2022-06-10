@@ -25,17 +25,11 @@ class UpdatesPage extends StatelessWidget {
           return ListView.builder(
             padding: const EdgeInsets.all(0),
             itemBuilder: (context, index) => updates[index].when(
-              date: (date) => ListTile(
-                title: Text(
-                  date.toString(), // TODO: format date
-                  style: Theme.of(context).textTheme.labelLarge,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                dense: true,
+              date: (date) => DateUpdateTile(date: date),
+              chapter: (novel, chapter) => ChapterUpdateTile(
+                novel: novel,
+                chapter: chapter,
               ),
-              chapter: (novel, chapter) =>
-                  ChapterUpdateTile(novel: novel, chapter: chapter),
             ),
             itemCount: updates.length,
           );

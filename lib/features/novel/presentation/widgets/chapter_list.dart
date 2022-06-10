@@ -20,7 +20,7 @@ class ChapterList extends ConsumerWidget {
     final locale = Localizations.localeOf(context);
 
     final items = ref.watch(chapterListFamily(novel));
-    final timeService = ref.watch(dateFormatServiceFamily(locale));
+    final dateFormatService = ref.watch(dateFormatServiceFamily(locale));
 
     final selectionActive =
         ref.watch(novelSelectionProvider.select((value) => value.active));
@@ -53,7 +53,7 @@ class ChapterList extends ConsumerWidget {
                 ),
                 subtitle: chapter.updated == null
                     ? null
-                    : Text(timeService.relativeDay(chapter.updated!)),
+                    : Text(dateFormatService.relativeDay(chapter.updated!)),
                 onTap: selectionActive
                     ? select
                     : () => context.router.push(

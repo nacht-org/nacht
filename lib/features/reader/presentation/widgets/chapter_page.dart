@@ -52,7 +52,7 @@ class ChapterPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(
                   left: 8.0,
-                  top: 32.0,
+                  top: 16.0,
                   right: 8.0,
                   bottom: 8.0,
                 ),

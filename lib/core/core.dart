@@ -7,6 +7,7 @@ export 'nacht_theme/nacht_theme.dart';
 // Preferences.
 export 'preferences/reader/reader.dart';
 export 'preferences/date_format/date_format.dart';
+export 'preferences/theme/theme.dart';
 
 // Misc.
 export 'misc/error_handler.dart';

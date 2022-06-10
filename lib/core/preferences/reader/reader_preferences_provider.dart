@@ -27,4 +27,9 @@ class ReaderPreferencesNotifier extends StateNotifier<ReaderPreferences> {
     ReaderPreferences.fontSizeKey.setValue(_preferences, value);
     state = state.copyWith(fontSize: value);
   }
+
+  void setLineHeight(double value) {
+    ReaderPreferences.lineHeightKey.setValue(_preferences, value);
+    state = state.copyWith(lineHeight: value);
+  }
 }

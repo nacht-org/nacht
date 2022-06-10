@@ -36,25 +36,20 @@ class SettingsSheet extends ConsumerWidget {
           final fontSize = ref.watch(
               readerPreferencesProvider.select((reader) => reader.fontSize));
 
-          return ListTile(
+          return StepListTile(
             title: const Text('Font size'),
             subtitle: Text('$fontSize'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  onPressed: fontSize > 8
-                      ? () => notifier.setFontSize(fontSize - 1)
-                      : null,
-                  icon: const Icon(Icons.remove),
-                ),
-                IconButton(
-                  onPressed: fontSize < 22
-                      ? () => notifier.setFontSize(fontSize + 1)
-                      : null,
-                  icon: const Icon(Icons.add),
-                ),
-              ],
+            decrement: IconButton(
+              onPressed: fontSize > 8
+                  ? () => notifier.setFontSize(fontSize - 1)
+                  : null,
+              icon: const Icon(Icons.remove),
+            ),
+            increment: IconButton(
+              onPressed: fontSize < 22
+                  ? () => notifier.setFontSize(fontSize + 1)
+                  : null,
+              icon: const Icon(Icons.add),
             ),
           );
         })

@@ -73,6 +73,9 @@ class ChapterPage extends HookConsumerWidget {
                     return Html(
                       data: content,
                       style: {
+                        "*": Style(
+                          lineHeight: LineHeight(preferences.lineHeight),
+                        ),
                         "p": Style(
                           fontSize: FontSize(preferences.fontSize),
                         ),

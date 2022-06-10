@@ -32,27 +32,37 @@ class SettingsSheet extends ConsumerWidget {
               .toList(),
           onChanged: notifier.setFontFamily,
         ),
-        Consumer(builder: (context, ref, child) {
-          final fontSize = ref.watch(
-              readerPreferencesProvider.select((reader) => reader.fontSize));
+        Consumer(
+          builder: (context, ref, child) {
+            final fontSize = ref.watch(
+                readerPreferencesProvider.select((reader) => reader.fontSize));
 
-          return StepListTile(
-            title: const Text('Font size'),
-            subtitle: Text('$fontSize'),
-            decrement: IconButton(
-              onPressed: fontSize > 8
-                  ? () => notifier.setFontSize(fontSize - 1)
-                  : null,
-              icon: const Icon(Icons.remove),
-            ),
-            increment: IconButton(
-              onPressed: fontSize < 22
-                  ? () => notifier.setFontSize(fontSize + 1)
-                  : null,
-              icon: const Icon(Icons.add),
-            ),
-          );
-        })
+            return StepListTile(
+              title: const Text('Font size'),
+              subtitle: Text('$fontSize'),
+              value: fontSize,
+              onChanged: notifier.setFontSize,
+              min: 8.0,
+              max: 22.0,
+            );
+          },
+        ),
+        Consumer(
+          builder: (context, ref, child) {
+            final lineHeight = ref.watch(readerPreferencesProvider
+                .select((reader) => reader.lineHeight));
+
+            return StepListTile(
+              title: const Text('Line height'),
+              subtitle: Text('$lineHeight'),
+              value: lineHeight,
+              onChanged: notifier.setLineHeight,
+              step: 0.1,
+              min: 0.6,
+              max: 2.2,
+            );
+          },
+        )
       ],
     );
   }

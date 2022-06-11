@@ -1,4 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+
+typedef FailureOr<T> = Either<Failure, T>;
 
 abstract class Failure extends Equatable {
   final String message;

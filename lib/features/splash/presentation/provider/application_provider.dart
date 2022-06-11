@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,11 +39,20 @@ class Application with LoggerMixin {
       }
     });
 
+    _addLicenses();
+
     await Future.wait([
       _read(updatesProvider.notifier).initialize(),
       _read(categoriesProvider.notifier).initialize(),
     ]);
 
     await _read(routerProvider).replace(const HomeRoute());
+  }
+
+  void _addLicenses() {
+    LicenseRegistry.addLicense(() async* {
+      final ofl = await rootBundle.loadString('assets/google_fonts/OFL.txt');
+      yield LicenseEntryWithLineBreaks(['google_fonts'], ofl);
+    });
   }
 }

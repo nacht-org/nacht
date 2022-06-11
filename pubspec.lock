@@ -401,6 +401,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  hetu_script:
+    dependency: transitive
+    description:
+      name: hetu_script
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.12"
+  hetu_script_dev_tools:
+    dependency: transitive
+    description:
+      name: hetu_script_dev_tools
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.9"
   hooks_riverpod:
     dependency: "direct main"
     description:
@@ -681,6 +695,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   recase:
     dependency: transitive
     description:

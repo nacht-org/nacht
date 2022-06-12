@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/core/preferences/theme/theme.dart';
 
 final brightnessProvider = Provider<Brightness>(
   (ref) {

@@ -56,6 +56,7 @@ class NachtApp extends HookConsumerWidget {
       case Brightness.dark:
         return ThemeData(
           brightness: Brightness.dark,
+          primarySwatch: Colors.blue,
           listTileTheme: ListTileThemeData(
             selectedTileColor: ThemeData.dark().cardColor,
           ),
@@ -64,6 +65,7 @@ class NachtApp extends HookConsumerWidget {
       case Brightness.light:
         return ThemeData(
           brightness: Brightness.light,
+          primarySwatch: Colors.blue,
           listTileTheme: ListTileThemeData(
             selectedTileColor: ThemeData.light().cardColor,
           ),

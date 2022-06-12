@@ -41,18 +41,21 @@ class _TabularLibraryDisplayState extends State<TabularLibraryDisplay>
     return NestedScrollView(
       floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverAppBar(
-          title: const Text('Library'),
-          floating: true,
-          pinned: true,
-          forceElevated: innerBoxIsScrolled,
-          bottom: AlignTabBar(
-            child: TabBar(
-              controller: controller,
-              tabs: widget.categories
-                  .map((category) => Tab(text: category.name))
-                  .toList(),
-              isScrollable: true,
+        SliverOverlapAbsorber(
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+          sliver: SliverAppBar(
+            title: const Text('Library'),
+            floating: true,
+            pinned: true,
+            forceElevated: innerBoxIsScrolled,
+            bottom: AlignTabBar(
+              child: TabBar(
+                controller: controller,
+                tabs: widget.categories
+                    .map((category) => Tab(text: category.name))
+                    .toList(),
+                isScrollable: true,
+              ),
             ),
           ),
         ),

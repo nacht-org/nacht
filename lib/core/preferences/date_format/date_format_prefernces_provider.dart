@@ -20,4 +20,9 @@ class DateFormatPreferencesNotifier
         super(DateFormatPreferences.read(preferences));
 
   final Preferences _preferences;
+
+  void setPattern(DateFormatPattern value) {
+    DateFormatPreferences.patternKey.setValue(_preferences, value);
+    state = state.copyWith(pattern: value);
+  }
 }

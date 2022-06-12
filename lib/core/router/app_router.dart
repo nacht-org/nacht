@@ -23,6 +23,7 @@ final routerProvider = Provider<AppRouter>(
     AutoRoute(path: '/webview', page: WebViewPage),
     AutoRoute(path: '/categories', page: CategoryPage),
     AutoRoute(path: '/reader', page: ReaderPage),
+    AutoRoute(path: '/settings', page: SettingsPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

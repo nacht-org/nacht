@@ -28,33 +28,11 @@ class MorePage extends StatelessWidget {
               onTap: () => context.router.push(const CategoryRoute()),
             ),
             const Divider(),
-            Consumer(builder: (context, ref, child) {
-              final themeMode = ref.watch(
-                  themePreferencesProvider.select((theme) => theme.themeMode));
-              final notifier = ref.watch(themePreferencesProvider.notifier);
-
-              return ListTile(
-                title: const Text('Theme mode'),
-                subtitle: Text(themeMode.name),
-                onTap: () async {
-                  final value = await showDialog<ThemeModePreference>(
-                    context: context,
-                    builder: (context) => RadioDialog(
-                      title: 'Theme mode',
-                      items: ThemeModePreference.values
-                          .map((themeMode) =>
-                              RadioItem(themeMode.name, themeMode))
-                          .toList(),
-                      value: themeMode,
-                    ),
-                  );
-
-                  if (value != null) {
-                    notifier.setThemeMode(value);
-                  }
-                },
-              );
-            })
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () => context.router.push(const SettingsRoute()),
+            ),
           ],
         ),
       ),

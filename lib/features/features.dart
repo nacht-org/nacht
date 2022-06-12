@@ -10,3 +10,4 @@ export 'updates/updates.dart';
 export 'category/category.dart';
 export 'webview/webview.dart';
 export 'reader/reader.dart';
+export 'settings/settings.dart';

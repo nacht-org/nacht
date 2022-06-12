@@ -58,6 +58,10 @@ class _$AppRouter extends RootStackRouter {
               novel: args.novel,
               chapter: args.chapter,
               doFetch: args.doFetch));
+    },
+    SettingsRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const SettingsPage());
     }
   };
 
@@ -69,7 +73,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(NovelRoute.name, path: '/novel'),
         RouteConfig(WebViewRoute.name, path: '/webview'),
         RouteConfig(CategoryRoute.name, path: '/categories'),
-        RouteConfig(ReaderRoute.name, path: '/reader')
+        RouteConfig(ReaderRoute.name, path: '/reader'),
+        RouteConfig(SettingsRoute.name, path: '/settings')
       ];
 }
 
@@ -207,4 +212,12 @@ class ReaderRouteArgs {
   String toString() {
     return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter, doFetch: $doFetch}';
   }
+}
+
+/// generated route for
+/// [SettingsPage]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
+
+  static const String name = 'SettingsRoute';
 }

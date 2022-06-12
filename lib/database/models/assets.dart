@@ -8,6 +8,7 @@ class Assets extends Table {
   TextColumn get path => text().nullable()();
   TextColumn get hash => text().withLength(max: 40)();
   IntColumn get typeId => integer().references(AssetTypes, #id)();
+  DateTimeColumn get savedAt => dateTime()();
 }
 
 class AssetTypes extends Table {

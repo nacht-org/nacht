@@ -13,6 +13,7 @@ class AssetData with _$AssetData {
     required File file,
     required String hash,
     required String mimetype,
+    required DateTime savedAt,
   }) = _AssetData;
 
   factory AssetData.fromModel(Asset asset) {
@@ -22,6 +23,7 @@ class AssetData with _$AssetData {
       file: File(asset.path!),
       hash: asset.hash,
       mimetype: AssetTypeSeed.intoMimeType(asset.typeId),
+      savedAt: asset.savedAt,
     );
   }
 

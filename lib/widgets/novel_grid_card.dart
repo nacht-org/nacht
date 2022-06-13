@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/common/common.dart';
 
@@ -21,7 +22,7 @@ class NovelGridCard extends StatelessWidget {
     if (cover != null) {
       image = FileImage(cover!.file);
     } else if (coverUrl != null) {
-      image = NetworkImage(coverUrl!);
+      image = CachedNetworkImageProvider(coverUrl!);
     } else {
       image = null;
     }

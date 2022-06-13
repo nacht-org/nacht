@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
@@ -26,7 +27,7 @@ class NovelHead extends ConsumerWidget {
     if (head.cover != null) {
       image = FileImage(head.cover!.file);
     } else if (head.coverUrl != null) {
-      image = NetworkImage(head.coverUrl!);
+      image = CachedNetworkImageProvider(head.coverUrl!);
     } else {
       image = null;
     }

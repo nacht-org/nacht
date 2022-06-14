@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../presentation.dart';
@@ -18,7 +20,7 @@ class SliverSearchResult extends ConsumerWidget {
       error: (message) => SliverFillLoadingError(
         message: Text(message),
       ),
-      http: (crawlerFactory) {
+      http: (crawlerFactory, url) {
         return SliverFillRemaining(
           hasScrollBody: false,
           child: Consumer(builder: (context, ref, child) {
@@ -32,7 +34,11 @@ class SliverSearchResult extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Pop once to remove the search context
+                    context.router
+                        .popAndPush(NovelRoute(type: NovelType.url(url)));
+                  },
                   child: const Text('Fetch'),
                 ),
               ],

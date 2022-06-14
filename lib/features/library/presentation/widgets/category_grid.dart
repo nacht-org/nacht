@@ -37,7 +37,7 @@ class CategoryGrid extends ConsumerWidget {
                   coverUrl: novel.coverUrl,
                   onTap: () => context.router.push(
                     NovelRoute(
-                      type: NovelType.complete(novel),
+                      type: NovelType.novel(novel),
                     ),
                   ),
                 );

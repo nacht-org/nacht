@@ -17,7 +17,7 @@ class BrowseSearchInfo with _$BrowseSearchInfo {
 @freezed
 class SearchResult with _$SearchResult {
   const factory SearchResult.none() = _NoneResult;
-  const factory SearchResult.http(sources.CrawlerFactory crawlerFactory) =
-      _HttpResult;
+  const factory SearchResult.http(
+      sources.CrawlerFactory crawlerFactory, String url) = _HttpResult;
   const factory SearchResult.error(String message) = _ErrorResult;
 }

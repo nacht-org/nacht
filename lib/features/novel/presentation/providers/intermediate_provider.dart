@@ -7,7 +7,7 @@ import 'package:nacht_sources/nacht_sources.dart';
 part 'intermediate_provider.freezed.dart';
 
 final intermediateProvider = StateNotifierProvider.autoDispose
-    .family<IntermediateNotifier, IntermediateState, PartialNovelData>(
+    .family<IntermediateNotifier, IntermediateState, NovelType>(
   (ref, data) {
     final crawlerFactory = ref.watch(crawlerFactoryFamily(data.url));
     final crawler = crawlerFactory != null
@@ -16,7 +16,7 @@ final intermediateProvider = StateNotifierProvider.autoDispose
 
     return IntermediateNotifier(
       read: ref.read,
-      state: IntermediateState.partial(data),
+      state: IntermediateState(novel: data, error: null),
       crawler: crawler,
       fetchNovel: ref.watch(fetchNovelProvider),
       getNovelByUrl: ref.watch(getNovelByUrlProvider),
@@ -26,16 +26,18 @@ final intermediateProvider = StateNotifierProvider.autoDispose
 
 @freezed
 class IntermediateState with _$IntermediateState {
-  factory IntermediateState.partial(PartialNovelData novel,
-      [Failure? failure]) = _PartialIntermediate;
-  factory IntermediateState.complete(NovelData novel) = _CompleteIntermediate;
+  factory IntermediateState({
+    required NovelType novel,
+    required String? error,
+  }) = _IntermediateState;
 
   IntermediateState._();
 
-  String get url {
-    return when(
-      partial: (novel, failure) => novel.url,
-      complete: (novel) => novel.url,
+  bool get isComplete {
+    return novel.when(
+      url: (_) => false,
+      partial: (_) => false,
+      novel: (_) => true,
     );
   }
 }
@@ -60,15 +62,19 @@ class IntermediateNotifier extends StateNotifier<IntermediateState>
   final FetchNovel _fetchNovel;
   final GetNovelByUrl _getNovelByUrl;
 
-  Future<void> reload() async {
+  Future<void> fetch() async {
     if (_crawler == null || _crawler!.instance is! ParseNovel) {
       _read(messageServiceProvider).showText('Unable to parse.');
       return;
     }
 
-    final failure =
-        (await _fetchNovel.execute(_crawler!.instance as ParseNovel, state.url))
-            .toNullable();
+    if (state.error != null) {
+      state = state.copyWith(error: null);
+    }
+
+    final failure = (await _fetchNovel.execute(
+            _crawler!.instance as ParseNovel, state.novel.url))
+        .toNullable();
 
     // TODO: add error to partial view
     if (failure != null) {
@@ -77,14 +83,14 @@ class IntermediateNotifier extends StateNotifier<IntermediateState>
       return;
     }
 
-    final result = await _getNovelByUrl.execute(state.url);
+    final result = await _getNovelByUrl.execute(state.novel.url);
     result.fold(
       (failure) {
         log.warning(failure);
-        _read(messageServiceProvider).showText(failure.message);
+        state = state.copyWith(error: failure.message);
       },
       (data) {
-        state = IntermediateState.complete(data);
+        state = state.copyWith(novel: NovelType.novel(data));
       },
     );
   }

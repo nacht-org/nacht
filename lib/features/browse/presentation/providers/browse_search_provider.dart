@@ -58,7 +58,7 @@ class BrowseSearchNotifier extends StateNotifier<BrowseSearchInfo> {
     final crawlerFactory = _getCrawlerForUrl.execute(state.query);
     if (crawlerFactory != null) {
       state = state.copyWith(
-        result: SearchResult.http(crawlerFactory),
+        result: SearchResult.http(crawlerFactory, state.query),
       );
     } else {
       state = state.copyWith(

@@ -56,6 +56,7 @@ class PartialView extends HookWidget {
                   head: HeadInfo.fromPartial(novel),
                 ),
               ),
+              // TODO: show error and retry.
             ],
           ),
         ),

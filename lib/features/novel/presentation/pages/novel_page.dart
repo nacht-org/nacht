@@ -59,6 +59,7 @@ class LoadingView extends HookConsumerWidget {
       ref.read(intermediateProvider(type).notifier).fetch();
     });
 
+    // TODO: add retry.
     return Scaffold(
       appBar: AppBar(
         title: Text(crawler?.meta.name ?? ''),

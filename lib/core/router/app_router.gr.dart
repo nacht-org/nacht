@@ -62,6 +62,10 @@ class _$AppRouter extends RootStackRouter {
     SettingsRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const SettingsPage());
+    },
+    AboutRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const AboutPage());
     }
   };
 
@@ -74,7 +78,8 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(WebViewRoute.name, path: '/webview'),
         RouteConfig(CategoryRoute.name, path: '/categories'),
         RouteConfig(ReaderRoute.name, path: '/reader'),
-        RouteConfig(SettingsRoute.name, path: '/settings')
+        RouteConfig(SettingsRoute.name, path: '/settings'),
+        RouteConfig(AboutRoute.name, path: '/about')
       ];
 }
 
@@ -220,4 +225,12 @@ class SettingsRoute extends PageRouteInfo<void> {
   const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
 
   static const String name = 'SettingsRoute';
+}
+
+/// generated route for
+/// [AboutPage]
+class AboutRoute extends PageRouteInfo<void> {
+  const AboutRoute() : super(AboutRoute.name, path: '/about');
+
+  static const String name = 'AboutRoute';
 }

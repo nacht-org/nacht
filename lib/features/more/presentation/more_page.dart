@@ -33,6 +33,11 @@ class MorePage extends StatelessWidget {
               title: const Text('Settings'),
               onTap: () => context.router.push(const SettingsRoute()),
             ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('About'),
+              onTap: () => context.router.push(const AboutRoute()),
+            ),
           ],
         ),
       ),

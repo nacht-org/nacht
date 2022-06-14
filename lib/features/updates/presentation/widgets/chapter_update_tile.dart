@@ -23,7 +23,7 @@ class ChapterUpdateTile extends ConsumerWidget {
       leading: GestureDetector(
         onTap: () => context.router.push(
           NovelRoute(
-            type: NovelType.complete(novel),
+            type: NovelType.novel(novel),
           ),
         ),
         child: AspectRatio(

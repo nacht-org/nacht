@@ -10,10 +10,14 @@ import '../presentation.dart';
 class PartialView extends HookWidget {
   const PartialView({
     Key? key,
+    required this.type,
     required this.novel,
+    required this.error,
   }) : super(key: key);
 
+  final NovelType type;
   final PartialNovelData novel;
+  final String? error;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +35,10 @@ class PartialView extends HookWidget {
         ],
         body: Consumer(
           builder: (context, ref, child) {
-            final notifier = ref.watch(intermediateProvider(novel).notifier);
+            final notifier = ref.watch(intermediateProvider(type).notifier);
 
             return RefreshIndicator(
-              onRefresh: notifier.reload,
+              onRefresh: notifier.fetch,
               key: refreshKey,
               child: child!,
             );

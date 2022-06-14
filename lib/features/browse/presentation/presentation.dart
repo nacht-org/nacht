@@ -9,3 +9,5 @@ export 'providers/crawlers_provider.dart';
 
 // Widgets.
 export 'widgets/browse_search_button.dart';
+export 'widgets/sliver_crawler_list.dart';
+export 'widgets/sliver_search_result.dart';

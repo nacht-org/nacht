@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/widgets/loading_error.dart';
 
 import '../presentation.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -21,28 +23,38 @@ class AboutPage extends StatelessWidget {
         body: MediaQuery.removePadding(
           context: context,
           removeTop: true,
-          child: ListView(
-            children: [
-              Consumer(
-                builder: (context, ref, child) {
-                  final info = ref.watch(packageInfoProvider);
+          child: Consumer(builder: (context, ref, child) {
+            final packageInfo = ref.watch(packageInfoProvider);
 
-                  final version = info.when(
-                    data: (data) => '${data.version}+${data.buildNumber}',
-                    error: (error, stack) => 'Error',
-                    loading: () => '',
-                  );
-
-                  return ListTile(
-                    title: const Text('Version'),
-                    subtitle: Text(version),
-                  );
-                },
+            return packageInfo.when(
+              loading: () => const SizedBox.shrink(),
+              error: (error, stack) => const LoadingError(
+                message: Text('Unable to load package information'),
               ),
-            ],
-          ),
+              data: (data) => buildView(context, data),
+            );
+          }),
         ),
       ),
+    );
+  }
+
+  ListView buildView(BuildContext context, PackageInfo data) {
+    return ListView(
+      children: [
+        ListTile(
+          title: const Text('Version'),
+          subtitle: Text('${data.version}+${data.buildNumber}'),
+        ),
+        ListTile(
+          title: const Text('Licenses'),
+          onTap: () => showLicensePage(
+            context: context,
+            applicationName: data.appName,
+            applicationVersion: data.version,
+          ),
+        )
+      ],
     );
   }
 }

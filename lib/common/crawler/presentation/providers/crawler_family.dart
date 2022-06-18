@@ -8,11 +8,11 @@ final crawlerFamily =
     Provider.autoDispose.family<CrawlerInfo, sources.CrawlerFactory>(
   (ref, factory) {
     final meta = factory.meta();
-    final handler = sources.IsolateHandler(factory: factory);
+    final handler = sources.CrawlerIsolate(factory: factory);
 
     ref.onDispose(() => handler.close());
 
-    return CrawlerInfo(meta: meta, handler: handler);
+    return CrawlerInfo(meta: meta, isolate: handler);
   },
   name: 'CrawlerFactory',
 );
@@ -21,7 +21,7 @@ final crawlerFamily =
 class CrawlerInfo with _$CrawlerInfo {
   factory CrawlerInfo({
     required sources.Meta meta,
-    required sources.IsolateHandler handler,
+    required sources.CrawlerIsolate isolate,
   }) = _CrawlerHolding;
 
   bool isSupported(sources.Feature feature) => meta.features.contains(feature);

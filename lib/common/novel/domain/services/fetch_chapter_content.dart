@@ -20,7 +20,7 @@ class FetchChapterContent {
   final GetIsConnectionAvailable _isConnectionAvailable;
 
   Future<Either<Failure, String>> execute(
-    sources.IsolateHandler handler,
+    sources.CrawlerIsolate isolate,
     String url,
   ) async {
     final isConnectionAvailable = await _isConnectionAvailable.execute();
@@ -29,7 +29,7 @@ class FetchChapterContent {
     }
 
     try {
-      final content = await handler.fetchChapterContent(url);
+      final content = await isolate.fetchChapterContent(url);
       return Right(content!);
     } on DioError catch (e) {
       return Left(NetworkFailure(e.message));

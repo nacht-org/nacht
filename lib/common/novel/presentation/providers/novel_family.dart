@@ -68,7 +68,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     }
 
     final failure =
-        (await _fetchNovel.execute(crawler.handler, state.url)).toNullable();
+        (await _fetchNovel.execute(crawler.isolate, state.url)).toNullable();
 
     // TODO: add error to partial view
     if (failure != null) {

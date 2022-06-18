@@ -37,7 +37,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
 
     state = state.copyWith(isLoading: true);
 
-    final result = await _fetchPopular.execute(crawler.handler, state.page);
+    final result = await _fetchPopular.execute(crawler.isolate, state.page);
 
     // FIXME: mounted check.
 

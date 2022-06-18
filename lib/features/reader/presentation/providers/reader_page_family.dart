@@ -35,10 +35,8 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
     }
 
     // TODO: check for crawler support
-    final content = await _fetchChapterContent.execute(
-      crawler!.handler,
-      state.chapter.url,
-    );
+    final content =
+        await _fetchChapterContent.execute(crawler!.isolate, state.chapter.url);
 
     // The provider may be dismounted before fetch ends.
     if (!mounted) return;

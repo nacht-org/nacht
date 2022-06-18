@@ -59,7 +59,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
     }
 
     final result =
-        await _fetchSearch.execute(_crawler.handler, _currentQuery, state.page);
+        await _fetchSearch.execute(_crawler.isolate, _currentQuery, state.page);
 
     result.fold(
       (failure) {

@@ -62,7 +62,7 @@ class IntermediateNotifier extends StateNotifier<IntermediateState>
     }
 
     final failure =
-        (await _fetchNovel.execute(crawler.handler, state.novel.url))
+        (await _fetchNovel.execute(crawler.isolate, state.novel.url))
             .toNullable();
 
     // TODO: add error to partial view

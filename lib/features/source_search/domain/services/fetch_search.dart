@@ -21,7 +21,7 @@ class FetchSearch {
   final GetIsConnectionAvailable _getIsConnectionAvailable;
 
   Future<Either<Failure, List<PartialNovelData>>> execute(
-    IsolateHandler handler,
+    CrawlerIsolate isolate,
     String query,
     int page,
   ) async {
@@ -31,7 +31,7 @@ class FetchSearch {
 
     final List<sources.Novel> novels;
     try {
-      novels = await handler.fetchSearch(query, page);
+      novels = await isolate.fetchSearch(query, page);
     } on DioError catch (e) {
       return Left(NetworkFailure(e.message));
     }

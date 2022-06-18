@@ -20,7 +20,7 @@ class FetchPopular {
   final GetIsConnectionAvailable _getIsConnectionAvailable;
 
   Future<Either<Failure, List<PartialNovelData>>> execute(
-    sources.IsolateHandler handler,
+    sources.CrawlerIsolate isolate,
     int page,
   ) async {
     if (!await _getIsConnectionAvailable.execute()) {
@@ -29,7 +29,7 @@ class FetchPopular {
 
     final List<sources.Novel> novels;
     try {
-      novels = await handler.fetchPopular(page);
+      novels = await isolate.fetchPopular(page);
     } on DioError catch (e) {
       return Left(NetworkFailure(e.message));
     }

@@ -29,7 +29,7 @@ class FetchNovel {
   final AddChapterUpdates _addChapterUpdates;
 
   Future<Option<Failure>> execute(
-    sources.IsolateHandler handler,
+    sources.CrawlerIsolate isolate,
     String url,
   ) async {
     final isConnectionAvailable = await _isConnectionAvailable.execute();
@@ -39,7 +39,7 @@ class FetchNovel {
 
     final sources.Novel novel;
     try {
-      novel = await handler.fetchNovel(url);
+      novel = await isolate.fetchNovel(url);
     } on DioError catch (e) {
       return Some(NetworkFailure(e.message));
     }

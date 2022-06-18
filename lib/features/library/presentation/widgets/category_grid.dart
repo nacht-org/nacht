@@ -9,9 +9,14 @@ import 'package:nacht/widgets/widgets.dart';
 import '../presentation.dart';
 
 class CategoryGrid extends ConsumerWidget {
-  const CategoryGrid({Key? key, required this.category}) : super(key: key);
+  const CategoryGrid({
+    Key? key,
+    required this.category,
+    required this.pinned,
+  }) : super(key: key);
 
   final CategoryData category;
+  final bool pinned;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,9 +62,10 @@ class CategoryGrid extends ConsumerWidget {
 
     return CustomScrollView(
       slivers: [
-        SliverOverlapInjector(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-        ),
+        if (pinned)
+          SliverOverlapInjector(
+            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+          ),
         ...slivers,
       ],
     );

@@ -64,7 +64,10 @@ class _TabularLibraryDisplayState extends State<TabularLibraryDisplay>
         child: TabBarView(
           controller: controller,
           children: widget.categories
-              .map((category) => CategoryGrid(category: category))
+              .map((category) => CategoryGrid(
+                    category: category,
+                    pinned: true,
+                  ))
               .toList(),
         ),
       ),

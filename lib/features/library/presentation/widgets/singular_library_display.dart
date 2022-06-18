@@ -24,7 +24,10 @@ class SingularLibraryDisplay extends StatelessWidget {
         ),
       ],
       body: DestinationTransition(
-        child: CategoryGrid(category: category),
+        child: CategoryGrid(
+          category: category,
+          pinned: false,
+        ),
       ),
     );
   }

@@ -58,9 +58,13 @@ class ChapterPage extends HookConsumerWidget {
                 ),
                 child: ReaderTheme(
                   child: Builder(builder: (context) {
+                    var theme = Theme.of(context);
+
                     return Text(
                       chapter.title,
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        color: theme.colorScheme.onBackground,
+                      ),
                     );
                   }),
                 ),

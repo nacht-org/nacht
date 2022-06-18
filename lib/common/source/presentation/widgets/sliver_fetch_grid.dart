@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
-import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 
 class SliverFetchGrid extends StatelessWidget {
@@ -13,7 +12,7 @@ class SliverFetchGrid extends StatelessWidget {
   }) : super(key: key);
 
   final List<PartialNovelData> items;
-  final Crawler crawler;
+  final CrawlerInfo crawler;
 
   @override
   Widget build(BuildContext context) {

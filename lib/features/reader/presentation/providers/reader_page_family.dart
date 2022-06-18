@@ -28,7 +28,7 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
   final Reader _read;
   final FetchChapterContent _fetchChapterContent;
 
-  Future<void> fetch() async {
+  Future<void> fetch(CrawlerInfo? crawler) async {
     if (state.fetched) {
       log.warning('chapter content already fetched.');
       return;
@@ -36,7 +36,7 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
 
     // TODO: check for crawler support
     final content = await _fetchChapterContent.execute(
-      state.crawler.instance as sources.ParseNovel,
+      crawler!.handler,
       state.chapter.url,
     );
 

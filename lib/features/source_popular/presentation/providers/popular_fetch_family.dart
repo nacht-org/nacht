@@ -10,7 +10,6 @@ final popularFetchFamily = StateNotifierProvider.autoDispose
   (ref, crawler) => PopularFetchNotifier(
     read: ref.read,
     state: FetchInfo.initial(),
-    crawler: crawler,
     fetchPopular: ref.watch(fetchPopularProvider),
   ),
   name: 'PopularFetchProvider',
@@ -20,31 +19,25 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
   PopularFetchNotifier({
     required Reader read,
     required FetchInfo state,
-    required CrawlerInfo crawler,
     required FetchPopular fetchPopular,
   })  : _read = read,
-        _crawler = crawler,
         _fetchPopular = fetchPopular,
         super(state);
 
   final Reader _read;
-  final CrawlerInfo _crawler;
   final FetchPopular _fetchPopular;
 
-  void restart() {
+  void restart(CrawlerInfo crawler) {
     state = FetchInfo.initial();
-    next();
+    next(crawler);
   }
 
-  Future<void> next() async {
-    assert(_crawler.isPopularSupported);
+  Future<void> next(CrawlerInfo crawler) async {
+    assert(crawler.isSupported(sources.Feature.popular));
 
     state = state.copyWith(isLoading: true);
 
-    final result = await _fetchPopular.execute(
-      _crawler.instance as sources.ParsePopular,
-      state.page,
-    );
+    final result = await _fetchPopular.execute(crawler.handler, state.page);
 
     // FIXME: mounted check.
 

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
+import 'package:nacht_sources/nacht_sources.dart';
 
 final fetchSearchProvider = Provider<FetchSearch>(
   (ref) => FetchSearch(
@@ -20,7 +21,7 @@ class FetchSearch {
   final GetIsConnectionAvailable _getIsConnectionAvailable;
 
   Future<Either<Failure, List<PartialNovelData>>> execute(
-    sources.ParseSearch parser,
+    IsolateHandler handler,
     String query,
     int page,
   ) async {
@@ -30,7 +31,7 @@ class FetchSearch {
 
     final List<sources.Novel> novels;
     try {
-      novels = await parser.search(query, page);
+      novels = await handler.fetchSearch(query, page);
     } on DioError catch (e) {
       return Left(NetworkFailure(e.message));
     }

@@ -36,9 +36,13 @@ class PartialView extends HookWidget {
         body: Consumer(
           builder: (context, ref, child) {
             final notifier = ref.watch(intermediateProvider(type).notifier);
+            final crawlerFactory = ref.watch(crawlerFactoryFamily(novel.url));
+            final crawler = crawlerFactory != null
+                ? ref.watch(crawlerFamily(crawlerFactory))
+                : null;
 
             return RefreshIndicator(
-              onRefresh: notifier.fetch,
+              onRefresh: () => notifier.fetch(crawler),
               key: refreshKey,
               child: child!,
             );

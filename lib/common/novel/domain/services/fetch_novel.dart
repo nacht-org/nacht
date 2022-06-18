@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
-import 'package:nacht/common/network/domain/failures/connection_not_available.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
@@ -30,7 +29,7 @@ class FetchNovel {
   final AddChapterUpdates _addChapterUpdates;
 
   Future<Option<Failure>> execute(
-    sources.ParseNovel parser,
+    sources.IsolateHandler handler,
     String url,
   ) async {
     final isConnectionAvailable = await _isConnectionAvailable.execute();
@@ -40,7 +39,7 @@ class FetchNovel {
 
     final sources.Novel novel;
     try {
-      novel = await parser.parseNovel(url);
+      novel = await handler.fetchNovel(url);
     } on DioError catch (e) {
       return Some(NetworkFailure(e.message));
     }

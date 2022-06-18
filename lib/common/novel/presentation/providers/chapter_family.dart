@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
-import 'package:nacht/common/novel/domain/services/set_read_at.dart';
 import 'package:nacht/core/logger/logger.dart';
 
 final chapterFamily = StateNotifierProvider.autoDispose

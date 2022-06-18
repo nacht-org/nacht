@@ -18,7 +18,6 @@ class AddChapterUpdates {
 
   final AppDatabase _database;
 
-  @override
   Future<Option<Failure>> execute(int novelId, Iterable<int> chapterIds) async {
     await _database.batch((batch) {
       for (final chapterId in chapterIds) {

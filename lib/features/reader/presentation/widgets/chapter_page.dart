@@ -29,7 +29,7 @@ class ChapterPage extends HookConsumerWidget {
     final notifier = ref.watch(readerPageFamily(input).notifier);
 
     usePostFrameCallback((timeStamp) {
-      notifier.fetch();
+      notifier.fetch(crawler);
     });
 
     return page.content.when(

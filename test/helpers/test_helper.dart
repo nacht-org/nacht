@@ -3,6 +3,5 @@ import 'package:mockito/annotations.dart';
 
 @GenerateMocks([
   ParseNovel,
-  ParsePopular,
 ])
 void main() {}

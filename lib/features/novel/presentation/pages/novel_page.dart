@@ -56,7 +56,7 @@ class LoadingView extends HookConsumerWidget {
         : null;
 
     usePostFrameCallback((timeStamp) {
-      ref.read(intermediateProvider(type).notifier).fetch();
+      ref.read(intermediateProvider(type).notifier).fetch(crawler);
     });
 
     // TODO: add retry.

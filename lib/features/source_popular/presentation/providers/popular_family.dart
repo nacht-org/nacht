@@ -7,7 +7,7 @@ import 'popular_fetch_family.dart';
 final popularFamily = Provider.autoDispose.family<FetchState, CrawlerFactory>(
   (ref, crawlerFactory) {
     final info = ref.watch(crawlerFamily(crawlerFactory));
-    if (info.isPopularNotSupported) {
+    if (!info.isSupported(Feature.popular)) {
       return const FetchState.unsupported("Popular not supported");
     }
 

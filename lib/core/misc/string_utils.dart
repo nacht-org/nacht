@@ -13,8 +13,8 @@ extension Plural on String {
     String suffix = 's',
     bool Function(String string)? test,
   }) {
-    final _test = test ?? (_) => true;
-    if (_test(this)) {
+    test = test ?? (_) => true;
+    if (test(this)) {
       return this + suffix;
     }
 

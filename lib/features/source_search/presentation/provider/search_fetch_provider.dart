@@ -36,17 +36,17 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   final CrawlerInfo _crawler;
   final FetchSearch _fetchSearch;
 
-  void restart() {
+  void restart(CrawlerInfo crawler) {
     state = FetchInfo.initial().copyWith(isLoading: true);
-    next();
+    next(crawler);
   }
 
-  Future<void> next() {
-    return fetch(_currentQuery);
+  Future<void> next(CrawlerInfo crawler) {
+    return fetch(crawler, _currentQuery);
   }
 
-  Future<void> fetch(String query) async {
-    if (_crawler.isSearchNotSupported) {
+  Future<void> fetch(CrawlerInfo crawler, String query) async {
+    if (!crawler.isSupported(Feature.search)) {
       log.warning('crawler search cancelled, not supported');
       return;
     }
@@ -58,11 +58,8 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
       state = FetchInfo.initial().copyWith(isLoading: true);
     }
 
-    final result = await _fetchSearch.execute(
-      _crawler.instance as ParseSearch,
-      _currentQuery,
-      state.page,
-    );
+    final result =
+        await _fetchSearch.execute(_crawler.handler, _currentQuery, state.page);
 
     result.fold(
       (failure) {

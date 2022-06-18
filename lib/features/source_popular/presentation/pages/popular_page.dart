@@ -26,9 +26,9 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
 
     usePostFrameCallback(
       (timeStamp) {
-        ref.watch(popularFetchFamily(crawler).notifier).next();
+        ref.watch(popularFetchFamily(crawler).notifier).next(crawler);
       },
-      condition: crawler.isPopularSupported,
+      condition: crawler.isSupported(sources.Feature.popular),
     );
 
     return Scaffold(
@@ -51,8 +51,9 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
             ),
           if (isSearching)
             SliverSearchBar(
-              onSubmitted: (text) =>
-                  ref.read(searchFetchProvider(crawler).notifier).fetch(text),
+              onSubmitted: (text) => ref
+                  .read(searchFetchProvider(crawler).notifier)
+                  .fetch(crawler, text),
             ),
         ],
         body: Consumer(
@@ -89,18 +90,18 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
                         if (isSearching) {
                           ref
                               .read(searchFetchProvider(crawler).notifier)
-                              .restart();
+                              .restart(crawler);
                         } else {
                           ref
                               .read(popularFetchFamily(crawler).notifier)
-                              .restart();
+                              .restart(crawler);
                         }
                       },
                     ),
                   ],
                   empty: () => [],
                   data: (novels) => [
-                    SliverFetchGrid(items: novels, crawler: crawler.instance),
+                    SliverFetchGrid(items: novels, crawler: crawler),
                   ],
                 ),
               ),
@@ -129,12 +130,12 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
     if (isSearching) {
       final fetch = ref.read(searchFetchProvider(crawler));
       if (fetch.page > 1 && !fetch.isLoading) {
-        ref.read(searchFetchProvider(crawler).notifier).next();
+        ref.read(searchFetchProvider(crawler).notifier).next(crawler);
       }
     } else {
       final fetch = ref.read(popularFetchFamily(crawler));
       if (fetch.page > 1 && !fetch.isLoading) {
-        ref.read(popularFetchFamily(crawler).notifier).next();
+        ref.read(popularFetchFamily(crawler).notifier).next(crawler);
       }
     }
   }

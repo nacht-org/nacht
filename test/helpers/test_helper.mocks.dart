@@ -5,7 +5,7 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:nacht_sources/src/interfaces/novel.dart' as _i3;
+import 'package:nacht_sources/src/mixins/parse_novel.dart' as _i3;
 import 'package:nacht_sources/src/models/models.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -29,32 +29,26 @@ class MockParseNovel extends _i1.Mock implements _i3.ParseNovel {
   }
 
   @override
-  _i4.Future<_i2.Novel> parseNovel(String? url) =>
-      (super.noSuchMethod(Invocation.method(#parseNovel, [url]),
+  _i4.Future<_i2.Novel> fetchNovel(String? url) =>
+      (super.noSuchMethod(Invocation.method(#fetchNovel, [url]),
               returnValue: Future<_i2.Novel>.value(_FakeNovel_0()))
           as _i4.Future<_i2.Novel>);
   @override
-  _i4.Future<void> parseChapter(_i2.Chapter? chapter) =>
-      (super.noSuchMethod(Invocation.method(#parseChapter, [chapter]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
-}
-
-/// A class which mocks [ParsePopular].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockParsePopular extends _i1.Mock implements _i3.ParsePopular {
-  MockParsePopular() {
-    _i1.throwOnMissingStub(this);
-  }
-
+  _i4.Future<String?> fetchChapterContent(String? url) =>
+      (super.noSuchMethod(Invocation.method(#fetchChapterContent, [url]),
+          returnValue: Future<String?>.value()) as _i4.Future<String?>);
+  @override
+  _i4.Future<List<_i2.Novel>> search(String? query, int? page) =>
+      (super.noSuchMethod(Invocation.method(#search, [query, page]),
+              returnValue: Future<List<_i2.Novel>>.value(<_i2.Novel>[]))
+          as _i4.Future<List<_i2.Novel>>);
   @override
   String buildPopularUrl(int? page) =>
       (super.noSuchMethod(Invocation.method(#buildPopularUrl, [page]),
           returnValue: '') as String);
   @override
-  _i4.Future<List<_i2.Novel>> parsePopular(int? page) =>
-      (super.noSuchMethod(Invocation.method(#parsePopular, [page]),
+  _i4.Future<List<_i2.Novel>> fetchPopular(int? page) =>
+      (super.noSuchMethod(Invocation.method(#fetchPopular, [page]),
               returnValue: Future<List<_i2.Novel>>.value(<_i2.Novel>[]))
           as _i4.Future<List<_i2.Novel>>);
 }

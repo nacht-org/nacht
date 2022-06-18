@@ -60,7 +60,7 @@ class NovelView extends HookConsumerWidget {
             )
         ],
         body: RefreshIndicator(
-          onRefresh: () async => notifier.fetch(crawler?.instance),
+          onRefresh: () async => notifier.fetch(crawler),
           child: Scrollbar(
             interactive: true,
             child: CustomScrollView(

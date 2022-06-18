@@ -1,15 +1,18 @@
-import 'package:nacht_sources/nacht_sources.dart';
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'crawler_family.freezed.dart';
 
-final crawlerFamily = Provider.autoDispose.family<CrawlerInfo, CrawlerFactory>(
-  (ref, crawlerFactory) {
-    final meta = crawlerFactory.meta();
-    final crawler = crawlerFactory.basic();
+final crawlerFamily =
+    Provider.autoDispose.family<CrawlerInfo, sources.CrawlerFactory>(
+  (ref, factory) {
+    final meta = factory.meta();
+    final handler = sources.IsolateHandler(factory: factory);
 
-    return CrawlerInfo(meta: meta, instance: crawler);
+    ref.onDispose(() => handler.close());
+
+    return CrawlerInfo(meta: meta, handler: handler);
   },
   name: 'CrawlerFactory',
 );
@@ -17,15 +20,11 @@ final crawlerFamily = Provider.autoDispose.family<CrawlerInfo, CrawlerFactory>(
 @freezed
 class CrawlerInfo with _$CrawlerInfo {
   factory CrawlerInfo({
-    required Meta meta,
-    required Crawler instance,
+    required sources.Meta meta,
+    required sources.IsolateHandler handler,
   }) = _CrawlerHolding;
 
-  bool get isPopularSupported => meta.features.contains(Feature.popular);
-  bool get isPopularNotSupported => !isPopularSupported;
-
-  bool get isSearchSupported => meta.features.contains(Feature.search);
-  bool get isSearchNotSupported => !isSearchSupported;
+  bool isSupported(sources.Feature feature) => meta.features.contains(feature);
 
   CrawlerInfo._();
 }

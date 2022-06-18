@@ -20,16 +20,17 @@ class FetchChapterContent {
   final GetIsConnectionAvailable _isConnectionAvailable;
 
   Future<Either<Failure, String>> execute(
-      sources.ParseNovel parser, String url) async {
+    sources.IsolateHandler handler,
+    String url,
+  ) async {
     final isConnectionAvailable = await _isConnectionAvailable.execute();
     if (!isConnectionAvailable) {
       return const Left(ConnectionNotAvailable());
     }
 
     try {
-      final chapter = sources.Chapter.withUrl(url);
-      await parser.parseChapter(chapter);
-      return Right(chapter.content!);
+      final content = await handler.fetchChapterContent(url);
+      return Right(content!);
     } on DioError catch (e) {
       return Left(NetworkFailure(e.message));
     }

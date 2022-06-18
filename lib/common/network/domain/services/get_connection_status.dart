@@ -1,8 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../domain.dart';
-
 final getConnectionStatusProvider = Provider<GetConnectionStatus>(
   (ref) => GetConnectionStatus(),
   name: 'GetConnectionStatusProvider',

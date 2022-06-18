@@ -1,6 +1,5 @@
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht_sources/nacht_sources.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -62,15 +61,14 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   final ChangeNovelCategories _changeNovelCategories;
   final GetFirstUnreadChapter _getFirstUnreadChapter;
 
-  Future<void> fetch(Crawler? crawler) async {
-    if (crawler == null || crawler is! ParseNovel) {
+  Future<void> fetch(CrawlerInfo? crawler) async {
+    if (crawler == null) {
       _read(messageServiceProvider).showText('Unable to parse.');
       return;
     }
 
     final failure =
-        (await _fetchNovel.execute(crawler as ParseNovel, state.url))
-            .toNullable();
+        (await _fetchNovel.execute(crawler.handler, state.url)).toNullable();
 
     // TODO: add error to partial view
     if (failure != null) {

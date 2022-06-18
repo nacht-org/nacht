@@ -19,6 +19,9 @@ class ReaderView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final reader = ref.watch(readerFamily(info));
+    final backgroundColor = ref.watch(readerPreferencesProvider.select(
+      (pref) => pref.colorMode.value?.backgroundColor,
+    ));
 
     final isToolbarVisible =
         ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
@@ -51,6 +54,7 @@ class ReaderView extends HookConsumerWidget {
             ),
           ),
         ),
+        backgroundColor: backgroundColor,
         body: ReaderBody(reader: reader),
         extendBody: true,
         bottomNavigationBar: AnimatedBottomBar(

@@ -62,7 +62,7 @@ class SettingsSheet extends ConsumerWidget {
               max: 2.2,
             );
           },
-        )
+        ),
       ],
     );
   }

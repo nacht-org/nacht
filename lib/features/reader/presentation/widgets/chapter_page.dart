@@ -63,7 +63,7 @@ class ChapterPage extends HookConsumerWidget {
                     return Text(
                       chapter.title,
                       style: theme.textTheme.displaySmall?.copyWith(
-                        color: theme.colorScheme.onBackground,
+                        color: theme.textTheme.labelLarge?.color,
                       ),
                     );
                   }),

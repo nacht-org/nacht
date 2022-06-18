@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/core/preferences/reader/models/reader_color_mode.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import 'settings_sheet.dart';
@@ -16,6 +17,25 @@ class ReaderBottomBar extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Consumer(
+            builder: (context, ref, child) {
+              final colorMode = ref.watch(
+                  readerPreferencesProvider.select((value) => value.colorMode));
+
+              return PopupMenuButton<ReaderColorMode>(
+                tooltip: 'Color mode',
+                initialValue: colorMode,
+                itemBuilder: (context) => ReaderColorMode.values
+                    .map(
+                      (mode) =>
+                          PopupMenuItem(value: mode, child: Text(mode.name)),
+                    )
+                    .toList(),
+                onSelected: notifier.setColorMode,
+                icon: const Icon(Icons.style),
+              );
+            },
+          ),
           Consumer(builder: (context, ref, child) {
             final fontFamily = ref.watch(
                 readerPreferencesProvider.select((value) => value.fontFamily));

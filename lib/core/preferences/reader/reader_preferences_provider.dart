@@ -2,6 +2,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 
+import 'models/reader_color_mode.dart';
+
 final readerPreferencesProvider =
     StateNotifierProvider<ReaderPreferencesNotifier, ReaderPreferences>(
   (ref) => ReaderPreferencesNotifier(
@@ -17,6 +19,11 @@ class ReaderPreferencesNotifier extends StateNotifier<ReaderPreferences> {
         super(ReaderPreferences.read(preferences));
 
   final Preferences _preferences;
+
+  void setColorMode(ReaderColorMode colorMode) {
+    ReaderPreferences.colorModeKey.setValue(_preferences, colorMode);
+    state = state.copyWith(colorMode: colorMode);
+  }
 
   void setFontFamily(ReaderFontFamily fontFamily) {
     ReaderPreferences.fontFamilyKey.setValue(_preferences, fontFamily);

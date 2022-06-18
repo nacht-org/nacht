@@ -25,7 +25,7 @@ class FetchChapterContent {
   ) async {
     final isConnectionAvailable = await _isConnectionAvailable.execute();
     if (!isConnectionAvailable) {
-      return const Left(ConnectionNotAvailable());
+      return const Left(NoNetworkConnection());
     }
 
     try {

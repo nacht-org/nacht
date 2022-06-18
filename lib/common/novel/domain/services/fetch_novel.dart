@@ -34,7 +34,7 @@ class FetchNovel {
   ) async {
     final isConnectionAvailable = await _isConnectionAvailable.execute();
     if (!isConnectionAvailable) {
-      return const Some(ConnectionNotAvailable());
+      return const Some(NoNetworkConnection());
     }
 
     final sources.Novel novel;

@@ -36,19 +36,22 @@ class ReaderTheme extends ConsumerWidget {
       ),
     ));
 
-    final brightness = data.colorMode.value?.brightness ?? theme.brightness;
-    final textTheme = textThemeFromBrightness(theme.typography, brightness);
+    final textTheme = applyFont(theme.textTheme, data.fontFamily);
 
     return Theme(
       data: theme.copyWith(
-        brightness: brightness,
-        textTheme: applyFont(textTheme, data.fontFamily),
+        textTheme: data.colorMode.value != null
+            ? textTheme.apply(
+                displayColor: data.colorMode.value!.textColor,
+                bodyColor: data.colorMode.value!.textColor,
+              )
+            : textTheme,
       ),
       child: child,
     );
   }
 
-  TextTheme? applyFont(TextTheme textTheme, ReaderFontFamily fontFamily) {
+  TextTheme applyFont(TextTheme textTheme, ReaderFontFamily fontFamily) {
     switch (fontFamily) {
       case ReaderFontFamily.basic:
         break;
@@ -56,16 +59,6 @@ class ReaderTheme extends ConsumerWidget {
         return GoogleFonts.latoTextTheme(textTheme);
     }
 
-    return null;
-  }
-
-  TextTheme textThemeFromBrightness(
-      Typography typography, Brightness brightness,) {
-    switch (brightness) {
-      case Brightness.dark:
-        return typography.white;
-      case Brightness.light:
-        return typography.black;
-    }
+    return textTheme;
   }
 }

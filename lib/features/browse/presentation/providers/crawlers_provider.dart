@@ -1,29 +1,39 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 import '../../domain/domain.dart';
 import '../presentation.dart';
 
-final crawlersProvider = Provider<List<CrawlerListItem>>((ref) {
-  final filter =
-      ref.watch(browsePreferencesProvider.select((value) => value.filter));
-  final crawlers = ref.watch(getCrawlersProvider).execute().where((element) {
-    if (BrowseFilter.unsupported.isActive(filter) &&
+final crawlersProvider = Provider<List<CrawlerListItem>>(
+  (ref) {
+    final filter =
+        ref.watch(browsePreferencesProvider.select((value) => value.filter));
+    final filterFunction = _createFilterFunction(filter);
+    final crawlers =
+        ref.watch(getCrawlersProvider).execute().where(filterFunction);
+
+    final map = <String, List<CrawlerEntry>>{};
+    for (final crawler in crawlers) {
+      final entry = CrawlerEntry.from(crawler);
+      map.putIfAbsent(entry.meta.lang, () => []).add(entry);
+    }
+
+    return _convert(map).toList();
+  },
+  name: 'CrawlersProvider',
+);
+
+bool Function(sources.CrawlerFactory) _createFilterFunction(int filter) {
+  return (element) {
+    if (BrowseFilter.unsupported.isHidden(filter) &&
         !element.meta().support.isPlatformSupported(currentPlatform())) {
       return false;
     }
 
     return true;
-  });
-
-  final map = <String, List<CrawlerEntry>>{};
-  for (final crawler in crawlers) {
-    final entry = CrawlerEntry.from(crawler);
-    map.putIfAbsent(entry.meta.lang, () => []).add(entry);
-  }
-
-  return _convert(map).toList();
-});
+  };
+}
 
 Iterable<CrawlerListItem> _convert(
     Map<String, List<CrawlerEntry>> groups) sync* {

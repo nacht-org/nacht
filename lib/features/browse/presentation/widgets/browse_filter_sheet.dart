@@ -21,11 +21,11 @@ class BrowseFilterSheet extends ConsumerWidget {
 
         return Consumer(
           builder: (context, ref, child) {
-            final active = ref.watch(browsePreferencesProvider
-                .select((value) => bit.isActive(value.filter)));
+            final shown = ref.watch(browsePreferencesProvider
+                .select((value) => bit.isShown(value.filter)));
 
             return CheckboxListTile(
-              value: !active,
+              value: shown,
               title: Text(bit.name),
               onChanged: (value) => notifier.toggleFilter(bit),
             );

@@ -17,7 +17,7 @@ void main() {
 
     final bit = FilterBit();
     for (final entry in tests.entries) {
-      expect(bit.isActive(entry.key), entry.value);
+      expect(bit.isHidden(entry.key), entry.value);
     }
   });
 

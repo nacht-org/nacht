@@ -63,6 +63,8 @@ class ReaderTheme extends ConsumerWidget {
         break;
       case ReaderFontFamily.lato:
         return GoogleFonts.latoTextTheme(textTheme);
+      case ReaderFontFamily.openSans:
+        return GoogleFonts.openSansTextTheme(textTheme);
     }
 
     return textTheme;

@@ -13,7 +13,7 @@ class BrowsePreferences with _$BrowsePreferences {
 
   static BrowsePreferences read(Preferences preferences) {
     return BrowsePreferences(
-      filter: filterKey.getValue(preferences, 0),
+      filter: filterKey.getValue(preferences, 0x00000001),
     );
   }
 

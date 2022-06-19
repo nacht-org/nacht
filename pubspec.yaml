@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/google_fonts/
     - assets/google_fonts/Lato/
+    - assets/google_fonts/Open_Sans/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

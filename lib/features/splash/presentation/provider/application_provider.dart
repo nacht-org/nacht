@@ -51,8 +51,13 @@ class Application with LoggerMixin {
 
   void _addLicenses() {
     LicenseRegistry.addLicense(() async* {
-      final ofl = await rootBundle.loadString('assets/google_fonts/OFL.txt');
-      yield LicenseEntryWithLineBreaks(['google_fonts'], ofl);
+      final lato =
+          await rootBundle.loadString('assets/google_fonts/Lato/OFL.txt');
+      yield LicenseEntryWithLineBreaks(['google_fonts'], lato);
+
+      final openSans = await rootBundle
+          .loadString('assets/google_fonts/Open_Sans/LICENSE.txt');
+      yield LicenseEntryWithLineBreaks(['google_fonts'], openSans);
     });
   }
 }

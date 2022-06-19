@@ -45,18 +45,18 @@ class ChapterPage extends HookConsumerWidget {
           }
           return false;
         },
-        child: Scrollbar(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                  top: 16.0,
-                  right: 8.0,
-                  bottom: 8.0,
-                ),
-                child: ReaderTheme(
+        child: ReaderTheme(
+          child: Scrollbar(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    top: 16.0,
+                    right: 8.0,
+                    bottom: 8.0,
+                  ),
                   child: Builder(builder: (context) {
                     var theme = Theme.of(context);
 
@@ -68,9 +68,7 @@ class ChapterPage extends HookConsumerWidget {
                     );
                   }),
                 ),
-              ),
-              ReaderTheme(
-                child: Consumer(
+                Consumer(
                   builder: (context, ref, child) {
                     final preferences = ref.watch(readerPreferencesProvider);
 
@@ -87,8 +85,8 @@ class ChapterPage extends HookConsumerWidget {
                     );
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

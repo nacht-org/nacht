@@ -40,6 +40,12 @@ class ReaderTheme extends ConsumerWidget {
 
     return Theme(
       data: theme.copyWith(
+        scrollbarTheme: data.colorMode.value != null
+            ? theme.scrollbarTheme.copyWith(
+                thumbColor:
+                    MaterialStateProperty.all(data.colorMode.value!.textColor),
+              )
+            : theme.scrollbarTheme,
         textTheme: data.colorMode.value != null
             ? textTheme.apply(
                 displayColor: data.colorMode.value!.textColor,

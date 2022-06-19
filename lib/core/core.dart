@@ -8,6 +8,7 @@ export 'nacht_theme/nacht_theme.dart';
 export 'preferences/reader/reader.dart';
 export 'preferences/date_format/date_format.dart';
 export 'preferences/theme/theme.dart';
+export 'preferences/browse/browse.dart';
 
 // Misc.
 export 'misc/error_handler.dart';
@@ -19,6 +20,7 @@ export 'misc/dartz_utils.dart';
 export 'misc/time_utils.dart';
 export 'misc/platform_utils.dart';
 export 'misc/scroll_utils.dart';
+export 'misc/filter_utils.dart';
 
 // Services.
 export 'services/message_service.dart';

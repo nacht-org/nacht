@@ -26,7 +26,6 @@ class SliverCrawlerList extends ConsumerWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              dense: true,
             );
           }, crawler: (entry) {
             final lang = langFromCode(entry.meta.lang)?['name'] ??

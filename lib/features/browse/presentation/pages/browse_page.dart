@@ -20,8 +20,21 @@ class BrowsePage extends ConsumerWidget {
             title: const Text('Browse'),
             floating: true,
             forceElevated: innerBoxIsScrolled,
-            actions: const [
-              BrowseSearchButton(),
+            actions: [
+              const BrowseSearchButton(),
+              IconButton(
+                onPressed: () {
+                  showExpandableBottomSheet(
+                    context: context,
+                    builder: (context, scrollController) => Material(
+                      child: BrowseFilterSheet(
+                        scrollController: scrollController,
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.filter_list),
+              ),
             ],
           ),
         if (search.active)

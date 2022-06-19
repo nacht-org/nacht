@@ -8,6 +8,7 @@ export 'providers/browse_search_provider.dart';
 export 'providers/crawlers_provider.dart';
 
 // Widgets.
+export 'widgets/browse_filter_sheet.dart';
 export 'widgets/browse_search_button.dart';
 export 'widgets/sliver_crawler_list.dart';
 export 'widgets/sliver_search_result.dart';

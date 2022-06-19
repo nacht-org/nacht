@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.nacht.app"
+        applicationId "org.nacht"
         minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

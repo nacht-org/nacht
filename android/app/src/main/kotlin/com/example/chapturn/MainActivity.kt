@@ -1,4 +1,4 @@
-package com.nacht.org
+package org.nacht
 
 import io.flutter.embedding.android.FlutterActivity
 

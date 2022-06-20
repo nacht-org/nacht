@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
@@ -9,16 +8,16 @@ class ReaderBody extends HookConsumerWidget {
   const ReaderBody({
     Key? key,
     required this.reader,
+    required this.controller,
   }) : super(key: key);
 
   final ReaderInfo reader;
+  final PageController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final crawlerFactory = ref.watch(crawlerFactoryFamily(reader.novel.url));
     final toolbarNotifier = ref.watch(toolbarProvider.notifier);
-
-    final controller = usePageController(initialPage: reader.initialIndex);
 
     if (crawlerFactory == null) {
       return Center(

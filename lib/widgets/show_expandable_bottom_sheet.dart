@@ -18,6 +18,7 @@ Future<T?> showExpandableBottomSheet<T>({
     isDismissible: true,
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
+// FIXME: add padding to top when fully expanded (status bar).
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => Navigator.of(context).pop(),

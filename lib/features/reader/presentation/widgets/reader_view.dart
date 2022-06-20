@@ -26,10 +26,14 @@ class ReaderView extends HookConsumerWidget {
     final isToolbarVisible =
         ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
 
+    // Controls appbar animation.
     final controller = useAnimationController(
       duration: kShortAnimationDuration,
       initialValue: 1,
     );
+
+    // Controls horizontal chapter page navigation.
+    final pageController = usePageController(initialPage: reader.initialIndex);
 
     useEffect(() {
       ref.read(toolbarProvider.notifier).setSystemUiMode(isToolbarVisible);
@@ -55,11 +59,17 @@ class ReaderView extends HookConsumerWidget {
           ),
         ),
         backgroundColor: backgroundColor,
-        body: ReaderBody(reader: reader),
+        body: ReaderBody(
+          reader: reader,
+          controller: pageController,
+        ),
         extendBody: true,
         bottomNavigationBar: AnimatedBottomBar(
           visible: isToolbarVisible,
-          child: const ReaderBottomBar(),
+          child: ReaderBottomBar(
+            info: info,
+            controller: pageController,
+          ),
         ),
       ),
     );
@@ -79,6 +89,8 @@ class ReaderView extends HookConsumerWidget {
           ref.watch(readerFamily(info).select((value) => value.current));
 
       return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(

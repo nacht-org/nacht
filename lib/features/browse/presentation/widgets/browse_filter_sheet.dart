@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/core/preferences/browse/browse_preferences_provider.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 class BrowseFilterSheet extends ConsumerWidget {
   const BrowseFilterSheet({Key? key, required this.scrollController})
@@ -13,25 +13,26 @@ class BrowseFilterSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(browsePreferencesProvider.notifier);
 
-    return ListView.builder(
+    return ListView(
       controller: scrollController,
-      itemCount: BrowseFilter.values.length,
-      itemBuilder: (context, index) {
-        final bit = BrowseFilter.values[index];
+      children: [
+        const HeaderTile(
+          title: Text('Filter'),
+        ),
+        for (final bit in BrowseFilter.values)
+          Consumer(
+            builder: (context, ref, child) {
+              final shown = ref.watch(browsePreferencesProvider
+                  .select((value) => bit.isShown(value.filter)));
 
-        return Consumer(
-          builder: (context, ref, child) {
-            final shown = ref.watch(browsePreferencesProvider
-                .select((value) => bit.isShown(value.filter)));
-
-            return CheckboxListTile(
-              value: shown,
-              title: Text(bit.name),
-              onChanged: (value) => notifier.toggleFilter(bit),
-            );
-          },
-        );
-      },
+              return CheckboxListTile(
+                value: shown,
+                title: Text(bit.name),
+                onChanged: (value) => notifier.toggleFilter(bit),
+              );
+            },
+          ),
+      ],
     );
   }
 }

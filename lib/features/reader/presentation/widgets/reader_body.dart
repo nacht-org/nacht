@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
 import '../presentation.dart';
-import 'chapter_page.dart';
 
 class ReaderBody extends HookConsumerWidget {
   const ReaderBody({

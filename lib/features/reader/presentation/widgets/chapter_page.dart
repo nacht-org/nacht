@@ -46,46 +46,49 @@ class ChapterPage extends HookConsumerWidget {
           return false;
         },
         child: ReaderTheme(
-          child: Scrollbar(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    top: 16.0,
-                    right: 8.0,
-                    bottom: 8.0,
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: Scrollbar(
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      top: 16.0,
+                      right: 8.0,
+                      bottom: 8.0,
+                    ),
+                    child: Builder(builder: (context) {
+                      var theme = Theme.of(context);
+
+                      return Text(
+                        chapter.title,
+                        style: theme.textTheme.displaySmall?.copyWith(
+                          color: theme.textTheme.labelLarge?.color,
+                        ),
+                      );
+                    }),
                   ),
-                  child: Builder(builder: (context) {
-                    var theme = Theme.of(context);
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final preferences = ref.watch(readerPreferencesProvider);
 
-                    return Text(
-                      chapter.title,
-                      style: theme.textTheme.displaySmall?.copyWith(
-                        color: theme.textTheme.labelLarge?.color,
-                      ),
-                    );
-                  }),
-                ),
-                Consumer(
-                  builder: (context, ref, child) {
-                    final preferences = ref.watch(readerPreferencesProvider);
-
-                    return Html(
-                      data: content,
-                      style: {
-                        "*": Style(
-                          lineHeight: LineHeight(preferences.lineHeight),
-                        ),
-                        "p": Style(
-                          fontSize: FontSize(preferences.fontSize),
-                        ),
-                      },
-                    );
-                  },
-                ),
-              ],
+                      return Html(
+                        data: content,
+                        style: {
+                          "*": Style(
+                            lineHeight: LineHeight(preferences.lineHeight),
+                          ),
+                          "p": Style(
+                            fontSize: FontSize(preferences.fontSize),
+                          ),
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

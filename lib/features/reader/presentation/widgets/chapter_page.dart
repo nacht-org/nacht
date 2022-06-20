@@ -49,7 +49,7 @@ class ChapterPage extends HookConsumerWidget {
           child: MediaQuery.removePadding(
             context: context,
             removeTop: true,
-            child: Scrollbar(
+            child: ReaderScrollbar(
               child: ListView(
                 children: [
                   Padding(
@@ -94,5 +94,27 @@ class ChapterPage extends HookConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+class ReaderScrollbar extends ConsumerWidget {
+  const ReaderScrollbar({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showScrollbar = ref.watch(
+      generalReaderPreferencesProvider.select((value) => value.showScrollbar),
+    );
+
+    if (showScrollbar) {
+      return Scrollbar(child: child);
+    } else {
+      return child;
+    }
   }
 }

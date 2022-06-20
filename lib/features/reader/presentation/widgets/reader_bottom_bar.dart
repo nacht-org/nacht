@@ -53,9 +53,13 @@ class ReaderBottomBar extends ConsumerWidget {
           }),
           IconButton(
             tooltip: 'Settings',
-            onPressed: () => showModalBottomSheet(
+            onPressed: () => showExpandableBottomSheet(
               context: context,
-              builder: (context) => const SettingsSheet(),
+              builder: (context, scrollController) => Material(
+                child: SettingsSheet(
+                  controller: scrollController,
+                ),
+              ),
             ),
             icon: const Icon(Icons.settings),
           ),

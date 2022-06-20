@@ -33,6 +33,18 @@ class DoublePreferenceKey extends PreferenceKey<double> {
       preferences.setDouble(key, value);
 }
 
+class BoolPreferenceKey extends PreferenceKey<bool> {
+  const BoolPreferenceKey(super.key);
+
+  @override
+  bool getValue(Preferences preferences, bool defaultValue) =>
+      preferences.getBool(key, defaultValue);
+
+  @override
+  void setValue(Preferences preferences, bool value) =>
+      preferences.setBool(key, value);
+}
+
 /// Provides a unique id for each [Enum]
 abstract class EnumPreference {
   int get id;

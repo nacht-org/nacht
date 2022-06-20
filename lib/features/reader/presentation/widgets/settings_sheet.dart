@@ -4,22 +4,25 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 class SettingsSheet extends ConsumerWidget {
-  const SettingsSheet({Key? key}) : super(key: key);
+  const SettingsSheet({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final preferences = ref.watch(readerPreferencesProvider);
-    final notifier = ref.watch(readerPreferencesProvider.notifier);
+    final readingModeNotifier = ref.watch(readerPreferencesProvider.notifier);
+    final generalNotifier =
+        ref.watch(generalReaderPreferencesProvider.notifier);
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
+      controller: controller,
       children: [
-        ListTile(
-          title: Text(
-            'Reader settings',
-            style: theme.textTheme.titleLarge,
-          ),
+        const HeaderTile(
+          title: Text('Reading mode'),
         ),
         MenuListTile<ReaderFontFamily>(
           title: 'Font family',
@@ -30,7 +33,7 @@ class SettingsSheet extends ConsumerWidget {
           items: ReaderFontFamily.values
               .map((font) => MenuListTileItem(value: font, label: font.name))
               .toList(),
-          onChanged: notifier.setFontFamily,
+          onChanged: readingModeNotifier.setFontFamily,
         ),
         Consumer(
           builder: (context, ref, child) {
@@ -41,7 +44,7 @@ class SettingsSheet extends ConsumerWidget {
               title: const Text('Font size'),
               subtitle: Text('$fontSize'),
               value: fontSize,
-              onChanged: notifier.setFontSize,
+              onChanged: readingModeNotifier.setFontSize,
               min: 8.0,
               max: 22.0,
             );
@@ -56,10 +59,27 @@ class SettingsSheet extends ConsumerWidget {
               title: const Text('Line height'),
               subtitle: Text('$lineHeight'),
               value: lineHeight,
-              onChanged: notifier.setLineHeight,
+              onChanged: readingModeNotifier.setLineHeight,
               step: 0.1,
               min: 0.6,
               max: 2.2,
+            );
+          },
+        ),
+        const HeaderTile(
+          title: Text('General'),
+        ),
+        Consumer(
+          builder: (context, ref, child) {
+            final showScrollbar = ref.watch(
+              generalReaderPreferencesProvider
+                  .select((value) => value.showScrollbar),
+            );
+
+            return SwitchListTile(
+              title: const Text('Show scrollbar'),
+              value: showScrollbar,
+              onChanged: generalNotifier.setShowScrollbar,
             );
           },
         ),

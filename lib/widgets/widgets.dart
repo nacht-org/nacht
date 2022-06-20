@@ -8,6 +8,9 @@ export 'slivers/sliver_fill_loading_indicator.dart';
 export 'slivers/sliver_bottom_padding.dart';
 export 'slivers/sliver_floating_action_button_padding.dart';
 
+// Tiles.
+export 'tiles/header_tile.dart';
+
 export 'sliding_preferred_size.dart';
 export 'animation_provider.dart';
 export 'destination_transition.dart';

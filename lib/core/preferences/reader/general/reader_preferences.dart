@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/core/preferences/reader/models/reader_color_mode.dart';
 import 'package:nacht/nht/nht.dart';
 
 import '../reader.dart';

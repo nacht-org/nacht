@@ -14,15 +14,15 @@ class SettingsSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferences = ref.watch(readerPreferencesProvider);
-    final readingModeNotifier = ref.watch(readerPreferencesProvider.notifier);
-    final generalNotifier =
-        ref.watch(generalReaderPreferencesProvider.notifier);
+    final generalNotifier = ref.watch(readerPreferencesProvider.notifier);
+    final verticalNotifier =
+        ref.watch(verticalReaderPreferencesProvider.notifier);
 
     return ListView(
       controller: controller,
       children: [
         const HeaderTile(
-          title: Text('Reading mode'),
+          title: Text('General'),
         ),
         MenuListTile<ReaderFontFamily>(
           title: 'Font family',
@@ -33,7 +33,7 @@ class SettingsSheet extends ConsumerWidget {
           items: ReaderFontFamily.values
               .map((font) => MenuListTileItem(value: font, label: font.name))
               .toList(),
-          onChanged: readingModeNotifier.setFontFamily,
+          onChanged: generalNotifier.setFontFamily,
         ),
         Consumer(
           builder: (context, ref, child) {
@@ -44,7 +44,7 @@ class SettingsSheet extends ConsumerWidget {
               title: const Text('Font size'),
               subtitle: Text('$fontSize'),
               value: fontSize,
-              onChanged: readingModeNotifier.setFontSize,
+              onChanged: generalNotifier.setFontSize,
               min: 8.0,
               max: 22.0,
             );
@@ -59,7 +59,7 @@ class SettingsSheet extends ConsumerWidget {
               title: const Text('Line height'),
               subtitle: Text('$lineHeight'),
               value: lineHeight,
-              onChanged: readingModeNotifier.setLineHeight,
+              onChanged: generalNotifier.setLineHeight,
               step: 0.1,
               min: 0.6,
               max: 2.2,
@@ -67,19 +67,19 @@ class SettingsSheet extends ConsumerWidget {
           },
         ),
         const HeaderTile(
-          title: Text('General'),
+          title: Text('Vertical'),
         ),
         Consumer(
           builder: (context, ref, child) {
             final showScrollbar = ref.watch(
-              generalReaderPreferencesProvider
+              verticalReaderPreferencesProvider
                   .select((value) => value.showScrollbar),
             );
 
             return SwitchListTile(
-              title: const Text('Show scrollbar'),
+              title: const Text('Show scroll bar'),
               value: showScrollbar,
-              onChanged: generalNotifier.setShowScrollbar,
+              onChanged: verticalNotifier.setShowScrollbar,
             );
           },
         ),

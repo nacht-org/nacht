@@ -1,7 +1,8 @@
-export 'models/reader_preferences.dart';
-export 'models/reader_font_family.dart';
-export 'models/reader_preferences_provider.dart';
+export 'general/reader_preferences.dart';
+export 'general/reader_font_family.dart';
+export 'general/reader_color_mode.dart';
+export 'general/reader_preferences_provider.dart';
 
 // General.
-export 'general/general_reader_preferences_provider.dart';
-export 'general/general_reader_preferences.dart';
+export 'vertical/vertical_reader_preferences_provider.dart';
+export 'vertical/vertical_reader_preferences.dart';

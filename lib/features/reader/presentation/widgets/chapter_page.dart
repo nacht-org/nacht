@@ -108,13 +108,12 @@ class ReaderScrollbar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final showScrollbar = ref.watch(
-      generalReaderPreferencesProvider.select((value) => value.showScrollbar),
+      verticalReaderPreferencesProvider.select((value) => value.showScrollbar),
     );
 
-    if (showScrollbar) {
-      return Scrollbar(child: child);
-    } else {
-      return child;
-    }
+    return Scrollbar(
+      thickness: showScrollbar ? null : 0.0,
+      child: child,
+    );
   }
 }

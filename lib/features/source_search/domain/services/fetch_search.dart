@@ -26,7 +26,7 @@ class FetchSearch {
     int page,
   ) async {
     if (!await _getIsConnectionAvailable.execute()) {
-      return const Left(NetworkFailure("Connection not available"));
+      return const Left(NoNetworkConnection());
     }
 
     final List<sources.Novel> novels;

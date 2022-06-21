@@ -34,7 +34,7 @@ class StatusInfo extends StatelessWidget {
         iconData = Icons.timelapse;
         break;
       case NovelStatus.hiatus:
-        iconData = Icons.stop;
+        iconData = Icons.pause;
         break;
       case NovelStatus.completed:
         iconData = Icons.check;

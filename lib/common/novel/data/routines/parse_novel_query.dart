@@ -32,24 +32,14 @@ class ParseNovelQuery {
     final novel = result.readTable(_database.novels);
     final asset = result.readTableOrNull(_database.assets);
 
-    final metadata =
-        (await _getMetaData(novel.id)).map(MetaEntryData.fromModel).toList();
     final chapters = await _getChapterModels(novel.id);
 
     final entity = NovelData.fromModel(novel).copyWith(
       chapters: chapters,
-      metadata: metadata,
       cover: asset == null ? null : AssetData.fromModel(asset),
     );
 
     return Right(entity);
-  }
-
-  Future<List<MetaEntry>> _getMetaData(int novelId) async {
-    final query = _database.select(_database.metaEntries)
-      ..where((tbl) => tbl.novelId.equals(novelId));
-
-    return await query.get();
   }
 
   Future<List<ChapterData>> _getChapterModels(

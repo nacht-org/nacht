@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Tags extends StatelessWidget {
+import '../presentation.dart';
+
+class Tags extends ConsumerWidget {
   const Tags({
     Key? key,
-    required this.tags,
+    required this.novelId,
     required this.expanded,
   }) : super(key: key);
 
-  final List<String> tags;
+  final int novelId;
   final ValueNotifier<bool> expanded;
 
   @override
-  Widget build(BuildContext context) {
-    final children = <Widget>[
-      for (final tag in tags)
-        Chip(
-          label: Text(
-            tag,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
-    ];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(tagsStreamFamily(novelId));
+
+    final children = data.whenOrNull(
+          data: (tags) => <Widget>[
+            for (final tag in tags)
+              Chip(
+                label: Text(
+                  tag.value,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+          ],
+        ) ??
+        [];
 
     if (children.isEmpty) {
       return const SizedBox.shrink();

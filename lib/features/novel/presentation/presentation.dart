@@ -9,6 +9,7 @@ export 'pages/novel_page.dart';
 export 'providers/description_info_provider.dart';
 export 'providers/intermediate_provider.dart';
 export 'providers/novel_selection_provider.dart';
+export 'providers/tags_stream_family.dart';
 
 // Widgets.
 export 'widgets/action_bar.dart';

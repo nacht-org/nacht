@@ -102,7 +102,7 @@ class NovelView extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 8),
                             Tags(
-                              tags: description.tags,
+                              novelId: novel.id,
                               expanded: expanded,
                             )
                           ],

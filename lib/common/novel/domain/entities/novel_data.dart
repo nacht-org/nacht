@@ -18,6 +18,7 @@ class NovelData with _$NovelData {
     required sources.NovelStatus status,
     required String lang,
     required List<ChapterData> chapters,
+    // TODO: remove [metadata] attribute.
     required List<MetaEntryData> metadata,
     required sources.WorkType workType,
     required sources.ReadingDirection readingDirection,

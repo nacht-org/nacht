@@ -59,7 +59,9 @@ class _Top extends ConsumerWidget {
         children: [
           buildRoundedMaterial(
             theme: theme,
+            shape: const CircleBorder(),
             child: IconButton(
+              // FIXME: doesnt update when page is changed by swiping.
               onPressed: reader.current.id != reader.novel.chapters.first.id
                   ? () {
                       controller.animateToPage(
@@ -77,6 +79,9 @@ class _Top extends ConsumerWidget {
           Expanded(
             child: buildRoundedMaterial(
               theme: theme,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kToolbarHeight),
+              ),
               child: HookConsumer(
                 builder: (context, ref, child) {
                   final current = useState(reader.current.index.toDouble());
@@ -108,6 +113,7 @@ class _Top extends ConsumerWidget {
           const SizedBox(width: 8.0),
           buildRoundedMaterial(
             theme: theme,
+            shape: const CircleBorder(),
             child: IconButton(
               onPressed: reader.current.id != reader.novel.chapters.last.id
                   ? () {
@@ -129,15 +135,14 @@ class _Top extends ConsumerWidget {
 
   Material buildRoundedMaterial({
     required ThemeData theme,
+    required ShapeBorder shape,
     required Widget child,
   }) {
     return Material(
       color: theme.colorScheme.surface,
       surfaceTintColor: theme.colorScheme.surfaceTint,
       elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4.0),
-      ),
+      shape: shape,
       child: child,
     );
   }

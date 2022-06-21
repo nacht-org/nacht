@@ -33,12 +33,12 @@ class NovelHead extends ConsumerWidget {
     }
 
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 170,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            AspectRatio(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 170,
+            child: AspectRatio(
               aspectRatio: 2 / 3,
               child: Card(
                 clipBehavior: Clip.antiAlias,
@@ -50,31 +50,31 @@ class NovelHead extends ConsumerWidget {
                     : null,
               ),
             ),
-            const SizedBox(width: 16.0),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    head.title,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    head.author ?? 'Unknown author',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  StatusInfo(
-                    status: head.status,
-                    suffix: crawler?.meta.name,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  head.title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  head.author ?? 'Unknown author',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                StatusInfo(
+                  status: head.status,
+                  suffix: crawler?.meta.name,
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

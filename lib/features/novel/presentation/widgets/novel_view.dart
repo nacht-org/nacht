@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../presentation.dart';
 
@@ -47,6 +48,13 @@ class NovelView extends HookConsumerWidget {
               title: innerBoxIsScrolled ? Text(novel.title) : null,
               floating: true,
               forceElevated: innerBoxIsScrolled,
+              actions: [
+                IconButton(
+                  tooltip: 'Share',
+                  onPressed: () => Share.share(novel.url),
+                  icon: const Icon(Icons.share),
+                ),
+              ],
             ),
           if (selection.active)
             SliverSelectionAppBar(

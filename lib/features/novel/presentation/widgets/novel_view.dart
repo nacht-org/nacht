@@ -14,11 +14,11 @@ class NovelView extends HookConsumerWidget {
   const NovelView({
     Key? key,
     required this.data,
-    required this.load,
+    required this.direct,
   }) : super(key: key);
 
   final NovelData data;
-  final bool load;
+  final bool direct;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +35,9 @@ class NovelView extends HookConsumerWidget {
     SelectionNotifier.handleRoute(novelSelectionProvider, ref, context);
 
     useEffect(() {
-      notifier.reload();
+      if (direct) {
+        notifier.reload();
+      }
       return null;
     }, []);
 
@@ -85,7 +87,7 @@ class NovelView extends HookConsumerWidget {
                 ),
                 HookConsumer(builder: (context, ref, child) {
                   final description = ref.watch(descriptionInfoProvider(novel));
-                  final expanded = useState(false);
+                  final expanded = useState(!direct);
 
                   return buildPadding(
                     top: 0,

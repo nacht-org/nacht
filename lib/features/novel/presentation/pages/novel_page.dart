@@ -32,7 +32,10 @@ class NovelPage extends ConsumerWidget {
       ),
       novel: (novel) => NovelView(
         data: novel,
-        load: type.maybeMap(novel: (_) => true, orElse: () => false),
+        direct: type.maybeMap(
+          novel: (_) => true,
+          orElse: () => false,
+        ),
       ),
     );
   }

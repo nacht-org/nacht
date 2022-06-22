@@ -17,17 +17,31 @@ Future<T?> showExpandableBottomSheet<T>({
     isScrollControlled: true,
     isDismissible: true,
     backgroundColor: Colors.transparent,
-    builder: (BuildContext context) {
-// FIXME: add padding to top when fully expanded (status bar).
+    builder: (BuildContext modelContext) {
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.of(context).pop(),
+        onTap: () => Navigator.of(modelContext).pop(),
         child: DraggableScrollableSheet(
           initialChildSize: initialChildSize,
           maxChildSize: maxChildSize,
           minChildSize: minChildSize,
           snap: true,
-          builder: builder,
+          builder: (sheetContext, scrollController) {
+            final mediaQuery = MediaQuery.of(context);
+
+            return Material(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight:
+                        mediaQuery.size.height - mediaQuery.viewPadding.top,
+                  ),
+                  child: builder(sheetContext, scrollController),
+                ),
+              ),
+            );
+          },
         ),
       );
     },

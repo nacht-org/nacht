@@ -52,6 +52,7 @@ class ReaderView extends HookConsumerWidget {
           controller: controller,
           visible: isToolbarVisible,
           child: ReaderAppBar(
+            // FIXME: overflows to two lines.
             title: Text(
               reader.novel.title,
               style: theme.textTheme.titleLarge,

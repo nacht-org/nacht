@@ -26,11 +26,11 @@ class BrowsePage extends ConsumerWidget {
                 onPressed: () {
                   showExpandableBottomSheet(
                     context: context,
-                    builder: (context, scrollController) => Material(
-                      child: BrowseFilterSheet(
+                    builder: (context, scrollController) {
+                      return BrowseFilterSheet(
                         scrollController: scrollController,
-                      ),
-                    ),
+                      );
+                    },
                   );
                 },
                 icon: const Icon(Icons.filter_list),

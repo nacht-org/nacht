@@ -197,11 +197,11 @@ class _Bottom extends ConsumerWidget {
             tooltip: 'Settings',
             onPressed: () => showExpandableBottomSheet(
               context: context,
-              builder: (context, scrollController) => Material(
-                child: SettingsSheet(
+              builder: (context, scrollController) {
+                return SettingsSheet(
                   controller: scrollController,
-                ),
-              ),
+                );
+              },
             ),
             icon: const Icon(Icons.settings),
           ),

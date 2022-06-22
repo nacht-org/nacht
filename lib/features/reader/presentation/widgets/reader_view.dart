@@ -46,30 +46,33 @@ class ReaderView extends HookConsumerWidget {
         ref.read(toolbarProvider.notifier).setSystemUiMode(true);
         return true;
       },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: SlidingPrefferedSize(
-          controller: controller,
-          visible: isToolbarVisible,
-          child: ReaderAppBar(
-            // FIXME: overflows to two lines.
-            title: Text(
-              reader.novel.title,
-              style: theme.textTheme.titleLarge,
+      child: ExpandableSheetOverride(
+        mediaQuery: MediaQuery.of(context),
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: SlidingPrefferedSize(
+            controller: controller,
+            visible: isToolbarVisible,
+            child: ReaderAppBar(
+              // FIXME: overflows to two lines.
+              title: Text(
+                reader.novel.title,
+                style: theme.textTheme.titleLarge,
+              ),
             ),
           ),
-        ),
-        backgroundColor: backgroundColor,
-        body: ReaderBody(
-          reader: reader,
-          controller: pageController,
-        ),
-        extendBody: true,
-        bottomNavigationBar: AnimatedBottomBar(
-          visible: isToolbarVisible,
-          child: ReaderBottomBar(
-            info: info,
+          backgroundColor: backgroundColor,
+          body: ReaderBody(
+            reader: reader,
             controller: pageController,
+          ),
+          extendBody: true,
+          bottomNavigationBar: AnimatedBottomBar(
+            visible: isToolbarVisible,
+            child: ReaderBottomBar(
+              info: info,
+              controller: pageController,
+            ),
           ),
         ),
       ),

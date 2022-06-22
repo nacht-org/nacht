@@ -12,7 +12,7 @@ Future<T?> showExpandableBottomSheet<T>({
   double minChildSize = 0.4,
   required ExpandableSheetBuilder builder,
 }) {
-  return showModalBottomSheet(
+  return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
     isDismissible: true,
@@ -27,7 +27,9 @@ Future<T?> showExpandableBottomSheet<T>({
           minChildSize: minChildSize,
           snap: true,
           builder: (sheetContext, scrollController) {
-            final mediaQuery = MediaQuery.of(context);
+            final mediaQuery =
+                ExpandableSheetOverride.of(context)?.mediaQuery ??
+                    MediaQuery.of(context);
 
             return Material(
               child: Align(
@@ -46,4 +48,27 @@ Future<T?> showExpandableBottomSheet<T>({
       );
     },
   );
+}
+
+class ExpandableSheetOverride extends InheritedWidget {
+  const ExpandableSheetOverride({
+    Key? key,
+    required this.child,
+    required this.mediaQuery,
+  }) : super(key: key, child: child);
+
+  @override
+  // ignore: overridden_fields
+  final Widget child;
+  final MediaQueryData mediaQuery;
+
+  static ExpandableSheetOverride? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<ExpandableSheetOverride>();
+  }
+
+  @override
+  bool updateShouldNotify(ExpandableSheetOverride oldWidget) {
+    return mediaQuery != oldWidget.mediaQuery;
+  }
 }

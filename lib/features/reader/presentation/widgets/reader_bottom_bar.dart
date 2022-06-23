@@ -31,6 +31,7 @@ class ReaderBottomBar extends ConsumerWidget {
           info: info,
           controller: controller,
         ),
+        const SizedBox(height: 8.0),
         const _Bottom(),
       ],
     );
@@ -54,7 +55,7 @@ class _Top extends ConsumerWidget {
     final notifier = ref.watch(readerFamily(info).notifier);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: [
           buildRoundedMaterial(

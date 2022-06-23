@@ -66,6 +66,7 @@ class ReaderView extends HookConsumerWidget {
             reader: reader,
             controller: pageController,
           ),
+          // FIXME: does not work as intended.
           extendBody: true,
           bottomNavigationBar: AnimatedBottomBar(
             visible: isToolbarVisible,

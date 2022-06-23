@@ -7,10 +7,10 @@ typedef ExpandableSheetBuilder = Widget Function(
 
 Future<T?> showExpandableBottomSheet<T>({
   required BuildContext context,
+  required ExpandableSheetBuilder builder,
   double initialChildSize = 0.4,
   double maxChildSize = 1,
   double minChildSize = 0.4,
-  required ExpandableSheetBuilder builder,
 }) {
   return showModalBottomSheet<T>(
     context: context,

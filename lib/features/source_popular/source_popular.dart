@@ -1,1 +1,1 @@
-export 'presentation/pages/popular_page.dart';
+export 'views/popular_page.dart';

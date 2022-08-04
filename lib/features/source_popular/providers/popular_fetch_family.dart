@@ -3,7 +3,7 @@ import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
-import '../../domain/domain.dart';
+import '../services/fetch_popular.dart';
 
 final popularFetchFamily = StateNotifierProvider.autoDispose
     .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(

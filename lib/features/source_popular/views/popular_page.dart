@@ -9,7 +9,9 @@ import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
-import '../presentation.dart';
+import '../providers/popular_family.dart';
+import '../providers/popular_fetch_family.dart';
+import '../providers/popular_view_family.dart';
 
 class PopularPage extends HookConsumerWidget with LoggerMixin {
   const PopularPage({

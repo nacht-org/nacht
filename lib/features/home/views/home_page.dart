@@ -4,7 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../presentation.dart';
+import '../models/destinations.dart';
+import '../providers/navigation_visible_provider.dart';
 
 class HomePage extends HookWidget {
   const HomePage({Key? key}) : super(key: key);

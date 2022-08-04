@@ -1,6 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/common/common.dart';
+
+import '../entities/chapter_data.dart';
+import '../entities/novel_data.dart';
+import '../entities/volume_data.dart';
 
 part 'chapter_list_family.freezed.dart';
 

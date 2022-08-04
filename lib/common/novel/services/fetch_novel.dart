@@ -5,6 +5,9 @@ import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
+import '../routines/add_chapter_updates.dart';
+import '../routines/update_novel.dart';
+
 final fetchNovelProvider = Provider<FetchNovel>(
   (ref) => FetchNovel(
     isConnectionAvailable: ref.watch(getIsConnectionAvailableProvider),

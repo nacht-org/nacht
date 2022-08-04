@@ -8,7 +8,10 @@ import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../data.dart';
+import '../mappers/source_chapter_into_companion.dart';
+import '../mappers/source_metadata_into_companion.dart';
+import '../mappers/source_novel_into_companion.dart';
+import '../mappers/source_volume_into_companion.dart';
 
 part 'update_novel.freezed.dart';
 

@@ -1,5 +1,7 @@
-import 'package:nacht/common/common.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../entities/novel_data.dart';
+import '../entities/partial_novel_data.dart';
 
 part 'novel_type.freezed.dart';
 

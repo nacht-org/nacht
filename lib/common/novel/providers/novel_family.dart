@@ -3,6 +3,17 @@ import 'package:nacht/core/core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../entities/novel_data.dart';
+import '../services/change_novel_categories.dart';
+import '../services/fetch_novel.dart';
+import '../services/get_first_unread_chapter.dart';
+import '../services/get_novel_by_id.dart';
+import '../services/get_novel_category_map.dart';
+import '../services/set_read_at.dart';
+import '../set_categories/provider/selected_categories_provider.dart';
+import '../set_categories/set_categories_dialog.dart';
+import 'chapter_family.dart';
+
 final novelFamily = StateNotifierProvider.autoDispose
     .family<NovelNotifier, NovelData, NovelInput>(
   (ref, data) => NovelNotifier(

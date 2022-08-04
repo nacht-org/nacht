@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
+
+import '../entities/chapter_data.dart';
 
 final setReadAtProvider = Provider<SetReadAt>(
   (ref) => SetReadAt(

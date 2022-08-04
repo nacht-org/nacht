@@ -1,7 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/domain.dart';
-import '../presentation.dart';
+import '../entities/update_data.dart';
+import '../models/update_entry.dart';
+import '../services/watch_updates.dart';
 
 final updatesProvider =
     StateNotifierProvider<UpdatesNotifier, List<UpdateEntry>>(

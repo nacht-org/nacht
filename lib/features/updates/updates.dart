@@ -1,2 +1,2 @@
-export 'presentation/pages/updates_page.dart';
-export 'presentation/providers/updates_provider.dart';
+export 'pages/updates_page.dart';
+export 'providers/updates_provider.dart';

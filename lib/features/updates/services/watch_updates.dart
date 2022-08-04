@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/database/database.dart';
 
-import '../domain.dart';
+import '../entities/update_data.dart';
 
 final watchUpdatesProvider = Provider<WatchUpdates>(
   (ref) => WatchUpdates(

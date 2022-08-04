@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../presentation.dart';
+import '../providers/updates_provider.dart';
+import '../widgets/chapter_update_tile.dart';
+import '../widgets/date_update_tile.dart';
 
 class UpdatesPage extends StatelessWidget {
   const UpdatesPage({Key? key}) : super(key: key);

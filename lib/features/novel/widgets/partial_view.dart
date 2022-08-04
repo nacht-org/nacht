@@ -5,7 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/nht/nht.dart';
 
-import '../presentation.dart';
+import '../models/head_info.dart';
+import '../providers/intermediate_provider.dart';
+import 'novel_head.dart';
 
 class PartialView extends HookWidget {
   const PartialView({

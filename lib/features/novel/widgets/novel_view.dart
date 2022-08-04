@@ -8,7 +8,14 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../presentation.dart';
+import '../models/head_info.dart';
+import '../providers/description_info_provider.dart';
+import '../providers/novel_selection_provider.dart';
+import 'action_bar.dart';
+import 'chapter_list.dart';
+import 'description.dart';
+import 'novel_head.dart';
+import 'tags.dart';
 
 class NovelView extends HookConsumerWidget {
   const NovelView({

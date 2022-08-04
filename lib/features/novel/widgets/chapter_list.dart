@@ -5,7 +5,7 @@ import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../presentation.dart';
+import '../providers/novel_selection_provider.dart';
 
 class ChapterList extends ConsumerWidget {
   const ChapterList({

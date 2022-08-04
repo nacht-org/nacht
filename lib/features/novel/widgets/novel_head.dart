@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
-import '../presentation.dart';
+import '../models/head_info.dart';
+import 'status.dart';
 
 final currentEssentialProvider =
     Provider.autoDispose<NovelHead>((ref) => throw UnimplementedError());

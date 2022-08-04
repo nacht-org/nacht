@@ -4,7 +4,10 @@ import 'dart:math' as math;
 
 import 'package:nacht/core/core.dart';
 
-import '../../domain/domain.dart';
+import '../services/add_category.dart';
+import '../services/change_categories_order.dart';
+import '../services/edit_category.dart';
+import '../services/remove_category.dart';
 
 final categoriesPageProvider =
     StateNotifierProvider.autoDispose<CategoriesNotifier, List<CategoryData>>(

@@ -4,7 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/app_database.dart';
-import 'package:nacht/features/category/domain/domain.dart';
+
+import '../failures/category_edit_failed.dart';
 
 final editCategoryProvider = Provider<EditCategory>(
   (ref) => EditCategory(

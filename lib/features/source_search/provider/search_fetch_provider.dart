@@ -1,10 +1,9 @@
 import 'package:nacht/common/common.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/browse/browse.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../domain/domain.dart';
+import '../services/fetch_search.dart';
 
 final searchFetchProvider = StateNotifierProvider.autoDispose
     .family<SearchFetchNotifier, FetchInfo, CrawlerInfo>(

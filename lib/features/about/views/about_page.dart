@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/widgets/loading_error.dart';
 
-import '../presentation.dart';
+import '../providers/package_info_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class AboutPage extends StatelessWidget {

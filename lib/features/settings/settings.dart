@@ -1,1 +1,1 @@
-export 'presentation/pages/settings_page.dart';
+export 'views/settings_page.dart';

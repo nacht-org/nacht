@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../presentation.dart';
+import '../models/reader_info.dart';
 
 final readerFamily = StateNotifierProvider.autoDispose
     .family<ReaderNotifier, ReaderInfo, ReaderInfo>(

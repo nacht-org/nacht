@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../presentation.dart';
+import '../models/reader_page_info.dart';
+import '../providers/reader_page_family.dart';
+import 'reader_theme.dart';
 
 class ChapterPage extends HookConsumerWidget {
   const ChapterPage({

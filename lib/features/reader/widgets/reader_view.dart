@@ -5,7 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../presentation.dart';
+import '../models/reader_info.dart';
+import '../providers/reader_family.dart';
+import '../providers/toolbar_provider.dart';
+import 'reader_body.dart';
+import 'reader_bottom_bar.dart';
 
 class ReaderView extends HookConsumerWidget {
   const ReaderView({

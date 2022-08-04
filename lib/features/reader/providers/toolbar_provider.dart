@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../presentation.dart';
+import '../models/toolbar_info.dart';
 
 final toolbarProvider =
     StateNotifierProvider.autoDispose<ToolbarNotifier, ToolbarInfo>(

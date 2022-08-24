@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/database/database.dart';
 
 part 'update_data.freezed.dart';

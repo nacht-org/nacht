@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 

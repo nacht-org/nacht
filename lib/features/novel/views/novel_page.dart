@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 

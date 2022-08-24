@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 
 import '../models/head_info.dart';
 import 'status.dart';

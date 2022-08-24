@@ -1,4 +1,4 @@
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/description_info.dart';

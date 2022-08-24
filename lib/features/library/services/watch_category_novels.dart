@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/database/database.dart';
 
 final watchCategoryNovelsProvider = Provider<WatchCategoryNovels>(

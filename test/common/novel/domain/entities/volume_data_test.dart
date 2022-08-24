@@ -1,4 +1,4 @@
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/database/database.dart';
 import 'package:flutter_test/flutter_test.dart';
 

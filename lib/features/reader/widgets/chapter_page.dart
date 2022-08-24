@@ -1,4 +1,4 @@
-import 'package:nacht/common/common.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht_sources/nacht_sources.dart';

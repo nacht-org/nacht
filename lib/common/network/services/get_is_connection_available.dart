@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../domain.dart';
+import '../network.dart';
 
 final getIsConnectionAvailableProvider = Provider<GetIsConnectionAvailable>(
   (ref) => GetIsConnectionAvailable(

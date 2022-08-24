@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../provider/is_searching_provider.dart';
+import '../search.dart';
 
 class SearchButton extends ConsumerWidget {
   const SearchButton({Key? key}) : super(key: key);

@@ -4,14 +4,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/source_search/source_search.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
-import '../providers/popular_family.dart';
-import '../providers/popular_fetch_family.dart';
-import '../providers/popular_view_family.dart';
+import '../../browse.dart';
 
 class PopularPage extends HookConsumerWidget with LoggerMixin {
   const PopularPage({

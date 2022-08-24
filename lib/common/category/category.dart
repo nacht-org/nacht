@@ -1,4 +1,8 @@
-export 'domain/domain.dart';
+// Models.
+export 'models/category_data.dart';
 
-// Presentation.
-export 'presentation/providers/categories_provider.dart';
+// Providers.
+export 'providers/categories_provider.dart';
+
+// Services.
+export 'services/watch_categories.dart';

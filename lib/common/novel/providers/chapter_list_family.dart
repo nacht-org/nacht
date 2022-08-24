@@ -1,9 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../entities/chapter_data.dart';
-import '../entities/novel_data.dart';
-import '../entities/volume_data.dart';
+import '../novel.dart';
 
 part 'chapter_list_family.freezed.dart';
 

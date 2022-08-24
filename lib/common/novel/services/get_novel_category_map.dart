@@ -1,8 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/common/common.dart';
 
-import 'get_novel_categories.dart';
-
 final getNovelCategoryMapProvider = Provider<GetNovelCategoryMap>(
   (ref) => GetNovelCategoryMap(
     read: ref.read,

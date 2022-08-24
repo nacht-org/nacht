@@ -4,8 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
 
-import '../entities/novel_data.dart';
-import '../routines/parse_novel_query.dart';
+import '../novel.dart';
 
 final getNovelByIdProvider = Provider<GetNovelById>(
   (ref) => GetNovelById(

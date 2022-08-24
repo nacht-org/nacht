@@ -5,11 +5,6 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/common/common.dart';
 import 'package:nacht/database/database.dart';
 
-import '../entities/chapter_data.dart';
-import '../entities/novel_data.dart';
-import '../entities/volume_data.dart';
-import '../failures/novel_not_found.dart';
-
 final parseNovelQueryProvider = Provider<ParseNovelQuery>(
   (ref) => ParseNovelQuery(
     database: ref.watch(databaseProvider),

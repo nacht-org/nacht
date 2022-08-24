@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../entities/novel_data.dart';
-import '../entities/partial_novel_data.dart';
+import '../novel.dart';
 
 part 'novel_type.freezed.dart';
 

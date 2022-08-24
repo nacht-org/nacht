@@ -2,8 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
-import '../../domain/domain.dart';
-import '../presentation.dart';
+import '../main.dart';
 
 final crawlersProvider = Provider<List<CrawlerListItem>>(
   (ref) {

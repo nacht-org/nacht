@@ -1,8 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 
-import '../../domain/domain.dart';
-import '../presentation.dart';
+import '../main.dart';
 
 final browseSearchProvider =
     StateNotifierProvider<BrowseSearchNotifier, BrowseSearchInfo>(

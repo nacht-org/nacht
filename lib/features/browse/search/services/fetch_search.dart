@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
-import 'package:nacht_sources/nacht_sources.dart';
 
 final fetchSearchProvider = Provider<FetchSearch>(
   (ref) => FetchSearch(
@@ -21,7 +20,7 @@ class FetchSearch {
   final GetIsConnectionAvailable _getIsConnectionAvailable;
 
   Future<Either<Failure, List<PartialNovelData>>> execute(
-    CrawlerIsolate isolate,
+    sources.CrawlerIsolate isolate,
     String query,
     int page,
   ) async {

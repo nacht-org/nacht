@@ -2,7 +2,7 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'search_fetch_provider.dart';
+import 'providers.dart';
 
 final searchProvider = Provider.autoDispose.family<FetchState, CrawlerFactory>(
   (ref, crawlerFactory) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import 'category_grid.dart';
+import 'widgets.dart';
 
 class SingularLibraryDisplay extends StatelessWidget {
   const SingularLibraryDisplay({

@@ -3,7 +3,7 @@ import 'package:nacht/nht/nht.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import 'category_grid.dart';
+import 'widgets.dart';
 
 class TabularLibraryDisplay extends StatefulWidget {
   const TabularLibraryDisplay({

@@ -6,7 +6,7 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../providers/category_novels_family.dart';
+import '../providers/providers.dart';
 
 class CategoryGrid extends ConsumerWidget {
   const CategoryGrid({

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../providers/library_view_provider.dart';
-import '../widgets/singular_library_display.dart';
-import '../widgets/tabular_library_display.dart';
+import '../providers/providers.dart';
+import '../widgets/widgets.dart';
 
 class LibraryPage extends HookConsumerWidget {
   const LibraryPage({Key? key}) : super(key: key);

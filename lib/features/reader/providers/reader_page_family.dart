@@ -2,7 +2,7 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../models/reader_page_info.dart';
+import '../models/models.dart';
 
 final readerPageFamily = StateNotifierProvider.autoDispose
     .family<ReaderPageNotifier, ReaderPageInfo, ReaderPageInfo>(

@@ -4,9 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../models/reader_info.dart';
-import '../providers/reader_family.dart';
-import 'settings_sheet.dart';
+import '../models/models.dart';
+import '../providers/providers.dart';
+import 'widgets.dart';
 
 extension on PageController {
   double? get pageSafe {

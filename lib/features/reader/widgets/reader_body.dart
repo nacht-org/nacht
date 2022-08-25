@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 
-import '../models/reader_info.dart';
-import '../providers/reader_family.dart';
-import '../providers/toolbar_provider.dart';
-import 'chapter_page.dart';
+import '../models/models.dart';
+import '../providers/providers.dart';
+import 'widgets.dart';
 
 class ReaderBody extends HookConsumerWidget {
   const ReaderBody({

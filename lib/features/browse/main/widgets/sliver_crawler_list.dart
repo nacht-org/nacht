@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 
-import '../main.dart';
+import '../providers/providers.dart';
 
 class SliverCrawlerList extends ConsumerWidget {
   const SliverCrawlerList({Key? key}) : super(key: key);

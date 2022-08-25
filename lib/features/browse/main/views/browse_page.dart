@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../main.dart';
+import '../providers/providers.dart';
+import '../widgets/widgets.dart';
 
 class BrowsePage extends ConsumerWidget {
   const BrowsePage({Key? key}) : super(key: key);

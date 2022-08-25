@@ -5,7 +5,7 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../main.dart';
+import '../providers/providers.dart';
 
 class SliverSearchResult extends ConsumerWidget {
   const SliverSearchResult({Key? key}) : super(key: key);

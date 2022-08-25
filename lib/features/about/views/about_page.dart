@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:nacht/widgets/loading_error.dart';
 
-import '../providers/package_info_provider.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import '../providers/providers.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);

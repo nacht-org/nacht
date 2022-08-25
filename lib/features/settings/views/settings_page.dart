@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/date_format_tile.dart';
-import '../widgets/theme_mode_tile.dart';
+import '../widgets/widgets.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 
-import '../models/head_info.dart';
+import '../models/models.dart';
 import 'status.dart';
 
 final currentEssentialProvider =

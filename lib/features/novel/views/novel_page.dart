@@ -5,9 +5,8 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../providers/intermediate_provider.dart';
-import '../widgets/novel_view.dart';
-import '../widgets/partial_view.dart';
+import '../providers/providers.dart';
+import '../widgets/widgets.dart';
 
 class NovelPage extends ConsumerWidget {
   const NovelPage({

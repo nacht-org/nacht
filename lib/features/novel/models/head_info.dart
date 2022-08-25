@@ -1,6 +1,5 @@
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
-import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'head_info.freezed.dart';

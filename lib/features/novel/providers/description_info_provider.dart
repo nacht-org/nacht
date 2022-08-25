@@ -1,7 +1,7 @@
 import 'package:nacht/shared/shared.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../models/description_info.dart';
+import '../models/models.dart';
 
 final descriptionInfoProvider =
     Provider.autoDispose.family<DescriptionInfo, NovelData>(

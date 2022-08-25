@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../providers/tags_stream_family.dart';
+import '../providers/providers.dart';
 
 class Tags extends ConsumerWidget {
   const Tags({

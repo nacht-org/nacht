@@ -3,6 +3,7 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../main/main.dart';
 import '../services/services.dart';
 
 final searchFetchProvider = StateNotifierProvider.autoDispose

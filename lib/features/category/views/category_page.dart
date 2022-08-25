@@ -4,10 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-import '../providers/categories_page_provider.dart';
-import '../providers/categories_selection_provider.dart';
-import '../widgets/add_dialog.dart';
-import '../widgets/category_list.dart';
+import '../providers/providers.dart';
+import '../widgets/widgets.dart';
 
 class CategoryPage extends ConsumerWidget with LoggerMixin {
   const CategoryPage({Key? key}) : super(key: key);

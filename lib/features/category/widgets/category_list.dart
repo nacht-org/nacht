@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../providers/categories_page_provider.dart';
-import '../providers/categories_selection_provider.dart';
-import 'edit_dialog.dart';
+import '../providers/providers.dart';
+import 'widgets.dart';
 
 class CategoryList extends HookConsumerWidget {
   const CategoryList({Key? key}) : super(key: key);

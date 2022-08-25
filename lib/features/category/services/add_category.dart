@@ -4,7 +4,7 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
 
-import '../failures/category_add_failed.dart';
+import '../failures/failures.dart';
 
 final addCategoryProvider = Provider<AddCategory>(
   (ref) => AddCategory(

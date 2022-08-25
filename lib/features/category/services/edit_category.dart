@@ -5,7 +5,7 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/app_database.dart';
 
-import '../failures/category_edit_failed.dart';
+import '../failures/failures.dart';
 
 final editCategoryProvider = Provider<EditCategory>(
   (ref) => EditCategory(

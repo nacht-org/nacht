@@ -21,14 +21,14 @@ dependencies:
   crypto: ^3.0.2
 
   # Router.
-  auto_route: ^4.0.1
+  auto_route: ^5.0.1
 
   # State management.
   hooks_riverpod: ^2.0.0-dev.9
   flutter_hooks: ^0.18.3
 
   # Database.
-  drift: ^1.5.0
+  drift: ^2.1.0
   sqlite3_flutter_libs: ^0.5.5
   path_provider: ^2.0.9
   path: ^1.8.1
@@ -40,7 +40,7 @@ dependencies:
   # Misc.
   url_launcher: ^6.0.20
   webview_flutter: ^3.0.2
-  permission_handler: ^9.2.0
+  permission_handler: ^10.0.0
 
   nacht_sources:
     path: ../nacht_sources
@@ -58,11 +58,11 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.1
-  auto_route_generator: ^4.0.0
+  auto_route_generator: ^5.0.2
   build_runner: ^2.1.8
   mockito: ^5.1.0
   freezed: ^2.0.3+1
-  drift_dev: ^1.5.2
+  drift_dev: ^2.1.0
 
 flutter:
   uses-material-design: true

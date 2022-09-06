@@ -11,7 +11,6 @@ final helperNovelEntity = NovelData(
   status: NovelStatus.unknown,
   lang: 'en',
   chapters: [],
-  metadata: [],
   workType: const OriginalWork(),
   readingDirection: ReadingDirection.ltr,
   favourite: false,

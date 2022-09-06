@@ -3,9 +3,6 @@ import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/database/database.dart';
 
-import 'chapter_data.dart';
-import 'meta_entry_data.dart';
-
 part 'novel_data.freezed.dart';
 
 @freezed
@@ -21,8 +18,6 @@ class NovelData with _$NovelData {
     required sources.NovelStatus status,
     required String lang,
     required List<ChapterData> chapters,
-    // TODO: remove [metadata] attribute.
-    required List<MetaEntryData> metadata,
     required sources.WorkType workType,
     required sources.ReadingDirection readingDirection,
     required bool favourite,
@@ -39,7 +34,6 @@ class NovelData with _$NovelData {
       status: StatusSeed.intoStatus(novel.statusId),
       lang: novel.lang,
       chapters: [],
-      metadata: [],
       workType: WorkTypeSeed.intoWorkType(novel.workTypeId),
       readingDirection:
           ReadingDirectionSeed.intoReadingDirection(novel.readingDirectionId),

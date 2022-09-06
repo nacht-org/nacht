@@ -27,7 +27,7 @@ class WatchCategories {
     final stream = query.watch();
     return stream.map(
       (event) => event.map((row) {
-        final category = NovelCategory.fromData(row.data);
+        final category = _database.novelCategories.map(row.data);
         final novelCount = row.read<int>('amount');
 
         return CategoryData.fromModel(category, novelCount: novelCount);

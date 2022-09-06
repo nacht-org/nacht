@@ -50,6 +50,12 @@ class _LazyIndexedStackState extends State<LazyIndexedStack>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(covariant LazyIndexedStack oldWidget) {
     super.didUpdateWidget(oldWidget);
 

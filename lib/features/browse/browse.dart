@@ -1,1 +1,3 @@
-export 'presentation/pages/browse_page.dart';
+export 'main/main.dart';
+export 'popular/popular.dart';
+export 'search/search.dart';

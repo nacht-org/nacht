@@ -1,15 +1,15 @@
 export 'app_database.dart';
 
-export 'models/novel.dart';
-export 'models/status.dart';
-export 'models/work_type.dart';
-export 'models/reading_direction.dart';
-export 'models/category.dart';
-export 'models/volume.dart';
-export 'models/chapter.dart';
-export 'models/meta_entry.dart';
-export 'models/namespaces.dart';
-export 'models/assets.dart';
-export 'models/updates.dart';
+export 'entities/novel.dart';
+export 'entities/status.dart';
+export 'entities/work_type.dart';
+export 'entities/reading_direction.dart';
+export 'entities/category.dart';
+export 'entities/volume.dart';
+export 'entities/chapter.dart';
+export 'entities/meta_entry.dart';
+export 'entities/namespaces.dart';
+export 'entities/assets.dart';
+export 'entities/updates.dart';
 
 export 'exceptions/seed_exception.dart';

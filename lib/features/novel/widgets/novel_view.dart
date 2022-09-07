@@ -36,10 +36,13 @@ class NovelView extends HookConsumerWidget {
     final selection = ref.watch(novelSelectionProvider);
     SelectionNotifier.handleRoute(novelSelectionProvider, ref, context);
 
+    final chapterList = ref.watch(chapterListFamily(data.id));
+
     useEffect(() {
       if (direct) {
         notifier.reload();
       }
+      ref.read(chapterListFamily(data.id).notifier).init();
       return null;
     }, []);
 
@@ -65,10 +68,10 @@ class NovelView extends HookConsumerWidget {
               title: Text('${selection.selected.length}'),
               onSelectAllPressed: () => ref
                   .read(novelSelectionProvider.notifier)
-                  .addAll(novel.chapters.map((c) => c.id)),
+                  .addAll(chapterList.ids),
               onInversePressed: () => ref
                   .read(novelSelectionProvider.notifier)
-                  .flipAll(novel.chapters.map((c) => c.id)),
+                  .flipAll(chapterList.ids),
             )
         ],
         body: RefreshIndicator(
@@ -88,7 +91,6 @@ class NovelView extends HookConsumerWidget {
                   bottom: 8,
                 ),
                 HookConsumer(builder: (context, ref, child) {
-                  final description = ref.watch(descriptionInfoProvider(novel));
                   final expanded = useState(!direct);
 
                   return buildPadding(
@@ -101,7 +103,7 @@ class NovelView extends HookConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Description(
-                              description: description.description,
+                              description: novel.description,
                               expanded: expanded,
                             ),
                             const SizedBox(height: 8),
@@ -118,8 +120,8 @@ class NovelView extends HookConsumerWidget {
                 SliverToBoxAdapter(
                   child: ListTile(
                     title: Text(
-                      '${novel.chapters.length} Chapter'.pluralize(
-                        test: (_) => novel.chapters.length > 1,
+                      '${chapterList.chapters.length} Chapter'.pluralize(
+                        test: (_) => chapterList.chapters.length > 1,
                       ),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),

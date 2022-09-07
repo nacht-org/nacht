@@ -27,10 +27,27 @@ class ReaderPage extends ConsumerWidget {
       return state.when(
         loading: () => const Scaffold(),
         error: (error, stack) => Text('Error: $error'),
-        data: (data) => ReaderView(info: ReaderInfo.from(data, chapter)),
+        data: (data) => ReaderView(
+          info: ReaderInfo(
+            novel: data,
+            initial: chapter,
+            currentIndex: null,
+            initialIndex: initialIndex(ref),
+          ),
+        ),
       );
     } else {
-      return ReaderView(info: ReaderInfo.from(novel, chapter));
+      return ReaderView(
+        info: ReaderInfo(
+          novel: novel,
+          initial: chapter,
+          currentIndex: null,
+          initialIndex: initialIndex(ref),
+        ),
+      );
     }
   }
+
+  int initialIndex(WidgetRef ref) =>
+      ref.read(chapterListFamily(novel.id)).chapters.indexOf(chapter);
 }

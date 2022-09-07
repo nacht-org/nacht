@@ -81,43 +81,6 @@ class ReaderView extends HookConsumerWidget {
       ),
     );
   }
-
-  /// Reader title with novel title and chapter title
-  ///
-  /// Note: Use was deprecated because it looked cramped.
-  /// Code remains unremoved until another solution to display
-  /// chapter title is implemented.
-  ///
-  /// TODO: implement another solution to display chapter title.
-  /// TODO: remove this method and the code block.
-  Consumer buildTitle(ReaderInfo reader, ThemeData theme) {
-    return Consumer(builder: (context, ref, child) {
-      final current =
-          ref.watch(readerFamily(info).select((value) => value.current));
-
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            reader.novel.title,
-            style: theme.textTheme.titleLarge?.copyWith(
-              color: theme.appBarTheme.foregroundColor,
-            ),
-            maxLines: 1,
-          ),
-          Text(
-            current.title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.hintColor,
-            ),
-            maxLines: 1,
-          ),
-        ],
-      );
-    });
-  }
 }
 
 class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {

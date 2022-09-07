@@ -39,8 +39,9 @@ dependencies:
 
   # Misc.
   url_launcher: ^6.0.20
-  webview_flutter: ^3.0.2
-  permission_handler: ^10.0.0
+  webview_flutter: ^2.8.0
+  webview_flutter_android: 2.8.0
+  permission_handler: ^9.2.0
 
   nacht_sources:
     path: ../nacht_sources

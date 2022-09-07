@@ -30,7 +30,6 @@ void main() {
     readingDirection: sources.ReadingDirection.ltr,
     workType: const sources.TranslatedWork.mtl(),
     status: sources.NovelStatus.completed,
-    chapters: [],
     favourite: true,
   );
 

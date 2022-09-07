@@ -14,18 +14,22 @@ class ChapterPage extends HookConsumerWidget {
   const ChapterPage({
     Key? key,
     required this.novel,
-    required this.chapter,
+    required this.index,
     required this.crawlerFactory,
   }) : super(key: key);
 
   final NovelData novel;
-  final ChapterData chapter;
+  final int index;
   final CrawlerFactory crawlerFactory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final crawler = ref.watch(crawlerFamily(crawlerFactory));
-    final input = ReaderPageInfo.from(chapter, crawler);
+
+    final data = ref.watch(chapterListFamily(novel.id)
+        .select((value) => value.chapters[index].copyWith(readAt: null)));
+
+    final input = ReaderPageInfo.from(data, crawler);
 
     final page = ref.watch(readerPageFamily(input));
     final notifier = ref.watch(readerPageFamily(input).notifier);
@@ -40,11 +44,10 @@ class ChapterPage extends HookConsumerWidget {
       ),
       data: (content) => NotificationListener<ScrollNotification>(
         onNotification: (notification) {
-          if (notification.isAtEnd) {
-            ref
-                .read(chapterFamily(ChapterInput(chapter)).notifier)
-                .markAsRead();
-          }
+          // TODO: reimplement mark as read
+          // if (notification.isAtEnd) {
+          //   ref.read(chapterFamily(ChapterInput(index)).notifier).markAsRead();
+          // }
           return false;
         },
         child: ReaderTheme(
@@ -65,7 +68,7 @@ class ChapterPage extends HookConsumerWidget {
                       var theme = Theme.of(context);
 
                       return Text(
-                        chapter.title,
+                        data.title,
                         style: theme.textTheme.displaySmall?.copyWith(
                           color: theme.textTheme.labelLarge?.color,
                         ),

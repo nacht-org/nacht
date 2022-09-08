@@ -25,25 +25,6 @@ class ChapterNotifier extends StateNotifier<ChapterData> with LoggerMixin {
   set readAt(DateTime? dateTime) {
     state = state.copyWith(readAt: dateTime);
   }
-
-  Future<void> markAsRead() async {
-    // Limit readAt updates to once every 5 minutes
-    if (state.readAt != null &&
-        DateTime.now().difference(state.readAt!).inMinutes < 5) {
-      return;
-    }
-
-    log.fine('updating read at to now');
-
-    final oldReadAt = state.readAt;
-    state = state.copyWith(readAt: DateTime.now());
-
-    final failure = await _setReadAt.execute([state], true);
-    if (failure != null) {
-      log.warning(failure);
-      state = state.copyWith(readAt: oldReadAt);
-    }
-  }
 }
 
 class ChapterInput extends Equatable {

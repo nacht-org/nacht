@@ -59,4 +59,31 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
       ],
     );
   }
+
+  Future<void> markAsRead(int index) async {
+    final chapter = state.chapters[index];
+    if (chapter.readAt != null &&
+        DateTime.now().difference(chapter.readAt!).inMinutes < 5) {
+      return;
+    }
+
+    log.fine('updating ${chapter.id} to read at to now');
+
+    final oldReadAt = chapter.readAt;
+    final newData = chapter.copyWith(readAt: DateTime.now());
+
+    state = state.copyWith(chapters: [
+      for (final c in state.chapters)
+        if (c.id == chapter.id) newData else c
+    ]);
+
+    final failure = await _setReadAt.execute([newData], true);
+    if (failure != null) {
+      log.warning(failure);
+      state = state.copyWith(chapters: [
+        for (final c in state.chapters)
+          if (c.id == chapter.id) chapter.copyWith(readAt: oldReadAt) else c
+      ]);
+    }
+  }
 }

@@ -45,7 +45,7 @@ class ChapterPage extends HookConsumerWidget {
       data: (content) => NotificationListener<ScrollNotification>(
         onNotification: (notification) {
           if (notification.isAtEnd) {
-            ref.read(chapterListFamily(data.id).notifier).markAsRead(index);
+            ref.read(chapterListFamily(novel.id).notifier).markAsRead(index);
           }
           return false;
         },

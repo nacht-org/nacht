@@ -20,9 +20,6 @@ class NovelData with _$NovelData {
     AssetData? cover,
     required sources.NovelStatus status,
     required String lang,
-    required List<ChapterData> chapters,
-    // TODO: remove [metadata] attribute.
-    required List<MetaEntryData> metadata,
     required sources.WorkType workType,
     required sources.ReadingDirection readingDirection,
     required bool favourite,
@@ -38,8 +35,6 @@ class NovelData with _$NovelData {
       coverUrl: novel.coverUrl,
       status: StatusSeed.intoStatus(novel.statusId),
       lang: novel.lang,
-      chapters: [],
-      metadata: [],
       workType: WorkTypeSeed.intoWorkType(novel.workTypeId),
       readingDirection:
           ReadingDirectionSeed.intoReadingDirection(novel.readingDirectionId),

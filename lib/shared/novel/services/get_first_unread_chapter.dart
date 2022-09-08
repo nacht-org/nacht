@@ -45,6 +45,8 @@ class GetFirstUnreadChapter {
     final chapter = row.readTable(_database.chapters);
     final volume = row.readTable(_database.volumes);
 
-    return Right(ChapterData.fromModel(chapter, VolumeData.fromModel(volume)));
+    return Right(
+      ChapterData.fromModel(chapter, VolumeData.fromModel(volume)),
+    );
   }
 }

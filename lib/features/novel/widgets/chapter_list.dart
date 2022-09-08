@@ -19,7 +19,9 @@ class ChapterList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context);
 
-    final items = ref.watch(chapterListFamily(novel));
+    final chapterList = ref.watch(chapterListFamily(novel.id));
+    final entries = ref.watch(chapterListEntriesFamily(chapterList.chapters));
+
     final dateFormatService = ref.watch(dateFormatServiceFamily(locale));
 
     final selectionActive =
@@ -29,7 +31,7 @@ class ChapterList extends ConsumerWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          return items[index].when(
+          return entries[index].when(
             volume: (volume) => ListTile(
               title: Text(
                 volume.name.toUpperCase(),
@@ -39,38 +41,37 @@ class ChapterList extends ConsumerWidget {
               dense: true,
             ),
             chapter: (data) => Consumer(builder: (context, ref, child) {
-              final chapter = ref.watch(chapterFamily(ChapterInput(data)));
               final selected = ref.watch(novelSelectionProvider
-                  .select((value) => value.contains(chapter.id)));
+                  .select((value) => value.contains(data.id)));
 
-              void select() => selectionNotifier.toggle(chapter.id);
+              void select() => selectionNotifier.toggle(data.id);
 
               return NachtListTile(
                 title: Text(
-                  chapter.title,
+                  data.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                subtitle: chapter.updated == null
+                subtitle: data.updated == null
                     ? null
-                    : Text(dateFormatService.relativeDay(chapter.updated!)),
+                    : Text(dateFormatService.relativeDay(data.updated!)),
                 onTap: selectionActive
                     ? select
                     : () => context.router.push(
                           ReaderRoute(
                             novel: novel,
-                            chapter: chapter,
+                            chapter: data,
                             doFetch: false,
                           ),
                         ),
                 onLongPress: selectionActive ? null : select,
                 selected: selected,
-                muted: chapter.readAt != null,
+                muted: data.readAt != null,
               );
             }),
           );
         },
-        childCount: items.length,
+        childCount: entries.length,
       ),
     );
   }

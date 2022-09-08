@@ -21,6 +21,8 @@ class ReaderBody extends HookConsumerWidget {
     final crawlerFactory = ref.watch(crawlerFactoryFamily(reader.novel.url));
     final toolbarNotifier = ref.watch(toolbarProvider.notifier);
 
+    final chapterList = ref.watch(chapterListFamily(reader.novel.id));
+
     if (crawlerFactory == null) {
       return Center(
         child: Text('uh oh.'),
@@ -31,11 +33,11 @@ class ReaderBody extends HookConsumerWidget {
       onTap: toolbarNotifier.toggle,
       child: PageView.builder(
         controller: controller,
-        itemCount: reader.novel.chapters.length,
+        itemCount: chapterList.chapters.length,
         itemBuilder: (context, index) {
           return ChapterPage(
             novel: reader.novel,
-            chapter: reader.novel.chapters[index],
+            index: index,
             crawlerFactory: crawlerFactory,
           );
         },

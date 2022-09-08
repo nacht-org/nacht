@@ -17,8 +17,6 @@ class ChapterUpdateTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(chapterFamily(ChapterInput(chapter)));
-
     return NachtListTile(
       leading: GestureDetector(
         onTap: () => context.router.push(
@@ -43,20 +41,21 @@ class ChapterUpdateTile extends ConsumerWidget {
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
-        data.title,
+        chapter.title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
       onTap: () {
+        // FIXME: update reader route to take volume and chapter.
         context.router.push(
           ReaderRoute(
             novel: novel,
-            chapter: data,
+            chapter: chapter,
             doFetch: true,
           ),
         );
       },
-      muted: data.readAt != null,
+      muted: chapter.readAt != null,
     );
   }
 }

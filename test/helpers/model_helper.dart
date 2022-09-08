@@ -10,8 +10,6 @@ final helperNovelEntity = NovelData(
   coverUrl: 'https://assets.website.com/novel/123/cover.jpg',
   status: NovelStatus.unknown,
   lang: 'en',
-  chapters: [],
-  metadata: [],
   workType: const OriginalWork(),
   readingDirection: ReadingDirection.ltr,
   favourite: false,

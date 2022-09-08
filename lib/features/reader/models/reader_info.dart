@@ -9,20 +9,8 @@ class ReaderInfo with _$ReaderInfo {
     required NovelData novel,
     required ChapterData initial,
     required int? currentIndex,
+    required int initialIndex,
   }) = _ReaderInfo;
 
-  factory ReaderInfo.from(NovelData novel, ChapterData initial) {
-    return ReaderInfo(
-      novel: novel,
-      initial: initial,
-      currentIndex: null,
-    );
-  }
-
   ReaderInfo._();
-
-  ChapterData get current =>
-      currentIndex == null ? initial : novel.chapters[currentIndex!];
-
-  int get initialIndex => novel.chapters.indexOf(initial);
 }

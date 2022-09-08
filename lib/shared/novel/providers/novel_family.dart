@@ -138,29 +138,4 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
       ),
     );
   }
-
-  Future<void> setReadAt(Set<int> ids, bool isRead) async {
-    // TODO: move to chapter list.
-    // final chapters =
-    //     state.chapters.where((element) => ids.contains(element.id)).toList();
-
-    // final failure = await _setReadAt.execute(chapters, isRead);
-    // if (failure != null) {
-    //   log.warning(failure);
-    //   return;
-    // }
-
-    // final readAt = isRead ? DateTime.now() : null;
-
-    // state = state.copyWith(
-    //   chapters: [
-    //     for (final c in state.chapters)
-    //       if (ids.contains(c.id)) c.copyWith(readAt: readAt) else c
-    //   ],
-    // );
-
-    // for (final chapter in chapters) {
-    //   _invalidate(chapterFamily(ChapterInput(chapter)).notifier);
-    // }
-  }
 }

@@ -37,12 +37,13 @@ class NovelView extends HookConsumerWidget {
     SelectionNotifier.handleRoute(novelSelectionProvider, ref, context);
 
     final chapterList = ref.watch(chapterListFamily(data.id));
+    final chapterListNotifier = ref.watch(chapterListFamily(data.id).notifier);
 
     useEffect(() {
       if (direct) {
         notifier.reload();
       }
-      ref.read(chapterListFamily(data.id).notifier).init();
+      chapterListNotifier.init();
       return null;
     }, []);
 
@@ -154,7 +155,7 @@ class NovelView extends HookConsumerWidget {
                 icon: const Icon(Icons.check),
                 onPressed: () {
                   final selection = ref.read(novelSelectionProvider);
-                  notifier.setReadAt(selection.selected, true);
+                  chapterListNotifier.setReadAt(selection.selected, true);
                   context.router.pop();
                 },
                 tooltip: 'Mark as read',
@@ -163,7 +164,7 @@ class NovelView extends HookConsumerWidget {
                 icon: const Icon(Icons.close),
                 onPressed: () {
                   final selection = ref.read(novelSelectionProvider);
-                  notifier.setReadAt(selection.selected, false);
+                  chapterListNotifier.setReadAt(selection.selected, false);
                   context.router.pop();
                 },
                 tooltip: 'Mark as unread',

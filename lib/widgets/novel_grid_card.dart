@@ -55,10 +55,11 @@ class NovelGridCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                padding: const EdgeInsets.all(8.0).copyWith(top: 32.0),
+                padding: const EdgeInsets.all(8.0).copyWith(top: 48.0),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.white,
                     shadows: const [
                       Shadow(blurRadius: 2.0),
                     ],

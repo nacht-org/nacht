@@ -24,8 +24,8 @@ class ChapterUpdateTile extends ConsumerWidget {
             type: NovelType.novel(novel),
           ),
         ),
-        child: AspectRatio(
-          aspectRatio: 2 / 3,
+        child: SizedBox.square(
+          dimension: 44,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
@@ -46,7 +46,6 @@ class ChapterUpdateTile extends ConsumerWidget {
         overflow: TextOverflow.ellipsis,
       ),
       onTap: () {
-        // FIXME: update reader route to take volume and chapter.
         context.router.push(
           ReaderRoute(
             novel: novel,

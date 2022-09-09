@@ -17,11 +17,7 @@ class MessageService {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showText(
     String text,
   ) {
-    return showSnackBar(SnackBar(
-      content: Text(text),
-      margin: const EdgeInsets.all(8.0),
-      behavior: SnackBarBehavior.floating,
-    ));
+    return showSnackBar(SnackBar(content: Text(text)));
   }
 
   Future<void> showUndo(
@@ -34,8 +30,6 @@ class MessageService {
       SnackBar(
         content: Text(message),
         action: SnackBarAction(label: 'Undo', onPressed: onUndo),
-        margin: const EdgeInsets.all(8.0),
-        behavior: SnackBarBehavior.floating,
       ),
     );
 

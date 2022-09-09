@@ -30,7 +30,6 @@ class SetCategoriesDialog extends ConsumerWidget {
                 value: entry.value,
                 onChanged: (value) =>
                     notifier.setSelected(entry.key.id, value!),
-                dense: true,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
             )

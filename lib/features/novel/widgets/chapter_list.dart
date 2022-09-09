@@ -40,35 +40,37 @@ class ChapterList extends ConsumerWidget {
               ),
               dense: true,
             ),
-            chapter: (data) => Consumer(builder: (context, ref, child) {
-              final selected = ref.watch(novelSelectionProvider
-                  .select((value) => value.contains(data.id)));
+            chapter: (data) => Consumer(
+              builder: (context, ref, child) {
+                final selected = ref.watch(novelSelectionProvider
+                    .select((value) => value.contains(data.id)));
 
-              void select() => selectionNotifier.toggle(data.id);
+                void select() => selectionNotifier.toggle(data.id);
 
-              return NachtListTile(
-                title: Text(
-                  data.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: data.updated == null
-                    ? null
-                    : Text(dateFormatService.relativeDay(data.updated!)),
-                onTap: selectionActive
-                    ? select
-                    : () => context.router.push(
-                          ReaderRoute(
-                            novel: novel,
-                            chapter: data,
-                            doFetch: false,
+                return NachtListTile(
+                  title: Text(
+                    data.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: data.updated == null
+                      ? null
+                      : Text(dateFormatService.relativeDay(data.updated!)),
+                  onTap: selectionActive
+                      ? select
+                      : () => context.router.push(
+                            ReaderRoute(
+                              novel: novel,
+                              chapter: data,
+                              doFetch: false,
+                            ),
                           ),
-                        ),
-                onLongPress: selectionActive ? null : select,
-                selected: selected,
-                muted: data.readAt != null,
-              );
-            }),
+                  onLongPress: selectionActive ? null : select,
+                  selected: selected,
+                  muted: data.readAt != null,
+                );
+              },
+            ),
           );
         },
         childCount: entries.length,

@@ -127,7 +127,13 @@ class NovelView extends HookConsumerWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     trailing: const Icon(Icons.filter_list),
-                    onTap: () {},
+                    onTap: () {
+                      showExpandableBottomSheet(
+                        context: context,
+                        builder: (context, controller) =>
+                            ChapterListBottomSheet(controller: controller),
+                      );
+                    },
                     dense: true,
                   ),
                 ),

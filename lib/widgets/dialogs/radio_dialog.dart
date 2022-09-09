@@ -23,8 +23,8 @@ class RadioDialog<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
+      content: ListView(
+        shrinkWrap: true,
         children: items
             .map(
               (item) => RadioListTile<T>(
@@ -33,7 +33,6 @@ class RadioDialog<T> extends StatelessWidget {
                 onChanged: (value) => Navigator.of(context).pop(value),
                 title: Text(item.label),
                 selected: item.value == value,
-                dense: true,
               ),
             )
             .toList(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SliverFloatingActionButtonPadding extends StatelessWidget {
-  const SliverFloatingActionButtonPadding({Key? key, this.mini = false})
+class SliverFloatingActionPadding extends StatelessWidget {
+  const SliverFloatingActionPadding({Key? key, this.mini = false})
       : super(key: key);
 
   final bool mini;

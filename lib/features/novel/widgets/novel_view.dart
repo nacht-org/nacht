@@ -132,7 +132,7 @@ class NovelView extends HookConsumerWidget {
                   ),
                 ),
                 ChapterList(novel: novel),
-                const SliverFloatingActionButtonPadding(),
+                const SliverFloatingActionPadding(),
               ],
             ),
           ),

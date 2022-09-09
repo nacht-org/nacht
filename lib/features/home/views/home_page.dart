@@ -28,7 +28,7 @@ class HomePage extends HookWidget {
           bottomNavigationBar: Consumer(builder: (context, ref, child) {
             final visible = ref.watch(navigationVisibleProvider);
 
-            return AnimatedBottomBar(
+            return ImplicitAnimatedBottomBar(
               visible: visible,
               child: NavigationBar(
                 selectedIndex: currentIndex.value,

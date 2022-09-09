@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:nacht/core/core.dart';
+import 'package:nacht/core/nacht_theme/nacht_theme.dart';
 
-import 'custom_bottom_bar.dart';
-
-class AnimatedBottomBar extends HookWidget {
-  const AnimatedBottomBar({
+class ImplicitAnimatedBottomBar extends HookWidget {
+  const ImplicitAnimatedBottomBar({
     Key? key,
-    required this.child,
     required this.visible,
+    required this.child,
   }) : super(key: key);
 
   final bool visible;
@@ -21,17 +19,33 @@ class AnimatedBottomBar extends HookWidget {
       duration: kShortAnimationDuration,
     );
 
-    final animation = useMemoized(
-      () => CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn),
-    );
-    final offset = useMemoized(
-      () => Tween(begin: const Offset(0, 1), end: const Offset(0, 0)),
-    );
-
     useEffect(() {
       visible ? controller.forward() : controller.reverse();
       return null;
     }, [visible]);
+
+    return AnimatedBottomBar(controller: controller, child: child);
+  }
+}
+
+class AnimatedBottomBar extends StatelessWidget {
+  const AnimatedBottomBar({
+    Key? key,
+    required this.child,
+    required this.controller,
+  }) : super(key: key);
+
+  final Widget child;
+  final AnimationController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.fastOutSlowIn,
+    );
+
+    final offset = Tween(begin: const Offset(0, 1), end: const Offset(0, 0));
 
     return SizeTransition(
       sizeFactor: animation,

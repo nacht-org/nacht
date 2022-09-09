@@ -43,21 +43,23 @@ class ReaderBottomBar extends ConsumerWidget {
               );
             },
           ),
-          Consumer(builder: (context, ref, child) {
-            final fontFamily = ref.watch(
-                readerPreferencesProvider.select((value) => value.fontFamily));
+          Consumer(
+            builder: (context, ref, child) {
+              final fontFamily = ref.watch(readerPreferencesProvider
+                  .select((value) => value.fontFamily));
 
-            return PopupMenuButton<ReaderFontFamily>(
-              tooltip: 'Font family',
-              initialValue: fontFamily,
-              itemBuilder: (context) => ReaderFontFamily.values
-                  .map((font) =>
-                      PopupMenuItem(value: font, child: Text(font.name)))
-                  .toList(),
-              onSelected: notifier.setFontFamily,
-              icon: const Icon(Icons.font_download),
-            );
-          }),
+              return PopupMenuButton<ReaderFontFamily>(
+                tooltip: 'Font family',
+                initialValue: fontFamily,
+                itemBuilder: (context) => ReaderFontFamily.values
+                    .map((font) =>
+                        PopupMenuItem(value: font, child: Text(font.name)))
+                    .toList(),
+                onSelected: notifier.setFontFamily,
+                icon: const Icon(Icons.font_download),
+              );
+            },
+          ),
           IconButton(
             tooltip: 'Settings',
             onPressed: () => showExpandableBottomSheet(

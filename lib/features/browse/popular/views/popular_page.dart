@@ -113,7 +113,7 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
         builder: (context, ref, child) {
           final fetch = ref.watch(popularFetchFamily(crawler));
 
-          return AnimatedBottomBar(
+          return ImplicitAnimatedBottomBar(
             visible: !fetch.isInitial && fetch.isLoading,
             child: const SizedBox(
               height: 4.0,

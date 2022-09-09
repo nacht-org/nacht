@@ -31,7 +31,7 @@ class ReaderView extends HookConsumerWidget {
     // Controls appbar animation.
     final controller = useAnimationController(
       duration: kShortAnimationDuration,
-      initialValue: 1,
+      initialValue: 0,
     );
 
     // Controls horizontal chapter page navigation.
@@ -41,6 +41,11 @@ class ReaderView extends HookConsumerWidget {
       ref.read(toolbarProvider.notifier).setSystemUiMode(isToolbarVisible);
       return null;
     }, []);
+
+    useEffect(() {
+      isToolbarVisible ? controller.forward() : controller.reverse();
+      return null;
+    }, [isToolbarVisible]);
 
     return WillPopScope(
       onWillPop: () async {
@@ -52,14 +57,21 @@ class ReaderView extends HookConsumerWidget {
         mediaQuery: MediaQuery.of(context),
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: SlidingPrefferedSize(
+          appBar: AnimatedAppBar(
             controller: controller,
-            visible: isToolbarVisible,
-            child: ReaderAppBar(
-              // FIXME: overflows to two lines.
+            child: AppBar(
               title: Text(
                 reader.novel.title,
                 style: theme.textTheme.titleLarge,
+                maxLines: 1,
+              ),
+              bottom: const PreferredSize(
+                preferredSize: Size.fromHeight(36.0),
+                child: ListTile(
+                  title: Text(""),
+                  trailing: Icon(Icons.book),
+                  dense: true,
+                ),
               ),
             ),
           ),
@@ -71,7 +83,7 @@ class ReaderView extends HookConsumerWidget {
           // FIXME: does not work as intended.
           extendBody: true,
           bottomNavigationBar: AnimatedBottomBar(
-            visible: isToolbarVisible,
+            controller: controller,
             child: ReaderBottomBar(
               info: info,
               controller: pageController,

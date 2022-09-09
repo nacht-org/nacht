@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SlidingPrefferedSize extends StatelessWidget
-    implements PreferredSizeWidget {
-  const SlidingPrefferedSize({
+class AnimatedAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const AnimatedAppBar({
     Key? key,
     required this.child,
     required this.controller,
-    required this.visible,
   }) : super(key: key);
 
   final PreferredSizeWidget child;
   final AnimationController controller;
-  final bool visible;
 
   @override
   Size get preferredSize => child.preferredSize;
 
   @override
   Widget build(BuildContext context) {
-    final offset = Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1));
-
-    visible ? controller.reverse() : controller.forward();
+    final offset = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
 
     return SlideTransition(
       position: offset.animate(

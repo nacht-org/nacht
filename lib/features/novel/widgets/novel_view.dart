@@ -151,7 +151,7 @@ class NovelView extends HookConsumerWidget {
               child: const Icon(Icons.play_arrow),
             ),
       extendBody: true,
-      bottomNavigationBar: AnimatedBottomBar(
+      bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selection.active,
         child: CustomBottomBar(
           child: Row(

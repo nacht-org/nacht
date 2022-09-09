@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
@@ -24,16 +25,18 @@ class ChapterUpdateTile extends ConsumerWidget {
             type: NovelType.novel(novel),
           ),
         ),
-        child: SizedBox.square(
-          dimension: 44,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              novel.coverUrl!,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
+        child: novel.coverUrl != null
+            ? SizedBox.square(
+                dimension: 44,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: CachedNetworkImage(
+                    imageUrl: novel.coverUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            : null,
       ),
       title: Text(
         novel.title,

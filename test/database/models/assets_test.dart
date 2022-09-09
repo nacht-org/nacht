@@ -11,6 +11,8 @@ void main() {
       5: 'image/png',
       6: 'image/svg+xml',
       7: 'image/webp',
+      8: 'text/html',
+      9: 'text/css',
     };
 
     test('fromMimeType should convert mimetype into seed id', () {

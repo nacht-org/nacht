@@ -39,7 +39,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.connect() : super.connect(_createDriftIsolateAndConnect());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -121,16 +121,26 @@ class AppDatabase extends _$AppDatabase {
                 id: const Value(6), mimetype: 'image/svg+xml'),
             AssetTypesCompanion.insert(
                 id: const Value(7), mimetype: 'image/webp'),
+            AssetTypesCompanion.insert(
+                id: const Value(8), mimetype: 'text/html'),
+            AssetTypesCompanion.insert(
+                id: const Value(9), mimetype: 'text/css'),
           ]);
         });
       },
       onUpgrade: (Migrator m, int from, int to) async {
         await customStatement('PRAGMA foreign_keys = OFF');
 
-        // Add migrations as required starting from 2
-        // if (from < 2) {
-        //   // Migrate to version 2
-        // }
+        if (from < 2) {
+          await batch((batch) {
+            batch.insertAll(assetTypes, [
+              AssetTypesCompanion.insert(
+                  id: const Value(8), mimetype: 'text/html'),
+              AssetTypesCompanion.insert(
+                  id: const Value(9), mimetype: 'text/css'),
+            ]);
+          });
+        }
 
         // Assert that the schema is valid after migrations
         if (kDebugMode) {

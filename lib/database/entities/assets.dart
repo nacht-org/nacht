@@ -25,6 +25,9 @@ abstract class AssetTypeSeed {
   static const int imageSvgXml = 6;
   static const int imageWebp = 7;
 
+  static const int textHtml = 8;
+  static const int textCss = 9;
+
   static int fromMimeType(String mimeType) {
     switch (mimeType) {
       case 'image/apng':
@@ -41,6 +44,10 @@ abstract class AssetTypeSeed {
         return 6;
       case 'image/webp':
         return 7;
+      case 'text/html':
+        return 8;
+      case 'text/css':
+        return 9;
       default:
         throw SeedException();
     }
@@ -62,6 +69,10 @@ abstract class AssetTypeSeed {
         return 'image/svg+xml';
       case 7:
         return 'image/webp';
+      case 8:
+        return 'text/html';
+      case 9:
+        return 'text/css';
       default:
         throw SeedException();
     }

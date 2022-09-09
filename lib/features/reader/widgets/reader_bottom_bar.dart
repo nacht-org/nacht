@@ -18,20 +18,6 @@ class ReaderBottomBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: const [
-        _Bottom(),
-      ],
-    );
-  }
-}
-
-class _Bottom extends ConsumerWidget {
-  const _Bottom({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(readerPreferencesProvider.notifier);
 
     return CustomBottomBar(

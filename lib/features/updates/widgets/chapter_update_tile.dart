@@ -6,6 +6,8 @@ import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
+const _leadingSize = 40.0;
+
 class ChapterUpdateTile extends ConsumerWidget {
   const ChapterUpdateTile({
     super.key,
@@ -18,6 +20,8 @@ class ChapterUpdateTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
     return NachtListTile(
       leading: GestureDetector(
         onTap: () => context.router.push(
@@ -27,16 +31,30 @@ class ChapterUpdateTile extends ConsumerWidget {
         ),
         child: novel.coverUrl != null
             ? SizedBox.square(
-                dimension: 44,
+                dimension: _leadingSize,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(16.0),
                   child: CachedNetworkImage(
                     imageUrl: novel.coverUrl!,
                     fit: BoxFit.cover,
                   ),
                 ),
               )
-            : null,
+            : Container(
+                height: _leadingSize,
+                width: _leadingSize,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: theme.colorScheme.secondary.withAlpha(150),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  novel.title.isEmpty ? "@" : novel.title[0],
+                  style: theme.textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
       ),
       title: Text(
         novel.title,

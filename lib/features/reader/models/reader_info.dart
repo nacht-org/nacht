@@ -12,5 +12,7 @@ class ReaderInfo with _$ReaderInfo {
     required int initialIndex,
   }) = _ReaderInfo;
 
+  int get index => currentIndex ?? initialIndex;
+
   ReaderInfo._();
 }

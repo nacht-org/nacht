@@ -10,10 +10,12 @@ class ReaderBody extends HookConsumerWidget {
   const ReaderBody({
     Key? key,
     required this.reader,
+    required this.notifier,
     required this.controller,
   }) : super(key: key);
 
   final ReaderInfo reader;
+  final ReaderNotifier notifier;
   final PageController controller;
 
   @override
@@ -41,8 +43,7 @@ class ReaderBody extends HookConsumerWidget {
             crawlerFactory: crawlerFactory,
           );
         },
-        onPageChanged: (index) =>
-            ref.read(readerFamily(reader).notifier).setCurrentIndex,
+        onPageChanged: notifier.setCurrentIndex,
       ),
     );
   }

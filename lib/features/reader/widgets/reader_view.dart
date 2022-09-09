@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../models/models.dart';
@@ -19,8 +20,9 @@ class ReaderView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final reader = ref.watch(readerFamily(info));
+    final notifier = ref.watch(readerFamily(info).notifier);
+
     final backgroundColor = ref.watch(readerPreferencesProvider.select(
       (pref) => pref.colorMode.value?.backgroundColor,
     ));
@@ -59,25 +61,14 @@ class ReaderView extends HookConsumerWidget {
           extendBodyBehindAppBar: true,
           appBar: AnimatedAppBar(
             controller: controller,
-            child: AppBar(
-              title: Text(
-                reader.novel.title,
-                style: theme.textTheme.titleLarge,
-                maxLines: 1,
-              ),
-              bottom: const PreferredSize(
-                preferredSize: Size.fromHeight(36.0),
-                child: ListTile(
-                  title: Text(""),
-                  trailing: Icon(Icons.book),
-                  dense: true,
-                ),
-              ),
+            child: ReaderAppBar(
+              reader: reader,
             ),
           ),
           backgroundColor: backgroundColor,
           body: ReaderBody(
             reader: reader,
+            notifier: notifier,
             controller: pageController,
           ),
           // FIXME: does not work as intended.
@@ -98,31 +89,47 @@ class ReaderView extends HookConsumerWidget {
 class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ReaderAppBar({
     Key? key,
-    required this.title,
+    required this.reader,
   }) : super(key: key);
 
-  final Widget title;
+  final ReaderInfo reader;
+
+  static const double bottomSize = 56.0;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final mediaQuery = MediaQuery.of(context);
+    return AppBar(
+      title: Text(
+        reader.novel.title,
+        maxLines: 1,
+      ),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(bottomSize),
+        child: Column(
+          children: [
+            const Divider(height: 0),
+            Consumer(builder: (context, ref, consumer) {
+              final chapter = ref.watch(
+                chapterListFamily(reader.novel.id)
+                    .select((list) => list.chapters[reader.index]),
+              );
 
-    return Material(
-      color: theme.colorScheme.surface,
-      surfaceTintColor: theme.colorScheme.surfaceTint,
-      elevation: 4.0,
-      child: Padding(
-        padding: EdgeInsets.only(top: mediaQuery.padding.top),
-        child: NavigationToolbar(
-          leading: const BackButton(),
-          middle: title,
-          centerMiddle: false,
+              return ListTile(
+                title: Text(
+                  chapter.title,
+                  maxLines: 1,
+                ),
+                trailing: const Icon(Icons.book),
+                dense: true,
+                onTap: () {},
+              );
+            }),
+          ],
         ),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + bottomSize);
 }

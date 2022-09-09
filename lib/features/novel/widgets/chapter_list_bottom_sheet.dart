@@ -22,20 +22,27 @@ class ChapterListBottomSheet extends ConsumerWidget {
         ),
         Padding(
           padding: wrapPadding,
-          child: Wrap(
-            spacing: 8.0,
-            runSpacing: 4.0,
-            children: [
-              FilterChip(
-                label: const Text("Source"),
-                onSelected: (v) {},
-                selected: true,
-              ),
-              FilterChip(
-                label: const Text("Date uploaded"),
-                onSelected: (v) {},
-              ),
-            ],
+          child: Consumer(
+            builder: (context, ref, child) {
+              final sort = ref.watch(
+                  chapterListPreferencesProvider.select((pref) => pref.sort));
+
+              return Wrap(
+                spacing: 8.0,
+                runSpacing: 4.0,
+                children: List.generate(
+                  SortPreference.values.length,
+                  (index) {
+                    final current = SortPreference.values[index];
+                    return FilterChip(
+                      label: Text(current.name),
+                      onSelected: (_) => notifier.setSort(current),
+                      selected: current == sort,
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ),
         const Divider(),
@@ -45,23 +52,25 @@ class ChapterListBottomSheet extends ConsumerWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Consumer(builder: (context, ref, child) {
-            final order = ref.watch(
-                chapterListPreferencesProvider.select((pref) => pref.order));
+          child: Consumer(
+            builder: (context, ref, child) {
+              final order = ref.watch(
+                  chapterListPreferencesProvider.select((pref) => pref.order));
 
-            return Wrap(
-              spacing: 8.0,
-              runSpacing: 4.0,
-              children: List.generate(OrderPreference.values.length, (index) {
-                final current = OrderPreference.values[index];
-                return FilterChip(
-                  label: Text(current.name),
-                  onSelected: (_) => notifier.setOrder(current),
-                  selected: current == order,
-                );
-              }),
-            );
-          }),
+              return Wrap(
+                spacing: 8.0,
+                runSpacing: 4.0,
+                children: List.generate(OrderPreference.values.length, (index) {
+                  final current = OrderPreference.values[index];
+                  return FilterChip(
+                    label: Text(current.name),
+                    onSelected: (_) => notifier.setOrder(current),
+                    selected: current == order,
+                  );
+                }),
+              );
+            },
+          ),
         ),
       ],
     );

@@ -23,4 +23,9 @@ class ChapterListPreferencesNotifier
     state = state.copyWith(order: order);
     ChapterListPreferences.orderKey.setValue(_preferences, order);
   }
+
+  void setSort(SortPreference sort) {
+    state = state.copyWith(sort: sort);
+    ChapterListPreferences.sortKey.setValue(_preferences, sort);
+  }
 }

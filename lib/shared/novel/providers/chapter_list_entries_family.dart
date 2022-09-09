@@ -21,13 +21,15 @@ final chapterListEntriesFamily =
 
   final state = <ChapterListEntry>[];
   if (map.length == 1) {
-    final chapters = map.values.single..sort(_compare(pref.order));
+    final chapters = map.values.single
+      ..sort(_getCompareTo(pref.order, pref.sort));
     state.addAll(chapters.map(ChapterListEntry.chapter));
   } else {
     final entries = _sortEntries(map, pref.order);
     for (final entry in entries) {
       state.add(ChapterListEntry.volume(entry.key));
-      final chapters = entry.value..sort(_compare(pref.order));
+
+      final chapters = entry.value..sort(_getCompareTo(pref.order, pref.sort));
       state.addAll(chapters.map(ChapterListEntry.chapter));
     }
   }
@@ -55,11 +57,29 @@ List<_KeyParam> _sortEntries(
   return map.entries.toList()..sort(compare);
 }
 
-int Function(ChapterData, ChapterData)? _compare(OrderPreference order) {
+Comparator<ChapterData> _getCompareTo(
+    OrderPreference order, SortPreference sort) {
   switch (order) {
-    case OrderPreference.descending:
-      return (a, b) => b.index.compareTo(a.index);
     case OrderPreference.ascending:
-      return (a, b) => a.index.compareTo(b.index);
+      return (a, b) => _compare(sort, a, b);
+    case OrderPreference.descending:
+      return (a, b) => _compare(sort, b, a);
+  }
+}
+
+int _compare(SortPreference sort, ChapterData a, ChapterData b) {
+  switch (sort) {
+    case SortPreference.source:
+      return a.index.compareTo(b.index);
+    case SortPreference.dateUpload:
+      if (a.updated == null && b.updated == null) {
+        return 0;
+      } else if (a.updated == null) {
+        return 1;
+      } else if (b.updated == null) {
+        return -1;
+      } else {
+        return a.updated!.compareTo(b.updated!);
+      }
   }
 }

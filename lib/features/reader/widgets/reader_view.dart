@@ -110,6 +110,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: const BackButton(),
       title: Text(
         reader.novel.title,
         maxLines: 1,

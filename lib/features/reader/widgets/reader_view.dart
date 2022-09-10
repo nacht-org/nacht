@@ -103,6 +103,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
         reader.novel.title,
         maxLines: 1,
       ),
+      elevation: 8.0,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(bottomSize),
         child: Column(

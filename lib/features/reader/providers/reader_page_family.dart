@@ -7,7 +7,6 @@ import '../models/models.dart';
 final readerPageFamily = StateNotifierProvider.autoDispose
     .family<ReaderPageNotifier, ReaderPageInfo, ReaderPageInfo>(
   (ref, info) => ReaderPageNotifier(
-    read: ref.read,
     state: info,
     fetchChapterContent: ref.watch(fetchChapterContentProvider),
   ),
@@ -17,14 +16,11 @@ final readerPageFamily = StateNotifierProvider.autoDispose
 class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
     with LoggerMixin {
   ReaderPageNotifier({
-    required Reader read,
     required ReaderPageInfo state,
     required FetchChapterContent fetchChapterContent,
-  })  : _read = read,
-        _fetchChapterContent = fetchChapterContent,
+  })  : _fetchChapterContent = fetchChapterContent,
         super(state);
 
-  final Reader _read;
   final FetchChapterContent _fetchChapterContent;
 
   Future<void> fetch(CrawlerInfo? crawler) async {
@@ -32,6 +28,9 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
       log.warning('chapter content already fetched.');
       return;
     }
+
+    // Make sure loading screen is being shown.
+    state = state.copyWith(content: const ContentInfo.loading());
 
     // TODO: check for crawler support
     final content =
@@ -43,7 +42,9 @@ class ReaderPageNotifier extends StateNotifier<ReaderPageInfo>
     content.fold(
       (failure) {
         log.warning(failure.message);
-        _read(messageServiceProvider).showText(failure.message);
+        state = state.copyWith(
+          content: ContentInfo.error(failure.message),
+        );
       },
       (data) => state = state.copyWith(
         content: ContentInfo.data(data),

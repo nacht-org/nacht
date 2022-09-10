@@ -1,6 +1,7 @@
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
+import 'package:nacht/widgets/widgets.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -41,6 +42,13 @@ class ChapterPage extends HookConsumerWidget {
     return page.content.when(
       loading: () => const Center(
         child: CircularProgressIndicator(),
+      ),
+      error: (message) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: LoadingError(
+          message: Text(message),
+          onRetry: () => notifier.fetch(crawler),
+        ),
       ),
       data: (content) => NotificationListener<ScrollNotification>(
         onNotification: (notification) {

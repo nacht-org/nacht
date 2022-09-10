@@ -25,8 +25,8 @@ class ReaderPreferences with _$ReaderPreferences {
     return ReaderPreferences(
       colorMode: colorModeKey.getValue(preferences, ReaderColorMode.none),
       fontFamily: fontFamilyKey.getValue(preferences, ReaderFontFamily.basic),
-      fontSize: fontSizeKey.getValue(preferences, 14.0),
-      lineHeight: lineHeightKey.getValue(preferences, 1.2),
+      fontSize: fontSizeKey.getValue(preferences, 16.0),
+      lineHeight: lineHeightKey.getValue(preferences, 1.5),
     );
   }
 

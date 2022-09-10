@@ -130,6 +130,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                 title: Text(
                   chapter.title,
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 trailing: const Icon(Icons.book),
                 dense: true,

@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../models/models.dart';
 import '../providers/providers.dart';
@@ -49,6 +50,10 @@ class ReaderView extends HookConsumerWidget {
       return null;
     }, [isToolbarVisible]);
 
+    final itemScrollController = useMemoized(() => ItemScrollController());
+    final itemPositionsListener =
+        useMemoized(() => ItemPositionsListener.create());
+
     return WillPopScope(
       onWillPop: () async {
         // Make sure status bar is visible when exiting reader
@@ -70,6 +75,12 @@ class ReaderView extends HookConsumerWidget {
             reader: reader,
             notifier: notifier,
             controller: pageController,
+          ),
+          drawer: ReaderDrawer(
+            reader: reader,
+            pageController: pageController,
+            itemScrollController: itemScrollController,
+            itemPositionsListener: itemPositionsListener,
           ),
           // FIXME: does not work as intended.
           extendBody: true,
@@ -94,7 +105,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final ReaderInfo reader;
 
-  static const double bottomSize = 48.0;
+  static const double _bottomSize = 48.0;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +116,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 8.0,
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(bottomSize),
+        preferredSize: const Size.fromHeight(_bottomSize),
         child: Column(
           children: [
             const Divider(height: 0),
@@ -122,7 +133,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 trailing: const Icon(Icons.book),
                 dense: true,
-                onTap: () {},
+                onTap: () => Scaffold.of(context).openDrawer(),
               );
             }),
           ],
@@ -132,5 +143,5 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight + bottomSize);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + _bottomSize);
 }

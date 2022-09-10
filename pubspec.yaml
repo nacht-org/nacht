@@ -37,6 +37,9 @@ dependencies:
   connectivity_plus: ^2.3.0
   dio: ^4.0.6
 
+  # Widgets.
+  scrollable_positioned_list: ^0.3.4
+
   # Misc.
   url_launcher: ^6.0.20
   webview_flutter: ^2.8.0

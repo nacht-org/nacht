@@ -45,10 +45,14 @@ class ReaderBottomBar extends StatelessWidget {
               );
             },
           ),
-          IconButton(
-            tooltip: "Chapter list",
-            onPressed: () {},
-            icon: const Icon(Icons.list),
+          Consumer(
+            builder: (context, ref, child) {
+              return IconButton(
+                tooltip: "Chapter list",
+                onPressed: () => Scaffold.of(context).openDrawer(),
+                icon: const Icon(Icons.list),
+              );
+            },
           ),
           IconButton(
             tooltip: 'Settings',

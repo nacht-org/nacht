@@ -1,64 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../models/models.dart';
 import 'widgets.dart';
 
-class ReaderBottomBar extends ConsumerWidget {
+class ReaderBottomBar extends StatelessWidget {
   const ReaderBottomBar({
     Key? key,
-    required this.info,
+    required this.reader,
     required this.controller,
   }) : super(key: key);
 
-  final ReaderInfo info;
+  final ReaderInfo reader;
   final PageController controller;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(readerPreferencesProvider.notifier);
-
+  Widget build(BuildContext context) {
     return CustomBottomBar(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Consumer(
             builder: (context, ref, child) {
-              final colorMode = ref.watch(
-                  readerPreferencesProvider.select((value) => value.colorMode));
+              final isNotFirst = ref.watch(
+                chapterListFamily(reader.novel.id).select((list) =>
+                    list.chapters[reader.index].id != list.chapters.first.id),
+              );
 
-              return PopupMenuButton<ReaderColorMode>(
-                tooltip: 'Color mode',
-                initialValue: colorMode,
-                itemBuilder: (context) => ReaderColorMode.values
-                    .map(
-                      (mode) =>
-                          PopupMenuItem(value: mode, child: Text(mode.name)),
-                    )
-                    .toList(),
-                onSelected: notifier.setColorMode,
-                icon: const Icon(Icons.style),
+              return IconButton(
+                tooltip: "Previous",
+                onPressed: isNotFirst
+                    ? () {
+                        controller.animateToPage(
+                          reader.index - 1,
+                          duration: kShortAnimationDuration,
+                          curve: Curves.ease,
+                        );
+                      }
+                    : null,
+                icon: const Icon(Icons.skip_previous),
               );
             },
           ),
-          Consumer(
-            builder: (context, ref, child) {
-              final fontFamily = ref.watch(readerPreferencesProvider
-                  .select((value) => value.fontFamily));
-
-              return PopupMenuButton<ReaderFontFamily>(
-                tooltip: 'Font family',
-                initialValue: fontFamily,
-                itemBuilder: (context) => ReaderFontFamily.values
-                    .map((font) =>
-                        PopupMenuItem(value: font, child: Text(font.name)))
-                    .toList(),
-                onSelected: notifier.setFontFamily,
-                icon: const Icon(Icons.font_download),
-              );
-            },
+          IconButton(
+            tooltip: "Chapter list",
+            onPressed: () {},
+            icon: const Icon(Icons.list),
           ),
           IconButton(
             tooltip: 'Settings',
@@ -71,6 +61,28 @@ class ReaderBottomBar extends ConsumerWidget {
               },
             ),
             icon: const Icon(Icons.settings),
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              final isNotLast = ref.watch(
+                chapterListFamily(reader.novel.id).select((list) =>
+                    list.chapters[reader.index].id != list.chapters.last.id),
+              );
+
+              return IconButton(
+                tooltip: "Next",
+                onPressed: isNotLast
+                    ? () {
+                        controller.animateToPage(
+                          reader.index + 1,
+                          duration: kShortAnimationDuration,
+                          curve: Curves.ease,
+                        );
+                      }
+                    : null,
+                icon: const Icon(Icons.skip_next),
+              );
+            },
           ),
         ],
       ),

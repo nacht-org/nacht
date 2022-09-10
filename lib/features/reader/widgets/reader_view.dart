@@ -76,7 +76,7 @@ class ReaderView extends HookConsumerWidget {
           bottomNavigationBar: AnimatedBottomBar(
             controller: controller,
             child: ReaderBottomBar(
-              info: info,
+              reader: reader,
               controller: pageController,
             ),
           ),

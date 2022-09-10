@@ -13,7 +13,6 @@ class SettingsSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preferences = ref.watch(readerPreferencesProvider);
     final generalNotifier = ref.watch(readerPreferencesProvider.notifier);
     final verticalNotifier =
         ref.watch(verticalReaderPreferencesProvider.notifier);
@@ -24,16 +23,43 @@ class SettingsSheet extends ConsumerWidget {
         const HeaderTile(
           title: Text('General'),
         ),
-        MenuListTile<ReaderFontFamily>(
-          title: 'Font family',
-          active: MenuListTileItem(
-            value: preferences.fontFamily,
-            label: preferences.fontFamily.name,
-          ),
-          items: ReaderFontFamily.values
-              .map((font) => MenuListTileItem(value: font, label: font.name))
-              .toList(),
-          onChanged: generalNotifier.setFontFamily,
+        Consumer(
+          builder: (context, ref, child) {
+            final colorMode = ref.watch(
+                readerPreferencesProvider.select((reader) => reader.colorMode));
+
+            return MenuListTile<ReaderColorMode>(
+              title: 'Color mode',
+              active: MenuListTileItem(
+                value: colorMode,
+                label: colorMode.name,
+              ),
+              items: ReaderColorMode.values
+                  .map(
+                      (mode) => MenuListTileItem(value: mode, label: mode.name))
+                  .toList(),
+              onChanged: generalNotifier.setColorMode,
+            );
+          },
+        ),
+        Consumer(
+          builder: (context, ref, child) {
+            final fontFamily = ref.watch(readerPreferencesProvider
+                .select((reader) => reader.fontFamily));
+
+            return MenuListTile<ReaderFontFamily>(
+              title: 'Font family',
+              active: MenuListTileItem(
+                value: fontFamily,
+                label: fontFamily.name,
+              ),
+              items: ReaderFontFamily.values
+                  .map(
+                      (font) => MenuListTileItem(value: font, label: font.name))
+                  .toList(),
+              onChanged: generalNotifier.setFontFamily,
+            );
+          },
         ),
         Consumer(
           builder: (context, ref, child) {

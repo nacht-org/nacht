@@ -94,7 +94,7 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final ReaderInfo reader;
 
-  static const double bottomSize = 56.0;
+  static const double bottomSize = 48.0;
 
   @override
   Widget build(BuildContext context) {

@@ -16,22 +16,32 @@ class BrowseFilterSheet extends ConsumerWidget {
     return ListView(
       controller: scrollController,
       children: [
-        const HeaderTile(
+        const ListTile(
+          leading: Icon(Icons.filter_list),
           title: Text('Filter'),
         ),
-        for (final bit in BrowseFilter.values)
-          Consumer(
-            builder: (context, ref, child) {
-              final shown = ref.watch(browsePreferencesProvider
-                  .select((value) => bit.isShown(value.filter)));
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Wrap(
+            spacing: 4.0,
+            runSpacing: 8.0,
+            children: List.generate(BrowseFilter.values.length, (index) {
+              final bit = BrowseFilter.values[index];
+              return Consumer(
+                builder: (context, ref, child) {
+                  final shown = ref.watch(browsePreferencesProvider
+                      .select((value) => bit.isShown(value.filter)));
 
-              return CheckboxListTile(
-                value: shown,
-                title: Text(bit.name),
-                onChanged: (value) => notifier.toggleFilter(bit),
+                  return FilterChip(
+                    label: Text(bit.name),
+                    selected: shown,
+                    onSelected: (_) => notifier.toggleFilter(bit),
+                  );
+                },
               );
-            },
+            }),
           ),
+        )
       ],
     );
   }

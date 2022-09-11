@@ -10,3 +10,4 @@ export 'get_novel_category_map.dart';
 export 'parse_novel_query.dart';
 export 'set_read_at.dart';
 export 'update_novel.dart';
+export 'refresh_novels_provider.dart';

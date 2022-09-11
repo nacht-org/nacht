@@ -20,19 +20,21 @@ class UpdatesPage extends StatelessWidget {
         ),
       ],
       body: DestinationTransition(
-        child: HookConsumer(builder: (context, ref, child) {
+        child: Consumer(builder: (context, ref, child) {
           final updates = ref.watch(updatesProvider);
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(0),
-            itemBuilder: (context, index) => updates[index].when(
-              date: (date) => DateUpdateTile(date: date),
-              chapter: (novel, chapter) => ChapterUpdateTile(
-                novel: novel,
-                chapter: chapter,
+          return Scrollbar(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              itemBuilder: (context, index) => updates[index].when(
+                date: (date) => DateUpdateTile(date: date),
+                chapter: (novel, chapter) => ChapterUpdateTile(
+                  novel: novel,
+                  chapter: chapter,
+                ),
               ),
+              itemCount: updates.length,
             ),
-            itemCount: updates.length,
           );
         }),
       ),

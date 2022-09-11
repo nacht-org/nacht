@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.1"
-  annotations:
-    dependency: transitive
-    description:
-      path: "../nacht_sources/packages/annotations"
-      relative: true
-    source: path
-    version: "1.0.0"
   args:
     dependency: transitive
     description:
@@ -558,10 +551,21 @@ packages:
   nacht_sources:
     dependency: "direct main"
     description:
-      path: "../nacht_sources"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "65f755df1a62c544d2d5b8aaa354d2e12b125efc"
+      url: "https://github.com/nacht-org/nacht_sources"
+    source: git
     version: "0.1.0"
+  nacht_sources_annotations:
+    dependency: transitive
+    description:
+      path: "packages/nacht_sources_annotations"
+      ref: HEAD
+      resolved-ref: "65f755df1a62c544d2d5b8aaa354d2e12b125efc"
+      url: "https://github.com/nacht-org/nacht_sources.git"
+    source: git
+    version: "1.0.0"
   nm:
     dependency: transitive
     description:

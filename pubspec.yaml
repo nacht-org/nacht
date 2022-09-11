@@ -19,6 +19,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   logging: ^1.0.2
   crypto: ^3.0.2
+  collection: ^1.16.0
 
   # Router.
   auto_route: ^5.0.1
@@ -27,18 +28,21 @@ dependencies:
   hooks_riverpod: ^2.0.0-dev.9
   flutter_hooks: ^0.18.3
 
-  # Database.
+  # Persistence
   drift: ^2.1.0
   sqlite3_flutter_libs: ^0.5.5
   path_provider: ^2.0.9
   path: ^1.8.1
+  shared_preferences: ^2.0.15
 
   # Network.
   connectivity_plus: ^2.3.0
   dio: ^4.0.6
+  cached_network_image: ^3.2.1
 
   # Widgets.
   scrollable_positioned_list: ^0.3.4
+  flutter_html: ^3.0.0-alpha.3
 
   # Misc.
   url_launcher: ^6.0.20
@@ -46,14 +50,13 @@ dependencies:
   webview_flutter_android: 2.8.0
   permission_handler: ^9.2.0
 
+  # App specific
   nacht_sources:
-    path: ../nacht_sources
+    git:
+      url: https://github.com/nacht-org/nacht_sources
+
   intl: ^0.17.0
-  flutter_html: ^3.0.0-alpha.3
-  shared_preferences: ^2.0.15
-  collection: ^1.16.0
   google_fonts: ^3.0.1
-  cached_network_image: ^3.2.1
   package_info_plus: ^1.4.2
   share_plus: ^4.0.9
 

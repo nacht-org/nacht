@@ -7,11 +7,9 @@ final novelFamily = StateNotifierProvider.autoDispose
     .family<NovelNotifier, NovelData, NovelInput>(
   (ref, data) => NovelNotifier(
     read: ref.read,
-    invalidate: ref.invalidate,
     state: data.novel,
     fetchNovel: ref.watch(fetchNovelProvider),
     getNovelById: ref.watch(getNovelByIdProvider),
-    setReadAt: ref.watch(setReadAtProvider),
     getNovelCategoryMap: ref.watch(getNovelCategoryMapProvider),
     changeNovelCategories: ref.watch(changeNovelCategoriesProvider),
     getFirstUnreadChapter: ref.watch(getFirstUnreadChapterProvider),
@@ -28,35 +26,27 @@ class NovelInput extends Equatable {
   List<Object?> get props => [novel.id];
 }
 
-typedef Invalidate = void Function(ProviderBase);
-
 class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   NovelNotifier({
     required Reader read,
-    required Invalidate invalidate,
     required NovelData state,
     required FetchNovel fetchNovel,
     required GetNovelById getNovelById,
-    required SetReadAt setReadAt,
     required GetNovelCategoryMap getNovelCategoryMap,
     required ChangeNovelCategories changeNovelCategories,
     required GetFirstUnreadChapter getFirstUnreadChapter,
   })  : _read = read,
-        _invalidate = invalidate,
         _fetchNovel = fetchNovel,
         _getNovelById = getNovelById,
-        _setReadAt = setReadAt,
         _getNovelCategoryMap = getNovelCategoryMap,
         _changeNovelCategories = changeNovelCategories,
         _getFirstUnreadChapter = getFirstUnreadChapter,
         super(state);
 
   final Reader _read;
-  final Invalidate _invalidate;
 
   final FetchNovel _fetchNovel;
   final GetNovelById _getNovelById;
-  final SetReadAt _setReadAt;
   final GetNovelCategoryMap _getNovelCategoryMap;
   final ChangeNovelCategories _changeNovelCategories;
   final GetFirstUnreadChapter _getFirstUnreadChapter;

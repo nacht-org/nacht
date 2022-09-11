@@ -73,7 +73,16 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
         log.warning(failure);
         _read(messageServiceProvider).showText(failure.message);
       },
-      (data) => state = data,
+      (data) {
+        state = data;
+
+        // Chapter list may be changed after updating the novel from source.
+        // So reload if chapter list has been previously loaded.
+        final chapterList = _read(chapterListFamily(state.id));
+        if (chapterList.isLoaded) {
+          _read(chapterListFamily(state.id).notifier).reload();
+        }
+      },
     );
   }
 

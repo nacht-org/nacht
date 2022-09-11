@@ -33,11 +33,15 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
 
   Future<void> init() async {
     if (!state.isLoaded) {
-      state = state.copyWith(
-        chapters: await _getChapters.execute(_novelId),
-        isLoaded: true,
-      );
+      reload();
     }
+  }
+
+  Future<void> reload() async {
+    state = state.copyWith(
+      chapters: await _getChapters.execute(_novelId),
+      isLoaded: true,
+    );
   }
 
   Future<void> setReadAt(Set<int> ids, bool isRead) async {

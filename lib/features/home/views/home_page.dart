@@ -27,7 +27,6 @@ class HomePage extends HookWidget {
           ),
           bottomNavigationBar: HookConsumer(
             builder: (context, ref, child) {
-              final hide = ref.watch(hideNavigationProvider);
               final nav = ref.watch(navigationProvider);
 
               final controller = useAnimationController(

@@ -7,7 +7,10 @@ import '../models/models.dart';
 final navigationProvider =
     StateNotifierProvider<NavigationNotifier, NavigationInfo>(
   (ref) => NavigationNotifier(
-    state: const NavigationInfo(offset: 0, forceHide: false),
+    state: const NavigationInfo(
+      event: ScrollEvent.end(),
+      forceHide: false,
+    ),
   ),
   name: "NavigationProvider",
 );
@@ -19,12 +22,18 @@ class NavigationNotifier extends StateNotifier<NavigationInfo>
   }) : super(state);
 
   /// All currently registered scroll controller listeners
-  final Map<ScrollController, VoidCallback> _listeners = {};
+  final Map<ScrollController, List<VoidCallback>> _listeners = {};
 
-  void _updateOffset(ScrollInfo scroll) {
+  void _scrollDelta(ScrollInfo scroll) {
     final delta = scroll.update();
-    log.info("Navigation offset changed to ${state.offset + delta} by $delta");
-    state = state.copyWith(offset: state.offset + delta);
+    log.info("Navigation offset changed by $delta");
+    state = state.copyWith(event: ScrollEvent.delta(delta));
+  }
+
+  void _scrollEnd(ScrollInfo scroll) {
+    if (!scroll.controller.position.isScrollingNotifier.value) {
+      state = state.copyWith(event: const ScrollEvent.end());
+    }
   }
 
   void attach(ScrollController controller) {
@@ -34,17 +43,23 @@ class NavigationNotifier extends StateNotifier<NavigationInfo>
     }
 
     final scroll = ScrollInfo(controller);
-    void callback() => _updateOffset(scroll);
-    _listeners[controller] = callback;
-    scroll.controller.addListener(callback);
+
+    void scrollDelta() => _scrollDelta(scroll);
+    void scrollEnd() => _scrollEnd(scroll);
+
+    _listeners[controller] = [scrollDelta, scrollEnd];
+    scroll.controller.addListener(scrollDelta);
+    scroll.controller.position.isScrollingNotifier.addListener(scrollEnd);
 
     log.fine("Attached scroll controller");
   }
 
   void detach(ScrollController controller) {
-    final callback = _listeners[controller];
-    if (callback != null) {
-      controller.removeListener(callback);
+    final callbacks = _listeners[controller];
+    if (callbacks != null) {
+      for (final callback in callbacks) {
+        controller.removeListener(callback);
+      }
     }
 
     log.fine("Detached scroll controller");

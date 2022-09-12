@@ -27,8 +27,6 @@ class HomePage extends HookWidget {
           ),
           bottomNavigationBar: HookConsumer(
             builder: (context, ref, child) {
-              final nav = ref.watch(navigationProvider);
-
               final controller = useAnimationController(
                 initialValue: 1,
                 duration: kShortAnimationDuration,
@@ -38,8 +36,16 @@ class HomePage extends HookWidget {
                 navigationProvider,
                 (prev, next) {
                   if (!next.forceHide) {
-                    final delta = next.offset - (prev?.offset ?? 0);
-                    controller.value -= delta * 0.01;
+                    next.event.when(
+                      delta: (delta) => controller.value -= delta * 0.01,
+                      end: () {
+                        if (controller.value >= 0.5) {
+                          controller.forward();
+                        } else {
+                          controller.reverse();
+                        }
+                      },
+                    );
                   }
 
                   final prevForceHide = prev?.forceHide ?? false;

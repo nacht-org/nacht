@@ -35,7 +35,7 @@ class HomePage extends HookWidget {
               ref.listen<NavigationInfo>(
                 navigationProvider,
                 (prev, next) {
-                  if (!next.forceHide) {
+                  if (!next.forceHide && prev?.event != next.event) {
                     next.event.when(
                       delta: (delta) => controller.value -= delta * 0.01,
                       end: () {

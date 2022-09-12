@@ -7,17 +7,22 @@ class SliverSelectionAppBar extends StatelessWidget {
     required this.title,
     this.onSelectAllPressed,
     this.onInversePressed,
+    this.bottom,
+    this.floating = false,
   }) : super(key: key);
 
   final Widget title;
   final VoidCallback? onSelectAllPressed;
   final VoidCallback? onInversePressed;
+  final PreferredSizeWidget? bottom;
+  final bool floating;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       leading: const CloseBackButton(),
       title: title,
+      floating: floating,
       pinned: true,
       forceElevated: true,
       actions: [
@@ -34,6 +39,7 @@ class SliverSelectionAppBar extends StatelessWidget {
             tooltip: "Inverse selection",
           ),
       ],
+      bottom: bottom,
     );
   }
 }

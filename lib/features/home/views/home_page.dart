@@ -25,25 +25,50 @@ class HomePage extends HookWidget {
             animation: animation,
             child: child,
           ),
-          bottomNavigationBar: Consumer(builder: (context, ref, child) {
-            final visible = ref.watch(navigationVisibleProvider);
+          bottomNavigationBar: HookConsumer(
+            builder: (context, ref, child) {
+              final hide = ref.watch(hideNavigationProvider);
+              final nav = ref.watch(navigationProvider);
 
-            return ImplicitAnimatedBottomBar(
-              visible: visible,
-              child: NavigationBar(
-                selectedIndex: currentIndex.value,
-                onDestinationSelected: (index) => currentIndex.value = index,
-                destinations: List.generate(destinations.length, (index) {
-                  final destination = destinations[index];
-                  return NavigationDestination(
-                    icon: destination.icon,
-                    selectedIcon: destination.selectedIcon,
-                    label: destination.label,
-                  );
-                }),
-              ),
-            );
-          }),
+              final controller = useAnimationController(
+                initialValue: 1,
+                duration: kShortAnimationDuration,
+              );
+
+              ref.listen<NavigationInfo>(
+                navigationProvider,
+                (prev, next) {
+                  if (!next.forceHide) {
+                    final delta = next.offset - (prev?.offset ?? 0);
+                    controller.value -= delta * 0.01;
+                  }
+
+                  final prevForceHide = prev?.forceHide ?? false;
+                  if (next.forceHide && !prevForceHide) {
+                    controller.reverse();
+                  } else if (!next.forceHide && prevForceHide) {
+                    controller.forward();
+                  }
+                },
+              );
+
+              return AnimatedBottomBar(
+                controller: controller,
+                child: NavigationBar(
+                  selectedIndex: currentIndex.value,
+                  onDestinationSelected: (index) => currentIndex.value = index,
+                  destinations: List.generate(destinations.length, (index) {
+                    final destination = destinations[index];
+                    return NavigationDestination(
+                      icon: destination.icon,
+                      selectedIcon: destination.selectedIcon,
+                      label: destination.label,
+                    );
+                  }),
+                ),
+              );
+            },
+          ),
         );
       },
     );

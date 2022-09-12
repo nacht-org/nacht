@@ -50,6 +50,7 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
   @override
   Widget build(BuildContext context) {
     final selection = ref.watch(librarySelectionProvider);
+    final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
 
     return NestedScrollView(
       controller: scrollController,
@@ -62,6 +63,26 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
                   title: Text("${selection.selected.length}"),
                   bottom: buildTabBar(),
                   floating: true,
+                  onSelectAllPressed: () async {
+                    if (tabController.indexIsChanging) {
+                      return;
+                    }
+
+                    final category = widget.categories[tabController.index];
+                    final novels = await ref
+                        .read(categoryNovelsFamily(category.id).future);
+                    selectionNotifier.addAll(novels.map((novel) => novel.id));
+                  },
+                  onInversePressed: () async {
+                    if (tabController.indexIsChanging) {
+                      return;
+                    }
+
+                    final category = widget.categories[tabController.index];
+                    final novels = await ref
+                        .read(categoryNovelsFamily(category.id).future);
+                    selectionNotifier.flipAll(novels.map((novel) => novel.id));
+                  },
                 )
               : SliverAppBar(
                   title: const Text('Library'),

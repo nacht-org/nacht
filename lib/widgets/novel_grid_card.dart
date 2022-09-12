@@ -9,14 +9,16 @@ class NovelGridCard extends StatelessWidget {
     required this.title,
     this.coverUrl,
     this.cover,
-    required this.onTap,
+    this.onTap,
+    this.onLongPress,
     this.selected = false,
   }) : super(key: key);
 
   final String title;
   final String? coverUrl;
   final AssetData? cover;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final bool selected;
 
   @override
@@ -36,6 +38,7 @@ class NovelGridCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: Stack(
           children: [
             if (image != null)

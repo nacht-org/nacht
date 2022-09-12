@@ -22,6 +22,10 @@ class CategoryGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(categoryNovelsFamily(category.id));
 
+    final selectionActive = ref.watch(
+        librarySelectionProvider.select((selection) => selection.active));
+    final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
+
     final slivers = state.when(
       loading: () => [],
       error: (error, stack) => [
@@ -37,14 +41,27 @@ class CategoryGrid extends ConsumerWidget {
               (context, index) {
                 final novel = data[index];
 
-                return NovelGridCard(
-                  title: novel.title,
-                  coverUrl: novel.coverUrl,
-                  onTap: () => context.router.push(
-                    NovelRoute(
-                      type: NovelType.novel(novel),
-                    ),
-                  ),
+                return Consumer(
+                  builder: (context, ref, child) {
+                    final selected = ref.watch(
+                      librarySelectionProvider.select(
+                          (selection) => selection.selected.contains(novel.id)),
+                    );
+
+                    void select() => selectionNotifier.toggle(novel.id);
+
+                    return NovelGridCard(
+                      title: novel.title,
+                      coverUrl: novel.coverUrl,
+                      onTap: selectionActive
+                          ? select
+                          : () => context.router.push(NovelRoute(
+                                type: NovelType.novel(novel),
+                              )),
+                      onLongPress: selectionActive ? null : select,
+                      selected: selected,
+                    );
+                  },
                 );
               },
               childCount: data.length,

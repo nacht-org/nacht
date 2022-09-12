@@ -21,7 +21,6 @@ class SingularLibraryDisplay extends HookConsumerWidget {
     final controller = useNavigationScrollController(navigationNotifier);
 
     final selection = ref.watch(librarySelectionProvider);
-    SelectionNotifier.handleRoute(librarySelectionProvider, ref, context);
 
     return NestedScrollView(
       controller: controller,

@@ -5,6 +5,7 @@ import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
 
+import '../services/services.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
@@ -46,12 +47,20 @@ class LibraryPage extends HookConsumerWidget {
               ),
               IconButton(
                 tooltip: "Mark as read",
-                onPressed: () {},
+                onPressed: () {
+                  final selected = ref.read(librarySelectionProvider).selected;
+                  ref.read(markReadManyNovel).execute(selected);
+                  Navigator.of(context).pop();
+                },
                 icon: const Icon(Icons.check),
               ),
               IconButton(
                 tooltip: "Mark as unread",
-                onPressed: () {},
+                onPressed: () {
+                  final selected = ref.read(librarySelectionProvider).selected;
+                  ref.read(markUnreadManyNovel).execute(selected);
+                  Navigator.of(context).pop();
+                },
                 icon: const Icon(Icons.close),
               ),
               IconButton(

@@ -63,6 +63,8 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
                   title: Text("${selection.selected.length}"),
                   bottom: buildTabBar(),
                   floating: true,
+                  // FIXME: Both of these are very similar, maybe optimize by
+                  // combining them.
                   onSelectAllPressed: () async {
                     if (tabController.indexIsChanging) {
                       return;

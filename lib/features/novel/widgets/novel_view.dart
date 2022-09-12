@@ -34,7 +34,7 @@ class NovelView extends HookConsumerWidget {
         : null;
 
     final selection = ref.watch(novelSelectionProvider);
-    SelectionNotifier.handleRoute(novelSelectionProvider, ref, context);
+    SelectionNotifier.handleRoute(context, ref, novelSelectionProvider);
 
     final chapterList = ref.watch(chapterListFamily(data.id));
     final chapterListNotifier = ref.watch(chapterListFamily(data.id).notifier);

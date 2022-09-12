@@ -14,20 +14,10 @@ class BrowsePage extends HookConsumerWidget {
     final navigationNotifier = ref.watch(navigationProvider.notifier);
     final controller = useNavigationScrollController(navigationNotifier);
 
-    // TODO: refactor and move this to providers.
-    // Hide and show bottom navigation based on whether search is active
-    ref.listen<bool>(
+    // Hide bottom navigation bar when searching.
+    NavigationNotifier.handleHide(
+      ref,
       browseSearchProvider.select((search) => search.active),
-      (previous, next) {
-        previous ??= false;
-        if (!previous && next) {
-          // Turned on
-          navigationNotifier.setForceHide(true);
-        } else if (previous && !next) {
-          // Turned off
-          navigationNotifier.setForceHide(false);
-        }
-      },
     );
 
     return NestedScrollView(

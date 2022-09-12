@@ -16,9 +16,16 @@ class LibraryPage extends HookConsumerWidget {
     final view = ref.watch(libraryViewProvider);
 
     final selectionActive = ref.watch(
-        librarySelectionProvider.select((selection) => selection.active));
-    SelectionNotifier.handleRoute(librarySelectionProvider, ref, context);
-    listen(librarySelectionProvider.select((value) => value.active), ref);
+      librarySelectionProvider.select((selection) => selection.active),
+    );
+
+    SelectionNotifier.handleRoute(context, ref, librarySelectionProvider);
+
+    // Hide bottom navigation bar when selecting.
+    NavigationNotifier.handleHide(
+      ref,
+      librarySelectionProvider.select((value) => value.active),
+    );
 
     return Scaffold(
       body: view.map(
@@ -58,17 +65,4 @@ class LibraryPage extends HookConsumerWidget {
       ),
     );
   }
-}
-
-void listen(ProviderListenable<bool> provider, WidgetRef ref) {
-  ref.listen<bool>(provider, (previous, next) {
-    previous ??= false;
-    if (!previous && next) {
-      // Turned on
-      ref.read(navigationProvider.notifier).setForceHide(true);
-    } else if (previous && !next) {
-      // Turned off
-      ref.read(navigationProvider.notifier).setForceHide(false);
-    }
-  });
 }

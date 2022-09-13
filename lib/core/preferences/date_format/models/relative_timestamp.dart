@@ -1,7 +1,7 @@
 import 'package:nacht/nht/nht.dart';
 
 enum RelativeTimestamp implements EnumPreference {
-  none(0, "None"),
+  disabled(0, "Disabled"),
   short(1, "Short (Today, Yesterday)"),
   long(2, "Long (Short+, n days ago)");
 
@@ -14,7 +14,7 @@ enum RelativeTimestamp implements EnumPreference {
   static RelativeTimestamp parse(int id) {
     switch (id) {
       case 0:
-        return RelativeTimestamp.none;
+        return RelativeTimestamp.disabled;
       case 1:
         return RelativeTimestamp.short;
       case 2:

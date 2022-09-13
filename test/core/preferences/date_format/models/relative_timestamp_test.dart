@@ -4,7 +4,7 @@ import 'package:nacht/core/preferences/date_format/models/relative_timestamp.dar
 void main() {
   group("RelativeTimestamp", () {
     final map = {
-      0: RelativeTimestamp.none,
+      0: RelativeTimestamp.disabled,
       1: RelativeTimestamp.short,
       2: RelativeTimestamp.long,
     };

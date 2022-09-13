@@ -25,7 +25,7 @@ class DateFormatService {
   final RelativeTimestamp _relative;
 
   String relativeDay(DateTime date) {
-    if (_relative == RelativeTimestamp.none) {
+    if (_relative == RelativeTimestamp.disabled) {
       return formatDate(date);
     }
 
@@ -47,7 +47,7 @@ class DateFormatService {
 
   int _cutoff() {
     switch (_relative) {
-      case RelativeTimestamp.none:
+      case RelativeTimestamp.disabled:
         return -1;
       case RelativeTimestamp.short:
         return 1;

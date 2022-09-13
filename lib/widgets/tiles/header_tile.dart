@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HeaderTile extends StatelessWidget {
-  const HeaderTile({Key? key, required this.title}) : super(key: key);
+  const HeaderTile({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   final Widget title;
 
@@ -12,7 +15,7 @@ class HeaderTile extends StatelessWidget {
     return ListTile(
       title: DefaultTextStyle(
         style: theme.textTheme.labelLarge!.copyWith(
-          color: theme.hintColor,
+          color: theme.colorScheme.secondary,
         ),
         child: title,
       ),

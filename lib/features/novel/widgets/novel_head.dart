@@ -19,6 +19,8 @@ class NovelHead extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
     final crawlerFactory = ref.watch(crawlerFactoryFamily(head.url));
     final crawler = crawlerFactory != null
         ? ref.watch(crawlerFamily(crawlerFactory))
@@ -60,11 +62,11 @@ class NovelHead extends ConsumerWidget {
               children: [
                 Text(
                   head.title,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: theme.textTheme.titleLarge,
                 ),
                 Text(
                   head.author ?? 'Unknown author',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: theme.textTheme.bodyLarge,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -14,6 +15,7 @@ class LibraryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final navigator = Navigator.of(context);
     final view = ref.watch(libraryViewProvider);
 
     final selectionActive = ref.watch(
@@ -50,7 +52,7 @@ class LibraryPage extends HookConsumerWidget {
                 onPressed: () {
                   final selected = ref.read(librarySelectionProvider).selected;
                   ref.read(markReadManyNovel).execute(selected);
-                  Navigator.of(context).pop();
+                  navigator.pop();
                 },
                 icon: const Icon(Icons.check),
               ),
@@ -59,13 +61,34 @@ class LibraryPage extends HookConsumerWidget {
                 onPressed: () {
                   final selected = ref.read(librarySelectionProvider).selected;
                   ref.read(markUnreadManyNovel).execute(selected);
-                  Navigator.of(context).pop();
+                  navigator.pop();
                 },
                 icon: const Icon(Icons.close),
               ),
               IconButton(
                 tooltip: "Delete",
-                onPressed: () {},
+                onPressed: () async {
+                  final selected = ref.read(librarySelectionProvider).selected;
+                  final novel = "novel"
+                      .pluralize(suffix: "s", test: (_) => selected.length > 1);
+
+                  final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => ConfirmDialog(
+                          title: const Text("Delete selected"),
+                          message: Text(
+                            "Selected $novel will be permanently removed from "
+                            "library and all categories.",
+                          ),
+                        ),
+                      ) ??
+                      false;
+
+                  if (confirm) {
+                    await ref.read(removeNovelManyProvider).execute(selected);
+                    navigator.pop();
+                  }
+                },
                 icon: const Icon(Icons.delete),
               ),
             ],

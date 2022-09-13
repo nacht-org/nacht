@@ -20,12 +20,13 @@ class Tags extends ConsumerWidget {
     final children = data.whenOrNull(
           data: (tags) => <Widget>[
             for (final tag in tags)
-              Chip(
+              ActionChip(
                 label: Text(
                   tag.value,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                onPressed: () {},
               ),
           ],
         ) ??

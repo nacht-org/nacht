@@ -47,10 +47,9 @@ class RefreshNotifier extends StateNotifier<bool> with LoggerMixin {
     } catch (e) {
       _messageService.showText("Encountered unexpected error");
       log.warning(e);
+    } finally {
+      state = false; // Set status to available.
     }
-
-    // Set status to available.
-    state = false;
   }
 
   /// Indicates whether refresh notifier is busy

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/updates/providers/updates_selection_provider.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -21,6 +22,14 @@ class ChapterUpdateTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+
+    final selectionActive = ref.watch(
+        updatesSelectionProvider.select((selection) => selection.active));
+    final selected = ref.watch(updatesSelectionProvider
+        .select((value) => value.selected.contains(chapter.id)));
+
+    final selectionNotifier = ref.watch(updatesSelectionProvider.notifier);
+    void select() => selectionNotifier.toggle(chapter.id);
 
     return NachtListTile(
       leading: GestureDetector(
@@ -66,15 +75,19 @@ class ChapterUpdateTile extends ConsumerWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      onTap: () {
-        context.router.push(
-          ReaderRoute(
-            novel: novel,
-            chapter: chapter,
-            doFetch: true,
-          ),
-        );
-      },
+      onTap: selectionActive
+          ? select
+          : () {
+              context.router.push(
+                ReaderRoute(
+                  novel: novel,
+                  chapter: chapter,
+                  doFetch: true,
+                ),
+              );
+            },
+      onLongPress: selectionActive ? null : select,
+      selected: selected,
       muted: chapter.readAt != null,
     );
   }

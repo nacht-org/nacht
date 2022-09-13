@@ -1,20 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:math' as math;
-
-part 'time_utils.freezed.dart';
-
-@freezed
-class RelativeDay with _$RelativeDay {
-  const factory RelativeDay.yesterday() = _RelativeYesterday;
-  const factory RelativeDay.today() = _RelativeToday;
-  const factory RelativeDay.tomorrow() = _RelativeTomorrow;
-  factory RelativeDay.daysAgo(int count) = _RelativeAgo;
-  factory RelativeDay.daysFrom(int count) = _RelativeFrom;
-  factory RelativeDay.precise(DateTime dateTime) = _RelativePrecise;
-
-  const RelativeDay._();
-}
-
 extension ParseRelativeDay on DateTime {
   int _difference(DateTime date) {
     DateTime now = DateTime.now();
@@ -23,20 +6,28 @@ extension ParseRelativeDay on DateTime {
         .inDays;
   }
 
-  RelativeDay get relativeDay {
+  T relative<T>({
+    required int cutoff,
+    required T Function(DateTime dateTime) precise,
+    required T Function() yesterday,
+    required T Function() today,
+    required T Function() tomorrow,
+    required T Function(int count) daysFrom,
+    required T Function(int count) daysAgo,
+  }) {
     final diff = _difference(this);
-    if (diff.abs() > 7) {
-      return RelativeDay.precise(this);
+    if (diff.abs() > cutoff) {
+      return precise(this);
     } else if (diff == -1) {
-      return const RelativeDay.yesterday();
+      return yesterday();
     } else if (diff == 0) {
-      return const RelativeDay.today();
+      return today();
     } else if (diff == 1) {
-      return const RelativeDay.tomorrow();
+      return tomorrow();
     } else if (diff > 0) {
-      return RelativeDay.daysFrom(diff);
+      return daysFrom(diff);
     } else {
-      return RelativeDay.daysAgo(diff.abs());
+      return daysAgo(diff.abs());
     }
   }
 }

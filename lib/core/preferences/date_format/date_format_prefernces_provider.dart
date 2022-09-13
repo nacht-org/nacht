@@ -25,4 +25,9 @@ class DateFormatPreferencesNotifier
     DateFormatPreferences.patternKey.setValue(_preferences, value);
     state = state.copyWith(pattern: value);
   }
+
+  void setRelative(RelativeTimestamp value) {
+    DateFormatPreferences.relativeKey.setValue(_preferences, value);
+    state = state.copyWith(relative: value);
+  }
 }

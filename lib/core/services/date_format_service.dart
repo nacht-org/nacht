@@ -7,6 +7,9 @@ final dateFormatServiceFamily =
     Provider.autoDispose.family<DateFormatService, Locale>(
   (ref, locale) => DateFormatService(
     dateFormat: ref.watch(dateFormatFamily(locale)),
+    relative: ref.watch(
+      dateFormatPreferencesProvider.select((value) => value.relative),
+    ),
   ),
   name: 'DateFormatServiceFamily',
 );
@@ -14,12 +17,20 @@ final dateFormatServiceFamily =
 class DateFormatService {
   DateFormatService({
     required DateFormat dateFormat,
-  }) : _dateFormat = dateFormat;
+    required RelativeTimestamp relative,
+  })  : _dateFormat = dateFormat,
+        _relative = relative;
 
   final DateFormat _dateFormat;
+  final RelativeTimestamp _relative;
 
   String relativeDay(DateTime date) {
-    return date.relativeDay.when(
+    if (_relative == RelativeTimestamp.none) {
+      return formatDate(date);
+    }
+
+    return date.relative(
+      cutoff: cutoff,
       yesterday: () => 'Yesterday',
       today: () => 'Today',
       tomorrow: () => 'Tomorrow',
@@ -30,4 +41,18 @@ class DateFormatService {
   }
 
   String formatDate(DateTime date) => _dateFormat.format(date);
+
+  /// The cutoff point from where precise formatting is used
+  late final int cutoff = _cutoff();
+
+  int _cutoff() {
+    switch (_relative) {
+      case RelativeTimestamp.none:
+        return -1;
+      case RelativeTimestamp.short:
+        return 1;
+      case RelativeTimestamp.long:
+        return 7;
+    }
+  }
 }

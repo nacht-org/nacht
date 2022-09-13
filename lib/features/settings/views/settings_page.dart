@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import '../widgets/widgets.dart';
 
@@ -7,7 +8,6 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
@@ -22,26 +22,16 @@ class SettingsPage extends StatelessWidget {
           context: context,
           removeTop: true,
           child: ListView(
-            children: [
-              ListTile(
-                title: Text(
-                  'Theme',
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
+            children: const [
+              HeaderTile(
+                title: Text('Theme'),
               ),
-              const ThemeModeTile(),
-              const Divider(),
-              ListTile(
-                title: Text(
-                  'Timestamps',
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
+              ThemeModeTile(),
+              Divider(),
+              HeaderTile(
+                title: Text("Timestamps"),
               ),
-              const DateFormatTile(),
+              DateFormatTile(),
             ],
           ),
         ),

@@ -63,27 +63,15 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
                   title: Text("${selection.selected.length}"),
                   bottom: buildTabBar(),
                   floating: true,
-                  // FIXME: Both of these are very similar, maybe optimize by
-                  // combining them.
                   onSelectAllPressed: () async {
-                    if (tabController.indexIsChanging) {
-                      return;
+                    if (!tabController.indexIsChanging) {
+                      selectionNotifier.addAll(await getIds());
                     }
-
-                    final category = widget.categories[tabController.index];
-                    final novels = await ref
-                        .read(categoryNovelsFamily(category.id).future);
-                    selectionNotifier.addAll(novels.map((novel) => novel.id));
                   },
                   onInversePressed: () async {
-                    if (tabController.indexIsChanging) {
-                      return;
+                    if (!tabController.indexIsChanging) {
+                      selectionNotifier.flipAll(await getIds());
                     }
-
-                    final category = widget.categories[tabController.index];
-                    final novels = await ref
-                        .read(categoryNovelsFamily(category.id).future);
-                    selectionNotifier.flipAll(novels.map((novel) => novel.id));
                   },
                 )
               : SliverAppBar(
@@ -119,6 +107,13 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
         isScrollable: true,
       ),
     );
+  }
+
+  /// Get ids of novels in current category.
+  Future<Iterable<int>> getIds() async {
+    final category = widget.categories[tabController.index];
+    final novels = await ref.read(categoryNovelsFamily(category.id).future);
+    return novels.map((novel) => novel.id);
   }
 
   @override

@@ -52,25 +52,19 @@ class NachtApp extends HookConsumerWidget {
   }
 
   ThemeData themeFromBrightness(Brightness brightness) {
-    switch (brightness) {
-      case Brightness.dark:
-        return ThemeData(
-          brightness: Brightness.dark,
-          colorSchemeSeed: const Color(0xFF25316D),
-          listTileTheme: ListTileThemeData(
-            selectedTileColor: ThemeData.dark().cardColor,
-          ),
-          useMaterial3: true,
-        );
-      case Brightness.light:
-        return ThemeData(
-          brightness: Brightness.light,
-          colorSchemeSeed: const Color(0xFF25316D),
-          listTileTheme: ListTileThemeData(
-            selectedTileColor: ThemeData.light().cardColor,
-          ),
-          useMaterial3: true,
-        );
-    }
+    final theme = ThemeData(
+      brightness: brightness,
+      colorSchemeSeed: const Color(0xFF25316D),
+      listTileTheme: ListTileThemeData(
+        selectedTileColor: ThemeData.light().cardColor,
+      ),
+      useMaterial3: true,
+    );
+
+    return theme.copyWith(
+      listTileTheme: theme.listTileTheme.copyWith(
+        selectedTileColor: theme.colorScheme.surfaceVariant,
+      ),
+    );
   }
 }

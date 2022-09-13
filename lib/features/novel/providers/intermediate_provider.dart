@@ -64,10 +64,9 @@ class IntermediateNotifier extends StateNotifier<IntermediateState>
         (await _fetchNovel.execute(crawler.isolate, state.novel.url))
             .toNullable();
 
-    // TODO: add error to partial view
     if (failure != null) {
+      state = state.copyWith(error: failure.message);
       log.warning(failure);
-      _read(messageServiceProvider).showText(failure.message);
       return;
     }
 

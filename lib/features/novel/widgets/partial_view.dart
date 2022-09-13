@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/nht/nht.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import '../models/models.dart';
 import '../providers/providers.dart';
@@ -62,7 +63,16 @@ class PartialView extends HookWidget {
                   head: HeadInfo.fromPartial(novel),
                 ),
               ),
-              // TODO: show error and retry.
+              if (error != null)
+                SliverPadding(
+                  padding: const EdgeInsets.all(16.0),
+                  sliver: SliverToBoxAdapter(
+                    child: LoadingError(
+                      message: Text(error!),
+                      onRetry: () => refreshKey.currentState!.show(),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

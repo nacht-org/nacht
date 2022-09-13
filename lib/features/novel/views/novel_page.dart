@@ -58,11 +58,12 @@ class LoadingView extends HookConsumerWidget {
         ? ref.watch(crawlerFamily(crawlerFactory))
         : null;
 
+    final notifier = ref.watch(intermediateProvider(type).notifier);
+
     usePostFrameCallback((timeStamp) {
-      ref.read(intermediateProvider(type).notifier).fetch(crawler);
+      notifier.fetch(crawler);
     });
 
-    // TODO: add retry.
     return Scaffold(
       appBar: AppBar(
         title: Text(crawler?.meta.name ?? ''),
@@ -73,6 +74,7 @@ class LoadingView extends HookConsumerWidget {
             )
           : LoadingError(
               message: Text(error!),
+              onRetry: () => notifier.fetch(crawler),
             ),
     );
   }

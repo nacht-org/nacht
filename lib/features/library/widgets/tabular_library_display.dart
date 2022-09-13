@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/home/providers/navigation_provider.dart';
+import 'package:nacht/features/library/providers/providers.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:flutter/material.dart';
@@ -48,27 +49,38 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
 
   @override
   Widget build(BuildContext context) {
+    final selection = ref.watch(librarySelectionProvider);
+    final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
+
     return NestedScrollView(
       controller: scrollController,
       floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverOverlapAbsorber(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-          sliver: SliverAppBar(
-            title: const Text('Library'),
-            floating: true,
-            pinned: true,
-            forceElevated: innerBoxIsScrolled,
-            bottom: AlignTabBar(
-              child: TabBar(
-                controller: tabController,
-                tabs: widget.categories
-                    .map((category) => Tab(text: category.name))
-                    .toList(),
-                isScrollable: true,
-              ),
-            ),
-          ),
+          sliver: selection.active
+              ? SliverSelectionAppBar(
+                  title: Text("${selection.selected.length}"),
+                  bottom: buildTabBar(),
+                  floating: true,
+                  onSelectAllPressed: () async {
+                    if (!tabController.indexIsChanging) {
+                      selectionNotifier.addAll(await getIds());
+                    }
+                  },
+                  onInversePressed: () async {
+                    if (!tabController.indexIsChanging) {
+                      selectionNotifier.flipAll(await getIds());
+                    }
+                  },
+                )
+              : SliverAppBar(
+                  title: const Text('Library'),
+                  floating: true,
+                  pinned: true,
+                  forceElevated: innerBoxIsScrolled,
+                  bottom: buildTabBar(),
+                ),
         ),
       ],
       body: DestinationTransition(
@@ -83,6 +95,25 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
         ),
       ),
     );
+  }
+
+  AlignTabBar buildTabBar() {
+    return AlignTabBar(
+      child: TabBar(
+        controller: tabController,
+        tabs: widget.categories
+            .map((category) => Tab(text: category.name))
+            .toList(),
+        isScrollable: true,
+      ),
+    );
+  }
+
+  /// Get ids of novels in current category.
+  Future<Iterable<int>> getIds() async {
+    final category = widget.categories[tabController.index];
+    final novels = await ref.read(categoryNovelsFamily(category.id).future);
+    return novels.map((novel) => novel.id);
   }
 
   @override

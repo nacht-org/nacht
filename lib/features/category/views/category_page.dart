@@ -13,7 +13,7 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selection = ref.watch(categoriesSelectionProvider);
-    SelectionNotifier.handleRoute(categoriesSelectionProvider, ref, context);
+    SelectionNotifier.handleRoute(context, ref, categoriesSelectionProvider);
 
     return Scaffold(
       body: NestedScrollView(

@@ -1,5 +1,6 @@
 // Dialogs.
 export 'dialogs/radio_dialog.dart';
+export 'dialogs/confirm_dialog.dart';
 
 // Slivers.
 export 'slivers/sliver_search_bar.dart';

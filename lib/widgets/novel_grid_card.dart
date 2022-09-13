@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/shared/shared.dart';
 
 class NovelGridCard extends StatelessWidget {
@@ -8,16 +9,22 @@ class NovelGridCard extends StatelessWidget {
     required this.title,
     this.coverUrl,
     this.cover,
-    required this.onTap,
+    this.onTap,
+    this.onLongPress,
+    this.selected = false,
   }) : super(key: key);
 
   final String title;
   final String? coverUrl;
   final AssetData? cover;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     ImageProvider? image;
     if (cover != null) {
       image = FileImage(cover!.file);
@@ -31,6 +38,7 @@ class NovelGridCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: Stack(
           children: [
             if (image != null)
@@ -40,6 +48,36 @@ class NovelGridCard extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),
               ),
+            Positioned.fill(
+              child: AnimatedContainer(
+                color:
+                    theme.colorScheme.surfaceTint.withAlpha(selected ? 50 : 0),
+                duration: kShortAnimationDuration,
+              ),
+            ),
+            Positioned(
+              right: 8,
+              top: 8,
+              child: AnimatedSwitcher(
+                duration: kShortAnimationDuration,
+                transitionBuilder: (child, animation) => ScaleTransition(
+                  scale: animation,
+                  child: child,
+                ),
+                child: selected
+                    ? CircleAvatar(
+                        key: const Key("avatar"),
+                        radius: 16,
+                        backgroundColor:
+                            theme.colorScheme.secondary.withAlpha(200),
+                        child: const Icon(
+                          Icons.check,
+                          size: 16,
+                        ),
+                      )
+                    : null,
+              ),
+            ),
             Positioned(
               bottom: 0,
               left: 0,
@@ -58,7 +96,7 @@ class NovelGridCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0).copyWith(top: 48.0),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
                     shadows: const [
                       Shadow(blurRadius: 2.0),

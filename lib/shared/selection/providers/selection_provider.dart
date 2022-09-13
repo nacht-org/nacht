@@ -9,27 +9,34 @@ part 'selection_provider.freezed.dart';
 @freezed
 class SelectionInfo with _$SelectionInfo {
   factory SelectionInfo({
+    /// Whether we are currently in selecting mode.
     required bool active,
+
+    /// Ids of all items currently selected.
     required Set<int> selected,
   }) = _SelectionInfo;
 
+  SelectionInfo._();
+
+  /// Convenience factory method to create inactive selection state.
   factory SelectionInfo.initial() {
     return SelectionInfo(active: false, selected: {});
   }
 
+  /// Convenience function to check if [value] is selected.
   bool contains(int value) => selected.contains(value);
-
-  SelectionInfo._();
 }
 
 class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   SelectionNotifier(super.state);
 
+  /// Listen to the [SelectionNotifier] to open and close [ModalRoute] when
+  /// activated and deactivated respectively.
   static void handleRoute(
+    BuildContext context,
+    WidgetRef ref,
     AutoDisposeStateNotifierProvider<SelectionNotifier, SelectionInfo>
         selectionProvider,
-    WidgetRef ref,
-    BuildContext context,
   ) {
     final log = Logger('SelectionNotifier');
 
@@ -63,24 +70,6 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
     }
   }
 
-  void _add(int id) {
-    state = state.copyWith(
-      active: true,
-      selected: {...state.selected, id},
-    );
-  }
-
-  void _remove(int toRemove) {
-    final selected = {
-      for (final id in state.selected)
-        if (id != toRemove) id
-    };
-
-    state = state.copyWith(
-      selected: selected,
-    );
-  }
-
   void addAll(Iterable<int> ids) {
     state = state.copyWith(selected: {...state.selected, ...ids});
   }
@@ -96,6 +85,24 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
     state = state.copyWith(
       active: false,
       selected: {},
+    );
+  }
+
+  void _add(int id) {
+    state = state.copyWith(
+      active: true,
+      selected: {...state.selected, id},
+    );
+  }
+
+  void _remove(int toRemove) {
+    final selected = {
+      for (final id in state.selected)
+        if (id != toRemove) id
+    };
+
+    state = state.copyWith(
+      selected: selected,
     );
   }
 }

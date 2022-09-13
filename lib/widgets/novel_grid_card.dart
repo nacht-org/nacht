@@ -60,6 +60,8 @@ class NovelGridCard extends StatelessWidget {
               top: 8,
               child: AnimatedSwitcher(
                 duration: kShortAnimationDuration,
+                switchInCurve: Curves.fastOutSlowIn,
+                switchOutCurve: Curves.fastOutSlowIn,
                 transitionBuilder: (child, animation) => ScaleTransition(
                   scale: animation,
                   child: child,

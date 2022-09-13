@@ -2,8 +2,8 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
 
-class StatusInfo extends StatelessWidget {
-  const StatusInfo({
+class StatusLine extends StatelessWidget {
+  const StatusLine({
     Key? key,
     required this.status,
     this.suffix,

@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 
 import '../models/models.dart';
-import 'status.dart';
+import 'status_line.dart';
 
 final currentEssentialProvider =
     Provider.autoDispose<NovelHead>((ref) => throw UnimplementedError());
@@ -70,7 +70,7 @@ class NovelHead extends ConsumerWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                StatusInfo(
+                StatusLine(
                   status: head.status,
                   suffix: crawler?.meta.name,
                 ),

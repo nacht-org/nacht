@@ -31,6 +31,7 @@ class SettingsPage extends StatelessWidget {
               HeaderTile(
                 title: Text("Timestamps"),
               ),
+              RelativeTimestampsTile(),
               DateFormatTile(),
             ],
           ),

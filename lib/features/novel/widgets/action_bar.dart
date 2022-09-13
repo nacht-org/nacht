@@ -73,24 +73,20 @@ class ActionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = active ? theme.colorScheme.primary : null;
-    final textStyle = theme.textTheme.labelMedium?.copyWith(color: color);
+    final color =
+        active ? theme.colorScheme.primary : theme.textTheme.labelLarge?.color;
 
-    return Material(
-      borderRadius: const BorderRadius.all(Radius.circular(50)),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Icon(icon, color: color, size: 24),
-              const SizedBox(height: 4),
-              Text(label, style: textStyle),
-            ],
-          ),
-        ),
+    return TextButton(
+      onPressed: onTap,
+      style: TextButton.styleFrom(
+        foregroundColor: color,
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 24),
+          const SizedBox(height: 4),
+          Text(label),
+        ],
       ),
     );
   }

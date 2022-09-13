@@ -25,9 +25,12 @@ class LibraryPage extends HookConsumerWidget {
     SelectionNotifier.handleRoute(context, ref, librarySelectionProvider);
 
     // Hide bottom navigation bar when selecting.
+    // FIXME: only rely on selection active status. related to updates page.
     NavigationNotifier.handleHide(
       ref,
-      librarySelectionProvider.select((value) => value.active),
+      librarySelectionProvider.select(
+        (value) => value.active && value.selected.isNotEmpty,
+      ),
     );
 
     return Scaffold(

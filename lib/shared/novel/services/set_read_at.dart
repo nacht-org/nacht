@@ -19,10 +19,10 @@ class SetReadAt {
 
   final AppDatabase _database;
 
-  Future<Failure?> execute(Iterable<ChapterData> chapters, bool isRead) async {
+  Future<Failure?> execute(Iterable<int> chapterIds, bool isRead) async {
     final readAt = isRead ? DateTime.now() : null;
     await _database.batch((batch) {
-      for (final chapter in chapters) {
+      for (final id in chapterIds) {
         final companion = ChaptersCompanion(
           readAt: Value(readAt),
         );
@@ -30,7 +30,7 @@ class SetReadAt {
         batch.update<Chapters, Chapter>(
           _database.chapters,
           companion,
-          where: (tbl) => tbl.id.equals(chapter.id),
+          where: (tbl) => tbl.id.equals(id),
         );
       }
     });

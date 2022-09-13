@@ -45,10 +45,7 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
   }
 
   Future<void> setReadAt(Set<int> ids, bool isRead) async {
-    final chapters =
-        state.chapters.where((element) => ids.contains(element.id)).toList();
-
-    final failure = await _setReadAt.execute(chapters, isRead);
+    final failure = await _setReadAt.execute(ids, isRead);
     if (failure != null) {
       log.warning(failure);
       return;
@@ -81,7 +78,7 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
         if (c.id == chapter.id) newData else c
     ]);
 
-    final failure = await _setReadAt.execute([newData], true);
+    final failure = await _setReadAt.execute([newData.id], true);
     if (failure != null) {
       log.warning(failure);
       state = state.copyWith(chapters: [

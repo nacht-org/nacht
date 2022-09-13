@@ -63,6 +63,7 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   }
 
   void toggle(int id) {
+    log.fine("toggle");
     if (state.selected.contains(id)) {
       _remove(id);
     } else {
@@ -71,10 +72,12 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   }
 
   void addAll(Iterable<int> ids) {
+    log.fine("addAll");
     state = state.copyWith(selected: {...state.selected, ...ids});
   }
 
   void flipAll(Iterable<int> ids) {
+    log.fine("flipAll");
     state = state.copyWith(selected: {
       for (final id in ids)
         if (!state.selected.contains(id)) id
@@ -82,6 +85,7 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   }
 
   void deactivate() {
+    log.fine("deactivate");
     state = state.copyWith(
       active: false,
       selected: {},
@@ -89,6 +93,7 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   }
 
   void _add(int id) {
+    log.fine("_add");
     state = state.copyWith(
       active: true,
       selected: {...state.selected, id},
@@ -96,6 +101,7 @@ class SelectionNotifier extends StateNotifier<SelectionInfo> with LoggerMixin {
   }
 
   void _remove(int toRemove) {
+    log.fine("_remove");
     final selected = {
       for (final id in state.selected)
         if (id != toRemove) id

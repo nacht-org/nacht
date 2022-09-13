@@ -120,6 +120,8 @@ class UpdatesView extends HookConsumerWidget {
               return RefreshIndicator(
                 key: refreshIndicatorKey,
                 onRefresh: refreshNotifier.refreshAll,
+                notificationPredicate:
+                    selectionActive ? (_) => false : (_) => true,
                 child: Scrollbar(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(0),

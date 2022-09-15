@@ -47,7 +47,6 @@ class ChapterUpdateTile extends ConsumerWidget {
                 ReaderRoute(
                   novel: novel,
                   chapter: chapter,
-                  doFetch: true,
                 ),
               );
             },

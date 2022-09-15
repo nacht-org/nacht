@@ -12,12 +12,10 @@ class ReaderPage extends HookConsumerWidget {
     Key? key,
     required this.novel,
     required this.chapter,
-    required this.doFetch,
   }) : super(key: key);
 
   final NovelData novel;
   final ChapterData chapter;
-  final bool doFetch;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

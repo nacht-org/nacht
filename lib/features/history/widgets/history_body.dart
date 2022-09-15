@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/shared/novel/widgets/novel_avatar.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../providers/history_provider.dart';
@@ -30,10 +31,22 @@ class HistoryBody extends ConsumerWidget {
               return entry.when(
                 date: (date) => RelativeDateTile(date: date),
                 history: (history) => ListTile(
-                  title: Text(history.novel.title),
-                  subtitle: Text(history.chapter.title),
+                  leading: NovelAvatar(
+                    novel: history.novel,
+                  ),
+                  title: Text(
+                    history.novel.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    history.chapter.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   trailing: Text(
-                      "${history.updatedAt.hour}:${history.updatedAt.minute}"),
+                    "${history.updatedAt.hour}:${history.updatedAt.minute}",
+                  ),
                 ),
               );
             },

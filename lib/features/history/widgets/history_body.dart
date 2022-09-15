@@ -12,21 +12,33 @@ class HistoryBody extends ConsumerWidget {
     final entriesValue = ref.watch(historyProvider);
 
     return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [],
+      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        SliverAppBar(
+          title: const Text("History"),
+          floating: true,
+          forceElevated: innerBoxIsScrolled,
+        ),
+      ],
       body: entriesValue.when(
-        data: (entries) => ListView.builder(
-          itemBuilder: (context, index) {
-            final entry = entries[index];
+        data: (entries) => MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              final entry = entries[index];
 
-            return entry.when(
-              date: (date) => RelativeDateTile(date: date),
-              history: (history) => ListTile(
-                title: Text(history.novel.title),
-                subtitle: Text(history.chapter.title),
-              ),
-            );
-          },
-          itemCount: entries.length,
+              return entry.when(
+                date: (date) => RelativeDateTile(date: date),
+                history: (history) => ListTile(
+                  title: Text(history.novel.title),
+                  subtitle: Text(history.chapter.title),
+                  trailing: Text(
+                      "${history.updatedAt.hour}:${history.updatedAt.minute}"),
+                ),
+              );
+            },
+            itemCount: entries.length,
+          ),
         ),
         error: (error, stack) => LoadingError(
           message: Text(error.toString()),

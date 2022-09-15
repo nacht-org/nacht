@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/core/router/app_router.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/novel/widgets/novel_avatar.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -52,6 +54,12 @@ class HistoryBody extends HookConsumerWidget {
                   ),
                   trailing: Text(
                     "${history.updatedAt.hour}:${history.updatedAt.minute}",
+                  ),
+                  onTap: () => context.router.push(
+                    ReaderRoute(
+                      novel: history.novel,
+                      chapter: history.chapter,
+                    ),
                   ),
                 ),
               );

@@ -16,12 +16,16 @@ class CreateAndReturnHistory with LoggerMixin {
 
   final AppDatabase _database;
 
-  Future<ReadingHistory> execute(int chapterId) async {
+  Future<ReadingHistory> execute(int novelId, int chapterId) async {
     final now = DateTime.now();
     final model =
         await _database.into(_database.readingHistories).insertReturning(
               ReadingHistoriesCompanion.insert(
-                  addedAt: now, updatedAt: now, chapterId: chapterId),
+                addedAt: now,
+                updatedAt: now,
+                novelId: novelId,
+                chapterId: chapterId,
+              ),
             );
 
     log.fine("Created new history session with id ${model.id}.");

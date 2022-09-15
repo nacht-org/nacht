@@ -27,7 +27,7 @@ class HistorySessionNotifier extends StateNotifier<HistorySessionInfo> {
   final UpdateHistory _updateHistory;
 
   Future<void> init(NovelData novel, ChapterData chapter) async {
-    final model = await _createAndReturnHistory.execute(chapter.id);
+    final model = await _createAndReturnHistory.execute(novel.id, chapter.id);
     final history = HistoryData.fromModel(model, novel, chapter);
 
     state = state.copyWith(

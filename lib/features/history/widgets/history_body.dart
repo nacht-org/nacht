@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/novel/widgets/novel_avatar.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../providers/history_provider.dart';
 
-class HistoryBody extends ConsumerWidget {
+class HistoryBody extends HookConsumerWidget {
   const HistoryBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final navigationNotifier = ref.watch(navigationProvider.notifier);
+    final controller = useNavigationScrollController(navigationNotifier);
+
     final entriesValue = ref.watch(historyProvider);
 
     return NestedScrollView(
+      controller: controller,
+      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
           title: const Text("History"),

@@ -120,6 +120,7 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
   void dispose() {
     super.dispose();
     tabController.dispose();
+    // FIXME: at this point it is not safe to refer to this. make a reference using listen
     ref.read(navigationProvider.notifier).detach(scrollController);
     scrollController.dispose();
   }

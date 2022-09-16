@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/updates/providers/updates_selection_provider.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
-
-const _leadingSize = 40.0;
 
 class ChapterUpdateTile extends ConsumerWidget {
   const ChapterUpdateTile({
@@ -21,8 +18,6 @@ class ChapterUpdateTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-
     final selectionActive = ref.watch(
         updatesSelectionProvider.select((selection) => selection.active));
     final selected = ref.watch(updatesSelectionProvider
@@ -32,38 +27,8 @@ class ChapterUpdateTile extends ConsumerWidget {
     void select() => selectionNotifier.toggle(chapter.id);
 
     return NachtListTile(
-      leading: GestureDetector(
-        onTap: () => context.router.push(
-          NovelRoute(
-            type: NovelType.novel(novel),
-          ),
-        ),
-        child: novel.coverUrl != null
-            ? SizedBox.square(
-                dimension: _leadingSize,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16.0),
-                  child: CachedNetworkImage(
-                    imageUrl: novel.coverUrl!,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              )
-            : Container(
-                height: _leadingSize,
-                width: _leadingSize,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
-                  color: theme.colorScheme.secondary.withAlpha(150),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  novel.title.isEmpty ? "@" : novel.title[0],
-                  style: theme.textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+      leading: NovelAvatar(
+        novel: novel,
       ),
       title: Text(
         novel.title,
@@ -82,7 +47,6 @@ class ChapterUpdateTile extends ConsumerWidget {
                 ReaderRoute(
                   novel: novel,
                   chapter: chapter,
-                  doFetch: true,
                 ),
               );
             },

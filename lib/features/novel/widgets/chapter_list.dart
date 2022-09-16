@@ -62,7 +62,6 @@ class ChapterList extends ConsumerWidget {
                             ReaderRoute(
                               novel: novel,
                               chapter: data,
-                              doFetch: false,
                             ),
                           ),
                   onLongPress: selectionActive ? null : select,

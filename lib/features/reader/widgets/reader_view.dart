@@ -73,7 +73,7 @@ class ReaderView extends HookConsumerWidget {
           backgroundColor: backgroundColor,
           body: ReaderBody(
             reader: reader,
-            notifier: notifier,
+            readerNotifier: notifier,
             controller: pageController,
           ),
           drawer: ReaderDrawer(

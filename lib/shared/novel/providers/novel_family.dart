@@ -133,7 +133,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     unread.fold(
       (failure) => _read(messageServiceProvider).showText(failure.message),
       (data) => _read(routerProvider).push(
-        ReaderRoute(novel: state, chapter: data, doFetch: false),
+        ReaderRoute(novel: state, chapter: data),
       ),
     );
   }

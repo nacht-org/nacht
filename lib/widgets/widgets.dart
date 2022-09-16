@@ -11,6 +11,7 @@ export 'slivers/sliver_floating_action_button_padding.dart';
 
 // Tiles.
 export 'tiles/header_tile.dart';
+export 'tiles/relative_date_tile.dart';
 
 export 'animation_provider.dart';
 export 'destination_transition.dart';

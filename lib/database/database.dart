@@ -11,5 +11,6 @@ export 'entities/meta_entry.dart';
 export 'entities/namespaces.dart';
 export 'entities/assets.dart';
 export 'entities/updates.dart';
+export 'entities/reading_history.dart';
 
 export 'exceptions/seed_exception.dart';

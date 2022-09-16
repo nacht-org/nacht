@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 
-class DateUpdateTile extends ConsumerWidget {
-  const DateUpdateTile({
+/// A date header tile which takes into account user preferences.
+class RelativeDateTile extends ConsumerWidget {
+  const RelativeDateTile({
     Key? key,
     required this.date,
   }) : super(key: key);

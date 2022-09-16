@@ -31,6 +31,12 @@ const destinations = [
     selectedIcon: Icon(Icons.update),
   ),
   Destination(
+    builder: historyBuilder,
+    label: "History",
+    icon: Icon(Icons.history_outlined),
+    selectedIcon: Icon(Icons.history),
+  ),
+  Destination(
     builder: browseBuilder,
     label: 'Browse',
     icon: Icon(Icons.explore_outlined),
@@ -46,5 +52,6 @@ const destinations = [
 
 Widget libraryBuilder(BuildContext context) => const LibraryPage();
 Widget updatesBuilder(BuildContext context) => const UpdatesPage();
+Widget historyBuilder(BuildContext context) => const HistoryPage();
 Widget browseBuilder(BuildContext context) => const BrowsePage();
 Widget moreBuilder(BuildContext context) => const MorePage();

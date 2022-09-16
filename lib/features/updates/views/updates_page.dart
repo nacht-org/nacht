@@ -126,7 +126,7 @@ class UpdatesView extends HookConsumerWidget {
                   child: ListView.builder(
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (context, index) => updates[index].when(
-                      date: (date) => DateUpdateTile(date: date),
+                      date: (date) => RelativeDateTile(date: date),
                       chapter: (novel, chapter) => ChapterUpdateTile(
                         novel: novel,
                         chapter: chapter,

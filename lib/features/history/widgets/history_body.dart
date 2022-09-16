@@ -44,19 +44,21 @@ class HistoryBody extends HookConsumerWidget {
             onInversePressed: () => selectionNotifier.flipAll(getIds()),
           )
       ],
-      body: MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            final entry = entries[index];
+      body: DestinationTransition(
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              final entry = entries[index];
 
-            return entry.when(
-              date: (date) => RelativeDateTile(date: date),
-              history: (history) => HistoryTile(history: history),
-            );
-          },
-          itemCount: entries.length,
+              return entry.when(
+                date: (date) => RelativeDateTile(date: date),
+                history: (history) => HistoryTile(history: history),
+              );
+            },
+            itemCount: entries.length,
+          ),
         ),
       ),
     );

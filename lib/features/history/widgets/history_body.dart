@@ -15,8 +15,6 @@ class HistoryBody extends HookConsumerWidget {
     final navigationNotifier = ref.watch(navigationProvider.notifier);
     final controller = useNavigationScrollController(navigationNotifier);
 
-    final entries = ref.watch(historyEntriesProvider);
-
     final selectionActive = ref.watch(
         historySelectionProvider.select((selection) => selection.active));
     final selectionCount = ref.watch(historySelectionProvider
@@ -47,23 +45,41 @@ class HistoryBody extends HookConsumerWidget {
       body: DestinationTransition(
         child: Scrollbar(
           interactive: true,
-          child: CustomScrollView(
-            slivers: [
-              if (entries.isNotEmpty)
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final entry = entries[index];
+          child: Consumer(
+            builder: (context, ref, child) {
+              final isEmpty =
+                  ref.watch(historyProvider.select((value) => value.isEmpty));
 
-                      return entry.when(
-                        date: (date) => RelativeDateTile(date: date),
-                        history: (history) => HistoryTile(history: history),
-                      );
-                    },
-                    childCount: entries.length,
-                  ),
-                ),
-            ],
+              return CustomScrollView(
+                slivers: [
+                  if (!isEmpty)
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final entries = ref.watch(historyEntriesProvider);
+
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              final entry = entries[index];
+
+                              return entry.when(
+                                date: (date) => RelativeDateTile(date: date),
+                                history: (history) =>
+                                    HistoryTile(history: history),
+                              );
+                            },
+                            childCount: entries.length,
+                          ),
+                        );
+                      },
+                    ),
+                  if (isEmpty)
+                    const SliverFillEmptyIndicator(
+                      child: Icon(Icons.history),
+                    ),
+                ],
+              );
+            },
           ),
         ),
       ),

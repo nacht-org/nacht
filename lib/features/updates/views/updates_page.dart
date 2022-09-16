@@ -81,6 +81,8 @@ class UpdatesView extends HookConsumerWidget {
       updatesSelectionProvider.select((selection) => selection.active),
     );
 
+    final refreshNotifier = ref.watch(refreshProvider.notifier);
+
     return NestedScrollView(
       controller: controller,
       floatHeaderSlivers: true,
@@ -108,35 +110,44 @@ class UpdatesView extends HookConsumerWidget {
           ),
         if (selectionActive) const UpdatesSelectionAppBar(),
       ],
-      body: MediaQuery.removePadding(
-        removeTop: true,
-        context: context,
-        child: DestinationTransition(
-          child: Consumer(
-            builder: (context, ref, child) {
-              final updates = ref.watch(updatesProvider);
-              final refreshNotifier = ref.watch(refreshProvider.notifier);
+      body: DestinationTransition(
+        child: RefreshIndicator(
+          onRefresh: refreshNotifier.refreshAll,
+          child: Scrollbar(
+            child: Consumer(
+              builder: (context, ref, child) {
+                final updatesEmpty =
+                    ref.watch(updatesProvider.select((value) => value.isEmpty));
 
-              return RefreshIndicator(
-                key: refreshIndicatorKey,
-                onRefresh: refreshNotifier.refreshAll,
-                notificationPredicate:
-                    selectionActive ? (_) => false : (_) => true,
-                child: Scrollbar(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(0),
-                    itemBuilder: (context, index) => updates[index].when(
-                      date: (date) => RelativeDateTile(date: date),
-                      chapter: (novel, chapter) => ChapterUpdateTile(
-                        novel: novel,
-                        chapter: chapter,
+                return CustomScrollView(
+                  slivers: [
+                    if (!updatesEmpty)
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final updates = ref.watch(updatesProvider);
+
+                          return SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) => updates[index].when(
+                                date: (date) => RelativeDateTile(date: date),
+                                chapter: (novel, chapter) => ChapterUpdateTile(
+                                  novel: novel,
+                                  chapter: chapter,
+                                ),
+                              ),
+                              childCount: updates.length,
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                    itemCount: updates.length,
-                  ),
-                ),
-              );
-            },
+                    if (updatesEmpty)
+                      const SliverFillEmptyIndicator(
+                        child: Icon(Icons.update),
+                      ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

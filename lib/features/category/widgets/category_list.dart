@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import '../providers/providers.dart';
 import 'widgets.dart';
@@ -16,9 +17,8 @@ class CategoryList extends HookConsumerWidget {
     final selectionNotifier = ref.watch(categoriesSelectionProvider.notifier);
 
     if (categories.isEmpty) {
-      return const Icon(
-        Icons.category,
-        size: 48,
+      return const EmptyIndicator(
+        child: Icon(Icons.category),
       );
     }
 

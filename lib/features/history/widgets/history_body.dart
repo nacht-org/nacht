@@ -45,19 +45,25 @@ class HistoryBody extends HookConsumerWidget {
           )
       ],
       body: DestinationTransition(
-        child: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              final entry = entries[index];
+        child: Scrollbar(
+          interactive: true,
+          child: CustomScrollView(
+            slivers: [
+              if (entries.isNotEmpty)
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final entry = entries[index];
 
-              return entry.when(
-                date: (date) => RelativeDateTile(date: date),
-                history: (history) => HistoryTile(history: history),
-              );
-            },
-            itemCount: entries.length,
+                      return entry.when(
+                        date: (date) => RelativeDateTile(date: date),
+                        history: (history) => HistoryTile(history: history),
+                      );
+                    },
+                    childCount: entries.length,
+                  ),
+                ),
+            ],
           ),
         ),
       ),

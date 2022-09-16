@@ -4,6 +4,7 @@ export 'dialogs/confirm_dialog.dart';
 
 // Slivers.
 export 'slivers/sliver_search_bar.dart';
+export 'slivers/sliver_fill_empty_indicator.dart';
 export 'slivers/sliver_fill_loading_error.dart';
 export 'slivers/sliver_fill_loading_indicator.dart';
 export 'slivers/sliver_bottom_padding.dart';

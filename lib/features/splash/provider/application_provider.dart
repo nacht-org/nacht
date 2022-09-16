@@ -44,6 +44,7 @@ class Application with LoggerMixin {
     await Future.wait([
       _read(updatesProvider.notifier).initialize(),
       _read(categoriesProvider.notifier).initialize(),
+      _read(historyProvider.notifier).init(),
     ]);
 
     await _read(routerProvider).replace(const HomeRoute());

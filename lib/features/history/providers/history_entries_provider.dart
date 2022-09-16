@@ -3,10 +3,10 @@ import 'package:nacht/shared/shared.dart';
 import '../models/models.dart';
 import 'history_provider.dart';
 
-final historyEntriesProvider = Provider<AsyncValue<List<HistoryEntry>>>(
+final historyEntriesProvider = Provider<List<HistoryEntry>>(
   (ref) {
     final data = ref.watch(historyProvider);
-    return data.whenData(_map);
+    return _map(data);
   },
   name: "HistoryEntriesProvider",
 );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/features/history/providers/history_selection_provider.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../widgets/widgets.dart';
+import '../providers/providers.dart';
 
 class HistoryPage extends HookConsumerWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -24,6 +24,8 @@ class HistoryPage extends HookConsumerWidget {
       ),
     );
 
+    final notifier = ref.watch(historyProvider.notifier);
+
     return Scaffold(
       body: const HistoryBody(),
       bottomNavigationBar: ImplicitAnimatedBottomBar(
@@ -34,13 +36,19 @@ class HistoryPage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                tooltip: "Delete",
-                onPressed: () {},
+                tooltip: "Delete history",
+                onPressed: () {
+                  notifier.deleteHistory();
+                  Navigator.of(context).pop();
+                },
                 icon: const Icon(Icons.delete),
               ),
               IconButton(
                 tooltip: "Delete novel history",
-                onPressed: () {},
+                onPressed: () {
+                  notifier.deleteNovelHistory();
+                  Navigator.of(context).pop();
+                },
                 icon: const Icon(Icons.delete_sweep),
               ),
             ],

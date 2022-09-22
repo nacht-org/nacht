@@ -43,6 +43,7 @@ dependencies:
   # Widgets.
   scrollable_positioned_list: ^0.3.4
   flutter_html: ^3.0.0-alpha.3
+  flutter_html_table: ^3.0.0-alpha.3
 
   # Misc.
   url_launcher: ^6.0.20

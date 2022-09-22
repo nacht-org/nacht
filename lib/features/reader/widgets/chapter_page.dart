@@ -1,3 +1,4 @@
+import 'package:flutter_html_table/flutter_html_table.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
@@ -95,6 +96,9 @@ class ChapterPage extends HookConsumerWidget {
                           "p": Style(
                             fontSize: FontSize(preferences.fontSize),
                           ),
+                        },
+                        customRenders: {
+                          tableMatcher(): tableRender(),
                         },
                       );
                     },

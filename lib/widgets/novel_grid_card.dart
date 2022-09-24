@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/shared/shared.dart';
@@ -12,6 +13,7 @@ class NovelGridCard extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.selected = false,
+    this.favorite = false,
   }) : super(key: key);
 
   final String title;
@@ -19,7 +21,9 @@ class NovelGridCard extends StatelessWidget {
   final AssetData? cover;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
+
   final bool selected;
+  final bool favorite;
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +62,40 @@ class NovelGridCard extends StatelessWidget {
             Positioned(
               right: 8,
               top: 8,
-              child: AnimatedSwitcher(
-                duration: kShortAnimationDuration,
-                switchInCurve: Curves.fastOutSlowIn,
-                switchOutCurve: Curves.fastOutSlowIn,
-                transitionBuilder: (child, animation) => ScaleTransition(
-                  scale: animation,
-                  child: child,
-                ),
-                child: selected
-                    ? CircleAvatar(
-                        key: const Key("avatar"),
-                        radius: 16,
-                        backgroundColor:
-                            theme.colorScheme.secondary.withAlpha(200),
-                        child: const Icon(
-                          Icons.check,
-                          size: 16,
-                        ),
-                      )
-                    : null,
+              child: Column(
+                children: [
+                  buildAnimatedSwitcher(
+                    visible: favorite,
+                    child: CircleAvatar(
+                      key: const Key("favorite"),
+                      radius: 16,
+                      backgroundColor: theme.colorScheme.primary.withAlpha(200),
+                      child: const Icon(
+                        Icons.favorite,
+                        size: 16,
+                      ),
+                    ),
+                  ),
+                  if (selected && favorite)
+                    const AnimatedSize(
+                      duration: kShortAnimationDuration,
+                      curve: Curves.fastOutSlowIn,
+                      child: SizedBox(height: 8.0),
+                    ),
+                  buildAnimatedSwitcher(
+                    visible: selected,
+                    child: CircleAvatar(
+                      key: const Key("selected"),
+                      radius: 16,
+                      backgroundColor:
+                          theme.colorScheme.secondary.withAlpha(200),
+                      child: const Icon(
+                        Icons.check,
+                        size: 16,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Positioned(
@@ -112,6 +130,25 @@ class NovelGridCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildAnimatedSwitcher({
+    required Widget child,
+    required bool visible,
+  }) {
+    return AnimatedSwitcher(
+      duration: kShortAnimationDuration,
+      switchInCurve: Curves.fastOutSlowIn,
+      switchOutCurve: Curves.fastOutSlowIn,
+      transitionBuilder: (child, animation) => SizeTransition(
+        sizeFactor: animation,
+        child: ScaleTransition(
+          scale: animation,
+          child: child,
+        ),
+      ),
+      child: visible ? child : null,
     );
   }
 }

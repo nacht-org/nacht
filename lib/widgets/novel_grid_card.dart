@@ -62,40 +62,8 @@ class NovelGridCard extends StatelessWidget {
             Positioned(
               right: 8,
               top: 8,
-              child: Column(
-                children: [
-                  buildAnimatedSwitcher(
-                    visible: favorite,
-                    child: CircleAvatar(
-                      key: const Key("favorite"),
-                      radius: 16,
-                      backgroundColor: theme.colorScheme.primary.withAlpha(200),
-                      child: const Icon(
-                        Icons.favorite,
-                        size: 16,
-                      ),
-                    ),
-                  ),
-                  if (selected && favorite)
-                    const AnimatedSize(
-                      duration: kShortAnimationDuration,
-                      curve: Curves.fastOutSlowIn,
-                      child: SizedBox(height: 8.0),
-                    ),
-                  buildAnimatedSwitcher(
-                    visible: selected,
-                    child: CircleAvatar(
-                      key: const Key("selected"),
-                      radius: 16,
-                      backgroundColor:
-                          theme.colorScheme.secondary.withAlpha(200),
-                      child: const Icon(
-                        Icons.check,
-                        size: 16,
-                      ),
-                    ),
-                  ),
-                ],
+              child: buildAnimatedSwitcher(
+                child: buildIndicator(theme),
               ),
             ),
             Positioned(
@@ -135,20 +103,42 @@ class NovelGridCard extends StatelessWidget {
 
   Widget buildAnimatedSwitcher({
     required Widget child,
-    required bool visible,
   }) {
     return AnimatedSwitcher(
       duration: kShortAnimationDuration,
       switchInCurve: Curves.fastOutSlowIn,
       switchOutCurve: Curves.fastOutSlowIn,
-      transitionBuilder: (child, animation) => SizeTransition(
-        sizeFactor: animation,
-        child: ScaleTransition(
-          scale: animation,
-          child: child,
-        ),
+      transitionBuilder: (child, animation) => ScaleTransition(
+        scale: animation,
+        child: child,
       ),
-      child: visible ? child : null,
+      child: child,
     );
+  }
+
+  Widget buildIndicator(ThemeData theme) {
+    if (favorite) {
+      return CircleAvatar(
+        key: const Key("favorite"),
+        radius: 16,
+        backgroundColor: theme.colorScheme.primary.withAlpha(200),
+        child: const Icon(
+          Icons.favorite,
+          size: 16,
+        ),
+      );
+    } else if (selected) {
+      return CircleAvatar(
+        key: const Key("selected"),
+        radius: 16,
+        backgroundColor: theme.colorScheme.secondary.withAlpha(200),
+        child: const Icon(
+          Icons.check,
+          size: 16,
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

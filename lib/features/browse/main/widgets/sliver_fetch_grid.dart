@@ -31,9 +31,9 @@ class SliverFetchGrid extends StatelessWidget {
             return HookConsumer(
               builder: (context, ref, child) {
                 final notifier = ref.watch(fetchLocalProvider.notifier);
-                final favorite = ref.watch(
-                  fetchLocalProvider
-                      .select((map) => FetchLocalInfo.favorite(map[novel.url])),
+                final favourite = ref.watch(
+                  fetchLocalProvider.select(
+                      (map) => FetchLocalInfo.favourite(map[novel.url])),
                 );
 
                 usePostFrameCallback((timeStamp) {
@@ -46,7 +46,7 @@ class SliverFetchGrid extends StatelessWidget {
                   onTap: () => context.router.push(NovelRoute(
                     type: NovelType.partial(novel),
                   )),
-                  favorite: favorite,
+                  favourite: favourite,
                 );
               },
             );

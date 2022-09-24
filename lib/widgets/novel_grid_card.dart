@@ -12,7 +12,7 @@ class NovelGridCard extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.selected = false,
-    this.favorite = false,
+    this.favourite = false,
   }) : super(key: key);
 
   final String title;
@@ -22,7 +22,7 @@ class NovelGridCard extends StatelessWidget {
   final VoidCallback? onLongPress;
 
   final bool selected;
-  final bool favorite;
+  final bool favourite;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class NovelGridCard extends StatelessWidget {
             if (image != null)
               SizedBox.expand(
                 child: AnimatedOpacityBuilder(
-                  opacity: favorite ? 1 : 0,
+                  opacity: favourite ? 1 : 0,
                   duration: kShortAnimationDuration,
                   builder: (context, opacity) => Ink.image(
                     image: image!,
@@ -124,9 +124,9 @@ class NovelGridCard extends StatelessWidget {
   }
 
   Widget buildIndicator(ThemeData theme) {
-    if (favorite) {
+    if (favourite) {
       return CircleAvatar(
-        key: const Key("favorite"),
+        key: const Key("favourite"),
         radius: 16,
         backgroundColor: theme.colorScheme.secondary.withAlpha(200),
         child: const Icon(

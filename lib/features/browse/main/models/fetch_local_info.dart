@@ -9,7 +9,7 @@ class FetchLocalInfo with _$FetchLocalInfo {
     required FetchCardLocalInfo? local,
   }) = _FetchLocalInfo;
 
-  static bool favorite(FetchLocalInfo? info) => info?.local?.favorite ?? false;
+  static bool favourite(FetchLocalInfo? info) => info?.local?.favourite ?? false;
 
   const FetchLocalInfo._();
 }
@@ -17,6 +17,6 @@ class FetchLocalInfo with _$FetchLocalInfo {
 @freezed
 class FetchCardLocalInfo with _$FetchCardLocalInfo {
   const factory FetchCardLocalInfo({
-    required bool favorite,
+    required bool favourite,
   }) = _FetchCardLocalInfo;
 }

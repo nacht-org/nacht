@@ -32,8 +32,8 @@ class SliverFetchGrid extends StatelessWidget {
               builder: (context, ref, child) {
                 final notifier = ref.watch(fetchLocalProvider.notifier);
                 final favourite = ref.watch(
-                  fetchLocalProvider.select(
-                      (map) => FetchLocalInfo.favourite(map[novel.url])),
+                  fetchLocalProvider
+                      .select((map) => map[novel.url]?.favourite ?? false),
                 );
 
                 usePostFrameCallback((timeStamp) {

@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/models.dart';
 import '../services/services.dart';
 
-typedef FetchLocalMap = Map<String, FetchLocalInfo>;
+typedef FetchLocalMap = Map<String, FetchLocalInfo?>;
 
 final fetchLocalProvider =
     StateNotifierProvider.autoDispose<FetchLocalProvider, FetchLocalMap>(
@@ -28,22 +28,21 @@ class FetchLocalProvider extends StateNotifier<FetchLocalMap> {
         super({});
 
   final WatchLocalForUrl _getLocalForUrl;
-  final List<StreamSubscription<FetchCardLocalInfo?>> subscriptions = [];
+  final Map<String, StreamSubscription> subscriptions = {};
 
   Future<void> load(String url) async {
-    final info = state[url];
-    if (info == null || !info.fetched) {
+    if (subscriptions[url] == null) {
       final stream = _getLocalForUrl.execute(url);
-      final subscription = stream.listen((local) {
-        state = {...state, url: FetchLocalInfo(fetched: true, local: local)};
+      final subscription = stream.listen((data) {
+        state = {...state, url: data};
       });
 
-      subscriptions.add(subscription);
+      subscriptions[url] = subscription;
     }
   }
 
   void cancel() {
-    for (final subscription in subscriptions) {
+    for (final subscription in subscriptions.values) {
       subscription.cancel();
     }
   }

@@ -18,7 +18,7 @@ class WatchLocalForUrl with LoggerMixin {
 
   final AppDatabase _database;
 
-  Stream<FetchCardLocalInfo?> execute(String url) {
+  Stream<FetchLocalInfo?> execute(String url) {
     log.fine("watching local for $url");
 
     final favourite = _database.novels.favourite;
@@ -27,8 +27,7 @@ class WatchLocalForUrl with LoggerMixin {
       ..where(_database.novels.url.equals(url));
 
     return query
-        .map((row) =>
-            FetchCardLocalInfo(favourite: row.read(favourite) ?? false))
+        .map((row) => FetchLocalInfo(favourite: row.read(favourite)!))
         .watchSingleOrNull();
   }
 }

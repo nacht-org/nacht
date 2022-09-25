@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/browse/main/providers/fetch_local_provider.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
@@ -59,6 +60,7 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
           builder: (context, ref, child) {
             // prevent auto dispose while this view is active
             ref.watch(popularFamily(crawlerFactory));
+            ref.watch(fetchLocalProvider);
 
             final view = ref.watch(popularViewFamily(crawlerFactory));
 
@@ -100,7 +102,7 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
                   ],
                   empty: () => [],
                   data: (novels) => [
-                    SliverFetchGrid(items: novels, crawler: crawler),
+                    SliverFetchGrid(novels: novels, crawler: crawler),
                   ],
                 ),
               ),

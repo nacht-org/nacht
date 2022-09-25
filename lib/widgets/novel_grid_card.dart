@@ -12,6 +12,7 @@ class NovelGridCard extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.selected = false,
+    this.favourite = false,
   }) : super(key: key);
 
   final String title;
@@ -19,7 +20,9 @@ class NovelGridCard extends StatelessWidget {
   final AssetData? cover;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
+
   final bool selected;
+  final bool favourite;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +46,17 @@ class NovelGridCard extends StatelessWidget {
           children: [
             if (image != null)
               SizedBox.expand(
-                child: Ink.image(
-                  image: image,
-                  fit: BoxFit.fill,
+                child: AnimatedOpacityBuilder(
+                  opacity: favourite ? 1 : 0,
+                  duration: kShortAnimationDuration,
+                  builder: (context, opacity) => Ink.image(
+                    image: image!,
+                    fit: BoxFit.fill,
+                    colorFilter: ColorFilter.mode(
+                      Colors.grey.withOpacity(opacity),
+                      BlendMode.saturation,
+                    ),
+                  ),
                 ),
               ),
             Positioned.fill(
@@ -58,26 +69,8 @@ class NovelGridCard extends StatelessWidget {
             Positioned(
               right: 8,
               top: 8,
-              child: AnimatedSwitcher(
-                duration: kShortAnimationDuration,
-                switchInCurve: Curves.fastOutSlowIn,
-                switchOutCurve: Curves.fastOutSlowIn,
-                transitionBuilder: (child, animation) => ScaleTransition(
-                  scale: animation,
-                  child: child,
-                ),
-                child: selected
-                    ? CircleAvatar(
-                        key: const Key("avatar"),
-                        radius: 16,
-                        backgroundColor:
-                            theme.colorScheme.secondary.withAlpha(200),
-                        child: const Icon(
-                          Icons.check,
-                          size: 16,
-                        ),
-                      )
-                    : null,
+              child: buildAnimatedSwitcher(
+                child: buildIndicator(theme),
               ),
             ),
             Positioned(
@@ -112,6 +105,85 @@ class NovelGridCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildAnimatedSwitcher({
+    required Widget child,
+  }) {
+    return AnimatedSwitcher(
+      duration: kShortAnimationDuration,
+      switchInCurve: Curves.fastOutSlowIn,
+      switchOutCurve: Curves.fastOutSlowIn,
+      transitionBuilder: (child, animation) => ScaleTransition(
+        scale: animation,
+        child: child,
+      ),
+      child: child,
+    );
+  }
+
+  Widget buildIndicator(ThemeData theme) {
+    if (favourite) {
+      return CircleAvatar(
+        key: const Key("favourite"),
+        radius: 16,
+        backgroundColor: theme.colorScheme.secondary.withAlpha(200),
+        child: const Icon(
+          Icons.favorite,
+          size: 16,
+        ),
+      );
+    } else if (selected) {
+      return CircleAvatar(
+        key: const Key("selected"),
+        radius: 16,
+        backgroundColor: theme.colorScheme.secondary.withAlpha(200),
+        child: const Icon(
+          Icons.check,
+          size: 16,
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+}
+
+class AnimatedOpacityBuilder extends ImplicitlyAnimatedWidget {
+  const AnimatedOpacityBuilder({
+    super.key,
+    super.curve = Curves.fastOutSlowIn,
+    required super.duration,
+    required this.builder,
+    required this.opacity,
+  }) : assert(opacity >= 0.0 && opacity <= 1.0);
+
+  final double opacity;
+
+  final Widget Function(BuildContext context, double value) builder;
+
+  @override
+  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() =>
+      AnimatedOpacityBuilderState();
+}
+
+class AnimatedOpacityBuilderState
+    extends AnimatedWidgetBaseState<AnimatedOpacityBuilder> {
+  Tween<double>? _opacity;
+
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _opacity = visitor(_opacity, widget.opacity,
+            (dynamic value) => Tween<double>(begin: value as double))
+        as Tween<double>?;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder(
+      context,
+      _opacity!.evaluate(animation),
     );
   }
 }

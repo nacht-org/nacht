@@ -34,7 +34,7 @@ class ChapterListBottomSheet extends ConsumerWidget {
                   SortPreference.values.length,
                   (index) {
                     final current = SortPreference.values[index];
-                    return FilterChip(
+                    return ChoiceChip(
                       label: Text(current.name),
                       onSelected: (_) => notifier.setSort(current),
                       selected: current == sort,
@@ -62,7 +62,7 @@ class ChapterListBottomSheet extends ConsumerWidget {
                 runSpacing: 4.0,
                 children: List.generate(OrderPreference.values.length, (index) {
                   final current = OrderPreference.values[index];
-                  return FilterChip(
+                  return ChoiceChip(
                     label: Text(current.name),
                     onSelected: (_) => notifier.setOrder(current),
                     selected: current == order,

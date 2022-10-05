@@ -24,7 +24,8 @@ class GetChapters {
         _database.chapters.volumeId.equalsExp(_database.volumes.id),
       )
     ])
-      ..where(_database.chapters.novelId.equals(novelId));
+      ..where(_database.chapters.novelId.equals(novelId))
+      ..orderBy([OrderingTerm.asc(_database.chapters.chapterIndex)]);
 
     final results = await query.get();
 

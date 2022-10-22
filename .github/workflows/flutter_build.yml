@@ -1,0 +1,50 @@
+name: CD
+
+on:
+  release:
+    types: [published]
+
+env:
+  flutter-channel: "stable"
+
+jobs:
+  build_apk:
+    name: Build nacht .apk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.flutter-channel }}
+
+      - name: Storing key.properties
+        run: echo "${{ secrets.KEY_PROPERTIES }}" | base64 --decode > android/key.properties
+
+      - name: Storing keystore
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/key.jks
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Generate files
+        run: flutter pub run build_runner build
+
+      - name: Build APK
+        run: flutter build apk --split-per-abi --release
+      
+      - name: Upload .apks to artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          tag: ${{ github.event.release.tag_name }}
+          asset_name: "app bundle"
+          overwrite: true
+          file_glob: true
+          file: build/app/outputs/flutter-apk/app-*

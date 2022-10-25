@@ -40,7 +40,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.connect() : super.connect(_createDriftIsolateAndConnect());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 1;
 
   @override
   MigrationStrategy get migration {
@@ -131,21 +131,6 @@ class AppDatabase extends _$AppDatabase {
       },
       onUpgrade: (Migrator m, int from, int to) async {
         await customStatement('PRAGMA foreign_keys = OFF');
-
-        if (from < 2) {
-          await batch((batch) {
-            batch.insertAll(assetTypes, [
-              AssetTypesCompanion.insert(
-                  id: const Value(8), mimetype: 'text/html'),
-              AssetTypesCompanion.insert(
-                  id: const Value(9), mimetype: 'text/css'),
-            ]);
-          });
-        }
-
-        if (from < 3) {
-          await m.createTable(readingHistories);
-        }
 
         // Assert that the schema is valid after migrations
         if (kDebugMode) {

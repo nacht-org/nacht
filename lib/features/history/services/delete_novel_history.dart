@@ -18,13 +18,8 @@ class DeleteNovelHistory {
 
   /// Delete all history entries from specified novels of [novelIds]
   Future<void> execute(Iterable<int> novelIds) async {
-    await _database.batch((batch) {
-      for (final id in novelIds) {
-        batch.deleteWhere<$ReadingHistoriesTable, ReadingHistory>(
-          _database.readingHistories,
-          (tbl) => tbl.novelId.equals(id),
-        );
-      }
-    });
+    await (_database.delete(_database.readingHistories)
+          ..where((tbl) => tbl.novelId.isIn(novelIds)))
+        .go();
   }
 }

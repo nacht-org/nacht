@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final messageServiceProvider = Provider<MessageService>(
-  (ref) => MessageService(read: ref.read),
+  (ref) => MessageService(ref: ref),
   name: 'MessageServiceProvider',
 );
 
 class MessageService {
   MessageService({
-    required Reader read,
-  }) : _read = read;
+    required Ref ref,
+  }) : _ref = ref;
 
-  final Reader _read;
+  final Ref _ref;
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showText(
     String text,
@@ -45,7 +45,7 @@ class MessageService {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
     SnackBar snackBar,
   ) {
-    final context = _read(routerProvider).navigatorKey.currentContext;
+    final context = _ref.read(routerProvider).navigatorKey.currentContext;
     assert(context != null);
 
     final messenger = ScaffoldMessenger.maybeOf(context!);

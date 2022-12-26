@@ -19,71 +19,127 @@ class _$AppRouter extends RootStackRouter {
   final Map<String, PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const SplashPage());
+        routeData: routeData,
+        child: const SplashPage(),
+      );
     },
     HomeRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const HomePage());
+        routeData: routeData,
+        child: const HomePage(),
+      );
     },
     PopularRoute.name: (routeData) {
       final args = routeData.argsAs<PopularRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData,
-          child:
-              PopularPage(key: args.key, crawlerFactory: args.crawlerFactory));
+        routeData: routeData,
+        child: PopularPage(
+          key: args.key,
+          crawlerFactory: args.crawlerFactory,
+        ),
+      );
     },
     NovelRoute.name: (routeData) {
       final args = routeData.argsAs<NovelRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: NovelPage(key: args.key, type: args.type));
+        routeData: routeData,
+        child: NovelPage(
+          key: args.key,
+          type: args.type,
+        ),
+      );
     },
     WebViewRoute.name: (routeData) {
       final args = routeData.argsAs<WebViewRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: WebViewPage(
-              key: args.key, title: args.title, initialUrl: args.initialUrl));
+        routeData: routeData,
+        child: WebViewPage(
+          key: args.key,
+          title: args.title,
+          initialUrl: args.initialUrl,
+        ),
+      );
     },
     CategoryRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const CategoryPage());
+        routeData: routeData,
+        child: const CategoryPage(),
+      );
     },
     ReaderRoute.name: (routeData) {
       final args = routeData.argsAs<ReaderRouteArgs>();
       return MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: ReaderPage(
-              key: args.key, novel: args.novel, chapter: args.chapter));
+        routeData: routeData,
+        child: ReaderPage(
+          key: args.key,
+          novel: args.novel,
+          chapter: args.chapter,
+        ),
+      );
     },
     SettingsRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const SettingsPage());
+        routeData: routeData,
+        child: const SettingsPage(),
+      );
     },
     AboutRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
-          routeData: routeData, child: const AboutPage());
-    }
+        routeData: routeData,
+        child: const AboutPage(),
+      );
+    },
   };
 
   @override
   List<RouteConfig> get routes => [
-        RouteConfig(SplashRoute.name, path: '/'),
-        RouteConfig(HomeRoute.name, path: '/home'),
-        RouteConfig(PopularRoute.name, path: '/popular'),
-        RouteConfig(NovelRoute.name, path: '/novel'),
-        RouteConfig(WebViewRoute.name, path: '/webview'),
-        RouteConfig(CategoryRoute.name, path: '/categories'),
-        RouteConfig(ReaderRoute.name, path: '/reader'),
-        RouteConfig(SettingsRoute.name, path: '/settings'),
-        RouteConfig(AboutRoute.name, path: '/about')
+        RouteConfig(
+          SplashRoute.name,
+          path: '/',
+        ),
+        RouteConfig(
+          HomeRoute.name,
+          path: '/home',
+        ),
+        RouteConfig(
+          PopularRoute.name,
+          path: '/popular',
+        ),
+        RouteConfig(
+          NovelRoute.name,
+          path: '/novel',
+        ),
+        RouteConfig(
+          WebViewRoute.name,
+          path: '/webview',
+        ),
+        RouteConfig(
+          CategoryRoute.name,
+          path: '/categories',
+        ),
+        RouteConfig(
+          ReaderRoute.name,
+          path: '/reader',
+        ),
+        RouteConfig(
+          SettingsRoute.name,
+          path: '/settings',
+        ),
+        RouteConfig(
+          AboutRoute.name,
+          path: '/about',
+        ),
       ];
 }
 
 /// generated route for
 /// [SplashPage]
 class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute() : super(SplashRoute.name, path: '/');
+  const SplashRoute()
+      : super(
+          SplashRoute.name,
+          path: '/',
+        );
 
   static const String name = 'SplashRoute';
 }
@@ -91,7 +147,11 @@ class SplashRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute() : super(HomeRoute.name, path: '/home');
+  const HomeRoute()
+      : super(
+          HomeRoute.name,
+          path: '/home',
+        );
 
   static const String name = 'HomeRoute';
 }
@@ -99,16 +159,26 @@ class HomeRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [PopularPage]
 class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
-  PopularRoute({Key? key, required CrawlerFactory crawlerFactory})
-      : super(PopularRoute.name,
-            path: '/popular',
-            args: PopularRouteArgs(key: key, crawlerFactory: crawlerFactory));
+  PopularRoute({
+    Key? key,
+    required CrawlerFactory crawlerFactory,
+  }) : super(
+          PopularRoute.name,
+          path: '/popular',
+          args: PopularRouteArgs(
+            key: key,
+            crawlerFactory: crawlerFactory,
+          ),
+        );
 
   static const String name = 'PopularRoute';
 }
 
 class PopularRouteArgs {
-  const PopularRouteArgs({this.key, required this.crawlerFactory});
+  const PopularRouteArgs({
+    this.key,
+    required this.crawlerFactory,
+  });
 
   final Key? key;
 
@@ -123,15 +193,26 @@ class PopularRouteArgs {
 /// generated route for
 /// [NovelPage]
 class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
-  NovelRoute({Key? key, required NovelType type})
-      : super(NovelRoute.name,
-            path: '/novel', args: NovelRouteArgs(key: key, type: type));
+  NovelRoute({
+    Key? key,
+    required NovelType type,
+  }) : super(
+          NovelRoute.name,
+          path: '/novel',
+          args: NovelRouteArgs(
+            key: key,
+            type: type,
+          ),
+        );
 
   static const String name = 'NovelRoute';
 }
 
 class NovelRouteArgs {
-  const NovelRouteArgs({this.key, required this.type});
+  const NovelRouteArgs({
+    this.key,
+    required this.type,
+  });
 
   final Key? key;
 
@@ -146,18 +227,29 @@ class NovelRouteArgs {
 /// generated route for
 /// [WebViewPage]
 class WebViewRoute extends PageRouteInfo<WebViewRouteArgs> {
-  WebViewRoute({Key? key, required String title, required String initialUrl})
-      : super(WebViewRoute.name,
-            path: '/webview',
-            args: WebViewRouteArgs(
-                key: key, title: title, initialUrl: initialUrl));
+  WebViewRoute({
+    Key? key,
+    required String title,
+    required String initialUrl,
+  }) : super(
+          WebViewRoute.name,
+          path: '/webview',
+          args: WebViewRouteArgs(
+            key: key,
+            title: title,
+            initialUrl: initialUrl,
+          ),
+        );
 
   static const String name = 'WebViewRoute';
 }
 
 class WebViewRouteArgs {
-  const WebViewRouteArgs(
-      {this.key, required this.title, required this.initialUrl});
+  const WebViewRouteArgs({
+    this.key,
+    required this.title,
+    required this.initialUrl,
+  });
 
   final Key? key;
 
@@ -174,7 +266,11 @@ class WebViewRouteArgs {
 /// generated route for
 /// [CategoryPage]
 class CategoryRoute extends PageRouteInfo<void> {
-  const CategoryRoute() : super(CategoryRoute.name, path: '/categories');
+  const CategoryRoute()
+      : super(
+          CategoryRoute.name,
+          path: '/categories',
+        );
 
   static const String name = 'CategoryRoute';
 }
@@ -182,17 +278,29 @@ class CategoryRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [ReaderPage]
 class ReaderRoute extends PageRouteInfo<ReaderRouteArgs> {
-  ReaderRoute(
-      {Key? key, required NovelData novel, required ChapterData chapter})
-      : super(ReaderRoute.name,
-            path: '/reader',
-            args: ReaderRouteArgs(key: key, novel: novel, chapter: chapter));
+  ReaderRoute({
+    Key? key,
+    required NovelData novel,
+    required ChapterData chapter,
+  }) : super(
+          ReaderRoute.name,
+          path: '/reader',
+          args: ReaderRouteArgs(
+            key: key,
+            novel: novel,
+            chapter: chapter,
+          ),
+        );
 
   static const String name = 'ReaderRoute';
 }
 
 class ReaderRouteArgs {
-  const ReaderRouteArgs({this.key, required this.novel, required this.chapter});
+  const ReaderRouteArgs({
+    this.key,
+    required this.novel,
+    required this.chapter,
+  });
 
   final Key? key;
 
@@ -209,7 +317,11 @@ class ReaderRouteArgs {
 /// generated route for
 /// [SettingsPage]
 class SettingsRoute extends PageRouteInfo<void> {
-  const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
+  const SettingsRoute()
+      : super(
+          SettingsRoute.name,
+          path: '/settings',
+        );
 
   static const String name = 'SettingsRoute';
 }
@@ -217,7 +329,11 @@ class SettingsRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [AboutPage]
 class AboutRoute extends PageRouteInfo<void> {
-  const AboutRoute() : super(AboutRoute.name, path: '/about');
+  const AboutRoute()
+      : super(
+          AboutRoute.name,
+          path: '/about',
+        );
 
   static const String name = 'AboutRoute';
 }

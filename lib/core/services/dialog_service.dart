@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final dialogServiceProvider = Provider<DialogService>(
-  (ref) => DialogService(read: ref.read),
+  (ref) => DialogService(ref: ref),
   name: 'DIalogServiceProvider',
 );
 
 class DialogService with LoggerMixin {
-  DialogService({required Reader read}) : _read = read;
+  DialogService({required Ref ref}) : _ref = ref;
 
-  final Reader _read;
+  final Ref _ref;
 
   Future<T?> show<T>({required Widget child}) {
-    final context = _read(routerProvider).navigatorKey.currentContext;
+    final context = _ref.read(routerProvider).navigatorKey.currentContext;
     assert(context != null);
 
     return showDialog<T>(

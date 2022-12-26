@@ -9,7 +9,7 @@ import '../services/services.dart';
 final popularFetchFamily = StateNotifierProvider.autoDispose
     .family<PopularFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, crawler) => PopularFetchNotifier(
-    read: ref.read,
+    ref: ref,
     state: FetchInfo.initial(),
     fetchPopular: ref.watch(fetchPopularProvider),
   ),
@@ -18,14 +18,14 @@ final popularFetchFamily = StateNotifierProvider.autoDispose
 
 class PopularFetchNotifier extends StateNotifier<FetchInfo> {
   PopularFetchNotifier({
-    required Reader read,
+    required Ref ref,
     required FetchInfo state,
     required FetchPopular fetchPopular,
-  })  : _read = read,
+  })  : _ref = ref,
         _fetchPopular = fetchPopular,
         super(state);
 
-  final Reader _read;
+  final Ref _ref;
   final FetchPopular _fetchPopular;
 
   void restart(CrawlerInfo crawler) {
@@ -48,7 +48,7 @@ class PopularFetchNotifier extends StateNotifier<FetchInfo> {
           state = state.copyWith(error: failure.message, isLoading: false);
         } else {
           state = state.copyWith(isLoading: false);
-          _read(messageServiceProvider).showText(failure.message);
+          _ref.read(messageServiceProvider).showText(failure.message);
         }
       },
       (data) {

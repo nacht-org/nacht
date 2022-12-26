@@ -10,7 +10,7 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
     .family<SearchFetchNotifier, FetchInfo, CrawlerInfo>(
   (ref, holding) {
     var notifier = SearchFetchNotifier(
-      read: ref.read,
+      ref: ref,
       crawler: holding,
       fetchSearch: ref.watch(fetchSearchProvider),
     );
@@ -22,17 +22,17 @@ final searchFetchProvider = StateNotifierProvider.autoDispose
 
 class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
   SearchFetchNotifier({
-    required Reader read,
+    required Ref ref,
     required CrawlerInfo crawler,
     required FetchSearch fetchSearch,
-  })  : _read = read,
+  })  : _ref = ref,
         _crawler = crawler,
         _fetchSearch = fetchSearch,
         super(FetchInfo.initial());
 
   String _currentQuery = '';
 
-  final Reader _read;
+  final Ref _ref;
   final CrawlerInfo _crawler;
   final FetchSearch _fetchSearch;
 
@@ -67,7 +67,7 @@ class SearchFetchNotifier extends StateNotifier<FetchInfo> with LoggerMixin {
           state = state.copyWith(error: failure.message, isLoading: false);
         } else {
           state = state.copyWith(isLoading: false);
-          _read(messageServiceProvider).showText(failure.message);
+          _ref.read(messageServiceProvider).showText(failure.message);
         }
       },
       (data) {

@@ -36,20 +36,20 @@ dependencies:
   shared_preferences: ^2.0.15
 
   # Network.
-  connectivity_plus: ^2.3.0
+  connectivity_plus: ^3.0.2
   dio: ^4.0.6
   cached_network_image: ^3.2.1
 
   # Widgets.
   scrollable_positioned_list: ^0.3.4
-  flutter_html: ^3.0.0-alpha.3
-  flutter_html_table: ^3.0.0-alpha.3
+  flutter_html: ^3.0.0-alpha.6
+  flutter_html_table: ^3.0.0-alpha.4
 
   # Misc.
   url_launcher: ^6.0.20
-  webview_flutter: ^2.8.0
-  webview_flutter_android: 2.8.0
-  permission_handler: ^9.2.0
+  webview_flutter: ^4.0.1
+  webview_flutter_android: ^3.1.1
+  permission_handler: ^10.2.0
 
   # App specific
   nacht_sources:
@@ -58,8 +58,8 @@ dependencies:
 
   intl: ^0.17.0
   google_fonts: ^3.0.1
-  package_info_plus: ^1.4.2
-  share_plus: ^4.0.9
+  package_info_plus: ^3.0.2
+  share_plus: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +71,7 @@ dev_dependencies:
   mockito: ^5.1.0
   freezed: ^2.0.3+1
   drift_dev: ^2.1.0
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
 
 flutter:
   uses-material-design: true

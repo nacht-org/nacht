@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final novelFamily = StateNotifierProvider.autoDispose
     .family<NovelNotifier, NovelData, NovelInput>(
   (ref, data) => NovelNotifier(
-    read: ref.read,
+    ref: ref,
     state: data.novel,
     fetchNovel: ref.watch(fetchNovelProvider),
     getNovelById: ref.watch(getNovelByIdProvider),
@@ -28,14 +28,14 @@ class NovelInput extends Equatable {
 
 class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   NovelNotifier({
-    required Reader read,
+    required Ref ref,
     required NovelData state,
     required FetchNovel fetchNovel,
     required GetNovelById getNovelById,
     required GetNovelCategoryMap getNovelCategoryMap,
     required ChangeNovelCategories changeNovelCategories,
     required GetFirstUnreadChapter getFirstUnreadChapter,
-  })  : _read = read,
+  })  : _ref = ref,
         _fetchNovel = fetchNovel,
         _getNovelById = getNovelById,
         _getNovelCategoryMap = getNovelCategoryMap,
@@ -43,7 +43,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
         _getFirstUnreadChapter = getFirstUnreadChapter,
         super(state);
 
-  final Reader _read;
+  final Ref _ref;
 
   final FetchNovel _fetchNovel;
   final GetNovelById _getNovelById;
@@ -53,7 +53,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
 
   Future<void> fetch(CrawlerInfo? crawler) async {
     if (crawler == null) {
-      _read(messageServiceProvider).showText('Unable to parse.');
+      _ref.read(messageServiceProvider).showText('Unable to parse.');
       return;
     }
 
@@ -63,7 +63,7 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     // TODO: add error to partial view
     if (failure != null) {
       log.warning(failure);
-      _read(messageServiceProvider).showText(failure.message);
+      _ref.read(messageServiceProvider).showText(failure.message);
       return;
     }
 
@@ -71,16 +71,16 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     result.fold(
       (failure) {
         log.warning(failure);
-        _read(messageServiceProvider).showText(failure.message);
+        _ref.read(messageServiceProvider).showText(failure.message);
       },
       (data) {
         state = data;
 
         // Chapter list may be changed after updating the novel from source.
         // So reload if chapter list has been previously loaded.
-        final chapterList = _read(chapterListFamily(state.id));
+        final chapterList = _ref.read(chapterListFamily(state.id));
         if (chapterList.isLoaded) {
-          _read(chapterListFamily(state.id).notifier).reload();
+          _ref.read(chapterListFamily(state.id).notifier).reload();
         }
       },
     );
@@ -100,9 +100,10 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
         for (final entry in categories.entries) entry.key: !entry.value
       };
     } else {
-      categories = await _read(dialogServiceProvider).show<CategorySelection?>(
-        child: SetCategoriesDialog(categories: categories),
-      );
+      categories =
+          await _ref.read(dialogServiceProvider).show<CategorySelection?>(
+                child: SetCategoriesDialog(categories: categories),
+              );
     }
 
     // Dont do anything if the dialog was cancelled.
@@ -131,10 +132,10 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     final unread = await _getFirstUnreadChapter.execute(state.id);
 
     unread.fold(
-      (failure) => _read(messageServiceProvider).showText(failure.message),
-      (data) => _read(routerProvider).push(
-        ReaderRoute(novel: state, chapter: data),
-      ),
+      (failure) => _ref.read(messageServiceProvider).showText(failure.message),
+      (data) => _ref.read(routerProvider).push(
+            ReaderRoute(novel: state, chapter: data),
+          ),
     );
   }
 }

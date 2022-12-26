@@ -25,6 +25,7 @@ class GetIsConnectionAvailable {
       case ConnectivityResult.wifi:
       case ConnectivityResult.ethernet:
       case ConnectivityResult.mobile:
+      case ConnectivityResult.vpn:
         return true;
       case ConnectivityResult.none:
         return false;

@@ -8,7 +8,7 @@ part 'intermediate_provider.freezed.dart';
 final intermediateProvider = StateNotifierProvider.autoDispose
     .family<IntermediateNotifier, IntermediateState, NovelType>(
   (ref, data) => IntermediateNotifier(
-    read: ref.read,
+    ref: ref,
     state: IntermediateState(novel: data, error: null),
     fetchNovel: ref.watch(fetchNovelProvider),
     getNovelByUrl: ref.watch(getNovelByUrlProvider),
@@ -36,23 +36,23 @@ class IntermediateState with _$IntermediateState {
 class IntermediateNotifier extends StateNotifier<IntermediateState>
     with LoggerMixin {
   IntermediateNotifier({
-    required Reader read,
+    required Ref ref,
     required IntermediateState state,
     required FetchNovel fetchNovel,
     required GetNovelByUrl getNovelByUrl,
-  })  : _read = read,
+  })  : _ref = ref,
         _fetchNovel = fetchNovel,
         _getNovelByUrl = getNovelByUrl,
         super(state);
 
-  final Reader _read;
+  final Ref _ref;
 
   final FetchNovel _fetchNovel;
   final GetNovelByUrl _getNovelByUrl;
 
   Future<void> fetch(CrawlerInfo? crawler) async {
     if (crawler == null) {
-      _read(messageServiceProvider).showText('Unable to parse.');
+      _ref.read(messageServiceProvider).showText('Unable to parse.');
       return;
     }
 

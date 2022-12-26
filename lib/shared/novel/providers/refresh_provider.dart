@@ -4,7 +4,7 @@ import 'package:nacht/shared/shared.dart';
 
 final refreshProvider = StateNotifierProvider<RefreshNotifier, bool>(
   (ref) => RefreshNotifier(
-    read: ref.read,
+    ref: ref,
     refreshNovels: ref.watch(refreshNovelsProvider),
   ),
   name: "RefreshProvider",
@@ -12,13 +12,13 @@ final refreshProvider = StateNotifierProvider<RefreshNotifier, bool>(
 
 class RefreshNotifier extends StateNotifier<bool> with LoggerMixin {
   RefreshNotifier({
-    required Reader read,
+    required Ref ref,
     required RefreshNovels refreshNovels,
-  })  : _read = read,
+  })  : _ref = ref,
         _refreshNovels = refreshNovels,
         super(false);
 
-  final Reader _read;
+  final Ref _ref;
   final RefreshNovels _refreshNovels;
 
   Future<void> refreshAll() async {
@@ -56,7 +56,7 @@ class RefreshNotifier extends StateNotifier<bool> with LoggerMixin {
   bool get _isBusy => state;
 
   /// Shorthand to get message service
-  MessageService get _messageService => _read(messageServiceProvider);
+  MessageService get _messageService => _ref.read(messageServiceProvider);
 
   /// Show busy message text
   void _showBusy() {

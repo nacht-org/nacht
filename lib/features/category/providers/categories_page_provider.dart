@@ -9,7 +9,7 @@ final categoriesPageProvider =
     StateNotifierProvider.autoDispose<CategoriesNotifier, List<CategoryData>>(
   (ref) {
     final categoriesNotifier = CategoriesNotifier(
-      read: ref.read,
+      ref: ref,
       state: [],
       addCategory: ref.watch(addCategoryProvider),
       editCategory: ref.watch(editCategoryProvider),
@@ -28,19 +28,19 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>>
     with LoggerMixin {
   CategoriesNotifier({
     required List<CategoryData> state,
-    required Reader read,
+    required Ref ref,
     required AddCategory addCategory,
     required EditCategory editCategory,
     required RemoveCategory removeCategory,
     required UpdateCategoriesIndex updateCategoriesIndex,
-  })  : _read = read,
+  })  : _ref = ref,
         _addCategory = addCategory,
         _editCategory = editCategory,
         _removeCategory = removeCategory,
         _updateCategoriesIndex = updateCategoriesIndex,
         super(state);
 
-  final Reader _read;
+  final Ref _ref;
 
   final AddCategory _addCategory;
   final EditCategory _editCategory;
@@ -48,7 +48,8 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>>
   final UpdateCategoriesIndex _updateCategoriesIndex;
 
   Future<void> reload() async {
-    final data = _read(categoriesProvider)
+    final data = _ref
+        .read(categoriesProvider)
         .where((element) => !element.isDefault)
         .toList();
 
@@ -57,7 +58,9 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>>
 
   Future<void> add(String name) async {
     if (name.isEmpty) {
-      _read(messageServiceProvider).showText('Category name cannot be empty.');
+      _ref
+          .read(messageServiceProvider)
+          .showText('Category name cannot be empty.');
       return;
     }
 
@@ -75,7 +78,9 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>>
 
   Future<void> edit(CategoryData category, String name) async {
     if (name.isEmpty) {
-      _read(messageServiceProvider).showText('Category name cannot be empty.');
+      _ref
+          .read(messageServiceProvider)
+          .showText('Category name cannot be empty.');
       return;
     } else if (category.name == name) {
       return;
@@ -103,7 +108,7 @@ class CategoriesNotifier extends StateNotifier<List<CategoryData>>
         if (!ids.contains(category.id)) category
     ];
 
-    _read(messageServiceProvider).showUndo(
+    _ref.read(messageServiceProvider).showUndo(
       '${ids.length} categories removed',
       onUndo: () {
         log.fine('undid ${ids.length} category removes');

@@ -13,12 +13,16 @@ class WebViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(initialUrl));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
-      body: WebView(
-        initialUrl: initialUrl,
+      body: WebViewWidget(
+        controller: controller,
       ),
     );
   }

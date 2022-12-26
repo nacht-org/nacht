@@ -3,7 +3,7 @@ import 'package:nacht/shared/shared.dart';
 
 final getNovelCategoryMapProvider = Provider<GetNovelCategoryMap>(
   (ref) => GetNovelCategoryMap(
-    read: ref.read,
+    ref: ref,
     getNovelCategories: ref.watch(getNovelCategoriesProvider),
   ),
   name: 'GetNovelCategoryMapProvider',
@@ -11,19 +11,19 @@ final getNovelCategoryMapProvider = Provider<GetNovelCategoryMap>(
 
 class GetNovelCategoryMap {
   GetNovelCategoryMap({
-    required Reader read,
+    required Ref ref,
     required GetNovelCategories getNovelCategories,
-  })  : _read = read,
+  })  : _ref = ref,
         _getNovelCategories = getNovelCategories;
 
-  final Reader _read;
+  final Ref _ref;
   final GetNovelCategories _getNovelCategories;
 
   Future<Map<CategoryData, bool>> execute(int novelId) async {
     final selected = await _getNovelCategories.execute(novelId);
     final selectedIds = selected.map((category) => category.id).toSet();
 
-    final categories = _read(categoriesProvider);
+    final categories = _ref.read(categoriesProvider);
     return {
       for (final category in categories)
         category: selectedIds.contains(category.id)

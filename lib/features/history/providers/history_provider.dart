@@ -7,7 +7,7 @@ import '../services/services.dart';
 final historyProvider =
     StateNotifierProvider<HistoryNotifier, List<HistoryData>>(
   (ref) => HistoryNotifier(
-    read: ref.read,
+    ref: ref,
     watchHistory: ref.watch(watchHistoryProvider),
     deleteHistory: ref.watch(deleteHistoryProvider),
     deleteNovelHistory: ref.watch(deleteNovelHistoryProvider),
@@ -16,17 +16,17 @@ final historyProvider =
 
 class HistoryNotifier extends StateNotifier<List<HistoryData>> {
   HistoryNotifier({
-    required Reader read,
+    required Ref ref,
     required WatchHistory watchHistory,
     required DeleteHistory deleteHistory,
     required DeleteNovelHistory deleteNovelHistory,
-  })  : _read = read,
+  })  : _ref = ref,
         _watchHistory = watchHistory,
         _deleteHistory = deleteHistory,
         _deleteNovelHistory = deleteNovelHistory,
         super(const []);
 
-  final Reader _read;
+  final Ref _ref;
   final WatchHistory _watchHistory;
   final DeleteHistory _deleteHistory;
   final DeleteNovelHistory _deleteNovelHistory;
@@ -37,12 +37,12 @@ class HistoryNotifier extends StateNotifier<List<HistoryData>> {
   }
 
   Future<void> deleteHistory() async {
-    final selected = _read(historySelectionProvider).selected;
+    final selected = _ref.read(historySelectionProvider).selected;
     await _deleteHistory.execute(selected);
   }
 
   Future<void> deleteNovelHistory() async {
-    final selected = _read(historySelectionProvider).selected;
+    final selected = _ref.read(historySelectionProvider).selected;
     final novelIds = state
         .where((history) => selected.contains(history.id))
         .map((history) => history.novel.id);

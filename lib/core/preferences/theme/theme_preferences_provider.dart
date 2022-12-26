@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
-import 'theme.dart';
 
 final themePreferencesProvider =
     StateNotifierProvider<ThemePreferencesNotifier, ThemePreferences>(

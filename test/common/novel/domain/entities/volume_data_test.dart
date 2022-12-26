@@ -3,7 +3,7 @@ import 'package:nacht/database/database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tModel = Volume(
+  const tModel = Volume(
     id: 3,
     volumeIndex: 3,
     name: 'Volume 3',

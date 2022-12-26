@@ -4,7 +4,7 @@ import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tMetaData = MetaEntry(
+  const tMetaData = MetaEntry(
     id: 6,
     name: 'subject',
     value: 'tvalue',

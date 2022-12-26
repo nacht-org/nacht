@@ -3,8 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
 
-import '../novel.dart';
-
 final setReadAtProvider = Provider<SetReadAt>(
   (ref) => SetReadAt(
     database: ref.watch(databaseProvider),

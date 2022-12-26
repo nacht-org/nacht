@@ -36,6 +36,9 @@ class Description extends StatelessWidget {
             ),
           ),
           Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -49,11 +52,11 @@ class Description extends StatelessWidget {
               ),
               height: 8 * 8,
             ),
+          ),
+          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
-          ),
-          Positioned(
             child: Center(
               child: Container(
                 decoration: BoxDecoration(
@@ -68,9 +71,6 @@ class Description extends StatelessWidget {
                 child: const Icon(Icons.keyboard_arrow_down),
               ),
             ),
-            bottom: 0,
-            left: 0,
-            right: 0,
           ),
         ],
       );

@@ -7,8 +7,6 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../models/models.dart';
-
 class SliverFetchGrid extends StatelessWidget {
   const SliverFetchGrid({
     Key? key,

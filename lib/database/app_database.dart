@@ -173,7 +173,7 @@ void _startBackground(_IsolateStartRequest request) {
   final executor = NativeDatabase(File(request.targetPath));
 
   final driftIsolate = DriftIsolate.inCurrent(
-    () => DatabaseConnection.fromExecutor(executor),
+    () => DatabaseConnection(executor),
   );
 
   request.sendDriftIsolate.send(driftIsolate);

@@ -29,7 +29,7 @@ class ReaderBody extends HookConsumerWidget {
         ref.watch(historySessionProvider(reader.novel.id).notifier);
 
     if (crawlerFactory == null) {
-      return Center(
+      return const Center(
         child: Text('uh oh.'),
       );
     }

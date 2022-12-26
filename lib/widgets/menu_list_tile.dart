@@ -36,7 +36,7 @@ class MenuListTile<T> extends StatelessWidget {
               child: Text(
                 active.label,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.textTheme.caption?.color,
+                  color: theme.textTheme.bodySmall?.color,
                 ),
               ),
             ),
@@ -45,7 +45,7 @@ class MenuListTile<T> extends StatelessWidget {
         ),
       ),
       onTap: () async {
-        final overlay = Overlay.of(context)!.context.findRenderObject()!;
+        final overlay = Overlay.of(context).context.findRenderObject()!;
         final tile = context.findRenderObject() as RenderBox;
 
         final position = RelativeRect.fromRect(

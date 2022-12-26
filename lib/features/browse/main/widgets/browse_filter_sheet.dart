@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/widgets/widgets.dart';
 
 class BrowseFilterSheet extends ConsumerWidget {
   const BrowseFilterSheet({Key? key, required this.scrollController})

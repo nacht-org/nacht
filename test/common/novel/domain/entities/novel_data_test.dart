@@ -4,7 +4,7 @@ import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tModel = Novel(
+  const tModel = Novel(
     id: 10,
     title: 'my novel',
     author: 'my name',

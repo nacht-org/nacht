@@ -1,8 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/database/database.dart';
 
-import 'chapter_data.dart';
-
 part 'volume_data.freezed.dart';
 
 @freezed

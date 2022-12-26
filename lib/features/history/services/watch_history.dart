@@ -3,8 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/database/database.dart';
 import 'package:nacht/shared/shared.dart';
 
-import '../models/models.dart';
-
 final watchHistoryProvider = Provider<WatchHistory>(
   (ref) => WatchHistory(
     database: ref.watch(databaseProvider),

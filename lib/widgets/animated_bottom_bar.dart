@@ -45,14 +45,9 @@ class AnimatedBottomBar extends StatelessWidget {
       curve: Curves.fastOutSlowIn,
     );
 
-    final offset = Tween(begin: const Offset(0, 1), end: const Offset(0, 0));
-
     return SizeTransition(
       sizeFactor: animation,
-      child: SlideTransition(
-        position: offset.animate(animation),
-        child: child,
-      ),
+      child: child,
     );
   }
 }

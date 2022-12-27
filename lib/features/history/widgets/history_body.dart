@@ -37,45 +37,43 @@ class HistoryBody extends HookConsumerWidget {
             onInversePressed: () => selectionNotifier.flipAll(getIds()),
           )
       ],
-      body: DestinationTransition(
-        child: Scrollbar(
-          interactive: true,
-          child: Consumer(
-            builder: (context, ref, child) {
-              final isEmpty =
-                  ref.watch(historyProvider.select((value) => value.isEmpty));
+      body: Scrollbar(
+        interactive: true,
+        child: Consumer(
+          builder: (context, ref, child) {
+            final isEmpty =
+                ref.watch(historyProvider.select((value) => value.isEmpty));
 
-              return CustomScrollView(
-                slivers: [
-                  if (!isEmpty)
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final entries = ref.watch(historyEntriesProvider);
+            return CustomScrollView(
+              slivers: [
+                if (!isEmpty)
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final entries = ref.watch(historyEntriesProvider);
 
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              final entry = entries[index];
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final entry = entries[index];
 
-                              return entry.when(
-                                date: (date) => RelativeDateTile(date: date),
-                                history: (history) =>
-                                    HistoryTile(history: history),
-                              );
-                            },
-                            childCount: entries.length,
-                          ),
-                        );
-                      },
-                    ),
-                  if (isEmpty)
-                    const SliverFillEmptyIndicator(
-                      child: Icon(Icons.history),
-                    ),
-                ],
-              );
-            },
-          ),
+                            return entry.when(
+                              date: (date) => RelativeDateTile(date: date),
+                              history: (history) =>
+                                  HistoryTile(history: history),
+                            );
+                          },
+                          childCount: entries.length,
+                        ),
+                      );
+                    },
+                  ),
+                if (isEmpty)
+                  const SliverFillEmptyIndicator(
+                    child: Icon(Icons.history),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

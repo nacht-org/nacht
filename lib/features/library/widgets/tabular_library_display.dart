@@ -78,16 +78,14 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
                 ),
         ),
       ],
-      body: DestinationTransition(
-        child: TabBarView(
-          controller: tabController,
-          children: widget.categories
-              .map((category) => CategoryGrid(
-                    category: category,
-                    pinned: true,
-                  ))
-              .toList(),
-        ),
+      body: TabBarView(
+        controller: tabController,
+        children: widget.categories
+            .map((category) => CategoryGrid(
+                  category: category,
+                  pinned: true,
+                ))
+            .toList(),
       ),
     );
   }

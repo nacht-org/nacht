@@ -47,13 +47,11 @@ class BrowsePage extends HookConsumerWidget {
                 ref.read(browseSearchProvider.notifier).search(text),
           )
       ],
-      body: DestinationTransition(
-        child: CustomScrollView(
-          slivers: [
-            if (!search.active) const SliverCrawlerList(),
-            if (search.active) const SliverSearchResult(),
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: [
+          if (!search.active) const SliverCrawlerList(),
+          if (search.active) const SliverSearchResult(),
+        ],
       ),
     );
   }

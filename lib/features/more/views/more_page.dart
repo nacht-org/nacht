@@ -17,31 +17,29 @@ class MorePage extends HookConsumerWidget {
           forceElevated: innerBoxIsScrolled,
         ),
       ],
-      body: DestinationTransition(
-        child: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: ListView(
-            padding: const EdgeInsets.all(0),
-            children: [
-              ListTile(
-                leading: const Icon(Icons.category),
-                title: const Text('Categories'),
-                onTap: () => context.router.push(const CategoryRoute()),
-              ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Settings'),
-                onTap: () => context.router.push(const SettingsRoute()),
-              ),
-              ListTile(
-                leading: const Icon(Icons.info),
-                title: const Text('About'),
-                onTap: () => context.router.push(const AboutRoute()),
-              ),
-            ],
-          ),
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: [
+            ListTile(
+              leading: const Icon(Icons.category),
+              title: const Text('Categories'),
+              onTap: () => context.router.push(const CategoryRoute()),
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () => context.router.push(const SettingsRoute()),
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('About'),
+              onTap: () => context.router.push(const AboutRoute()),
+            ),
+          ],
         ),
       ),
     );

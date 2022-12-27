@@ -105,44 +105,42 @@ class UpdatesView extends HookConsumerWidget {
           ),
         if (selectionActive) const UpdatesSelectionAppBar(),
       ],
-      body: DestinationTransition(
-        child: RefreshIndicator(
-          onRefresh: refreshNotifier.refreshAll,
-          child: Scrollbar(
-            child: Consumer(
-              builder: (context, ref, child) {
-                final updatesEmpty =
-                    ref.watch(updatesProvider.select((value) => value.isEmpty));
+      body: RefreshIndicator(
+        onRefresh: refreshNotifier.refreshAll,
+        child: Scrollbar(
+          child: Consumer(
+            builder: (context, ref, child) {
+              final updatesEmpty =
+                  ref.watch(updatesProvider.select((value) => value.isEmpty));
 
-                return CustomScrollView(
-                  slivers: [
-                    if (!updatesEmpty)
-                      Consumer(
-                        builder: (context, ref, child) {
-                          final updates = ref.watch(updatesProvider);
+              return CustomScrollView(
+                slivers: [
+                  if (!updatesEmpty)
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final updates = ref.watch(updatesProvider);
 
-                          return SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => updates[index].when(
-                                date: (date) => RelativeDateTile(date: date),
-                                chapter: (novel, chapter) => ChapterUpdateTile(
-                                  novel: novel,
-                                  chapter: chapter,
-                                ),
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => updates[index].when(
+                              date: (date) => RelativeDateTile(date: date),
+                              chapter: (novel, chapter) => ChapterUpdateTile(
+                                novel: novel,
+                                chapter: chapter,
                               ),
-                              childCount: updates.length,
                             ),
-                          );
-                        },
-                      ),
-                    if (updatesEmpty)
-                      const SliverFillEmptyIndicator(
-                        child: Icon(Icons.update),
-                      ),
-                  ],
-                );
-              },
-            ),
+                            childCount: updates.length,
+                          ),
+                        );
+                      },
+                    ),
+                  if (updatesEmpty)
+                    const SliverFillEmptyIndicator(
+                      child: Icon(Icons.update),
+                    ),
+                ],
+              );
+            },
           ),
         ),
       ),

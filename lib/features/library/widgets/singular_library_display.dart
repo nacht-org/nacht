@@ -43,11 +43,9 @@ class SingularLibraryDisplay extends HookConsumerWidget {
             },
           ),
       ],
-      body: DestinationTransition(
-        child: CategoryGrid(
-          category: category,
-          pinned: false,
-        ),
+      body: CategoryGrid(
+        category: category,
+        pinned: false,
       ),
     );
   }

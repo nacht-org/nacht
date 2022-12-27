@@ -11,9 +11,6 @@ class BrowsePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final search = ref.watch(browseSearchProvider);
 
-    final navigationNotifier = ref.watch(navigationProvider.notifier);
-    final controller = useNavigationScrollController(navigationNotifier);
-
     // Hide bottom navigation bar when searching.
     NavigationNotifier.handleHide(
       ref,
@@ -21,13 +18,11 @@ class BrowsePage extends HookConsumerWidget {
     );
 
     return NestedScrollView(
-      controller: controller,
-      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         if (!search.active)
           SliverAppBar(
             title: const Text('Browse'),
-            floating: true,
+            pinned: true,
             forceElevated: innerBoxIsScrolled,
             actions: [
               const BrowseSearchButton(),

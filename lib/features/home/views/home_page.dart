@@ -35,19 +35,6 @@ class HomePage extends HookWidget {
               ref.listen<NavigationInfo>(
                 navigationProvider,
                 (prev, next) {
-                  if (!next.forceHide && prev?.event != next.event) {
-                    next.event.when(
-                      delta: (delta) => controller.value -= delta * 0.01,
-                      end: () {
-                        if (controller.value >= 0.5) {
-                          controller.forward();
-                        } else {
-                          controller.reverse();
-                        }
-                      },
-                    );
-                  }
-
                   final prevForceHide = prev?.forceHide ?? false;
                   if (next.forceHide && !prevForceHide) {
                     controller.reverse();

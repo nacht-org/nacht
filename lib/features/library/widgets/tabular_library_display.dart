@@ -32,9 +32,6 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
     tabController =
         TabController(length: widget.categories.length, vsync: this);
     scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(navigationProvider.notifier).attach(scrollController);
-    });
   }
 
   @override
@@ -54,7 +51,6 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
 
     return NestedScrollView(
       controller: scrollController,
-      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverOverlapAbsorber(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
@@ -62,7 +58,6 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
               ? SliverSelectionAppBar(
                   title: Text("${selection.selected.length}"),
                   bottom: buildTabBar(),
-                  floating: true,
                   onSelectAllPressed: () async {
                     if (!tabController.indexIsChanging) {
                       selectionNotifier.addAll(await getIds());
@@ -97,7 +92,7 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
     );
   }
 
-  AlignTabBar buildTabBar() {
+  PreferredSizeWidget buildTabBar() {
     return AlignTabBar(
       child: TabBar(
         controller: tabController,
@@ -120,8 +115,6 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
   void dispose() {
     super.dispose();
     tabController.dispose();
-    // FIXME: at this point it is not safe to refer to this. make a reference using listen
-    ref.read(navigationProvider.notifier).detach(scrollController);
     scrollController.dispose();
   }
 }

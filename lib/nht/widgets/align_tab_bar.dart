@@ -4,7 +4,7 @@ class AlignTabBar extends StatelessWidget with PreferredSizeWidget {
   const AlignTabBar({
     Key? key,
     required this.child,
-    this.alignment = Alignment.centerLeft,
+    this.alignment = AlignmentDirectional.centerStart,
   }) : super(key: key);
 
   final AlignmentGeometry alignment;

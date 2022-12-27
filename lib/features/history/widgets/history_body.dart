@@ -12,9 +12,6 @@ class HistoryBody extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final navigationNotifier = ref.watch(navigationProvider.notifier);
-    final controller = useNavigationScrollController(navigationNotifier);
-
     final selectionActive = ref.watch(
         historySelectionProvider.select((selection) => selection.active));
     final selectionCount = ref.watch(historySelectionProvider
@@ -26,13 +23,11 @@ class HistoryBody extends HookConsumerWidget {
     }
 
     return NestedScrollView(
-      controller: controller,
-      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         if (!selectionActive)
           SliverAppBar(
             title: const Text("History"),
-            floating: true,
+            pinned: true,
             forceElevated: innerBoxIsScrolled,
           ),
         if (selectionActive)

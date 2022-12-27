@@ -74,9 +74,6 @@ class UpdatesView extends HookConsumerWidget {
       () => GlobalKey<RefreshIndicatorState>(),
     );
 
-    final navigationNotifier = ref.watch(navigationProvider.notifier);
-    final controller = useNavigationScrollController(navigationNotifier);
-
     final selectionActive = ref.watch(
       updatesSelectionProvider.select((selection) => selection.active),
     );
@@ -84,13 +81,11 @@ class UpdatesView extends HookConsumerWidget {
     final refreshNotifier = ref.watch(refreshProvider.notifier);
 
     return NestedScrollView(
-      controller: controller,
-      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         if (!selectionActive)
           SliverAppBar(
             title: const Text('Updates'),
-            floating: true,
+            pinned: true,
             forceElevated: innerBoxIsScrolled,
             actions: [
               Consumer(

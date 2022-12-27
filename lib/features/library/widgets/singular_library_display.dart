@@ -17,20 +17,15 @@ class SingularLibraryDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final navigationNotifier = ref.watch(navigationProvider.notifier);
-    final controller = useNavigationScrollController(navigationNotifier);
-
     final selection = ref.watch(librarySelectionProvider);
     final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
 
     return NestedScrollView(
-      controller: controller,
-      floatHeaderSlivers: true,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         if (!selection.active)
           SliverAppBar(
             title: const Text('Library'),
-            floating: true,
+            pinned: true,
             forceElevated: innerBoxIsScrolled,
           ),
         if (selection.active)

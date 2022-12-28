@@ -48,24 +48,8 @@ class NovelView extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          if (!selection.active)
-            SliverAppBar(
-              title: innerBoxIsScrolled ? Text(novel.title) : null,
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-              actions: [
-                IconButton(
-                  tooltip: 'Share',
-                  onPressed: () => Share.share(novel.url),
-                  icon: const Icon(Icons.share),
-                ),
-              ],
-            ),
-          if (selection.active)
-            SliverSelectionAppBar(
+      appBar: selection.active
+          ? SelectionAppBar(
               title: Text('${selection.selected.length}'),
               onSelectAllPressed: () => ref
                   .read(novelSelectionProvider.notifier)
@@ -74,73 +58,81 @@ class NovelView extends HookConsumerWidget {
                   .read(novelSelectionProvider.notifier)
                   .flipAll(chapterList.ids),
             )
-        ],
-        body: RefreshIndicator(
-          onRefresh: () async => notifier.fetch(crawler),
-          child: Scrollbar(
-            interactive: true,
-            child: CustomScrollView(
-              slivers: [
-                buildPadding(
-                  sliver: NovelHead(head: HeadInfo.fromNovel(novel)),
-                  top: 24,
-                  bottom: 8,
+          : AppBar(
+              title: Text(novel.title),
+              actions: [
+                IconButton(
+                  tooltip: 'Share',
+                  onPressed: () => Share.share(novel.url),
+                  icon: const Icon(Icons.share),
                 ),
-                buildPadding(
-                  sliver: ActionBar(input: input),
-                  top: 0,
-                  bottom: 8,
-                ),
-                HookConsumer(builder: (context, ref, child) {
-                  final expanded = useState(!direct);
-
-                  return buildPadding(
-                    top: 0,
-                    bottom: 8,
-                    sliver: SliverToBoxAdapter(
-                      child: GestureDetector(
-                        onTap: () => expanded.value = !expanded.value,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Description(
-                              description: novel.description,
-                              expanded: expanded,
-                            ),
-                            const SizedBox(height: 8),
-                            Tags(
-                              novelId: novel.id,
-                              expanded: expanded,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-                SliverToBoxAdapter(
-                  child: ListTile(
-                    title: Text(
-                      '${chapterList.chapters.length} Chapter'.pluralize(
-                        test: (_) => chapterList.chapters.length > 1,
-                      ),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    trailing: const Icon(Icons.filter_list),
-                    onTap: () {
-                      showExpandableBottomSheet(
-                        context: context,
-                        builder: (context, controller) =>
-                            ChapterListBottomSheet(controller: controller),
-                      );
-                    },
-                    dense: true,
-                  ),
-                ),
-                ChapterList(novel: novel),
-                const SliverFloatingActionPadding(),
               ],
             ),
+      body: RefreshIndicator(
+        onRefresh: () async => notifier.fetch(crawler),
+        child: Scrollbar(
+          interactive: true,
+          child: CustomScrollView(
+            slivers: [
+              buildPadding(
+                sliver: NovelHead(head: HeadInfo.fromNovel(novel)),
+                top: 24,
+                bottom: 8,
+              ),
+              buildPadding(
+                sliver: ActionBar(input: input),
+                top: 0,
+                bottom: 8,
+              ),
+              HookConsumer(builder: (context, ref, child) {
+                final expanded = useState(!direct);
+
+                return buildPadding(
+                  top: 0,
+                  bottom: 8,
+                  sliver: SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () => expanded.value = !expanded.value,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Description(
+                            description: novel.description,
+                            expanded: expanded,
+                          ),
+                          const SizedBox(height: 8),
+                          Tags(
+                            novelId: novel.id,
+                            expanded: expanded,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  title: Text(
+                    '${chapterList.chapters.length} Chapter'.pluralize(
+                      test: (_) => chapterList.chapters.length > 1,
+                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  trailing: const Icon(Icons.filter_list),
+                  onTap: () {
+                    showExpandableBottomSheet(
+                      context: context,
+                      builder: (context, controller) =>
+                          ChapterListBottomSheet(controller: controller),
+                    );
+                  },
+                  dense: true,
+                ),
+              ),
+              ChapterList(novel: novel),
+              const SliverFloatingActionPadding(),
+            ],
           ),
         ),
       ),

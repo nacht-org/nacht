@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/splash/provider/application_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 
 Future<void> main() async {
   // Disable http font downloads in release mode.
@@ -40,23 +41,38 @@ class NachtApp extends HookConsumerWidget {
       return null;
     }, []);
 
-    return MaterialApp.router(
-      title: 'nacht',
-      theme: themeFromBrightness(brightness),
-      debugShowCheckedModeBanner: false,
-      routeInformationParser: router.defaultRouteParser(),
-      routerDelegate: router.delegate(),
-      routeInformationProvider: router.routeInfoProvider(),
+    return DynamicColorBuilder(
+      builder: (lightDynamic, darkDynamic) {
+        ColorScheme? colorScheme;
+        switch (brightness) {
+          case Brightness.dark:
+            colorScheme = darkDynamic;
+            break;
+          case Brightness.light:
+            colorScheme = lightDynamic;
+            break;
+        }
+
+        colorScheme ??=
+            ColorScheme.fromSeed(seedColor: const Color(0xFF25316D));
+
+        return MaterialApp.router(
+          title: 'nacht',
+          theme: themeFromBrightness(brightness, colorScheme),
+          debugShowCheckedModeBanner: false,
+          routeInformationParser: router.defaultRouteParser(),
+          routerDelegate: router.delegate(),
+          routeInformationProvider: router.routeInfoProvider(),
+        );
+      },
     );
   }
 
-  ThemeData themeFromBrightness(Brightness brightness) {
+  ThemeData themeFromBrightness(
+      Brightness brightness, ColorScheme colorScheme) {
     final theme = ThemeData(
       brightness: brightness,
-      colorSchemeSeed: const Color(0xFF25316D),
-      listTileTheme: ListTileThemeData(
-        selectedTileColor: ThemeData.light().cardColor,
-      ),
+      colorScheme: colorScheme,
       useMaterial3: true,
     );
 

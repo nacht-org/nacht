@@ -71,6 +71,9 @@ class HistoryBody extends HookConsumerWidget {
                   const SliverFillEmptyIndicator(
                     child: Icon(Icons.history),
                   ),
+                const SliverToBoxAdapter(
+                  child: NavigationOffset(),
+                ),
               ],
             );
           },

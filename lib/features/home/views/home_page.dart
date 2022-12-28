@@ -25,6 +25,7 @@ class HomePage extends HookWidget {
             opacity: animation,
             child: child,
           ),
+          extendBody: true,
           bottomNavigationBar: HookConsumer(
             builder: (context, ref, child) {
               final controller = useAnimationController(

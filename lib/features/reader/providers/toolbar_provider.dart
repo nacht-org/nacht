@@ -35,9 +35,10 @@ class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
 
   void setSystemUiMode(bool visible) {
     if (visible) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-        SystemUiOverlay.top,
-      ]);
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: SystemUiOverlay.values,
+      );
     } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     }

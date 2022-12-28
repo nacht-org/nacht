@@ -23,8 +23,7 @@ class RadioDialog<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: ListView(
-        shrinkWrap: true,
+      content: Column(
         children: items
             .map(
               (item) => RadioListTile<T>(
@@ -38,6 +37,7 @@ class RadioDialog<T> extends StatelessWidget {
             .toList(),
       ),
       contentPadding: const EdgeInsets.only(top: 20.0, bottom: 24.0),
+      scrollable: true,
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

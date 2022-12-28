@@ -19,8 +19,7 @@ class SetCategoriesDialog extends ConsumerWidget {
 
     return AlertDialog(
       title: const Text('Set categories'),
-      content: ListView(
-        shrinkWrap: true,
+      content: Column(
         children: (categories.entries.toList()
               ..sort((a, b) => a.key.index.compareTo(b.key.index)))
             .map(
@@ -36,6 +35,7 @@ class SetCategoriesDialog extends ConsumerWidget {
             .toList(),
       ),
       contentPadding: const EdgeInsets.only(top: 20, bottom: 24.0),
+      scrollable: true,
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

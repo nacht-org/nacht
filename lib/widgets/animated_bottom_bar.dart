@@ -47,6 +47,7 @@ class AnimatedBottomBar extends StatelessWidget {
 
     return SizeTransition(
       sizeFactor: animation,
+      axisAlignment: -1.0,
       child: child,
     );
   }

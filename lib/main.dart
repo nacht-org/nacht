@@ -53,8 +53,10 @@ class NachtApp extends HookConsumerWidget {
             break;
         }
 
-        colorScheme ??=
-            ColorScheme.fromSeed(seedColor: const Color(0xFF25316D));
+        colorScheme ??= ColorScheme.fromSeed(
+          brightness: brightness,
+          seedColor: const Color(0xFF25316D),
+        );
 
         return MaterialApp.router(
           title: 'nacht',

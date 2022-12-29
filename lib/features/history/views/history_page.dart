@@ -12,6 +12,10 @@ class HistoryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectionActive = ref.watch(
+      historySelectionProvider.select((selection) => selection.active),
+    );
+
     SelectionNotifier.handleRoute(context, ref, historySelectionProvider);
     NavigationNotifier.handleHide(
       ref,
@@ -20,9 +24,6 @@ class HistoryPage extends HookConsumerWidget {
       ),
     );
 
-    final selectionActive = ref.watch(
-      historySelectionProvider.select((selection) => selection.active),
-    );
     final selectionCount = ref.watch(historySelectionProvider
         .select((selection) => selection.selected.length));
     final selectionNotifier = ref.watch(historySelectionProvider.notifier);

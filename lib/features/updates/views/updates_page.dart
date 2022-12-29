@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/core/core.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/features/home/models/models.dart';
 import 'package:nacht/features/updates/providers/providers.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -72,6 +70,8 @@ class UpdatesView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useScrollController();
+
     final refreshIndicatorKey = useMemoized(
       () => GlobalKey<RefreshIndicatorState>(),
     );
@@ -120,12 +120,15 @@ class UpdatesView extends HookConsumerWidget {
       body: RefreshIndicator(
         onRefresh: refreshNotifier.refreshAll,
         child: Scrollbar(
+          interactive: true,
+          controller: controller,
           child: Consumer(
             builder: (context, ref, child) {
               final updatesEmpty =
                   ref.watch(updatesProvider.select((value) => value.isEmpty));
 
               return CustomScrollView(
+                controller: controller,
                 slivers: [
                   if (!updatesEmpty)
                     Consumer(

@@ -12,10 +12,6 @@ class HistoryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectionActive = ref.watch(
-      historySelectionProvider.select((selection) => selection.active),
-    );
-
     SelectionNotifier.handleRoute(context, ref, historySelectionProvider);
     NavigationNotifier.handleHide(
       ref,
@@ -24,9 +20,29 @@ class HistoryPage extends HookConsumerWidget {
       ),
     );
 
-    final notifier = ref.watch(historyProvider.notifier);
+    final selectionActive = ref.watch(
+      historySelectionProvider.select((selection) => selection.active),
+    );
+    final selectionCount = ref.watch(historySelectionProvider
+        .select((selection) => selection.selected.length));
+    final selectionNotifier = ref.watch(historySelectionProvider.notifier);
+
+    final historyNotifier = ref.watch(historyProvider.notifier);
+
+    List<int> getIds() {
+      return ref.read(historyProvider).map((history) => history.id).toList();
+    }
 
     return Scaffold(
+      appBar: selectionActive
+          ? SelectionAppBar(
+              title: Text("$selectionCount"),
+              onSelectAllPressed: () => selectionNotifier.addAll(getIds()),
+              onInversePressed: () => selectionNotifier.flipAll(getIds()),
+            )
+          : AppBar(
+              title: const Text("History"),
+            ),
       body: const HistoryBody(),
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
@@ -38,7 +54,7 @@ class HistoryPage extends HookConsumerWidget {
               IconButton(
                 tooltip: "Delete history",
                 onPressed: () {
-                  notifier.deleteHistory();
+                  historyNotifier.deleteHistory();
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(Icons.delete),
@@ -46,7 +62,7 @@ class HistoryPage extends HookConsumerWidget {
               IconButton(
                 tooltip: "Delete novel history",
                 onPressed: () {
-                  notifier.deleteNovelHistory();
+                  historyNotifier.deleteNovelHistory();
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(Icons.delete_sweep),

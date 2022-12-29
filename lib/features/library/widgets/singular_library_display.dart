@@ -20,32 +20,26 @@ class SingularLibraryDisplay extends HookConsumerWidget {
     final selection = ref.watch(librarySelectionProvider);
     final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
 
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        if (!selection.active)
-          SliverAppBar(
-            title: const Text('Library'),
-            pinned: true,
-            forceElevated: innerBoxIsScrolled,
-          ),
-        if (selection.active)
-          SliverSelectionAppBar(
-            title: Text("${selection.selected.length}"),
-            onSelectAllPressed: () async {
-              final novels =
-                  await ref.read(categoryNovelsFamily(category.id).future);
-              selectionNotifier.addAll(novels.map((novel) => novel.id));
-            },
-            onInversePressed: () async {
-              final novels =
-                  await ref.read(categoryNovelsFamily(category.id).future);
-              selectionNotifier.flipAll(novels.map((novel) => novel.id));
-            },
-          ),
-      ],
+    return Scaffold(
+      appBar: selection.active
+          ? SelectionAppBar(
+              title: Text("${selection.selected.length}"),
+              onSelectAllPressed: () async {
+                final novels =
+                    await ref.read(categoryNovelsFamily(category.id).future);
+                selectionNotifier.addAll(novels.map((novel) => novel.id));
+              },
+              onInversePressed: () async {
+                final novels =
+                    await ref.read(categoryNovelsFamily(category.id).future);
+                selectionNotifier.flipAll(novels.map((novel) => novel.id));
+              },
+            )
+          : AppBar(
+              title: const Text('Library'),
+            ),
       body: CategoryGrid(
         category: category,
-        pinned: false,
       ),
     );
   }

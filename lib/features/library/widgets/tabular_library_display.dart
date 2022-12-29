@@ -49,41 +49,31 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
     final selection = ref.watch(librarySelectionProvider);
     final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
 
-    return NestedScrollView(
-      controller: scrollController,
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverOverlapAbsorber(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-          sliver: selection.active
-              ? SliverSelectionAppBar(
-                  title: Text("${selection.selected.length}"),
-                  bottom: buildTabBar(),
-                  onSelectAllPressed: () async {
-                    if (!tabController.indexIsChanging) {
-                      selectionNotifier.addAll(await getIds());
-                    }
-                  },
-                  onInversePressed: () async {
-                    if (!tabController.indexIsChanging) {
-                      selectionNotifier.flipAll(await getIds());
-                    }
-                  },
-                )
-              : SliverAppBar(
-                  title: const Text('Library'),
-                  floating: true,
-                  pinned: true,
-                  forceElevated: innerBoxIsScrolled,
-                  bottom: buildTabBar(),
-                ),
-        ),
-      ],
+    return Scaffold(
+      appBar: selection.active
+          ? SelectionAppBar(
+              title: Text("${selection.selected.length}"),
+              bottom: buildTabBar(),
+              onSelectAllPressed: () async {
+                if (!tabController.indexIsChanging) {
+                  selectionNotifier.addAll(await getIds());
+                }
+              },
+              onInversePressed: () async {
+                if (!tabController.indexIsChanging) {
+                  selectionNotifier.flipAll(await getIds());
+                }
+              },
+            )
+          : AppBar(
+              title: const Text('Library'),
+              bottom: buildTabBar(),
+            ),
       body: TabBarView(
         controller: tabController,
         children: widget.categories
             .map((category) => CategoryGrid(
                   category: category,
-                  pinned: true,
                 ))
             .toList(),
       ),

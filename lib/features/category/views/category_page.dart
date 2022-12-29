@@ -16,21 +16,10 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
     SelectionNotifier.handleRoute(context, ref, categoriesSelectionProvider);
 
     return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          if (!selection.active)
-            SliverAppBar(
-              title: const Text('Edit categories'),
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-            ),
-          if (selection.active)
-            SliverAppBar(
-              leading: const CloseBackButton(),
+      appBar: selection.active
+          ? AppBar(
+              leading: const CloseButton(),
               title: Text('${selection.selected.length}'),
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
               actions: [
                 Consumer(builder: (context, ref, child) {
                   final selected = ref.watch(categoriesSelectionProvider
@@ -47,10 +36,11 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
                   );
                 }),
               ],
+            )
+          : AppBar(
+              title: const Text('Edit categories'),
             ),
-        ],
-        body: const CategoryList(),
-      ),
+      body: const CategoryList(),
       floatingActionButton: !selection.active
           ? FloatingActionButton(
               onPressed: () => showDialog(

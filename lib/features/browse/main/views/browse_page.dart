@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
@@ -16,6 +17,8 @@ class BrowsePage extends HookConsumerWidget {
       ref,
       browseSearchProvider.select((search) => search.active),
     );
+
+    final controller = useScrollController();
 
     return Scaffold(
       appBar: search.active
@@ -42,11 +45,16 @@ class BrowsePage extends HookConsumerWidget {
                 ),
               ],
             ),
-      body: CustomScrollView(
-        slivers: [
-          if (!search.active) const SliverCrawlerList(),
-          if (search.active) const SliverSearchResult(),
-        ],
+      body: Scrollbar(
+        interactive: true,
+        controller: controller,
+        child: CustomScrollView(
+          controller: controller,
+          slivers: [
+            if (!search.active) const SliverCrawlerList(),
+            if (search.active) const SliverSearchResult(),
+          ],
+        ),
       ),
     );
   }

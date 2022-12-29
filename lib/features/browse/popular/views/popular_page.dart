@@ -32,11 +32,13 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
     );
 
     return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          if (!isSearching)
-            SliverAppBar(
+      appBar: isSearching
+          ? SearchBar(
+              onSubmitted: (text) => ref
+                  .read(searchFetchProvider(crawler).notifier)
+                  .fetch(crawler, text),
+            )
+          : AppBar(
               title: Text(crawler.meta.name),
               actions: [
                 const SearchButton(),
@@ -49,66 +51,57 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
                 ),
               ],
             ),
-          if (isSearching)
-            SliverSearchBar(
-              onSubmitted: (text) => ref
-                  .read(searchFetchProvider(crawler).notifier)
-                  .fetch(crawler, text),
-            ),
-        ],
-        body: Consumer(
-          builder: (context, ref, child) {
-            // prevent auto dispose while this view is active
-            ref.watch(popularFamily(crawlerFactory));
-            ref.watch(fetchLocalProvider);
+      body: Consumer(
+        builder: (context, ref, child) {
+          // prevent auto dispose while this view is active
+          ref.watch(popularFamily(crawlerFactory));
+          ref.watch(fetchLocalProvider);
 
-            final view = ref.watch(popularViewFamily(crawlerFactory));
+          final view = ref.watch(popularViewFamily(crawlerFactory));
 
-            return NotificationListener<ScrollNotification>(
-              onNotification: (notification) {
-                if (notification.isAtEnd) {
-                  log.info(
-                      'scroll to end notification recieved in popular page');
-                  onScrollEnd(ref, isSearching, crawler);
-                }
-                return false;
-              },
-              child: CustomScrollView(
-                slivers: view.when(
-                  loading: () => [
-                    const SliverFillLoadingIndicator(),
-                  ],
-                  unsupported: (message) => [
-                    SliverFillLoadingError(
-                      message: Text(message),
-                    ),
-                  ],
-                  error: (message) => [
-                    SliverFillLoadingError(
-                      message: Text(message),
-                      onRetry: () {
-                        final isSearching = ref.read(isSearchingProvider);
-                        if (isSearching) {
-                          ref
-                              .read(searchFetchProvider(crawler).notifier)
-                              .restart(crawler);
-                        } else {
-                          ref
-                              .read(popularFetchFamily(crawler).notifier)
-                              .restart(crawler);
-                        }
-                      },
-                    ),
-                  ],
-                  empty: () => [],
-                  data: (novels) => [
-                    SliverFetchGrid(novels: novels, crawler: crawler),
-                  ],
-                ),
+          return NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification.isAtEnd) {
+                log.info('scroll to end notification recieved in popular page');
+                onScrollEnd(ref, isSearching, crawler);
+              }
+              return false;
+            },
+            child: CustomScrollView(
+              slivers: view.when(
+                loading: () => [
+                  const SliverFillLoadingIndicator(),
+                ],
+                unsupported: (message) => [
+                  SliverFillLoadingError(
+                    message: Text(message),
+                  ),
+                ],
+                error: (message) => [
+                  SliverFillLoadingError(
+                    message: Text(message),
+                    onRetry: () {
+                      final isSearching = ref.read(isSearchingProvider);
+                      if (isSearching) {
+                        ref
+                            .read(searchFetchProvider(crawler).notifier)
+                            .restart(crawler);
+                      } else {
+                        ref
+                            .read(popularFetchFamily(crawler).notifier)
+                            .restart(crawler);
+                      }
+                    },
+                  ),
+                ],
+                empty: () => [],
+                data: (novels) => [
+                  SliverFetchGrid(novels: novels, crawler: crawler),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
       extendBody: true,
       bottomNavigationBar: Consumer(

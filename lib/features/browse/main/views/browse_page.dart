@@ -17,36 +17,31 @@ class BrowsePage extends HookConsumerWidget {
       browseSearchProvider.select((search) => search.active),
     );
 
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        if (!search.active)
-          SliverAppBar(
-            title: const Text('Browse'),
-            pinned: true,
-            forceElevated: innerBoxIsScrolled,
-            actions: [
-              const BrowseSearchButton(),
-              IconButton(
-                onPressed: () {
-                  showExpandableBottomSheet(
-                    context: context,
-                    builder: (context, scrollController) {
-                      return BrowseFilterSheet(
-                        scrollController: scrollController,
-                      );
-                    },
-                  );
-                },
-                icon: const Icon(Icons.filter_list),
-              ),
-            ],
-          ),
-        if (search.active)
-          SliverSearchBar(
-            onSubmitted: (text) =>
-                ref.read(browseSearchProvider.notifier).search(text),
-          )
-      ],
+    return Scaffold(
+      appBar: search.active
+          ? SearchBar(
+              onSubmitted: (text) =>
+                  ref.read(browseSearchProvider.notifier).search(text),
+            )
+          : AppBar(
+              title: const Text('Browse'),
+              actions: [
+                const BrowseSearchButton(),
+                IconButton(
+                  onPressed: () {
+                    showExpandableBottomSheet(
+                      context: context,
+                      builder: (context, scrollController) {
+                        return BrowseFilterSheet(
+                          scrollController: scrollController,
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.filter_list),
+                ),
+              ],
+            ),
       body: CustomScrollView(
         slivers: [
           if (!search.active) const SliverCrawlerList(),

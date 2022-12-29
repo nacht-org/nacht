@@ -11,30 +11,23 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            title: const Text('About'),
-            floating: true,
-            forceElevated: innerBoxIsScrolled,
-          ),
-        ],
-        body: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: Consumer(builder: (context, ref, child) {
-            final packageInfo = ref.watch(packageInfoProvider);
+      appBar: AppBar(
+        title: const Text('About'),
+      ),
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: Consumer(builder: (context, ref, child) {
+          final packageInfo = ref.watch(packageInfoProvider);
 
-            return packageInfo.when(
-              loading: () => const SizedBox.shrink(),
-              error: (error, stack) => const LoadingError(
-                message: Text('Unable to load package information'),
-              ),
-              data: (data) => buildView(context, data),
-            );
-          }),
-        ),
+          return packageInfo.when(
+            loading: () => const SizedBox.shrink(),
+            error: (error, stack) => const LoadingError(
+              message: Text('Unable to load package information'),
+            ),
+            data: (data) => buildView(context, data),
+          );
+        }),
       ),
     );
   }

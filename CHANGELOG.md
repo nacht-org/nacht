@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Latest] - Unreleased
 
+## [v0.2.1] - 2022-12-29
+
 ### Added
 
 - Added dynamic color support.

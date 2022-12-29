@@ -79,34 +79,44 @@ class UpdatesView extends HookConsumerWidget {
     final selectionActive = ref.watch(
       updatesSelectionProvider.select((selection) => selection.active),
     );
+    final selection = ref.watch(updatesSelectionProvider);
+    final selectionNotifier = ref.watch(updatesSelectionProvider.notifier);
 
     final refreshNotifier = ref.watch(refreshProvider.notifier);
 
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        if (!selectionActive)
-          SliverAppBar(
-            title: const Text('Updates'),
-            pinned: true,
-            forceElevated: innerBoxIsScrolled,
-            actions: [
-              Consumer(
-                builder: (context, ref, child) {
-                  final isBusy = ref.watch(refreshProvider);
+    Iterable<int> getIds() {
+      return ref
+          .read(updatesProvider)
+          .map((entry) =>
+              entry.whenOrNull(chapter: (novel, chapter) => chapter.id))
+          .whereType<int>();
+    }
 
-                  return IconButton(
-                    tooltip: "Refresh",
-                    onPressed: isBusy
-                        ? null
-                        : () => refreshIndicatorKey.currentState!.show(),
-                    icon: const Icon(Icons.refresh),
-                  );
-                },
-              ),
-            ],
-          ),
-        if (selectionActive) const UpdatesSelectionAppBar(),
-      ],
+    return Scaffold(
+      appBar: selectionActive
+          ? SelectionAppBar(
+              title: Text("${selection.selected.length}"),
+              onSelectAllPressed: () => selectionNotifier.addAll(getIds()),
+              onInversePressed: () => selectionNotifier.flipAll(getIds()),
+            )
+          : AppBar(
+              title: const Text('Updates'),
+              actions: [
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isBusy = ref.watch(refreshProvider);
+
+                    return IconButton(
+                      tooltip: "Refresh",
+                      onPressed: isBusy
+                          ? null
+                          : () => refreshIndicatorKey.currentState!.show(),
+                      icon: const Icon(Icons.refresh),
+                    );
+                  },
+                ),
+              ],
+            ),
       body: RefreshIndicator(
         onRefresh: refreshNotifier.refreshAll,
         child: Scrollbar(

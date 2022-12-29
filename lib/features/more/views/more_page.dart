@@ -3,21 +3,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/widgets/widgets.dart';
 
 class MorePage extends HookConsumerWidget {
   const MorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return NestedScrollView(
-      headerSliverBuilder: (context, innerBoxIsScrolled) => [
-        SliverAppBar(
-          title: const Text('More'),
-          pinned: true,
-          forceElevated: innerBoxIsScrolled,
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('More'),
+      ),
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,

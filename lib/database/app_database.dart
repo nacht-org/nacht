@@ -33,6 +33,7 @@ final databaseProvider = Provider<AppDatabase>(
   AssetTypes,
   Updates,
   ReadingHistories,
+  Downloads,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
@@ -40,7 +41,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.connect() : super.connect(_createDriftIsolateAndConnect());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
@@ -131,6 +132,10 @@ class AppDatabase extends _$AppDatabase {
       },
       onUpgrade: (Migrator m, int from, int to) async {
         await customStatement('PRAGMA foreign_keys = OFF');
+
+        if (from < 2) {
+          m.createTable(downloads);
+        }
 
         // Assert that the schema is valid after migrations
         if (kDebugMode) {

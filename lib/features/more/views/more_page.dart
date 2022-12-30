@@ -20,6 +20,11 @@ class MorePage extends HookConsumerWidget {
           padding: const EdgeInsets.all(0),
           children: [
             ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Downloads'),
+              onTap: () => context.router.push(const DownloadRoute()),
+            ),
+            ListTile(
               leading: const Icon(Icons.category),
               title: const Text('Categories'),
               onTap: () => context.router.push(const CategoryRoute()),

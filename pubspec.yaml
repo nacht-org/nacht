@@ -29,7 +29,7 @@ dependencies:
   flutter_hooks: ^0.18.3
 
   # Persistence
-  drift: ^2.1.0
+  drift: ^2.4.0
   sqlite3_flutter_libs: ^0.5.5
   path_provider: ^2.0.9
   path: ^1.8.1

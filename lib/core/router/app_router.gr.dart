@@ -77,6 +77,12 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    DownloadRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const DownloadPage(),
+      );
+    },
     SettingsRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -120,6 +126,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           ReaderRoute.name,
           path: '/reader',
+        ),
+        RouteConfig(
+          DownloadRoute.name,
+          path: '/downloads',
         ),
         RouteConfig(
           SettingsRoute.name,
@@ -312,6 +322,18 @@ class ReaderRouteArgs {
   String toString() {
     return 'ReaderRouteArgs{key: $key, novel: $novel, chapter: $chapter}';
   }
+}
+
+/// generated route for
+/// [DownloadPage]
+class DownloadRoute extends PageRouteInfo<void> {
+  const DownloadRoute()
+      : super(
+          DownloadRoute.name,
+          path: '/downloads',
+        );
+
+  static const String name = 'DownloadRoute';
 }
 
 /// generated route for

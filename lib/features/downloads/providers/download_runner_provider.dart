@@ -100,7 +100,7 @@ class DownloadRunnerNotifier extends StateNotifier<void> with LoggerMixin {
       },
       (asset) async {
         downloadNotifier.setCurrent(null);
-        downloadListNotifier.remove(data.id);
+        await downloadListNotifier.remove(data.id);
         log.info(
           "Chapter download successful: ${data.related.chapterId} ${data.related.chapterTitle}",
         );

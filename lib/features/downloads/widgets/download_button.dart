@@ -43,8 +43,8 @@ class DownloadButton extends ConsumerWidget {
       return _ProgressDownload(onCancel: () {});
     }
 
-    return const _PendingDownload(
-      onCancel: null,
+    return _PendingDownload(
+      onCancel: () => notifier.remove(state.id),
     );
   }
 }

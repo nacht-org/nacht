@@ -60,8 +60,6 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
     }
   }
 
-  Future<void> reload() async {}
-
   Future<void> setReadAt(Set<int> ids, bool isRead) async {
     final failure = await _setReadAt.execute(ids, isRead);
     if (failure != null) {

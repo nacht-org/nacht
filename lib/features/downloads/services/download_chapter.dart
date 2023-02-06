@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:drift/drift.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
 import 'package:nacht/shared/shared.dart';
@@ -10,6 +11,14 @@ import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:crypto/crypto.dart';
+
+final downloadChapterProvider = Provider<DownloadChapter>(
+  (ref) => DownloadChapter(
+    database: ref.watch(databaseProvider),
+    fetchChapterContent: ref.watch(fetchChapterContentProvider),
+  ),
+  name: 'DownloadChapterProvider',
+);
 
 class DownloadChapter {
   const DownloadChapter({
@@ -24,25 +33,29 @@ class DownloadChapter {
   Future<Either<Failure, AssetData>> call(
     sources.Meta meta,
     sources.CrawlerIsolate isolate,
-    ChapterData chapter,
+    int novelId,
+    int chapterId,
+    String chapterUrl,
   ) async {
-    final content = await _fetchChapterContent.execute(isolate, chapter.url);
+    final content = await _fetchChapterContent.execute(isolate, chapterUrl);
 
     return await content.fold(
       (failure) async => Left(failure),
       (content) async {
         final documentsDir = await getApplicationDocumentsDirectory();
         final filePath = path.join(documentsDir.path, 'novels', meta.id,
-            chapter.novelId.toString(), '${chapter.id.toString()}.html');
+            novelId.toString(), '${chapterId.toString()}.html');
 
         final file = File(filePath);
+        await file.parent.create(recursive: true);
+
         file.writeAsString(content);
 
         final hash = md5.convert(utf8.encode(content)).toString();
         final asset = await _database.into(_database.assets).insertReturning(
               AssetsCompanion(
                 hash: Value(hash),
-                url: Value(chapter.url),
+                url: Value(chapterUrl),
                 path: Value(filePath),
                 typeId: const Value(AssetTypeSeed.textHtml),
                 savedAt: Value(DateTime.now()),
@@ -50,7 +63,7 @@ class DownloadChapter {
             );
 
         (_database.update(_database.chapters)
-              ..where((tbl) => tbl.id.equals(chapter.id)))
+              ..where((tbl) => tbl.id.equals(chapterId)))
             .write(ChaptersCompanion(content: Value(asset.id)));
 
         return Right(AssetData.fromModel(asset));

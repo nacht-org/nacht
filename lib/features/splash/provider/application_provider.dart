@@ -38,6 +38,8 @@ class Application with LoggerMixin {
       _ref.read(downloadListProvider.notifier).init(),
     ]);
 
+    _ref.read(downloadRunnerProvider);
+
     await _ref.read(routerProvider).replace(const HomeRoute());
   }
 

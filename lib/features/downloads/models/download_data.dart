@@ -29,18 +29,22 @@ class DownloadData with _$DownloadData {
 class DownloadRelatedData with _$DownloadRelatedData {
   const factory DownloadRelatedData({
     required int novelId,
+    required String novelTitle,
+    required String novelUrl,
     required int chapterId,
     required String chapterTitle,
-    required String novelTitle,
+    required String chapterUrl,
     required int volumeId,
   }) = _DownloadRelatedData;
 
   factory DownloadRelatedData.from(NovelData novel, ChapterData chapter) {
     return DownloadRelatedData(
       novelId: novel.id,
+      novelTitle: novel.title,
+      novelUrl: novel.url,
       chapterId: chapter.id,
       chapterTitle: chapter.title,
-      novelTitle: novel.title,
+      chapterUrl: chapter.url,
       volumeId: chapter.volume.id,
     );
   }

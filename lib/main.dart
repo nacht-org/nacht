@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/splash/provider/application_provider.dart';
+import 'package:nacht/nht/nht.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -22,7 +23,7 @@ Future<void> main() async {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      // observers: [ProviderLogger()],
+      observers: [ProviderLogger()],
       child: const NachtApp(),
     ),
   );

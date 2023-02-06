@@ -11,15 +11,15 @@ import '../services/services.dart';
 part 'download_list_provider.freezed.dart';
 
 @freezed
-class DownloadState with _$DownloadState {
-  const factory DownloadState({
+class DownloadListState with _$DownloadListState {
+  const factory DownloadListState({
     required Map<int, DownloadData> data,
     required List<int> order,
     required Map<int, int> chapters,
-  }) = _DownloadState;
+  }) = _DownloadListState;
 
-  factory DownloadState.empty() {
-    return const DownloadState(
+  factory DownloadListState.empty() {
+    return const DownloadListState(
       data: {},
       order: [],
       chapters: {},
@@ -32,7 +32,7 @@ class DownloadState with _$DownloadState {
     return data[dataId];
   }
 
-  DownloadState addAndCopy(DownloadData download) {
+  DownloadListState addAndCopy(DownloadData download) {
     return copyWith(
       data: {...data, download.id: download},
       order: [...order, download.id],
@@ -40,35 +40,58 @@ class DownloadState with _$DownloadState {
     );
   }
 
-  const DownloadState._();
+  DownloadListState copyWithoutId(int id) {
+    return copyWith(
+      data: {
+        for (final entry in data.entries)
+          if (entry.key != id) entry.key: entry.value
+      },
+      order: order.where((value) => value != id).toList(),
+      chapters: {
+        for (final entry in chapters.entries)
+          if (entry.key != id) entry.key: entry.value
+      },
+    );
+  }
+
+  DownloadData? get first {
+    if (order.isEmpty) return null;
+    return data[order.first];
+  }
+
+  const DownloadListState._();
 }
 
 final downloadListProvider =
-    StateNotifierProvider<DownloadListNotifier, DownloadState>(
+    StateNotifierProvider<DownloadListNotifier, DownloadListState>(
   (ref) => DownloadListNotifier(
     ref: ref,
-    state: DownloadState.empty(),
+    state: DownloadListState.empty(),
     createDownload: ref.watch(createDownloadProvider),
     getDownloads: ref.watch(getDownloadsProvider),
+    removeDownload: ref.watch(removeDownloadProvider),
   ),
   name: 'DownloadListProvider',
 );
 
-class DownloadListNotifier extends StateNotifier<DownloadState>
+class DownloadListNotifier extends StateNotifier<DownloadListState>
     with LoggerMixin {
   DownloadListNotifier({
     required Ref ref,
-    required DownloadState state,
+    required DownloadListState state,
     required CreateDownload createDownload,
     required GetDownloads getDownloads,
+    required RemoveDownload removeDownload,
   })  : _ref = ref,
         _createDownload = createDownload,
         _getDownloads = getDownloads,
+        _removeDownload = removeDownload,
         super(state);
 
   final Ref _ref;
   final CreateDownload _createDownload;
   final GetDownloads _getDownloads;
+  final RemoveDownload _removeDownload;
 
   Future<void> init() async {
     final result = await _getDownloads.call();
@@ -90,7 +113,7 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
           order.add(download.id);
         }
 
-        state = DownloadState(
+        state = DownloadListState(
           data: dataMap,
           order: order,
           chapters: chaptersMap,
@@ -114,6 +137,19 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
         state = state.addAndCopy(data);
         log.info(
             "added download: id=${data.id} order=${data.orderIndex} title=${related.chapterTitle}");
+      },
+    );
+  }
+
+  Future<void> remove(int downloadId) async {
+    final result = await _removeDownload.call(downloadId);
+
+    result.fold(
+      (failure) {
+        log.warning(failure);
+      },
+      (_) {
+        state = state.copyWithoutId(downloadId);
       },
     );
   }

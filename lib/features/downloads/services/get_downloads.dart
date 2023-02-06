@@ -28,8 +28,10 @@ class GetDownloads {
       buildSelectColumns(downloads.$columns),
       "n.id as novelId",
       "n.title as novelTitle",
+      "n.url as novelUrl",
       "c.id as chapterId",
       'c.title as chapterTitle',
+      'c.url as chapterUrl',
       'c.volume_id as volumeId',
     ].join(", ");
 
@@ -52,16 +54,20 @@ class GetDownloads {
           downloads.map(row.data, tablePrefix: downloads.aliasedName);
 
       final novelId = row.read<int>('novelId');
-      final chapterId = row.read<int>('chapterId');
       final novelTitle = row.read<String>('novelTitle');
+      final novelUrl = row.read<String>('novelUrl');
+      final chapterId = row.read<int>('chapterId');
       final chapterTitle = row.read<String>('chapterTitle');
+      final chapterUrl = row.read<String>('chapterUrl');
       final volumeId = row.read<int>('volumeId');
 
       final related = DownloadRelatedData(
         novelId: novelId,
+        novelTitle: novelTitle,
+        novelUrl: novelUrl,
         chapterId: chapterId,
         chapterTitle: chapterTitle,
-        novelTitle: novelTitle,
+        chapterUrl: chapterUrl,
         volumeId: volumeId,
       );
 

@@ -22,10 +22,21 @@ class DownloadButton extends ConsumerWidget {
         .select((value) => value.dataFromChapterId(related.chapterId)));
     final notifier = ref.watch(downloadListProvider.notifier);
 
+    final isDownloading = ref.watch(
+      downloadProvider.select((download) =>
+          download.current != null && download.current?.id == state?.id),
+    );
+
+    final download = ref.watch(downloadProvider);
+
     if (state == null) {
       return _AddDownloadButton(
         onPressed: () => notifier.add(related),
       );
+    }
+
+    if (isDownloading) {
+      return _ProgressDownload(onCancel: () {});
     }
 
     return const _PendingDownload(

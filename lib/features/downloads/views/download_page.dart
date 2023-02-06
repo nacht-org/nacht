@@ -4,16 +4,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
-class DownloadPage extends StatelessWidget {
+class DownloadPage extends ConsumerWidget {
   const DownloadPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final download = ref.watch(downloadProvider);
+    final notifier = ref.watch(downloadProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Download queue'),
       ),
       body: const DownloadView(),
+      floatingActionButton: download.isRunning
+          ? FloatingActionButton(
+              onPressed: () => notifier.setRunning(false),
+              child: const Icon(Icons.pause),
+            )
+          : FloatingActionButton(
+              onPressed: () => notifier.setRunning(true),
+              child: const Icon(Icons.play_arrow),
+            ),
     );
   }
 }

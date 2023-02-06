@@ -10,7 +10,7 @@ class AssetData with _$AssetData {
   factory AssetData({
     required int id,
     required String? url,
-    required File file,
+    required File? file,
     required String hash,
     required String mimetype,
     required DateTime savedAt,
@@ -20,7 +20,7 @@ class AssetData with _$AssetData {
     return AssetData(
       id: asset.id,
       url: asset.url,
-      file: File(asset.path!),
+      file: asset.path != null ? File(asset.path!) : null,
       hash: asset.hash,
       mimetype: AssetTypeSeed.intoMimeType(asset.typeId),
       savedAt: asset.savedAt,

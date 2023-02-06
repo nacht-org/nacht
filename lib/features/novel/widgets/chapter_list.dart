@@ -56,6 +56,10 @@ class ChapterList extends ConsumerWidget {
                   subtitle: data.updated == null
                       ? null
                       : Text(dateFormatService.relativeDay(data.updated!)),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.download),
+                  ),
                   onTap: selectionActive
                       ? select
                       : () => context.router.push(

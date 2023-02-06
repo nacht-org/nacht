@@ -12,9 +12,11 @@ class DownloadButton extends ConsumerWidget {
   const DownloadButton({
     super.key,
     required this.related,
+    required this.isDownloaded,
   });
 
   final DownloadRelatedData related;
+  final bool isDownloaded;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +29,9 @@ class DownloadButton extends ConsumerWidget {
           download.current != null && download.current?.id == state?.id),
     );
 
-    final download = ref.watch(downloadProvider);
+    if (isDownloaded) {
+      return const _DownloadDone();
+    }
 
     if (state == null) {
       return _AddDownloadButton(
@@ -112,6 +116,39 @@ class _ProgressDownload extends StatelessWidget {
       child: _DownloadIndicator(
         color: theme.colorScheme.onSurface,
         progress: null,
+      ),
+    );
+  }
+}
+
+class _DownloadDone extends StatelessWidget {
+  const _DownloadDone();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return _DownloadPopupMenu(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          onTap: () {},
+          child: const Text('Delete'),
+        ),
+      ],
+      child: Container(
+        width: 24.0,
+        height: 24.0,
+        decoration: BoxDecoration(
+          color: theme.colorScheme.onSurface,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Icon(
+            Icons.done,
+            size: 18,
+            color: theme.colorScheme.background,
+          ),
+        ),
       ),
     );
   }

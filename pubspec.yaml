@@ -61,6 +61,7 @@ dependencies:
   package_info_plus: ^3.0.2
   share_plus: ^6.3.0
   dynamic_color: ^1.5.4
+  simple_animations: ^5.0.0+3
 
 dev_dependencies:
   flutter_test:

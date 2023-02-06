@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -47,7 +48,7 @@ class ChapterList extends ConsumerWidget {
 
                 void select() => selectionNotifier.toggle(data.id);
 
-                return NachtListTile(
+                return ListTile(
                   title: Text(
                     data.title,
                     maxLines: 1,
@@ -56,10 +57,7 @@ class ChapterList extends ConsumerWidget {
                   subtitle: data.updated == null
                       ? null
                       : Text(dateFormatService.relativeDay(data.updated!)),
-                  trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.download),
-                  ),
+                  trailing: DownloadButton(chapter: data),
                   onTap: selectionActive
                       ? select
                       : () => context.router.push(
@@ -70,7 +68,6 @@ class ChapterList extends ConsumerWidget {
                           ),
                   onLongPress: selectionActive ? null : select,
                   selected: selected,
-                  muted: data.readAt != null,
                 );
               },
             ),

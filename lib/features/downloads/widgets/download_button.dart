@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/nacht_theme/nacht_theme.dart';
 import 'package:nacht/features/downloads/models/models.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -12,11 +13,13 @@ class DownloadButton extends ConsumerWidget {
   const DownloadButton({
     super.key,
     required this.related,
-    required this.isDownloaded,
+    required this.assetId,
   });
 
   final DownloadRelatedData related;
-  final bool isDownloaded;
+  final int? assetId;
+
+  bool get isDownloaded => assetId != null;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +33,10 @@ class DownloadButton extends ConsumerWidget {
     );
 
     if (isDownloaded) {
-      return const _DownloadDone();
+      return _DownloadDone(
+        chapterId: related.chapterId,
+        assetId: assetId,
+      );
     }
 
     if (state == null) {
@@ -40,6 +46,7 @@ class DownloadButton extends ConsumerWidget {
     }
 
     if (isDownloading) {
+      // TODO: How to cancel downloads in progress.
       return _ProgressDownload(onCancel: () {});
     }
 
@@ -121,19 +128,27 @@ class _ProgressDownload extends StatelessWidget {
   }
 }
 
-class _DownloadDone extends StatelessWidget {
-  const _DownloadDone();
+class _DownloadDone extends ConsumerWidget {
+  const _DownloadDone({
+    required this.chapterId,
+    required this.assetId,
+  });
+
+  final int chapterId;
+  final int? assetId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final delete = ref.watch(deleteDownloadedChapter);
 
     return _DownloadPopupMenu(
       itemBuilder: (context) => [
-        PopupMenuItem(
-          onTap: () {},
-          child: const Text('Delete'),
-        ),
+        if (assetId != null)
+          PopupMenuItem(
+            onTap: () => delete.call(chapterId, assetId!),
+            child: const Text('Delete'),
+          ),
       ],
       child: Container(
         width: 24.0,

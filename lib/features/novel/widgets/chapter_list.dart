@@ -60,7 +60,7 @@ class ChapterList extends ConsumerWidget {
                       : Text(dateFormatService.relativeDay(data.updated!)),
                   trailing: DownloadButton(
                     related: DownloadRelatedData.from(novel, data),
-                    isDownloaded: data.content != null,
+                    assetId: data.content,
                   ),
                   onTap: selectionActive
                       ? select

@@ -59,7 +59,7 @@ class DownloadView extends ConsumerWidget {
           ),
           trailing: DownloadButton(
             related: download.related,
-            isDownloaded: false,
+            assetId: null,
           ),
         );
       },

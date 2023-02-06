@@ -9,18 +9,41 @@ class DownloadData with _$DownloadData {
   const factory DownloadData({
     required int id,
     required int orderIndex,
-    required ChapterData chapter,
+    required DownloadRelatedData related,
     required DateTime createdAt,
   }) = _DownloadData;
 
-  factory DownloadData.fromModel(Download model, ChapterData chapter) {
+  factory DownloadData.fromModel(Download model, DownloadRelatedData related) {
     return DownloadData(
       id: model.id,
       orderIndex: model.orderIndex,
-      chapter: chapter,
+      related: related,
       createdAt: model.createdAt,
     );
   }
 
   const DownloadData._();
+}
+
+@freezed
+class DownloadRelatedData with _$DownloadRelatedData {
+  const factory DownloadRelatedData({
+    required int novelId,
+    required int chapterId,
+    required String chapterTitle,
+    required String novelTitle,
+    required int volumeId,
+  }) = _DownloadRelatedData;
+
+  factory DownloadRelatedData.from(NovelData novel, ChapterData chapter) {
+    return DownloadRelatedData(
+      novelId: novel.id,
+      chapterId: chapter.id,
+      chapterTitle: chapter.title,
+      novelTitle: novel.title,
+      volumeId: chapter.volume.id,
+    );
+  }
+
+  const DownloadRelatedData._();
 }

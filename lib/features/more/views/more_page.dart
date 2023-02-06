@@ -21,7 +21,7 @@ class MorePage extends HookConsumerWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.download),
-              title: const Text('Downloads'),
+              title: const Text('Download queue'),
               onTap: () => context.router.push(const DownloadRoute()),
             ),
             ListTile(

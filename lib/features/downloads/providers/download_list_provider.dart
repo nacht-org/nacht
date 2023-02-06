@@ -36,7 +36,7 @@ class DownloadState with _$DownloadState {
     return copyWith(
       data: {...data, download.id: download},
       order: [...order, download.id],
-      chapters: {...chapters, download.chapter.id: download.id},
+      chapters: {...chapters, download.related.chapterId: download.id},
     );
   }
 
@@ -86,7 +86,7 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
 
         for (final download in data) {
           dataMap[download.id] = download;
-          chaptersMap[download.chapter.id] = download.id;
+          chaptersMap[download.related.chapterId] = download.id;
           order.add(download.id);
         }
 
@@ -99,8 +99,9 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
     );
   }
 
-  Future<void> add(ChapterData chapter) async {
-    final download = await _createDownload.call(chapter.id, state.order.length);
+  Future<void> add(DownloadRelatedData related) async {
+    final download =
+        await _createDownload.call(related.chapterId, state.order.length);
 
     download.fold(
       (failure) {
@@ -109,10 +110,10 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
             .showText("Failed to create new download");
       },
       (download) {
-        final data = DownloadData.fromModel(download, chapter);
+        final data = DownloadData.fromModel(download, related);
         state = state.addAndCopy(data);
         log.info(
-            "added download: id=${data.id} order=${data.orderIndex} title=${chapter.title}");
+            "added download: id=${data.id} order=${data.orderIndex} title=${related.chapterTitle}");
       },
     );
   }

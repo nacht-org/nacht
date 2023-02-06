@@ -22,31 +22,57 @@ class GetDownloads {
   final AppDatabase _database;
 
   Future<Either<Failure, List<DownloadData>>> call() async {
-    final query = _database.select(_database.downloads).join([
-      leftOuterJoin(
+    final downloads = _database.alias(_database.downloads, 'd');
+
+    final columns = [
+      buildSelectColumns(downloads.$columns),
+      "n.id as novelId",
+      "n.title as novelTitle",
+      "c.id as chapterId",
+      'c.title as chapterTitle',
+      'c.volume_id as volumeId',
+    ].join(", ");
+
+    final query = _database.customSelect(
+      "SELECT $columns FROM downloads d "
+      "LEFT JOIN chapters c ON d.chapter_id = c.id "
+      "LEFT JOIN novels n ON c.novel_id = n.id "
+      "ORDER BY d.order_index ASC",
+      readsFrom: {
+        _database.downloads,
         _database.chapters,
-        _database.chapters.id.equalsExp(_database.downloads.chapterId),
-      ),
-      leftOuterJoin(
-        _database.volumes,
-        _database.volumes.id.equalsExp(_database.chapters.volumeId),
-      ),
-    ])
-      ..orderBy([
-        OrderingTerm.asc(_database.downloads.orderIndex),
-      ]);
+        _database.novels,
+      },
+    );
 
     final results = await query.get();
 
-    return Right(results.map((result) {
-      final volume = result.readTable(_database.volumes);
-      final chapter = result.readTable(_database.chapters);
-      final download = result.readTable(_database.downloads);
+    return Right(results.map((row) {
+      final download =
+          downloads.map(row.data, tablePrefix: downloads.aliasedName);
 
-      return DownloadData.fromModel(
-        download,
-        ChapterData.fromModel(chapter, VolumeData.fromModel(volume)),
+      final novelId = row.read<int>('novelId');
+      final chapterId = row.read<int>('chapterId');
+      final novelTitle = row.read<String>('novelTitle');
+      final chapterTitle = row.read<String>('chapterTitle');
+      final volumeId = row.read<int>('volumeId');
+
+      final related = DownloadRelatedData(
+        novelId: novelId,
+        chapterId: chapterId,
+        chapterTitle: chapterTitle,
+        novelTitle: novelTitle,
+        volumeId: volumeId,
       );
+
+      return DownloadData.fromModel(download, related);
     }).toList());
   }
+}
+
+String buildSelectColumns(List<GeneratedColumn> columns) {
+  return columns
+      .map((column) =>
+          "${column.tableName}.${column.name} AS '${column.tableName}.${column.name}'")
+      .join(", ");
 }

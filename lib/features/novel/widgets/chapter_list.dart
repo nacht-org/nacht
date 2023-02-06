@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/downloads/models/models.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
@@ -57,7 +58,9 @@ class ChapterList extends ConsumerWidget {
                   subtitle: data.updated == null
                       ? null
                       : Text(dateFormatService.relativeDay(data.updated!)),
-                  trailing: DownloadButton(chapter: data),
+                  trailing: DownloadButton(
+                    related: DownloadRelatedData.from(novel, data),
+                  ),
                   onTap: selectionActive
                       ? select
                       : () => context.router.push(

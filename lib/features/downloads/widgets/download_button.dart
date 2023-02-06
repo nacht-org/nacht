@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/nacht_theme/nacht_theme.dart';
+import 'package:nacht/features/downloads/models/models.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -10,20 +11,20 @@ import '../providers/providers.dart';
 class DownloadButton extends ConsumerWidget {
   const DownloadButton({
     super.key,
-    required this.chapter,
+    required this.related,
   });
 
-  final ChapterData chapter;
+  final DownloadRelatedData related;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(downloadListProvider
-        .select((value) => value.dataFromChapterId(chapter.id)));
+        .select((value) => value.dataFromChapterId(related.chapterId)));
     final notifier = ref.watch(downloadListProvider.notifier);
 
     if (state == null) {
       return _AddDownloadButton(
-        onPressed: () => notifier.add(chapter),
+        onPressed: () => notifier.add(related),
       );
     }
 

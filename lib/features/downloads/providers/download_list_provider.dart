@@ -1,10 +1,12 @@
+import 'dart:collection';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/downloads/services/create_download.dart';
 import 'package:nacht/shared/shared.dart';
 
 import '../models/models.dart';
+import '../services/services.dart';
 
 part 'download_list_provider.freezed.dart';
 
@@ -16,10 +18,26 @@ class DownloadState with _$DownloadState {
     required Map<int, int> chapters,
   }) = _DownloadState;
 
+  factory DownloadState.empty() {
+    return const DownloadState(
+      data: {},
+      order: [],
+      chapters: {},
+    );
+  }
+
   DownloadData? dataFromChapterId(int chapterId) {
     final dataId = chapters[chapterId];
     if (dataId == null) return null;
     return data[dataId];
+  }
+
+  DownloadState addAndCopy(DownloadData download) {
+    return copyWith(
+      data: {...data, download.id: download},
+      order: [...order, download.id],
+      chapters: {...chapters, download.chapter.id: download.id},
+    );
   }
 
   const DownloadState._();
@@ -29,12 +47,9 @@ final downloadListProvider =
     StateNotifierProvider<DownloadListNotifier, DownloadState>(
   (ref) => DownloadListNotifier(
     ref: ref,
-    state: const DownloadState(
-      data: {},
-      order: [],
-      chapters: {},
-    ),
+    state: DownloadState.empty(),
     createDownload: ref.watch(createDownloadProvider),
+    getDownloads: ref.watch(getDownloadsProvider),
   ),
   name: 'DownloadListProvider',
 );
@@ -45,12 +60,44 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
     required Ref ref,
     required DownloadState state,
     required CreateDownload createDownload,
+    required GetDownloads getDownloads,
   })  : _ref = ref,
         _createDownload = createDownload,
+        _getDownloads = getDownloads,
         super(state);
 
   final Ref _ref;
   final CreateDownload _createDownload;
+  final GetDownloads _getDownloads;
+
+  Future<void> init() async {
+    final result = await _getDownloads.call();
+
+    result.fold(
+      (failure) {
+        _ref
+            .read(messageServiceProvider)
+            .showText("Failed to read downloads from database");
+      },
+      (data) {
+        final Map<int, DownloadData> dataMap = {};
+        final List<int> order = [];
+        final Map<int, int> chaptersMap = {};
+
+        for (final download in data) {
+          dataMap[download.id] = download;
+          chaptersMap[download.chapter.id] = download.id;
+          order.add(download.id);
+        }
+
+        state = DownloadState(
+          data: dataMap,
+          order: order,
+          chapters: chaptersMap,
+        );
+      },
+    );
+  }
 
   Future<void> add(ChapterData chapter) async {
     final download = await _createDownload.call(chapter.id, state.order.length);
@@ -63,15 +110,9 @@ class DownloadListNotifier extends StateNotifier<DownloadState>
       },
       (download) {
         final data = DownloadData.fromModel(download, chapter);
-
-        state = state.copyWith(
-            data: {...state.data, data.id: data},
-            order: [...state.order, data.id],
-            chapters: {...state.chapters, chapter.id: data.id});
-
+        state = state.addAndCopy(data);
         log.info(
-          "added download: id=${data.id} order=${data.orderIndex} title=${chapter.title}",
-        );
+            "added download: id=${data.id} order=${data.orderIndex} title=${chapter.title}");
       },
     );
   }

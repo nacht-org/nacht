@@ -19,10 +19,18 @@ class MorePage extends HookConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(0),
           children: [
-            ListTile(
-              leading: const Icon(Icons.download),
-              title: const Text('Download queue'),
-              onTap: () => context.router.push(const DownloadRoute()),
+            Consumer(
+              builder: (context, ref, child) {
+                final remaining = ref.watch(
+                    downloadListProvider.select((state) => state.order.length));
+
+                return ListTile(
+                  leading: const Icon(Icons.download),
+                  title: const Text('Download queue'),
+                  subtitle: remaining > 0 ? Text("$remaining remaining") : null,
+                  onTap: () => context.router.push(const DownloadRoute()),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.category),

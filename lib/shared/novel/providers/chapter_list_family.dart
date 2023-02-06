@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/logger/logger.dart';
 import 'package:nacht/shared/novel/services/get_chapters.dart';
@@ -6,12 +8,20 @@ import '../novel.dart';
 
 final chapterListFamily = StateNotifierProvider.autoDispose
     .family<ChapterListNotifier, ChapterListInfo, int>(
-  (ref, novelId) => ChapterListNotifier(
-    state: ChapterListInfo(chapters: [], isLoaded: false),
-    novelId: novelId,
-    getChapters: ref.watch(getChaptersProvider),
-    setReadAt: ref.watch(setReadAtProvider),
-  ),
+  (ref, novelId) {
+    final notifier = ChapterListNotifier(
+      state: ChapterListInfo(chapters: [], isLoaded: false),
+      novelId: novelId,
+      watchChapterList: ref.watch(watchChapterListProvider),
+      setReadAt: ref.watch(setReadAtProvider),
+    );
+
+    ref.onDispose(() {
+      notifier.chapterSubscription?.cancel();
+    });
+
+    return notifier;
+  },
   name: 'ChapterListProvider',
 );
 
@@ -20,29 +30,37 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
   ChapterListNotifier({
     required ChapterListInfo state,
     required int novelId,
-    required GetChapters getChapters,
+    required WatchChapterList watchChapterList,
     required SetReadAt setReadAt,
   })  : _novelId = novelId,
-        _getChapters = getChapters,
+        _watchChapterList = watchChapterList,
         _setReadAt = setReadAt,
         super(state);
 
   final int _novelId;
-  final GetChapters _getChapters;
+  final WatchChapterList _watchChapterList;
   final SetReadAt _setReadAt;
+
+  late StreamSubscription<List<ChapterData>>? chapterSubscription;
 
   Future<void> init() async {
     if (!state.isLoaded) {
-      reload();
+      final chapterStream =
+          _watchChapterList.call(_novelId).asBroadcastStream();
+      final chapters = await chapterStream.first;
+
+      chapterSubscription = chapterStream.listen((chapters) {
+        state = state.copyWith(chapters: chapters);
+      });
+
+      state = state.copyWith(
+        chapters: chapters,
+        isLoaded: true,
+      );
     }
   }
 
-  Future<void> reload() async {
-    state = state.copyWith(
-      chapters: await _getChapters.execute(_novelId),
-      isLoaded: true,
-    );
-  }
+  Future<void> reload() async {}
 
   Future<void> setReadAt(Set<int> ids, bool isRead) async {
     final failure = await _setReadAt.execute(ids, isRead);

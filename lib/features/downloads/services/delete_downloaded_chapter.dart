@@ -19,19 +19,21 @@ class DeleteDownloadedChapter {
   final AppDatabase _database;
 
   Future<void> call(int chapterId, int assetId) async {
-    await _database.transaction(() async {
-      final companion = AssetsCompanion(id: Value(assetId));
-      final asset =
-          await _database.delete(_database.assets).deleteReturning(companion);
-      if (asset == null) return;
+    await _database.transaction(
+      () async {
+        await (_database.update(_database.chapters)
+              ..where((tbl) => tbl.id.equals(chapterId)))
+            .write(const ChaptersCompanion(content: Value(null)));
 
-      if (asset.path != null) {
-        await File(asset.path!).delete();
-      }
+        final companion = AssetsCompanion(id: Value(assetId));
+        final asset =
+            await _database.delete(_database.assets).deleteReturning(companion);
+        if (asset == null) return;
 
-      await (_database.update(_database.chapters)
-            ..where((tbl) => tbl.id.equals(chapterId)))
-          .write(const ChaptersCompanion(content: Value(null)));
-    });
+        if (asset.path != null) {
+          await File(asset.path!).delete();
+        }
+      },
+    );
   }
 }

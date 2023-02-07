@@ -4,6 +4,8 @@ import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/features/features.dart';
 
+import '../widgets/widgets.dart';
+
 class MorePage extends HookConsumerWidget {
   const MorePage({Key? key}) : super(key: key);
 
@@ -19,19 +21,7 @@ class MorePage extends HookConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(0),
           children: [
-            Consumer(
-              builder: (context, ref, child) {
-                final remaining = ref.watch(
-                    downloadListProvider.select((state) => state.order.length));
-
-                return ListTile(
-                  leading: const Icon(Icons.download),
-                  title: const Text('Download queue'),
-                  subtitle: remaining > 0 ? Text("$remaining remaining") : null,
-                  onTap: () => context.router.push(const DownloadRoute()),
-                );
-              },
-            ),
+            const DownloadQueueTile(),
             ListTile(
               leading: const Icon(Icons.category),
               title: const Text('Categories'),

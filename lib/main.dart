@@ -23,7 +23,7 @@ Future<void> main() async {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
       ],
-      observers: [ProviderLogger()],
+      // observers: [ProviderLogger()],
       child: const NachtApp(),
     ),
   );

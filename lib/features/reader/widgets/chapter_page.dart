@@ -37,7 +37,7 @@ class ChapterPage extends HookConsumerWidget {
     final notifier = ref.watch(readerPageFamily(input).notifier);
 
     usePostFrameCallback((timeStamp) {
-      notifier.fetch(crawler);
+      notifier.reload(crawler);
     });
 
     return page.content.when(
@@ -48,7 +48,7 @@ class ChapterPage extends HookConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: LoadingError(
           message: Text(message),
-          onRetry: () => notifier.fetch(crawler),
+          onRetry: () => notifier.reload(crawler),
         ),
       ),
       data: (content) => NotificationListener<ScrollNotification>(

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/database/database.dart';
 
@@ -25,6 +27,10 @@ class AssetData with _$AssetData {
       mimetype: AssetTypeSeed.intoMimeType(asset.typeId),
       savedAt: asset.savedAt,
     );
+  }
+
+  static String hashString(String content) {
+    return md5.convert(utf8.encode(content)).toString();
   }
 
   AssetData._();

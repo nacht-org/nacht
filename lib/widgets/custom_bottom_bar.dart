@@ -21,12 +21,9 @@ class CustomBottomBar extends StatelessWidget {
           top: Radius.circular(16.0),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SizedBox(
-          height: 64.0,
-          child: child,
-        ),
+      child: SizedBox(
+        height: 64.0,
+        child: child,
       ),
     );
   }

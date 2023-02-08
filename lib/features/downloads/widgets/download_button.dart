@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/nacht_theme/nacht_theme.dart';
-import 'package:nacht/features/downloads/models/models.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:simple_animations/simple_animations.dart';
-
-import '../providers/providers.dart';
 
 class DownloadButton extends ConsumerWidget {
   const DownloadButton({

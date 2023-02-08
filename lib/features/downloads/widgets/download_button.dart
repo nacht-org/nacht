@@ -82,14 +82,14 @@ class _PendingDownload extends StatelessWidget {
     final theme = Theme.of(context);
     final iconTheme = IconTheme.of(context);
 
-    return _DownloadPopupMenu(
+    return PopupMenuButton(
       itemBuilder: (context) => [
         PopupMenuItem(
           onTap: onCancel,
           child: const Text('Cancel'),
         ),
       ],
-      child: MirrorAnimationBuilder<Color?>(
+      icon: MirrorAnimationBuilder<Color?>(
         tween: ColorTween(
             begin: iconTheme.color, end: theme.colorScheme.onSurface),
         duration: kLongAnimationDuration,
@@ -113,14 +113,14 @@ class _ProgressDownload extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return _DownloadPopupMenu(
+    return PopupMenuButton(
       itemBuilder: (context) => [
         PopupMenuItem(
           onTap: onCancel,
           child: const Text('Cancel'),
         ),
       ],
-      child: _DownloadIndicator(
+      icon: _DownloadIndicator(
         color: theme.colorScheme.onSurface,
         progress: null,
       ),
@@ -142,7 +142,7 @@ class _DownloadDone extends ConsumerWidget {
     final theme = Theme.of(context);
     final delete = ref.watch(deleteDownloadedChapter);
 
-    return _DownloadPopupMenu(
+    return PopupMenuButton(
       itemBuilder: (context) => [
         if (assetId != null)
           PopupMenuItem(
@@ -150,7 +150,7 @@ class _DownloadDone extends ConsumerWidget {
             child: const Text('Delete'),
           ),
       ],
-      child: Container(
+      icon: Container(
         width: 24.0,
         height: 24.0,
         decoration: BoxDecoration(
@@ -202,34 +202,6 @@ class _DownloadIndicator extends StatelessWidget {
             strokeWidth: 2,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _DownloadPopupMenu extends StatelessWidget {
-  const _DownloadPopupMenu({
-    required this.itemBuilder,
-    required this.child,
-  });
-
-  final Widget child;
-  final PopupMenuItemBuilder itemBuilder;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Material(
-        shape: const CircleBorder(),
-        clipBehavior: Clip.hardEdge,
-        child: PopupMenuButton(
-          itemBuilder: itemBuilder,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: child,
-          ),
-        ),
       ),
     );
   }

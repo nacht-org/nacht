@@ -12,7 +12,7 @@ final readAssetAsStringProvider = Provider<ReadAssetAsString>(
 
 class ReadAssetAsString with LoggerMixin {
   Future<Either<Failure, String>> call(AssetData asset) async {
-    if (asset.file == null) {
+    if (asset.file == null || !await asset.file!.exists()) {
       return Left(AssetNotFound(asset.file));
     }
 

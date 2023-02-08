@@ -15,7 +15,7 @@ class DownloadQueueTile extends ConsumerWidget {
         ref.watch(downloadListProvider.select((state) => state.order.length));
 
     final subtitle = [
-      if (isPaused) "Paused",
+      if (isPaused && remaining > 0) "Paused",
       if (remaining > 0) "$remaining remaining",
     ].join(" • ");
 

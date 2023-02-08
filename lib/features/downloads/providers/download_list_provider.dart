@@ -146,7 +146,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     );
   }
 
-  Future<void> addAll(Iterable<DownloadRelatedData> relatedData) async {
+  Future<void> addMany(Iterable<DownloadRelatedData> relatedData) async {
     // FIXME: optimize adding multiple downloads at once
     for (final related in relatedData) {
       await add(related);
@@ -164,6 +164,10 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
         state = state.copyWithoutId(downloadId);
       },
     );
+  }
+
+  Future<void> removeAll() async {
+    state = DownloadListState.empty();
   }
 
   Future<void> _onAdded(DownloadListState previousState) async {

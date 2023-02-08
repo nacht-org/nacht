@@ -182,7 +182,7 @@ class NovelView extends HookConsumerWidget {
 
                   ref
                       .read(downloadListProvider.notifier)
-                      .addAll(chaptersToDownload);
+                      .addMany(chaptersToDownload);
                   context.router.pop();
                 },
                 icon: const Icon(Icons.download),

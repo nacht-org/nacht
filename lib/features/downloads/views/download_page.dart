@@ -15,6 +15,18 @@ class DownloadPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Download queue'),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                onTap: () =>
+                    ref.read(downloadListProvider.notifier).removeAll(),
+                child: const Text('Cancel all'),
+              ),
+            ],
+            icon: const Icon(Icons.more_vert),
+          ),
+        ],
       ),
       body: const DownloadView(),
       floatingActionButton: download.isRunning

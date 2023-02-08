@@ -71,6 +71,7 @@ final downloadListProvider =
     createDownload: ref.watch(createDownloadProvider),
     getDownloads: ref.watch(getDownloadsProvider),
     removeDownload: ref.watch(removeDownloadProvider),
+    removeAllDownloads: ref.watch(removeAllDownloadsProvider),
   ),
   name: 'DownloadListProvider',
 );
@@ -83,16 +84,19 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     required CreateDownload createDownload,
     required GetDownloads getDownloads,
     required RemoveDownload removeDownload,
+    required RemoveAllDownloads removeAllDownloads,
   })  : _ref = ref,
         _createDownload = createDownload,
         _getDownloads = getDownloads,
         _removeDownload = removeDownload,
+        _removeAllDownloads = removeAllDownloads,
         super(state);
 
   final Ref _ref;
   final CreateDownload _createDownload;
   final GetDownloads _getDownloads;
   final RemoveDownload _removeDownload;
+  final RemoveAllDownloads _removeAllDownloads;
 
   Future<void> init() async {
     final result = await _getDownloads.call();
@@ -167,6 +171,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
   }
 
   Future<void> removeAll() async {
+    await _removeAllDownloads.call();
     state = DownloadListState.empty();
   }
 

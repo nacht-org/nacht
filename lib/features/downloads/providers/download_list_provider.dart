@@ -7,6 +7,7 @@ import 'package:nacht/shared/shared.dart';
 
 import '../models/models.dart';
 import '../services/services.dart';
+import 'providers.dart';
 
 part 'download_list_provider.freezed.dart';
 
@@ -134,9 +135,13 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
       },
       (download) {
         final data = DownloadData.fromModel(download, related);
+
+        final previousState = state;
         state = state.addAndCopy(data);
         log.info(
             "added download: id=${data.id} order=${data.orderIndex} title=${related.chapterTitle}");
+
+        _onAdded(previousState);
       },
     );
   }
@@ -152,5 +157,12 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
         state = state.copyWithoutId(downloadId);
       },
     );
+  }
+
+  Future<void> _onAdded(DownloadListState previousState) async {
+    if (previousState.order.isEmpty) {
+      _ref.read(downloadProvider.notifier).setRunning(true);
+      log.info("Download started when items added to empty list");
+    }
   }
 }

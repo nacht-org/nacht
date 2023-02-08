@@ -11,6 +11,7 @@ final toolbarProvider =
   name: 'ToolbarProvider',
 );
 
+// FIXME: this is no longer used. remove it?
 class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
   ToolbarNotifier({
     required ToolbarInfo state,
@@ -34,13 +35,13 @@ class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
   }
 
   void setSystemUiMode(bool visible) {
-    if (visible) {
-      SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual,
-        overlays: SystemUiOverlay.values,
-      );
-    } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    }
+    // if (visible) {
+    //   SystemChrome.setEnabledSystemUIMode(
+    //     SystemUiMode.manual,
+    //     overlays: SystemUiOverlay.values,
+    //   );
+    // } else {
+    //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    // }
   }
 }

@@ -71,10 +71,16 @@ class ReaderView extends HookConsumerWidget {
             ),
           ),
           backgroundColor: backgroundColor,
-          body: ReaderBody(
-            reader: reader,
-            readerNotifier: notifier,
-            controller: pageController,
+          body: MediaQuery.removeViewInsets(
+            context: context,
+            removeTop: true,
+            child: SafeArea(
+              child: ReaderBody(
+                reader: reader,
+                readerNotifier: notifier,
+                controller: pageController,
+              ),
+            ),
           ),
           drawer: ReaderDrawer(
             reader: reader,

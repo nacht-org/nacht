@@ -59,21 +59,19 @@ class ChapterPage extends HookConsumerWidget {
           return false;
         },
         child: ReaderTheme(
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ReaderScrollbar(
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      top: 16.0,
-                      right: 8.0,
-                      bottom: 8.0,
-                    ),
-                    child: Builder(builder: (context) {
-                      var theme = Theme.of(context);
+          child: ReaderScrollbar(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    top: 16.0,
+                    right: 8.0,
+                    bottom: 8.0,
+                  ),
+                  child: Builder(
+                    builder: (context) {
+                      final theme = Theme.of(context);
 
                       return Text(
                         data.title,
@@ -81,30 +79,30 @@ class ChapterPage extends HookConsumerWidget {
                           color: theme.textTheme.labelLarge?.color,
                         ),
                       );
-                    }),
-                  ),
-                  Consumer(
-                    builder: (context, ref, child) {
-                      final preferences = ref.watch(readerPreferencesProvider);
-
-                      return Html(
-                        data: content,
-                        style: {
-                          "*": Style(
-                            lineHeight: LineHeight(preferences.lineHeight),
-                          ),
-                          "p": Style(
-                            fontSize: FontSize(preferences.fontSize),
-                          ),
-                        },
-                        customRenders: {
-                          tableMatcher(): tableRender(),
-                        },
-                      );
                     },
                   ),
-                ],
-              ),
+                ),
+                Consumer(
+                  builder: (context, ref, child) {
+                    final preferences = ref.watch(readerPreferencesProvider);
+
+                    return Html(
+                      data: content,
+                      style: {
+                        "*": Style(
+                          lineHeight: LineHeight(preferences.lineHeight),
+                        ),
+                        "p": Style(
+                          fontSize: FontSize(preferences.fontSize),
+                        ),
+                      },
+                      customRenders: {
+                        tableMatcher(): tableRender(),
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ),

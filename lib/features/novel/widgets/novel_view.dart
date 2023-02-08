@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -166,6 +167,26 @@ class NovelView extends HookConsumerWidget {
                   context.router.pop();
                 },
                 tooltip: 'Mark as unread',
+              ),
+              IconButton(
+                onPressed: () {
+                  final selection = ref.read(novelSelectionProvider);
+                  final chapterList = ref.read(chapterListFamily(novel.id));
+                  final chaptersToDownload = chapterList.chapters
+                      .where(
+                        (element) =>
+                            element.content == null &&
+                            selection.contains(element.id),
+                      )
+                      .map((e) => DownloadRelatedData.from(novel, e));
+
+                  ref
+                      .read(downloadListProvider.notifier)
+                      .addAll(chaptersToDownload);
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.download),
+                tooltip: 'Download',
               ),
             ],
           ),

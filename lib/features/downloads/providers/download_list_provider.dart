@@ -146,6 +146,13 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     );
   }
 
+  Future<void> addAll(Iterable<DownloadRelatedData> relatedData) async {
+    // FIXME: optimize adding multiple downloads at once
+    for (final related in relatedData) {
+      await add(related);
+    }
+  }
+
   Future<void> remove(int downloadId) async {
     final result = await _removeDownload.call(downloadId);
 

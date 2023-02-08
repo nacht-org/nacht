@@ -188,6 +188,25 @@ class NovelView extends HookConsumerWidget {
                 icon: const Icon(Icons.download),
                 tooltip: 'Download',
               ),
+              IconButton(
+                onPressed: () {
+                  final selection = ref.read(novelSelectionProvider);
+                  final chapterList = ref.read(chapterListFamily(novel.id));
+                  final chaptersToDelete = chapterList.chapters.where(
+                    (element) =>
+                        element.content != null &&
+                        selection.contains(element.id),
+                  );
+
+                  ref
+                      .read(deleteManyDownloadedChaptersProvider)
+                      .call(chaptersToDelete);
+
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.delete),
+                tooltip: 'Delete',
+              ),
             ],
           ),
         ),

@@ -3,15 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
 
-final createDownloadProvider = Provider<CreateDownload>(
-  (ref) {
-    return CreateDownload(database: ref.watch(databaseProvider));
-  },
-  name: 'CreateDownloadProvider',
+final insertDownloadProvider = Provider<InsertDownload>(
+  (ref) => InsertDownload(
+    database: ref.watch(databaseProvider),
+  ),
+  name: 'InsertDownloadProvider',
 );
 
-class CreateDownload {
-  const CreateDownload({
+class InsertDownload {
+  const InsertDownload({
     required AppDatabase database,
   }) : _database = database;
 

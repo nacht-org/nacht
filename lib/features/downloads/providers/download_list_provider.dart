@@ -80,7 +80,7 @@ final downloadListProvider =
   (ref) => DownloadListNotifier(
     ref: ref,
     state: DownloadListState.empty(),
-    createDownload: ref.watch(createDownloadProvider),
+    insertDownload: ref.watch(insertDownloadProvider),
     getDownloads: ref.watch(getDownloadsProvider),
     removeDownload: ref.watch(removeDownloadProvider),
     removeAllDownloads: ref.watch(removeAllDownloadsProvider),
@@ -94,13 +94,13 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
   DownloadListNotifier({
     required Ref ref,
     required DownloadListState state,
-    required CreateDownload createDownload,
+    required InsertDownload insertDownload,
     required GetDownloads getDownloads,
     required RemoveDownload removeDownload,
     required RemoveAllDownloads removeAllDownloads,
     required InsertMultipleDownloads insertMultipleDownloads,
   })  : _ref = ref,
-        _createDownload = createDownload,
+        _insertDownload = insertDownload,
         _getDownloads = getDownloads,
         _removeDownload = removeDownload,
         _removeAllDownloads = removeAllDownloads,
@@ -108,7 +108,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
         super(state);
 
   final Ref _ref;
-  final CreateDownload _createDownload;
+  final InsertDownload _insertDownload;
   final GetDownloads _getDownloads;
   final RemoveDownload _removeDownload;
   final RemoveAllDownloads _removeAllDownloads;
@@ -145,7 +145,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
 
   Future<void> add(DownloadRelatedData related) async {
     final download =
-        await _createDownload.call(related.chapterId, state.order.length);
+        await _insertDownload.call(related.chapterId, state.order.length);
 
     download.fold(
       (failure) {

@@ -11,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../models/models.dart';
 import '../providers/providers.dart';
+import 'actions/download_action.dart';
 import 'widgets.dart';
 
 class NovelView extends HookConsumerWidget {
@@ -62,6 +63,7 @@ class NovelView extends HookConsumerWidget {
           : AppBar(
               title: Text(novel.title),
               actions: [
+                DownloadAction(novel: novel),
                 IconButton(
                   onPressed: () => showExpandableBottomSheet(
                     context: context,
@@ -93,33 +95,35 @@ class NovelView extends HookConsumerWidget {
                 top: 0,
                 bottom: 8,
               ),
-              HookConsumer(builder: (context, ref, child) {
-                final expanded = useState(!direct);
+              HookConsumer(
+                builder: (context, ref, child) {
+                  final expanded = useState(!direct);
 
-                return buildPadding(
-                  top: 0,
-                  bottom: 8,
-                  sliver: SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () => expanded.value = !expanded.value,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Description(
-                            description: novel.description,
-                            expanded: expanded,
-                          ),
-                          const SizedBox(height: 8),
-                          Tags(
-                            novelId: novel.id,
-                            expanded: expanded,
-                          )
-                        ],
+                  return buildPadding(
+                    top: 0,
+                    bottom: 8,
+                    sliver: SliverToBoxAdapter(
+                      child: GestureDetector(
+                        onTap: () => expanded.value = !expanded.value,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Description(
+                              description: novel.description,
+                              expanded: expanded,
+                            ),
+                            const SizedBox(height: 8),
+                            Tags(
+                              novelId: novel.id,
+                              expanded: expanded,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                },
+              ),
               SliverToBoxAdapter(
                 child: ListTile(
                   title: Text(

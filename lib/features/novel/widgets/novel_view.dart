@@ -63,6 +63,14 @@ class NovelView extends HookConsumerWidget {
               title: Text(novel.title),
               actions: [
                 IconButton(
+                  onPressed: () => showExpandableBottomSheet(
+                    context: context,
+                    builder: (context, controller) =>
+                        ChapterListBottomSheet(controller: controller),
+                  ),
+                  icon: const Icon(Icons.filter_list),
+                ),
+                IconButton(
                   tooltip: 'Share',
                   onPressed: () => Share.share(novel.url),
                   icon: const Icon(Icons.share),

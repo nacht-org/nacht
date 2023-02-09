@@ -26,6 +26,6 @@ export 'show_expandable_bottom_sheet.dart';
 export 'empty_indicator.dart';
 export 'search_bar.dart';
 
-export 'nacht_list_tile.dart';
+export 'mute_tile.dart';
 export 'menu_list_tile.dart';
 export 'step_list_tile.dart';

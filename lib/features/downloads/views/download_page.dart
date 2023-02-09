@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
@@ -48,6 +49,12 @@ class DownloadView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final downloads = ref.watch(downloadListProvider);
+
+    if (downloads.order.isEmpty) {
+      return const EmptyIndicator(
+        child: Icon(Icons.download),
+      );
+    }
 
     return ListView.builder(
       itemCount: downloads.order.length,

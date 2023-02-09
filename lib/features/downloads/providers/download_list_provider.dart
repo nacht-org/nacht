@@ -1,9 +1,6 @@
-import 'dart:collection';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/shared/shared.dart';
 
 import '../models/models.dart';
 import '../services/services.dart';
@@ -173,6 +170,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     downloads.fold(
       (failure) {
         log.warning(failure);
+        _ref.read(messageServiceProvider).showText(failure.message);
       },
       (downloads) {
         final previousState = state;
@@ -189,6 +187,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     result.fold(
       (failure) {
         log.warning(failure);
+        _ref.read(messageServiceProvider).showText(failure.message);
       },
       (_) {
         state = state.copyWithoutId(downloadId);

@@ -74,6 +74,9 @@ class DownloadRunnerNotifier extends StateNotifier<void> with LoggerMixin {
     if (factory == null) {
       log.warning(
           "Download stopped: Unable to obtain source for novel '${data.related.novelUrl}' and chapter '${data.related.chapterUrl}'");
+      _ref
+          .read(messageServiceProvider)
+          .showText("Could not find crawler for ${data.related.chapterTitle}.");
       return false;
     }
 
@@ -97,6 +100,7 @@ class DownloadRunnerNotifier extends StateNotifier<void> with LoggerMixin {
     await result.fold(
       (failure) {
         log.warning(failure);
+        _ref.read(messageServiceProvider).showText(failure.message);
       },
       (asset) async {
         downloadNotifier.setCurrent(null);

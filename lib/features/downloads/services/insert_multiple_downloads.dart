@@ -24,6 +24,7 @@ class InsertMultipleDownloads {
   ) async {
     final downloads = <DownloadData>[];
 
+    // FIXME: This transaction can throw an error and should be handled.
     int runningIndex = orderIndex;
     await _database.transaction(() async {
       for (final related in data) {

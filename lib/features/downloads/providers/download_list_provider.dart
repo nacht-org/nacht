@@ -33,11 +33,23 @@ class DownloadListState with _$DownloadListState {
     return data[dataId];
   }
 
-  DownloadListState addAndCopy(DownloadData download) {
+  DownloadListState copyWithData(DownloadData download) {
     return copyWith(
       data: {...data, download.id: download},
       order: [...order, download.id],
       chapters: {...chapters, download.related.chapterId: download.id},
+    );
+  }
+
+  DownloadListState copyWithMany(Iterable<DownloadData> downloads) {
+    return copyWith(
+      data: {...data, for (final download in downloads) download.id: download},
+      order: [...order, for (final download in downloads) download.id],
+      chapters: {
+        ...chapters,
+        for (final download in downloads)
+          download.related.chapterId: download.id
+      },
     );
   }
 
@@ -72,6 +84,7 @@ final downloadListProvider =
     getDownloads: ref.watch(getDownloadsProvider),
     removeDownload: ref.watch(removeDownloadProvider),
     removeAllDownloads: ref.watch(removeAllDownloadsProvider),
+    insertMultipleDownloads: ref.watch(insertMultipleDownloadsProvider),
   ),
   name: 'DownloadListProvider',
 );
@@ -85,11 +98,13 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     required GetDownloads getDownloads,
     required RemoveDownload removeDownload,
     required RemoveAllDownloads removeAllDownloads,
+    required InsertMultipleDownloads insertMultipleDownloads,
   })  : _ref = ref,
         _createDownload = createDownload,
         _getDownloads = getDownloads,
         _removeDownload = removeDownload,
         _removeAllDownloads = removeAllDownloads,
+        _insertMultipleDownloads = insertMultipleDownloads,
         super(state);
 
   final Ref _ref;
@@ -97,6 +112,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
   final GetDownloads _getDownloads;
   final RemoveDownload _removeDownload;
   final RemoveAllDownloads _removeAllDownloads;
+  final InsertMultipleDownloads _insertMultipleDownloads;
 
   Future<void> init() async {
     final result = await _getDownloads.call();
@@ -141,7 +157,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
         final data = DownloadData.fromModel(download, related);
 
         final previousState = state;
-        state = state.addAndCopy(data);
+        state = state.copyWithData(data);
         log.info(
             "added download: id=${data.id} order=${data.orderIndex} title=${related.chapterTitle}");
 
@@ -151,10 +167,20 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
   }
 
   Future<void> addMany(Iterable<DownloadRelatedData> relatedData) async {
-    // FIXME: optimize adding multiple downloads at once
-    for (final related in relatedData) {
-      await add(related);
-    }
+    final downloads =
+        await _insertMultipleDownloads.call(relatedData, state.order.length);
+
+    downloads.fold(
+      (failure) {
+        log.warning(failure);
+      },
+      (downloads) {
+        final previousState = state;
+        state = state.copyWithMany(downloads);
+        log.info("added ${downloads.length} downloads");
+        _onAdded(previousState);
+      },
+    );
   }
 
   Future<void> remove(int downloadId) async {

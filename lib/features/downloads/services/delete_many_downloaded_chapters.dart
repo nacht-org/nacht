@@ -34,7 +34,10 @@ class DeleteManyDownloadedChapters {
           .get();
 
       for (final asset in assets) {
-        await File(asset.path!).delete();
+        final file = File(asset.path!);
+        if (await file.exists()) {
+          await file.delete();
+        }
       }
 
       await (_database.delete(_database.assets)

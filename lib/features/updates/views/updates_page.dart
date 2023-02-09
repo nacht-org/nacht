@@ -13,6 +13,11 @@ class UpdatesPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final refreshKey = useMemoized(() => GlobalKey<RefreshIndicatorState>());
+
+    final selection = ref.watch(updatesSelectionProvider);
+    final selectionNotifier = ref.watch(updatesSelectionProvider.notifier);
+
     final selectionActive = ref.watch(
       updatesSelectionProvider.select((selection) => selection.active),
     );
@@ -30,8 +35,41 @@ class UpdatesPage extends HookConsumerWidget {
       ),
     );
 
+    Iterable<int> getIds() {
+      return ref
+          .read(updatesProvider)
+          .map((entry) =>
+              entry.whenOrNull(chapter: (novel, chapter) => chapter.id))
+          .whereType<int>();
+    }
+
     return Scaffold(
-      body: const UpdatesView(),
+      appBar: selectionActive
+          ? SelectionAppBar(
+              title: Text("${selection.selected.length}"),
+              onSelectAllPressed: () => selectionNotifier.addAll(getIds()),
+              onInversePressed: () => selectionNotifier.flipAll(getIds()),
+            )
+          : AppBar(
+              title: const Text('Updates'),
+              actions: [
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isBusy = ref.watch(refreshProvider);
+
+                    return IconButton(
+                      tooltip: "Refresh",
+                      onPressed:
+                          isBusy ? null : () => refreshKey.currentState!.show(),
+                      icon: const Icon(Icons.refresh),
+                    );
+                  },
+                ),
+              ],
+            ),
+      body: UpdatesView(
+        refreshKey: refreshKey,
+      ),
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
         child: CustomBottomBar(
@@ -66,100 +104,60 @@ class UpdatesPage extends HookConsumerWidget {
 }
 
 class UpdatesView extends HookConsumerWidget {
-  const UpdatesView({Key? key}) : super(key: key);
+  const UpdatesView({
+    Key? key,
+    required this.refreshKey,
+  }) : super(key: key);
+
+  final GlobalKey<RefreshIndicatorState> refreshKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useScrollController();
-
-    final refreshIndicatorKey = useMemoized(
-      () => GlobalKey<RefreshIndicatorState>(),
-    );
-
-    final selectionActive = ref.watch(
-      updatesSelectionProvider.select((selection) => selection.active),
-    );
-    final selection = ref.watch(updatesSelectionProvider);
-    final selectionNotifier = ref.watch(updatesSelectionProvider.notifier);
-
     final refreshNotifier = ref.watch(refreshProvider.notifier);
 
-    Iterable<int> getIds() {
-      return ref
-          .read(updatesProvider)
-          .map((entry) =>
-              entry.whenOrNull(chapter: (novel, chapter) => chapter.id))
-          .whereType<int>();
-    }
+    return RefreshIndicator(
+      onRefresh: refreshNotifier.refreshAll,
+      child: Scrollbar(
+        interactive: true,
+        controller: controller,
+        child: Consumer(
+          builder: (context, ref, child) {
+            final updatesEmpty =
+                ref.watch(updatesProvider.select((value) => value.isEmpty));
 
-    return Scaffold(
-      appBar: selectionActive
-          ? SelectionAppBar(
-              title: Text("${selection.selected.length}"),
-              onSelectAllPressed: () => selectionNotifier.addAll(getIds()),
-              onInversePressed: () => selectionNotifier.flipAll(getIds()),
-            )
-          : AppBar(
-              title: const Text('Updates'),
-              actions: [
-                Consumer(
-                  builder: (context, ref, child) {
-                    final isBusy = ref.watch(refreshProvider);
+            return CustomScrollView(
+              controller: controller,
+              slivers: [
+                if (!updatesEmpty)
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final updates = ref.watch(updatesProvider);
 
-                    return IconButton(
-                      tooltip: "Refresh",
-                      onPressed: isBusy
-                          ? null
-                          : () => refreshIndicatorKey.currentState!.show(),
-                      icon: const Icon(Icons.refresh),
-                    );
-                  },
-                ),
-              ],
-            ),
-      body: RefreshIndicator(
-        onRefresh: refreshNotifier.refreshAll,
-        child: Scrollbar(
-          interactive: true,
-          controller: controller,
-          child: Consumer(
-            builder: (context, ref, child) {
-              final updatesEmpty =
-                  ref.watch(updatesProvider.select((value) => value.isEmpty));
-
-              return CustomScrollView(
-                controller: controller,
-                slivers: [
-                  if (!updatesEmpty)
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final updates = ref.watch(updatesProvider);
-
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) => updates[index].when(
-                              date: (date) => RelativeDateTile(date: date),
-                              chapter: (novel, chapter) => ChapterUpdateTile(
-                                novel: novel,
-                                chapter: chapter,
-                              ),
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) => updates[index].when(
+                            date: (date) => RelativeDateTile(date: date),
+                            chapter: (novel, chapter) => ChapterUpdateTile(
+                              novel: novel,
+                              chapter: chapter,
                             ),
-                            childCount: updates.length,
                           ),
-                        );
-                      },
-                    ),
-                  if (updatesEmpty)
-                    const SliverFillEmptyIndicator(
-                      child: Icon(Icons.update),
-                    ),
-                  const SliverToBoxAdapter(
-                    child: NavigationOffset(),
-                  )
-                ],
-              );
-            },
-          ),
+                          childCount: updates.length,
+                        ),
+                      );
+                    },
+                  ),
+                if (updatesEmpty)
+                  const SliverFillEmptyIndicator(
+                    child: Icon(Icons.update),
+                  ),
+                const SliverToBoxAdapter(
+                  child: NavigationOffset(),
+                )
+              ],
+            );
+          },
         ),
       ),
     );

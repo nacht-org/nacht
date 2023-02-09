@@ -15,8 +15,8 @@ class MuteTile extends StatelessWidget {
     final theme = Theme.of(context);
     return ListTileTheme(
       data: theme.listTileTheme.copyWith(
-        textColor: muted ? null : theme.colorScheme.onSurface.withAlpha(0x73),
-        selectedColor: muted ? null : theme.colorScheme.primary.withAlpha(0x73),
+        textColor: muted ? theme.colorScheme.onSurface.withAlpha(0x73) : null,
+        selectedColor: muted ? theme.colorScheme.primary.withAlpha(0x73) : null,
       ),
       child: child,
     );

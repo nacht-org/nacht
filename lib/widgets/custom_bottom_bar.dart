@@ -22,7 +22,7 @@ class CustomBottomBar extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        height: 64.0,
+        height: 72.0,
         child: child,
       ),
     );

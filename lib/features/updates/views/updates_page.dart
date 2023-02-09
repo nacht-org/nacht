@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -94,6 +96,48 @@ class UpdatesPage extends HookConsumerWidget {
                   Navigator.of(context).pop();
                 },
                 icon: const Icon(Icons.close),
+              ),
+              IconButton(
+                tooltip: "Download",
+                onPressed: () {
+                  final selection = ref.read(updatesSelectionProvider);
+                  final updates = ref.read(updatesProvider);
+                  final chaptersToDownload = updates
+                      .map((entry) => entry.whenOrNull(
+                          chapter: (novel, chapter) => Tuple2(novel, chapter)))
+                      .whereType<Tuple2<NovelData, ChapterData>>()
+                      .where((tuple) =>
+                          tuple.value2.content == null &&
+                          selection.contains(tuple.value2.id))
+                      .map((tuple) =>
+                          DownloadRelatedData.from(tuple.value1, tuple.value2));
+
+                  ref
+                      .read(downloadListProvider.notifier)
+                      .addMany(chaptersToDownload);
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.download),
+              ),
+              IconButton(
+                tooltip: "Delete",
+                onPressed: () {
+                  final selection = ref.read(updatesSelectionProvider);
+                  final updates = ref.read(updatesProvider);
+                  final chaptersToDelete = updates
+                      .map((entry) => entry.whenOrNull(
+                          chapter: (novel, chapter) => chapter))
+                      .whereType<ChapterData>()
+                      .where((chapter) =>
+                          chapter.content != null &&
+                          selection.contains(chapter.id));
+
+                  ref
+                      .read(deleteManyDownloadedChaptersProvider)
+                      .call(chaptersToDelete);
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.delete),
               ),
             ],
           ),

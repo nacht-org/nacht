@@ -48,28 +48,34 @@ class DownloadChapter {
 
         final file = File(filePath);
         await file.parent.create(recursive: true);
-
         file.writeAsString(content);
 
         final hash = md5.convert(utf8.encode(content)).toString();
 
-        final asset = await _database.transaction(() async {
-          final asset = await _database.into(_database.assets).insertReturning(
-                AssetsCompanion(
-                  hash: Value(hash),
-                  url: Value(chapterUrl),
-                  path: Value(filePath),
-                  typeId: const Value(AssetTypeSeed.textHtml),
-                  savedAt: Value(DateTime.now()),
-                ),
-              );
+        final Asset asset;
+        try {
+          asset = await _database.transaction(() async {
+            final asset =
+                await _database.into(_database.assets).insertReturning(
+                      AssetsCompanion(
+                        hash: Value(hash),
+                        url: Value(chapterUrl),
+                        path: Value(filePath),
+                        typeId: const Value(AssetTypeSeed.textHtml),
+                        savedAt: Value(DateTime.now()),
+                      ),
+                    );
 
-          await (_database.update(_database.chapters)
-                ..where((tbl) => tbl.id.equals(chapterId)))
-              .write(ChaptersCompanion(content: Value(asset.id)));
+            await (_database.update(_database.chapters)
+                  ..where((tbl) => tbl.id.equals(chapterId)))
+                .write(ChaptersCompanion(content: Value(asset.id)));
 
-          return asset;
-        });
+            return asset;
+          });
+        } catch (e) {
+          await file.delete();
+          rethrow;
+        }
 
         return Right(AssetData.fromModel(asset));
       },

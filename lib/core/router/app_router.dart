@@ -23,6 +23,7 @@ final routerProvider = Provider<AppRouter>(
     AutoRoute(path: '/webview', page: WebViewPage),
     AutoRoute(path: '/categories', page: CategoryPage),
     AutoRoute(path: '/reader', page: ReaderPage),
+    AutoRoute(path: '/downloads', page: DownloadPage),
     AutoRoute(path: '/settings', page: SettingsPage),
     AutoRoute(path: '/about', page: AboutPage),
   ],

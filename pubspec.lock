@@ -317,18 +317,18 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: "77aeabca20951ec29c5801bde26b769d450fc38624d0be73f6615d5aa5e81608"
+      sha256: "2cd1d570d6d14de6a2b559a7e3f09af1f1a105093a54a9a87e2e577b1dd2e31d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.0"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
-      sha256: "5935b2711915ca333f31a0fb669580f2bee8d57b59e3bc133bc0e78546a0b675"
+      sha256: d065e0a49a325182ee0d29f67350b701af227c5b7b419dfe0ed7d45bf4338c8a
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.4.0"
   dynamic_color:
     dependency: "direct main"
     description:
@@ -556,10 +556,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: f6ffe2895e3c86c6ad5a27e6302cf807403463e397cb2f0c580f619ac2fa588b
+      sha256: "8e9d133755c3e84c73288363e6343157c383a0c6c56fc51afcc5d4d7180306d6"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.2"
+    version: "3.3.0"
   intl:
     dependency: "direct main"
     description:
@@ -651,21 +651,21 @@ packages:
   nacht_sources:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "0eb80ef4b7e394e62a1874b3b07b667244545985"
+      path: "packages/nacht_sources"
+      ref: "v0.2.1+1"
+      resolved-ref: "8eb7e5d3819619ac91341be2e20f7bcb49c5272c"
       url: "https://github.com/nacht-org/nacht_sources"
     source: git
-    version: "0.1.0"
+    version: "0.2.1+1"
   nacht_sources_annotations:
     dependency: transitive
     description:
       path: "packages/nacht_sources_annotations"
-      ref: HEAD
-      resolved-ref: "0eb80ef4b7e394e62a1874b3b07b667244545985"
+      ref: "v0.2.1+1"
+      resolved-ref: "8eb7e5d3819619ac91341be2e20f7bcb49c5272c"
       url: "https://github.com/nacht-org/nacht_sources.git"
     source: git
-    version: "1.0.0"
+    version: "0.2.1+1"
   nm:
     dependency: transitive
     description:
@@ -910,18 +910,18 @@ packages:
     dependency: transitive
     description:
       name: rechron
-      sha256: b405e84a4741ac2eb5bbb03f8315b9bb49cc2d7cdd6ed7efaa92fe3343760ab2
+      sha256: "7d7cda43ebe3eab3ac9dfaf8327e9fcb024d0603265edaa9cdbdaeb20d74c3fb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1-dev.1"
+    version: "0.2.0"
   rechron_core:
     dependency: transitive
     description:
       name: rechron_core
-      sha256: "038d31792b62e9e7d953824294ab8390131ac038d232056c35daad530384b270"
+      sha256: "7c1df1c43bb0cac6a5c1d7b4be36f40cdbfe4dbb239216b630a4750496fa5774"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1-dev.1"
+    version: "0.2.0"
   riverpod:
     dependency: transitive
     description:
@@ -1042,6 +1042,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  simple_animations:
+    dependency: "direct main"
+    description:
+      name: simple_animations
+      sha256: "6da9a59389d7f6695391f702b0893a0fc63aed2b4d41509cfc1f8781218db635"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0+3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1099,10 +1107,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "8a0327df835decd4b8eff045287a8a3452ea4ff9ef67e2ae10bb775474e3d107"
+      sha256: "55c942954675db05541b8e984e07828cab04a1924da68f3cd23a0eeb3e29a83b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.24.0"
+    version: "0.25.0"
   stack_trace:
     dependency: transitive
     description:

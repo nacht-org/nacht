@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -10,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../models/models.dart';
 import '../providers/providers.dart';
+import 'actions/download_action.dart';
 import 'widgets.dart';
 
 class NovelView extends HookConsumerWidget {
@@ -61,6 +63,15 @@ class NovelView extends HookConsumerWidget {
           : AppBar(
               title: Text(novel.title),
               actions: [
+                DownloadAction(novel: novel),
+                IconButton(
+                  onPressed: () => showExpandableBottomSheet(
+                    context: context,
+                    builder: (context, controller) =>
+                        ChapterListBottomSheet(controller: controller),
+                  ),
+                  icon: const Icon(Icons.filter_list),
+                ),
                 IconButton(
                   tooltip: 'Share',
                   onPressed: () => Share.share(novel.url),
@@ -84,33 +95,35 @@ class NovelView extends HookConsumerWidget {
                 top: 0,
                 bottom: 8,
               ),
-              HookConsumer(builder: (context, ref, child) {
-                final expanded = useState(!direct);
+              HookConsumer(
+                builder: (context, ref, child) {
+                  final expanded = useState(!direct);
 
-                return buildPadding(
-                  top: 0,
-                  bottom: 8,
-                  sliver: SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () => expanded.value = !expanded.value,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Description(
-                            description: novel.description,
-                            expanded: expanded,
-                          ),
-                          const SizedBox(height: 8),
-                          Tags(
-                            novelId: novel.id,
-                            expanded: expanded,
-                          )
-                        ],
+                  return buildPadding(
+                    top: 0,
+                    bottom: 8,
+                    sliver: SliverToBoxAdapter(
+                      child: GestureDetector(
+                        onTap: () => expanded.value = !expanded.value,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Description(
+                              description: novel.description,
+                              expanded: expanded,
+                            ),
+                            const SizedBox(height: 8),
+                            Tags(
+                              novelId: novel.id,
+                              expanded: expanded,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                },
+              ),
               SliverToBoxAdapter(
                 child: ListTile(
                   title: Text(
@@ -166,6 +179,45 @@ class NovelView extends HookConsumerWidget {
                   context.router.pop();
                 },
                 tooltip: 'Mark as unread',
+              ),
+              IconButton(
+                onPressed: () {
+                  final selection = ref.read(novelSelectionProvider);
+                  final chapterList = ref.read(chapterListFamily(novel.id));
+                  final chaptersToDownload = chapterList.chapters
+                      .where(
+                        (element) =>
+                            element.content == null &&
+                            selection.contains(element.id),
+                      )
+                      .map((e) => DownloadRelatedData.from(novel, e));
+
+                  ref
+                      .read(downloadListProvider.notifier)
+                      .addMany(chaptersToDownload);
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.download),
+                tooltip: 'Download',
+              ),
+              IconButton(
+                onPressed: () {
+                  final selection = ref.read(novelSelectionProvider);
+                  final chapterList = ref.read(chapterListFamily(novel.id));
+                  final chaptersToDelete = chapterList.chapters.where(
+                    (element) =>
+                        element.content != null &&
+                        selection.contains(element.id),
+                  );
+
+                  ref
+                      .read(deleteManyDownloadedChaptersProvider)
+                      .call(chaptersToDelete);
+
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.delete),
+                tooltip: 'Delete',
               ),
             ],
           ),

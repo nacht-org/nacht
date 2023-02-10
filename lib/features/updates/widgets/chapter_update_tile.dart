@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/features/updates/providers/updates_selection_provider.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
@@ -26,33 +27,39 @@ class ChapterUpdateTile extends ConsumerWidget {
     final selectionNotifier = ref.watch(updatesSelectionProvider.notifier);
     void select() => selectionNotifier.toggle(chapter.id);
 
-    return NachtListTile(
-      leading: NovelAvatar(
-        novel: novel,
-      ),
-      title: Text(
-        novel.title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Text(
-        chapter.title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      onTap: selectionActive
-          ? select
-          : () {
-              context.router.push(
-                ReaderRoute(
-                  novel: novel,
-                  chapter: chapter,
-                ),
-              );
-            },
-      onLongPress: selectionActive ? null : select,
-      selected: selected,
+    return MuteTile(
       muted: chapter.readAt != null,
+      child: ListTile(
+        leading: NovelAvatar(
+          novel: novel,
+        ),
+        title: Text(
+          novel.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          chapter.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        trailing: DownloadButton(
+          related: DownloadRelatedData.from(novel, chapter),
+          assetId: chapter.content,
+        ),
+        onTap: selectionActive
+            ? select
+            : () {
+                context.router.push(
+                  ReaderRoute(
+                    novel: novel,
+                    chapter: chapter,
+                  ),
+                );
+              },
+        onLongPress: selectionActive ? null : select,
+        selected: selected,
+      ),
     );
   }
 }

@@ -27,8 +27,8 @@ class NovelHead extends ConsumerWidget {
         : null;
 
     ImageProvider? image;
-    if (head.cover != null) {
-      image = FileImage(head.cover!.file);
+    if (head.cover?.file != null) {
+      image = FileImage(head.cover!.file!);
     } else if (head.coverUrl != null) {
       image = CachedNetworkImageProvider(head.coverUrl!);
     } else {

@@ -3,7 +3,7 @@ description: Free and open source multi-platform novel reader.
 
 publish_to: "none"
 
-version: 0.2.1+9
+version: 0.2.1+10
 
 environment:
   sdk: ">=2.17.0-0 <3.0.0"
@@ -29,7 +29,7 @@ dependencies:
   flutter_hooks: ^0.18.3
 
   # Persistence
-  drift: ^2.1.0
+  drift: ^2.4.0
   sqlite3_flutter_libs: ^0.5.5
   path_provider: ^2.0.9
   path: ^1.8.1
@@ -55,12 +55,15 @@ dependencies:
   nacht_sources:
     git:
       url: https://github.com/nacht-org/nacht_sources
+      path: packages/nacht_sources
+      ref: v0.2.1+1
 
   intl: ^0.17.0
   google_fonts: ^3.0.1
   package_info_plus: ^3.0.2
   share_plus: ^6.3.0
   dynamic_color: ^1.5.4
+  simple_animations: ^5.0.0+3
 
 dev_dependencies:
   flutter_test:

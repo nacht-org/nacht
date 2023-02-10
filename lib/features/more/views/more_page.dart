@@ -4,6 +4,8 @@ import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/features/features.dart';
 
+import '../widgets/widgets.dart';
+
 class MorePage extends HookConsumerWidget {
   const MorePage({Key? key}) : super(key: key);
 
@@ -19,6 +21,7 @@ class MorePage extends HookConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(0),
           children: [
+            const DownloadQueueTile(),
             ListTile(
               leading: const Icon(Icons.category),
               title: const Text('Categories'),

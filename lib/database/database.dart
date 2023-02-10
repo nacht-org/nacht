@@ -12,5 +12,6 @@ export 'entities/namespaces.dart';
 export 'entities/assets.dart';
 export 'entities/updates.dart';
 export 'entities/reading_history.dart';
+export 'entities/downloads.dart';
 
 export 'exceptions/seed_exception.dart';

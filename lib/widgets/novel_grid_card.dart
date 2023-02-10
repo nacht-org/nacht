@@ -29,8 +29,8 @@ class NovelGridCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     ImageProvider? image;
-    if (cover != null) {
-      image = FileImage(cover!.file);
+    if (cover?.file != null) {
+      image = FileImage(cover!.file!);
     } else if (coverUrl != null) {
       image = CachedNetworkImageProvider(coverUrl!);
     } else {

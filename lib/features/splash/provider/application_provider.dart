@@ -21,11 +21,6 @@ class Application with LoggerMixin {
   Future<void> init() async {
     initializeLogger();
 
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: SystemUiOverlay.values,
-    );
-
     SystemChrome.setSystemUIChangeCallback((systemOverlaysAreVisible) async {
       if (!systemOverlaysAreVisible) {
         await Future.delayed(const Duration(seconds: 3));
@@ -40,7 +35,10 @@ class Application with LoggerMixin {
       _ref.read(updatesProvider.notifier).initialize(),
       _ref.read(categoriesProvider.notifier).initialize(),
       _ref.read(historyProvider.notifier).init(),
+      _ref.read(downloadListProvider.notifier).init(),
     ]);
+
+    _ref.read(downloadRunnerProvider);
 
     await _ref.read(routerProvider).replace(const HomeRoute());
   }

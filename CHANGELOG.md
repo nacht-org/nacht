@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Latest] - Unreleased
 
+### Added
+
+- Added scrollbar to update page and browse page.
+
+### Changed
+
+- Change all appbars to fixed mode.
+- Added controller to history page.
+
+### Fixed
+
+- Set android compile target to 33.
+
 ## [v0.2.1] - 2022-12-29
 
 ### Added
@@ -18,7 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Delete novel history using 'IS IN' clause.
 - Apply navigation transition to the whole view.
 - Changed bottom bar to curved and to be bigger.
-- Changed novel page appbar to fixed. 
+- Changed novel page appbar to fixed.
 
 ### Fixed
 

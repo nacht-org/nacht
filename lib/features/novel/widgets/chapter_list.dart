@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/downloads/models/models.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -47,26 +49,32 @@ class ChapterList extends ConsumerWidget {
 
                 void select() => selectionNotifier.toggle(data.id);
 
-                return NachtListTile(
-                  title: Text(
-                    data.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  subtitle: data.updated == null
-                      ? null
-                      : Text(dateFormatService.relativeDay(data.updated!)),
-                  onTap: selectionActive
-                      ? select
-                      : () => context.router.push(
-                            ReaderRoute(
-                              novel: novel,
-                              chapter: data,
-                            ),
-                          ),
-                  onLongPress: selectionActive ? null : select,
-                  selected: selected,
+                return MuteTile(
                   muted: data.readAt != null,
+                  child: ListTile(
+                    title: Text(
+                      data.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: data.updated == null
+                        ? null
+                        : Text(dateFormatService.relativeDay(data.updated!)),
+                    trailing: DownloadButton(
+                      related: DownloadRelatedData.from(novel, data),
+                      assetId: data.content,
+                    ),
+                    onTap: selectionActive
+                        ? select
+                        : () => context.router.push(
+                              ReaderRoute(
+                                novel: novel,
+                                chapter: data,
+                              ),
+                            ),
+                    onLongPress: selectionActive ? null : select,
+                    selected: selected,
+                  ),
                 );
               },
             ),

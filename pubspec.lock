@@ -651,21 +651,21 @@ packages:
   nacht_sources:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "0eb80ef4b7e394e62a1874b3b07b667244545985"
+      path: "packages/nacht_sources"
+      ref: "v0.2.1+1"
+      resolved-ref: "8eb7e5d3819619ac91341be2e20f7bcb49c5272c"
       url: "https://github.com/nacht-org/nacht_sources"
     source: git
-    version: "0.1.0"
+    version: "0.2.1+1"
   nacht_sources_annotations:
     dependency: transitive
     description:
       path: "packages/nacht_sources_annotations"
-      ref: HEAD
-      resolved-ref: "0eb80ef4b7e394e62a1874b3b07b667244545985"
+      ref: "v0.2.1+1"
+      resolved-ref: "8eb7e5d3819619ac91341be2e20f7bcb49c5272c"
       url: "https://github.com/nacht-org/nacht_sources.git"
     source: git
-    version: "1.0.0"
+    version: "0.2.1+1"
   nm:
     dependency: transitive
     description:
@@ -910,18 +910,18 @@ packages:
     dependency: transitive
     description:
       name: rechron
-      sha256: b405e84a4741ac2eb5bbb03f8315b9bb49cc2d7cdd6ed7efaa92fe3343760ab2
+      sha256: "7d7cda43ebe3eab3ac9dfaf8327e9fcb024d0603265edaa9cdbdaeb20d74c3fb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1-dev.1"
+    version: "0.2.0"
   rechron_core:
     dependency: transitive
     description:
       name: rechron_core
-      sha256: "038d31792b62e9e7d953824294ab8390131ac038d232056c35daad530384b270"
+      sha256: "7c1df1c43bb0cac6a5c1d7b4be36f40cdbfe4dbb239216b630a4750496fa5774"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1-dev.1"
+    version: "0.2.0"
   riverpod:
     dependency: transitive
     description:

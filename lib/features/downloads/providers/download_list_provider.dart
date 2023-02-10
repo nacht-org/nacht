@@ -146,8 +146,7 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
       return;
     }
 
-    final result =
-        await _insertDownload.call(related.chapterId, state.order.length);
+    final result = await _insertDownload.call(related, state.order.length);
 
     result.fold(
       (failure) {
@@ -156,12 +155,10 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
             .showText("Failed to create new download");
       },
       (download) {
-        final data = DownloadData.fromModel(download, related);
-
         final previousState = state;
-        state = state.copyWithData(data);
+        state = state.copyWithData(download);
         log.info(
-            "added download: id=${data.id} order=${data.orderIndex} title=${related.chapterTitle}");
+            "added download: id=${download.id} order=${download.orderIndex} title=${related.chapterTitle}");
 
         _onAdded(previousState);
       },

@@ -141,6 +141,11 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
   }
 
   Future<void> add(DownloadRelatedData related) async {
+    if (state.chapters.containsKey(related.chapterId)) {
+      log.fine("Chapter download skipped as its already in download queue");
+      return;
+    }
+
     final download =
         await _insertDownload.call(related.chapterId, state.order.length);
 
@@ -164,6 +169,10 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
   }
 
   Future<void> addMany(Iterable<DownloadRelatedData> relatedData) async {
+    // Must filter out those that are already in the download queue
+    relatedData =
+        relatedData.where((r) => !state.chapters.containsKey(r.chapterId));
+
     final downloads =
         await _insertMultipleDownloads.call(relatedData, state.order.length);
 

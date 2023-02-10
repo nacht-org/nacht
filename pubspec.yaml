@@ -59,7 +59,7 @@ dependencies:
       ref: v0.2.1+1
 
   intl: ^0.17.0
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.3
   package_info_plus: ^3.0.2
   share_plus: ^6.3.0
   dynamic_color: ^1.5.4

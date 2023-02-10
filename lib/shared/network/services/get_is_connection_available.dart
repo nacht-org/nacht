@@ -28,6 +28,7 @@ class GetIsConnectionAvailable {
       case ConnectivityResult.vpn:
         return true;
       case ConnectivityResult.none:
+      case ConnectivityResult.other:
         return false;
     }
   }

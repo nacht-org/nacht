@@ -146,10 +146,10 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
       return;
     }
 
-    final download =
+    final result =
         await _insertDownload.call(related.chapterId, state.order.length);
 
-    download.fold(
+    result.fold(
       (failure) {
         _ref
             .read(messageServiceProvider)
@@ -173,10 +173,10 @@ class DownloadListNotifier extends StateNotifier<DownloadListState>
     relatedData =
         relatedData.where((r) => !state.chapters.containsKey(r.chapterId));
 
-    final downloads =
+    final result =
         await _insertMultipleDownloads.call(relatedData, state.order.length);
 
-    downloads.fold(
+    result.fold(
       (failure) {
         log.warning(failure);
         _ref.read(messageServiceProvider).showText(failure.message);

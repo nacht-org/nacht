@@ -17,7 +17,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
+          distribution: "zulu"
           java-version: 11
 
       - name: Setup Flutter
@@ -29,7 +29,7 @@ jobs:
         run: echo "${{ secrets.KEY_PROPERTIES }}" | base64 --decode > android/key.properties
 
       - name: Storing keystore
-        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/key.jks
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/keystore.jks
 
       - name: Get dependencies
         run: flutter pub get
@@ -39,7 +39,7 @@ jobs:
 
       - name: Build APK
         run: flutter build apk --split-per-abi --release
-      
+
       - name: Upload .apks to artifacts
         uses: svenstaro/upload-release-action@v2
         with:

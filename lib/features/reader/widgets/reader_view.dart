@@ -60,42 +60,39 @@ class ReaderView extends HookConsumerWidget {
         ref.read(toolbarProvider.notifier).setSystemUiMode(true);
         return true;
       },
-      child: ExpandableSheetOverride(
-        mediaQuery: MediaQuery.of(context),
-        child: Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AnimatedAppBar(
-            controller: controller,
-            child: ReaderAppBar(
-              reader: reader,
-            ),
-          ),
-          backgroundColor: backgroundColor,
-          body: MediaQuery.removeViewInsets(
-            context: context,
-            removeTop: true,
-            child: SafeArea(
-              child: ReaderBody(
-                reader: reader,
-                readerNotifier: notifier,
-                controller: pageController,
-              ),
-            ),
-          ),
-          drawer: ReaderDrawer(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AnimatedAppBar(
+          controller: controller,
+          child: ReaderAppBar(
             reader: reader,
-            pageController: pageController,
-            itemScrollController: itemScrollController,
-            itemPositionsListener: itemPositionsListener,
           ),
-          // FIXME: does not work as intended.
-          extendBody: true,
-          bottomNavigationBar: AnimatedBottomBar(
-            controller: controller,
-            child: ReaderBottomBar(
+        ),
+        backgroundColor: backgroundColor,
+        body: MediaQuery.removeViewInsets(
+          context: context,
+          removeTop: true,
+          child: SafeArea(
+            child: ReaderBody(
               reader: reader,
+              readerNotifier: notifier,
               controller: pageController,
             ),
+          ),
+        ),
+        drawer: ReaderDrawer(
+          reader: reader,
+          pageController: pageController,
+          itemScrollController: itemScrollController,
+          itemPositionsListener: itemPositionsListener,
+        ),
+        // FIXME: does not work as intended.
+        extendBody: true,
+        bottomNavigationBar: AnimatedBottomBar(
+          controller: controller,
+          child: ReaderBottomBar(
+            reader: reader,
+            controller: pageController,
           ),
         ),
       ),

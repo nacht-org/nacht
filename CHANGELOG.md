@@ -7,18 +7,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Latest] - Unreleased
 
+## [v0.2.2] - 2023-02-11
+
 ### Added
 
 - Added scrollbar to update page and browse page.
+- Added ability to download for offline reading.
+  - Limitation: Does not run on the background.
 
 ### Changed
 
 - Change all appbars to fixed mode.
 - Added controller to history page.
+- Override theme of `ListTile` instead of using a modified `ListTile` class.
+- Increase `CustomBottomBar` width to 72.
+- Animated description and tags expansion.
+- Update expandable bottom sheet to be more faithful to m3.
 
 ### Fixed
 
 - Set android compile target to 33.
+- No longer set app to immersive mode in reader, due to some problems animation problems.
+- Removed double scaffold from updates page.
+- Fix color on novel card selection check mark and background.
 
 ## [v0.2.1] - 2022-12-29
 

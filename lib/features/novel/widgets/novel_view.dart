@@ -95,34 +95,16 @@ class NovelView extends HookConsumerWidget {
                 top: 0,
                 bottom: 8,
               ),
-              HookConsumer(
-                builder: (context, ref, child) {
-                  final expanded = useState(!direct);
-
-                  return buildPadding(
-                    top: 0,
-                    bottom: 8,
-                    sliver: SliverToBoxAdapter(
-                      child: GestureDetector(
-                        onTap: () => expanded.value = !expanded.value,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Description(
-                              description: novel.description,
-                              expanded: expanded,
-                            ),
-                            const SizedBox(height: 8),
-                            Tags(
-                              novelId: novel.id,
-                              expanded: expanded,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              buildPadding(
+                top: 0,
+                bottom: 8,
+                sliver: SliverToBoxAdapter(
+                  child: DescriptionAndTags(
+                    description: novel.description,
+                    novelId: novel.id,
+                    initialExpanded: !direct,
+                  ),
+                ),
               ),
               SliverToBoxAdapter(
                 child: ListTile(

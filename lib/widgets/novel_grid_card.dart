@@ -128,7 +128,7 @@ class NovelGridCard extends StatelessWidget {
       return CircleAvatar(
         key: const Key("favourite"),
         radius: 16,
-        backgroundColor: theme.colorScheme.secondary.withAlpha(200),
+        backgroundColor: theme.colorScheme.surface,
         child: const Icon(
           Icons.favorite,
           size: 16,
@@ -138,7 +138,7 @@ class NovelGridCard extends StatelessWidget {
       return CircleAvatar(
         key: const Key("selected"),
         radius: 16,
-        backgroundColor: theme.colorScheme.secondary.withAlpha(200),
+        backgroundColor: theme.colorScheme.surface,
         child: const Icon(
           Icons.check,
           size: 16,

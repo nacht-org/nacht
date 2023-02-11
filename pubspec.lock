@@ -660,11 +660,11 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/nacht_sources"
-      ref: "v0.2.1+1"
-      resolved-ref: "8eb7e5d3819619ac91341be2e20f7bcb49c5272c"
+      ref: "nacht_sources-v0.2.2"
+      resolved-ref: "0aa6440aa1cc60bf69ef4cb8b4f8460e87403900"
       url: "https://github.com/nacht-org/nacht_sources"
     source: git
-    version: "0.2.1+1"
+    version: "0.2.2"
   nacht_sources_annotations:
     dependency: transitive
     description:

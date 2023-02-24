@@ -17,6 +17,7 @@ Future<T?> showExpandableBottomSheet<T>({
     isScrollControlled: true,
     isDismissible: true,
     backgroundColor: Colors.transparent,
+    elevation: 0,
     useSafeArea: true,
     builder: (BuildContext context) {
       return GestureDetector(

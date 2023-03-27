@@ -32,7 +32,7 @@ class FetchSearch {
     try {
       novels = await isolate.fetchSearch(query, page);
     } on DioError catch (e) {
-      return Left(NetworkFailure(e.message));
+      return Left(NetworkFailure(e.message ?? "Unknown failure"));
     }
 
     final entities = novels.map(PartialNovelData.fromSource).toList();

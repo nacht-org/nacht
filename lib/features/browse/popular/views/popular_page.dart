@@ -11,6 +11,7 @@ import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 import '../../browse.dart';
 
+@RoutePage()
 class PopularPage extends HookConsumerWidget with LoggerMixin {
   const PopularPage({
     Key? key,

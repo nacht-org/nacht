@@ -13,19 +13,22 @@ final routerProvider = Provider<AppRouter>(
   name: 'RouterProvider',
 );
 
-@MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
-  routes: [
-    AutoRoute(path: '/', page: SplashPage, initial: true),
-    AutoRoute(path: '/home', page: HomePage),
-    AutoRoute(path: '/popular', page: PopularPage),
-    AutoRoute(path: '/novel', page: NovelPage),
-    AutoRoute(path: '/webview', page: WebViewPage),
-    AutoRoute(path: '/categories', page: CategoryPage),
-    AutoRoute(path: '/reader', page: ReaderPage),
-    AutoRoute(path: '/downloads', page: DownloadPage),
-    AutoRoute(path: '/settings', page: SettingsPage),
-    AutoRoute(path: '/about', page: AboutPage),
-  ],
-)
-class AppRouter extends _$AppRouter {}
+@AutoRouterConfig(replaceInRouteName: 'Page,Route')
+class AppRouter extends _$AppRouter {
+  @override
+  RouteType get defaultRouteType => const RouteType.material();
+
+  @override
+  final List<AutoRoute> routes = [
+    AutoRoute(path: '/', page: SplashRoute.page),
+    AutoRoute(path: '/home', page: HomeRoute.page),
+    AutoRoute(path: '/popular', page: PopularRoute.page),
+    AutoRoute(path: '/novel', page: NovelRoute.page),
+    AutoRoute(path: '/webview', page: WebViewRoute.page),
+    AutoRoute(path: '/categories', page: CategoryRoute.page),
+    AutoRoute(path: '/reader', page: ReaderRoute.page),
+    AutoRoute(path: '/downloads', page: DownloadRoute.page),
+    AutoRoute(path: '/settings', page: SettingsRoute.page),
+    AutoRoute(path: '/about', page: AboutRoute.page),
+  ];
+}

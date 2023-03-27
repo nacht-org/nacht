@@ -31,7 +31,7 @@ class FetchPopular {
     try {
       novels = await isolate.fetchPopular(page);
     } on DioError catch (e) {
-      return Left(NetworkFailure(e.message));
+      return Left(NetworkFailure(e.message ?? "Unknown failure"));
     }
 
     final entities =

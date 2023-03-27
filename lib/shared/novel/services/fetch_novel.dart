@@ -41,7 +41,7 @@ class FetchNovel {
     try {
       novel = await isolate.fetchNovel(url);
     } on DioError catch (e) {
-      return Some(NetworkFailure(e.message));
+      return Some(NetworkFailure(e.message ?? 'Unknown error'));
     }
 
     final updateResult = await _updateNovel.execute(novel);

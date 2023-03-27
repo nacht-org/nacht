@@ -22,7 +22,7 @@ dependencies:
   collection: ^1.16.0
 
   # Router.
-  auto_route: ^5.0.1
+  auto_route: ^6.0.3
 
   # State management.
   hooks_riverpod: ^2.0.0-dev.9
@@ -37,7 +37,7 @@ dependencies:
 
   # Network.
   connectivity_plus: ^3.0.2
-  dio: ^4.0.6
+  dio: ^5.1.0
   cached_network_image: ^3.2.1
 
   # Widgets.
@@ -55,10 +55,9 @@ dependencies:
   nacht_sources:
     git:
       url: https://github.com/nacht-org/nacht_sources
-      path: packages/nacht_sources
-      ref: nacht_sources-v0.2.2
+      ref: v0.2.4
 
-  intl: ^0.17.0
+  intl: ^0.18.0
   google_fonts: ^4.0.3
   package_info_plus: ^3.0.2
   share_plus: ^6.3.0
@@ -71,12 +70,12 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.1
-  auto_route_generator: ^5.0.2
+  auto_route_generator: ^6.0.1
   build_runner: ^2.1.8
   mockito: ^5.1.0
   freezed: ^2.0.3+1
   drift_dev: ^2.1.0
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.12.0
 
 flutter:
   uses-material-design: true

@@ -11,7 +11,7 @@ final checkNewReleaseProvider = Provider.autoDispose(
   ),
 );
 
-class CheckNewRelease {
+class CheckNewRelease with LoggerMixin {
   const CheckNewRelease({
     required Ref ref,
     required GetLatestRelease getLatestRelease,
@@ -22,11 +22,13 @@ class CheckNewRelease {
   final GetLatestRelease _getLatestRelease;
 
   Future<Either<Failure, void>> call() async {
+    log.info("checking for new release");
     final release = await _getLatestRelease.call();
 
     return release.fold(
       (failure) => Left(failure),
       (data) {
+        log.info("found new release");
         _ref.read(routerProvider).push(NewReleaseRoute(release: data));
         return const Right(null);
       },

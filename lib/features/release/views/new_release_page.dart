@@ -68,7 +68,7 @@ class NewReleasePage extends ConsumerWidget {
                     release.htmlUrl!,
                     mode: LaunchMode.externalNonBrowserApplication,
                   ),
-                  child: const Text('Github'),
+                  child: const Text('GitHub'),
                 ),
             ],
           ),

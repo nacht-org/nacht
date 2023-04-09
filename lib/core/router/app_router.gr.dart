@@ -92,6 +92,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const DownloadPage(),
       );
     },
+    NewReleaseRoute.name: (routeData) {
+      final args = routeData.argsAs<NewReleaseRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: NewReleasePage(
+          key: args.key,
+          release: args.release,
+        ),
+      );
+    },
   };
 }
 
@@ -337,4 +347,42 @@ class DownloadRoute extends PageRouteInfo<void> {
   static const String name = 'DownloadRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NewReleasePage]
+class NewReleaseRoute extends PageRouteInfo<NewReleaseRouteArgs> {
+  NewReleaseRoute({
+    Key? key,
+    required Release release,
+    List<PageRouteInfo>? children,
+  }) : super(
+          NewReleaseRoute.name,
+          args: NewReleaseRouteArgs(
+            key: key,
+            release: release,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'NewReleaseRoute';
+
+  static const PageInfo<NewReleaseRouteArgs> page =
+      PageInfo<NewReleaseRouteArgs>(name);
+}
+
+class NewReleaseRouteArgs {
+  const NewReleaseRouteArgs({
+    this.key,
+    required this.release,
+  });
+
+  final Key? key;
+
+  final Release release;
+
+  @override
+  String toString() {
+    return 'NewReleaseRouteArgs{key: $key, release: $release}';
+  }
 }

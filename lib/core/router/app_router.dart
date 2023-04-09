@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:github/github.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/features/features.dart';
@@ -30,5 +31,10 @@ class AppRouter extends _$AppRouter {
     AutoRoute(path: '/downloads', page: DownloadRoute.page),
     AutoRoute(path: '/settings', page: SettingsRoute.page),
     AutoRoute(path: '/about', page: AboutRoute.page),
+    AutoRoute(
+      path: '/new-release',
+      page: NewReleaseRoute.page,
+      fullscreenDialog: true,
+    ),
   ];
 }

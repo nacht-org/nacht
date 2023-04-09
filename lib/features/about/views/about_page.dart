@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:nacht/widgets/loading_error.dart';
 
@@ -40,6 +41,14 @@ class AboutPage extends StatelessWidget {
         ListTile(
           title: const Text('Version'),
           subtitle: Text('${data.version}+${data.buildNumber}'),
+        ),
+        Consumer(
+          builder: (context, ref, child) {
+            return ListTile(
+              title: const Text("Check for updates"),
+              onTap: () => ref.read(checkNewReleaseProvider).call(),
+            );
+          },
         ),
         ListTile(
           title: const Text('Licenses'),

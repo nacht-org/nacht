@@ -74,15 +74,19 @@ class NewReleasePage extends ConsumerWidget {
                 FilledButton(
                   onPressed: () {},
                   child: const Text('Download'),
-                ),
-              if (release.htmlUrl != null)
-                OutlinedButton(
+                )
+              else if (release.htmlUrl != null)
+                FilledButton(
                   onPressed: () => launchUrlString(
                     release.htmlUrl!,
                     mode: LaunchMode.externalNonBrowserApplication,
                   ),
                   child: const Text('GitHub'),
                 ),
+              OutlinedButton(
+                onPressed: () => context.router.pop(),
+                child: const Text('Cancel'),
+              ),
             ],
           ),
         ),

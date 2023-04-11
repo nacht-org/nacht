@@ -67,6 +67,7 @@ dependencies:
   github: ^9.11.0
   system_info2: ^3.0.2
   flutter_markdown: ^0.6.14
+  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:

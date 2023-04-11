@@ -3,6 +3,7 @@ export 'logger/logger.dart';
 export 'router/app_router.dart';
 export 'preferences/preferences_provider.dart';
 export 'nacht_theme/nacht_theme.dart';
+export 'background/background.dart';
 
 // Preferences.
 export 'preferences/reader/reader.dart';

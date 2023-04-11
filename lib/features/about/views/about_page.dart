@@ -1,11 +1,13 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/features/features.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:nacht/widgets/loading_error.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:nacht/core/constants.dart' as constants;
+import 'package:workmanager/workmanager.dart';
 
 import '../providers/providers.dart';
 
@@ -51,6 +53,11 @@ class AboutPage extends StatelessWidget {
               onTap: () => ref.read(checkNewReleaseProvider).call(),
             );
           },
+        ),
+        ListTile(
+          title: const Text('Background update check'),
+          onTap: () => Workmanager()
+              .registerOneOffTask('uniqueName', BackgroundTask.appUpdateCheck),
         ),
         ListTile(
           title: const Text("What's new"),

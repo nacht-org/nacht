@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../notifications/notifications.dart';
 import '../services/services.dart';
 
 @RoutePage()
@@ -72,7 +73,11 @@ class NewReleasePage extends ConsumerWidget {
             children: [
               if (downloadLink != null)
                 FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref
+                        .read(notificationServiceProvider)
+                        .show(NewUpdateNotification(release));
+                  },
                   child: const Text('Download'),
                 )
               else if (release.htmlUrl != null)

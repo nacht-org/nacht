@@ -4,6 +4,8 @@ import 'package:github/github.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:system_info2/system_info2.dart';
 
+import '../models/models.dart';
+
 const name = 'app';
 const postfix = '-release';
 
@@ -11,18 +13,8 @@ final getDownloadLinkProvider = Provider.autoDispose(
   (ref) => GetDownloadLink(),
 );
 
-class DownloadAsset {
-  const DownloadAsset({
-    required this.apkAsset,
-    required this.hashAsset,
-  });
-
-  final ReleaseAsset apkAsset;
-  final ReleaseAsset hashAsset;
-}
-
 class GetDownloadLink {
-  DownloadAsset? call(Release release) {
+  DownloadAssets? call(Release release) {
     String? filename;
     if (Platform.isAndroid) {
       filename = androidFilename();
@@ -35,16 +27,16 @@ class GetDownloadLink {
     return intoAssets(release, filename);
   }
 
-  DownloadAsset? intoAssets(Release release, String apkFilename) {
-    final hashFilename = '$apkFilename.sha1';
+  DownloadAssets? intoAssets(Release release, String appFilename) {
+    final hashFilename = '$appFilename.sha1';
 
-    final apkAsset =
-        release.assets?.firstWhere((asset) => asset.name == apkFilename);
+    final appAsset =
+        release.assets?.firstWhere((asset) => asset.name == appFilename);
     final hashAsset =
         release.assets?.firstWhere((asset) => asset.name == hashFilename);
 
-    if (apkAsset != null && hashAsset != null) {
-      return DownloadAsset(apkAsset: apkAsset, hashAsset: hashAsset);
+    if (appAsset != null && hashAsset != null) {
+      return DownloadAssets(appAsset: appAsset, hashAsset: hashAsset);
     } else {
       return null;
     }

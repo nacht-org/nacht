@@ -37,7 +37,7 @@ dependencies:
 
   # Network.
   connectivity_plus: ^3.0.2
-  dio: ^5.1.0
+  dio: ^5.1.1
   cached_network_image: ^3.2.1
 
   # Widgets.

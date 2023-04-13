@@ -9,11 +9,11 @@ import '../models/models.dart';
 const name = 'app';
 const postfix = '-release';
 
-final getDownloadLinkProvider = Provider.autoDispose(
-  (ref) => GetDownloadLink(),
+final getPlatformDownloadAssetsProvider = Provider.autoDispose(
+  (ref) => GetPlatformDownloadAssets(),
 );
 
-class GetDownloadLink {
+class GetPlatformDownloadAssets {
   DownloadAssets? call(Release release) {
     String? filename;
     if (Platform.isAndroid) {

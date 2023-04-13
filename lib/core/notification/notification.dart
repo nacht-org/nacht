@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:nacht/features/release/notifications/notifications.dart';
 
+import '../logger/logger.dart';
+
 export 'notification_channel.dart';
 export 'notification_handle.dart';
 export 'notification_service.dart';
@@ -28,14 +30,18 @@ Future<void> initializeLocalNotificationsPlugin() async {
 @pragma('vm:entry-point')
 void onDidReceiveBackgroundNotificationResponse(
   NotificationResponse response,
-) {
+) async {
+  final container = ProviderContainer();
+  await initializeLocalNotificationsPlugin();
+  initializeLogger();
+
   switch (response.notificationResponseType) {
     case NotificationResponseType.selectedNotification:
       break;
     case NotificationResponseType.selectedNotificationAction:
       switch (response.actionId) {
         case AppUpdateDownloadAction.id:
-          AppUpdateDownloadAction().execute(response);
+          AppUpdateDownloadAction().execute(container, response);
           break;
         default:
           break;
@@ -60,5 +66,6 @@ abstract class Notification {
 }
 
 abstract class NotificationAction {
-  Future<void> execute(NotificationResponse response);
+  Future<void> execute(
+      ProviderContainer container, NotificationResponse response);
 }

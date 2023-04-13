@@ -22,11 +22,20 @@ class AppUpdateCheckTask extends BackgroundTask<void> with LoggerMixin {
       log.warning(failure.toString());
       return false;
     }, (release) {
-      if (release != null) {
-        final notificationService = container.read(notificationServiceProvider);
-        notificationService.show(NewUpdateNotification(release));
-        log.info("found release in background");
+      if (release == null) {
+        return true;
       }
+
+      final downloadAssets =
+          container.read(getPlatformDownloadAssetsProvider).call(release);
+
+      if (downloadAssets == null) {
+        return true;
+      }
+
+      final notificationService = container.read(notificationServiceProvider);
+      notificationService.show(NewUpdateNotification(release, downloadAssets));
+      log.info("found release in background");
       return true;
     });
 

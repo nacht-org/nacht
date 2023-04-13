@@ -28,7 +28,8 @@ class NewReleasePage extends ConsumerWidget {
         ? null
         : dateFormatService.relativeDay(release.publishedAt!);
 
-    final downloadLink = ref.read(getDownloadLinkProvider).call(release);
+    final downloadAssets =
+        ref.read(getPlatformDownloadAssetsProvider).call(release);
 
     return Scaffold(
       appBar: AppBar(
@@ -71,12 +72,12 @@ class NewReleasePage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (downloadLink != null)
+              if (downloadAssets != null)
                 FilledButton(
                   onPressed: () {
                     ref
                         .read(notificationServiceProvider)
-                        .show(NewUpdateNotification(release));
+                        .show(NewUpdateNotification(release, downloadAssets));
                   },
                   child: const Text('Download'),
                 )

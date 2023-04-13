@@ -69,6 +69,7 @@ dependencies:
   flutter_markdown: ^0.6.14
   workmanager: ^0.5.1
   flutter_local_notifications: ^14.0.0-dev.2
+  riverpod: ^2.3.4
 
 dev_dependencies:
   flutter_test:

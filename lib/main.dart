@@ -16,7 +16,7 @@ Future<void> main() async {
   GoogleFonts.config.allowRuntimeFetching = kDebugMode;
 
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(background, isInDebugMode: kDebugMode);
+  Workmanager().initialize(onBackgroundTask, isInDebugMode: kDebugMode);
 
   final sharedPreferences = await SharedPreferences.getInstance();
 

@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/features/features.dart';
+
+import 'package:nacht/features/release/notifications/notifications.dart';
 
 export 'notification_channel.dart';
 export 'notification_handle.dart';
@@ -34,7 +35,7 @@ void onDidReceiveBackgroundNotificationResponse(
     case NotificationResponseType.selectedNotificationAction:
       switch (response.actionId) {
         case AppUpdateDownloadAction.id:
-          AppUpdateDownloadAction.execute(response);
+          AppUpdateDownloadAction().execute(response);
           break;
         default:
           break;
@@ -56,4 +57,8 @@ abstract class Notification {
   String get body;
   NotificationDetails? get notificationDetails;
   String? get payload => null;
+}
+
+abstract class NotificationAction {
+  Future<void> execute(NotificationResponse response);
 }

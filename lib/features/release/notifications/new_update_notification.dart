@@ -4,6 +4,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:github/github.dart' hide Notification;
 import 'package:nacht/core/core.dart';
 
+import 'actions/actions.dart';
+
 const _channel = NotificationChannel.appUpdateCheck;
 
 class NewUpdateNotification extends Notification {
@@ -25,12 +27,12 @@ class NewUpdateNotification extends Notification {
         _channel.name,
         channelDescription: _channel.description,
         actions: [
-          AndroidNotificationAction(
+          const AndroidNotificationAction(
             AppUpdateDownloadAction.id,
             'Download',
             cancelNotification: false,
           ),
-          AndroidNotificationAction('${_channel.id}.cancel', 'Cancel'),
+          const AndroidNotificationAction('cancel', 'Cancel'),
         ],
       ),
     );
@@ -38,11 +40,4 @@ class NewUpdateNotification extends Notification {
 
   @override
   String? get payload => jsonEncode(release.toJson());
-}
-
-abstract class AppUpdateDownloadAction {
-  static const String id = 'appUpdateCheck.download';
-  static void execute(NotificationResponse response) {
-    print(id);
-  }
 }

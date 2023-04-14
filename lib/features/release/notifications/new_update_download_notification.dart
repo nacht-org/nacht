@@ -1,59 +1,43 @@
+import 'dart:convert';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/core/core.dart';
 
 import '../models/models.dart';
-
-part 'new_update_download_notification.freezed.dart';
+import 'actions/actions.dart';
 
 const _channel = NotificationChannel.appUpdateCheck;
+const _downloadingTitle = 'Downloading update...';
+const _cancelAction =
+    AndroidNotificationAction(AppUpdateCancelAction.id, 'Cancel');
 
-@freezed
-class NewUpdateDownloadState with _$NewUpdateDownloadState {
-  const factory NewUpdateDownloadState.initializing() =
-      _NewUpdateDownloadInitializing;
+abstract class NewUpdateDownloadNotification extends Notification {
+  const NewUpdateDownloadNotification();
 
-  const factory NewUpdateDownloadState.progress(int current, int total) =
-      _NewUpdateDownloadProgress;
+  const factory NewUpdateDownloadNotification.initializing() =
+      _DownloadInitializing;
 
-  const factory NewUpdateDownloadState.finalizing() =
-      _NewUpdateDownloadFinalizing;
+  const factory NewUpdateDownloadNotification.progress(int value, int total) =
+      _DownloadProgress;
 
-  const factory NewUpdateDownloadState.success(
-    String filePath,
-  ) = _NewUpdateDownloadSuccess;
+  const factory NewUpdateDownloadNotification.finalizing(String message) =
+      _DownloadFinalizing;
 
-  const factory NewUpdateDownloadState.error(
-    ReleaseWithDownloadAssets release,
-    String message,
-  ) = _NewUpdateDownloadError;
+  const factory NewUpdateDownloadNotification.complete(String filePath) =
+      _DownloadComplete;
+
+  const factory NewUpdateDownloadNotification.error(
+      ReleaseWithDownloadAssets release, String message) = _DownloadError;
 }
 
-class NewUpdateDownloadNotification extends Notification {
-  const NewUpdateDownloadNotification({required this.state});
-
-  final NewUpdateDownloadState state;
+class _DownloadInitializing extends NewUpdateDownloadNotification {
+  const _DownloadInitializing();
 
   @override
-  String get title {
-    return state.maybeWhen(
-      success: (_) => 'Download complete',
-      error: (_, __) => 'Download failed',
-      orElse: () => 'Downloading update...',
-    );
-  }
+  String get title => _downloadingTitle;
 
   @override
-  String get body {
-    return state.when(
-      initializing: () => 'Initializing...',
-      progress: (value, total) =>
-          '${_formatBytes(value)}/${_formatBytes(total)}',
-      finalizing: () => 'Almost done...',
-      success: (_) => 'Ready to install',
-      error: (_, message) => message,
-    );
-  }
+  String get body => 'Initializing...';
 
   @override
   NotificationDetails? get notificationDetails {
@@ -64,28 +48,52 @@ class NewUpdateDownloadNotification extends Notification {
         channelDescription: _channel.description,
         importance: Importance.low,
         priority: Priority.low,
+        playSound: false,
+        enableVibration: false,
         ongoing: true,
+        autoCancel: false,
+        showProgress: true,
+        indeterminate: true,
+        category: AndroidNotificationCategory.progress,
+        actions: [
+          _cancelAction,
+        ],
+      ),
+    );
+  }
+}
+
+class _DownloadProgress extends NewUpdateDownloadNotification {
+  const _DownloadProgress(this.value, this.total);
+
+  final int value;
+  final int total;
+
+  @override
+  String get title => _downloadingTitle;
+
+  @override
+  String get body => '${_formatBytes(value)}/${_formatBytes(total)}';
+
+  @override
+  NotificationDetails? get notificationDetails {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channel.id,
+        _channel.name,
+        channelDescription: _channel.description,
+        importance: Importance.low,
+        priority: Priority.low,
         playSound: false,
         enableVibration: false,
         autoCancel: false,
-        maxProgress: 100,
-        progress: state.maybeWhen(
-          progress: (current, total) => ((current / total) * 100).round(),
-          finalizing: () => 100,
-          orElse: () => 0,
-        ),
-        indeterminate: state.maybeWhen(
-          initializing: () => true,
-          orElse: () => false,
-        ),
-        showProgress: state.maybeWhen(
-          initializing: () => true,
-          progress: (_, __) => true,
-          finalizing: () => true,
-          orElse: () => false,
-        ),
+        ongoing: true,
+        showProgress: true,
+        maxProgress: total,
+        progress: value,
+        category: AndroidNotificationCategory.progress,
         actions: [
-          AndroidNotificationAction('AppUpdateDownload.cancel', 'Cancel'),
+          _cancelAction,
         ],
       ),
     );
@@ -95,4 +103,100 @@ class NewUpdateDownloadNotification extends Notification {
     final value = count / (1024 * 1024);
     return '${value.toStringAsFixed(2)}MB';
   }
+}
+
+class _DownloadFinalizing extends NewUpdateDownloadNotification {
+  const _DownloadFinalizing(this.message);
+
+  final String message;
+
+  @override
+  String get title => _downloadingTitle;
+
+  @override
+  String get body => message;
+
+  @override
+  NotificationDetails? get notificationDetails {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channel.id,
+        _channel.name,
+        channelDescription: _channel.description,
+        importance: Importance.low,
+        priority: Priority.low,
+        playSound: false,
+        enableVibration: false,
+        autoCancel: false,
+        showProgress: true,
+        progress: 1,
+        maxProgress: 1,
+        category: AndroidNotificationCategory.progress,
+        actions: [
+          _cancelAction,
+        ],
+      ),
+    );
+  }
+}
+
+class _DownloadComplete extends NewUpdateDownloadNotification {
+  const _DownloadComplete(this.filePath);
+
+  final String filePath;
+
+  @override
+  String get title => 'Download complete';
+
+  @override
+  String get body => 'Ready to install';
+
+  @override
+  NotificationDetails? get notificationDetails {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channel.id,
+        _channel.name,
+        channelDescription: _channel.description,
+        autoCancel: false,
+        actions: [
+          const AndroidNotificationAction(AppUpdateInstallAction.id, 'Install'),
+          const AndroidNotificationAction(VoidAction.id, 'Cancel'),
+        ],
+      ),
+    );
+  }
+}
+
+class _DownloadError extends NewUpdateDownloadNotification {
+  const _DownloadError(this.release, this.message);
+
+  final ReleaseWithDownloadAssets release;
+  final String message;
+
+  @override
+  String get title => 'Download failed';
+
+  @override
+  String get body => message;
+
+  @override
+  NotificationDetails? get notificationDetails {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channel.id,
+        _channel.name,
+        channelDescription: _channel.description,
+        autoCancel: false,
+        category: AndroidNotificationCategory.error,
+        actions: [
+          const AndroidNotificationAction(AppUpdateDownloadAction.id, 'Retry'),
+          const AndroidNotificationAction(VoidAction.id, 'Cancel'),
+        ],
+      ),
+    );
+  }
+
+  @override
+  String? get payload => jsonEncode(release.toJson());
 }

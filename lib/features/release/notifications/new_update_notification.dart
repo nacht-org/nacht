@@ -34,7 +34,7 @@ class NewUpdateNotification extends Notification {
             'Download',
             cancelNotification: false,
           ),
-          const AndroidNotificationAction('cancel', 'Cancel'),
+          const AndroidNotificationAction(VoidAction.id, 'Cancel'),
         ],
       ),
     );

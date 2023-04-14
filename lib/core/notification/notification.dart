@@ -8,6 +8,7 @@ import '../logger/logger.dart';
 export 'notification_channel.dart';
 export 'notification_handle.dart';
 export 'notification_service.dart';
+export 'notification_action.dart';
 
 final flutterLocalNotificationsPluginProvider =
     Provider<FlutterLocalNotificationsPlugin>(
@@ -43,6 +44,12 @@ void onDidReceiveBackgroundNotificationResponse(
         case AppUpdateDownloadAction.id:
           AppUpdateDownloadAction().execute(container, response);
           break;
+        case AppUpdateCancelAction.id:
+          AppUpdateCancelAction().execute(container, response);
+          break;
+        case AppUpdateInstallAction.id:
+          AppUpdateInstallAction().execute(container, response);
+          break;
         default:
           break;
       }
@@ -63,9 +70,4 @@ abstract class Notification {
   String get body;
   NotificationDetails? get notificationDetails;
   String? get payload => null;
-}
-
-abstract class NotificationAction {
-  Future<void> execute(
-      ProviderContainer container, NotificationResponse response);
 }

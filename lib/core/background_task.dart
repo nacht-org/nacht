@@ -36,3 +36,7 @@ void onBackgroundTask() {
     }
   });
 }
+
+abstract class BackgroundTaskTag {
+  static const String appUpdate = 'appUpdate';
+}

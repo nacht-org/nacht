@@ -27,16 +27,10 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
 
     try {
       final file = await _download(container, data, handle);
-      handle.show(NewUpdateDownloadNotification(
-        state: NewUpdateDownloadState.success(file.path),
-      ));
-
+      handle.show(NewUpdateDownloadNotification.complete(file.path));
       log.info('download succeeded');
     } catch (e) {
-      handle.show(NewUpdateDownloadNotification(
-        state: NewUpdateDownloadState.error(data, e.toString()),
-      ));
-
+      handle.show(NewUpdateDownloadNotification.error(data, e.toString()));
       log.info('app update download failed: $e');
     }
 
@@ -51,24 +45,18 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
     final dio = Dio();
     final cancelToken = CancelToken();
 
-    handle.show(const NewUpdateDownloadNotification(
-      state: NewUpdateDownloadState.initializing(),
-    ));
+    handle.show(const NewUpdateDownloadNotification.initializing());
 
     final appFile = await _downloadAsset(
       dio: dio,
       asset: data.downloadAssets.appAsset,
       cancelToken: cancelToken,
-      onReceiveProgress: (value, total) => handle.show(
-        NewUpdateDownloadNotification(
-          state: NewUpdateDownloadState.progress(value, total),
-        ),
-      ),
+      onReceiveProgress: (value, total) =>
+          handle.show(NewUpdateDownloadNotification.progress(value, total)),
     );
 
-    handle.show(const NewUpdateDownloadNotification(
-      state: NewUpdateDownloadState.finalizing(),
-    ));
+    handle.show(const NewUpdateDownloadNotification.finalizing(
+        'Checking file integrity'));
 
     final hashFile = await _downloadAsset(
       dio: dio,

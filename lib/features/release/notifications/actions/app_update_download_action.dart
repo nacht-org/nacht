@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/release/models/models.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:workmanager/workmanager.dart';
@@ -10,8 +7,9 @@ import 'package:workmanager/workmanager.dart';
 import '../../background_tasks/background_tasks.dart';
 
 class AppUpdateDownloadAction with LoggerMixin implements NotificationAction {
-  static const String id = 'AppUpdateCheck.download';
+  static const String id = 'AppUpdate.Download';
 
+  @override
   Future<void> execute(
     ProviderContainer container,
     NotificationResponse response,
@@ -23,13 +21,11 @@ class AppUpdateDownloadAction with LoggerMixin implements NotificationAction {
       return;
     }
 
-    final data =
-        ReleaseWithDownloadAssets.fromJson(jsonDecode(response.payload!));
-
     Workmanager().registerOneOffTask(
       'update-download',
       AppUpdateDownloadTask.name,
-      inputData: {'release': jsonEncode(data.toJson())},
+      tag: BackgroundTaskTag.appUpdate,
+      inputData: {'release': response.payload!},
     );
   }
 }

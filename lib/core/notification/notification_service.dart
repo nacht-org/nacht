@@ -16,6 +16,7 @@ class NotificationService {
   int counter = 0;
   FlutterLocalNotificationsPlugin plugin;
 
+  /// FIXME: need to make it work across threads
   NotificationHandle getHandle({int? id}) {
     return NotificationHandle(plugin, id ?? counter++);
   }

@@ -29,12 +29,7 @@ class AppUpdateDownloadAction with LoggerMixin implements NotificationAction {
     Workmanager().registerOneOffTask(
       'update-download',
       AppUpdateDownloadTask.name,
-      inputData: {'release': data},
+      inputData: {'release': jsonEncode(data.toJson())},
     );
-  }
-
-  String _formatBytes(int count) {
-    final value = count / (1024 ^ 2);
-    return value.toStringAsFixed(2);
   }
 }

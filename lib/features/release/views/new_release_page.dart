@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -5,7 +7,10 @@ import 'package:github/github.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:workmanager/workmanager.dart';
 
+import '../background_tasks/background_tasks.dart';
+import '../models/models.dart';
 import '../notifications/notifications.dart';
 import '../services/services.dart';
 
@@ -75,9 +80,17 @@ class NewReleasePage extends ConsumerWidget {
               if (downloadAssets != null)
                 FilledButton(
                   onPressed: () {
-                    ref
-                        .read(notificationServiceProvider)
-                        .show(NewUpdateNotification(release, downloadAssets));
+                    Workmanager().registerOneOffTask(
+                      'update-download',
+                      AppUpdateDownloadTask.name,
+                      tag: BackgroundTaskTag.appUpdate,
+                      inputData: {
+                        'release': jsonEncode(ReleaseWithDownloadAssets(
+                          release: release,
+                          downloadAssets: downloadAssets,
+                        ).toJson()),
+                      },
+                    );
                   },
                   child: const Text('Download'),
                 )

@@ -166,6 +166,9 @@ class _DownloadComplete extends NewUpdateDownloadNotification {
       ),
     );
   }
+
+  @override
+  String? get payload => jsonEncode({'filePath': filePath});
 }
 
 class _DownloadError extends NewUpdateDownloadNotification {

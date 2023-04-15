@@ -47,13 +47,13 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
 
     handle.show(const NewUpdateDownloadNotification.initializing());
 
-    final appFile = await _downloadAsset(
-      dio: dio,
-      asset: data.downloadAssets.appAsset,
-      cancelToken: cancelToken,
-      onReceiveProgress: (value, total) =>
-          handle.show(NewUpdateDownloadNotification.progress(value, total)),
-    );
+    // final appFile = await _downloadAsset(
+    //   dio: dio,
+    //   asset: data.downloadAssets.appAsset,
+    //   cancelToken: cancelToken,
+    //   onReceiveProgress: (value, total) =>
+    //       handle.show(NewUpdateDownloadNotification.progress(value, total)),
+    // );
 
     handle.show(const NewUpdateDownloadNotification.finalizing(
         'Checking file integrity'));
@@ -64,11 +64,11 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
       cancelToken: cancelToken,
     );
 
-    if (!await _checkDownloadIntegrity(appFile, hashFile)) {
-      throw Exception("File integrity check failed");
-    }
+    // if (!await _checkDownloadIntegrity(appFile, hashFile)) {
+    //   throw Exception("File integrity check failed");
+    // }
 
-    return appFile;
+    return File('');
   }
 
   Future<File> _downloadAsset({

@@ -30,10 +30,7 @@ class NewUpdateNotification extends Notification {
         channelDescription: _channel.description,
         actions: [
           const AndroidNotificationAction(
-            AppUpdateDownloadAction.id,
-            'Download',
-            cancelNotification: false,
-          ),
+              AppUpdateDownloadAction.id, 'Download'),
           const AndroidNotificationAction(VoidAction.id, 'Cancel'),
         ],
       ),

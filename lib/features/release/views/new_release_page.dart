@@ -11,7 +11,6 @@ import 'package:workmanager/workmanager.dart';
 
 import '../background_tasks/background_tasks.dart';
 import '../models/models.dart';
-import '../notifications/notifications.dart';
 import '../services/services.dart';
 
 @RoutePage()
@@ -26,37 +25,38 @@ class NewReleasePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final locale = Localizations.localeOf(context);
-    final dateFormatService = ref.watch(dateFormatServiceFamily(locale));
-
-    final publishedAt = release.publishedAt == null
-        ? null
-        : dateFormatService.relativeDay(release.publishedAt!);
 
     final downloadAssets =
         ref.read(getPlatformDownloadAssetsProvider).call(release);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("New Update"),
-      ),
       body: Scrollbar(
         child: ListView(
           children: [
-            if (release.name != null)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
-                child: Text(
-                  release.name!,
-                  style: theme.textTheme.headlineMedium,
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 32.0, 16.0, 0.0),
+                child: Icon(
+                  Icons.info_outline,
+                  size: 48.0,
+                  color: theme.colorScheme.primary,
                 ),
               ),
-            if (publishedAt != null)
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+              child: Text(
+                'New version available',
+                style: theme.textTheme.headlineMedium,
+              ),
+            ),
+            if (release.tagName != null)
               Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
                 child: Text(
-                  "Published $publishedAt",
-                  style: const TextStyle(fontStyle: FontStyle.italic),
+                  release.tagName!,
+                  style: theme.textTheme.bodyLarge,
                 ),
               ),
             Markdown(
@@ -68,46 +68,51 @@ class NewReleasePage extends ConsumerWidget {
         ),
       ),
       bottomNavigationBar: Material(
-        color: theme.colorScheme.surface,
-        surfaceTintColor: theme.colorScheme.surfaceTint,
         elevation: 4.0,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (downloadAssets != null)
-                FilledButton(
-                  onPressed: () {
-                    Workmanager().registerOneOffTask(
-                      'update-download',
-                      AppUpdateDownloadTask.name,
-                      tag: BackgroundTaskTag.appUpdate,
-                      inputData: {
-                        'release': jsonEncode(ReleaseWithDownloadAssets(
-                          release: release,
-                          downloadAssets: downloadAssets,
-                        ).toJson()),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Divider(height: 0),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (downloadAssets != null)
+                    FilledButton(
+                      onPressed: () {
+                        Workmanager().registerOneOffTask(
+                          'update-download',
+                          AppUpdateDownloadTask.name,
+                          tag: BackgroundTaskTag.appUpdate,
+                          inputData: {
+                            'release': jsonEncode(ReleaseWithDownloadAssets(
+                              release: release,
+                              downloadAssets: downloadAssets,
+                            ).toJson()),
+                          },
+                        );
                       },
-                    );
-                  },
-                  child: const Text('Download'),
-                )
-              else if (release.htmlUrl != null)
-                FilledButton(
-                  onPressed: () => launchUrlString(
-                    release.htmlUrl!,
-                    mode: LaunchMode.externalNonBrowserApplication,
+                      child: const Text('Download'),
+                    )
+                  else if (release.htmlUrl != null)
+                    FilledButton(
+                      onPressed: () => launchUrlString(
+                        release.htmlUrl!,
+                        mode: LaunchMode.externalNonBrowserApplication,
+                      ),
+                      child: const Text('GitHub'),
+                    ),
+                  OutlinedButton(
+                    onPressed: () => context.router.pop(),
+                    child: const Text('Not now'),
                   ),
-                  child: const Text('GitHub'),
-                ),
-              OutlinedButton(
-                onPressed: () => context.router.pop(),
-                child: const Text('Cancel'),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -16,7 +16,7 @@ class NewUpdateNotification extends Notification {
   final DownloadAssets downloadAssets;
 
   @override
-  String get title => 'New Update';
+  String get title => 'New version available';
 
   @override
   String get body => 'Version ${release.tagName} is available for download';

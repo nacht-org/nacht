@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AlignTabBar extends StatelessWidget with PreferredSizeWidget {
+class AlignTabBar extends StatelessWidget implements PreferredSizeWidget {
   const AlignTabBar({
     Key? key,
     required this.child,

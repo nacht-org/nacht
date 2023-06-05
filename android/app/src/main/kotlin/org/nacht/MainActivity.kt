@@ -3,7 +3,6 @@ package org.nacht
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.annotation.NonNull
 import androidx.core.content.FileProvider
 import android.content.Context
 import android.content.pm.PackageManager
@@ -12,16 +11,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.app.ActivityCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
 
+@Suppress("PrivatePropertyName")
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "org.nacht/install_apk"
-
     private val INSTALL_REQUEST_CODE = 100
     
-    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
             call, result -> 
@@ -46,7 +44,7 @@ class MainActivity: FlutterActivity() {
         }
     }
 
-    fun installApk(context: Context, apkFilePath: String) {
+    private fun installApk(context: Context, apkFilePath: String) {
         val apkFile = File(apkFilePath)
 
         var hasInstallPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.REQUEST_INSTALL_PACKAGES) == PackageManager.PERMISSION_GRANTED

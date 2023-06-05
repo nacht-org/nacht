@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/logger/logger.dart';
-import 'package:nacht/shared/novel/services/get_chapters.dart';
 
 import '../novel.dart';
 

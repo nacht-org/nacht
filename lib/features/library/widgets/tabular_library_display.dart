@@ -1,10 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/features/home/providers/navigation_provider.dart';
 import 'package:nacht/features/library/providers/providers.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:flutter/material.dart';
-import 'package:nacht/widgets/widgets.dart';
 
 import 'widgets.dart';
 

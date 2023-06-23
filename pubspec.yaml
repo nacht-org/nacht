@@ -22,7 +22,7 @@ dependencies:
   collection: ^1.16.0
 
   # Router.
-  auto_route: ^6.0.3
+  auto_route: ^7.4.0
 
   # State management.
   hooks_riverpod: ^2.0.0-dev.9
@@ -36,7 +36,7 @@ dependencies:
   shared_preferences: ^2.0.15
 
   # Network.
-  connectivity_plus: ^3.0.2
+  connectivity_plus: ^4.0.1
   dio: ^5.1.1
   cached_network_image: ^3.2.1
 
@@ -49,7 +49,7 @@ dependencies:
   url_launcher: ^6.0.20
   webview_flutter: ^4.0.1
   webview_flutter_android: ^3.1.1
-  permission_handler: ^10.2.0
+  permission_handler: ^10.3.0
 
   # App specific
   nacht_sources:
@@ -59,13 +59,13 @@ dependencies:
 
   intl: ^0.18.0
   google_fonts: ^4.0.3
-  package_info_plus: ^3.0.2
-  share_plus: ^6.3.0
+  package_info_plus: ^4.0.2
+  share_plus: ^7.0.2
   dynamic_color: ^1.5.4
   simple_animations: ^5.0.0+3
   boxy: ^2.0.7
   github: ^9.11.0
-  system_info2: ^3.0.2
+  system_info2: ^4.0.0
   flutter_markdown: ^0.6.14
   workmanager: ^0.5.1
   flutter_local_notifications: ^14.0.0-dev.2
@@ -76,12 +76,12 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.1
-  auto_route_generator: ^6.0.1
+  auto_route_generator: ^7.1.1
   build_runner: ^2.1.8
   mockito: ^5.1.0
   freezed: ^2.0.3+1
   drift_dev: ^2.1.0
-  flutter_launcher_icons: ^0.12.0
+  flutter_launcher_icons: ^0.13.1
   json_serializable: ^6.6.1
 
 flutter:

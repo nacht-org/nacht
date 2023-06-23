@@ -3,7 +3,7 @@ import 'package:nacht/core/core.dart';
 import 'package:riverpod/riverpod.dart';
 import 'package:workmanager/workmanager.dart';
 
-class AppUpdateCancelAction with LoggerMixin implements NotificationAction {
+class AppUpdateCancelAction with LoggerMixin implements NotificationActionTask {
   static const String id = 'AppUpdate.Cancel';
 
   @override
@@ -11,6 +11,6 @@ class AppUpdateCancelAction with LoggerMixin implements NotificationAction {
     ProviderContainer container,
     NotificationResponse response,
   ) async {
-    Workmanager().cancelByTag(BackgroundTaskTag.appUpdate);
+    Workmanager().cancelByTag(BackgroundTaskTags.appUpdate);
   }
 }

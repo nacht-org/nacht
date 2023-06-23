@@ -7,8 +7,6 @@ import 'package:nacht/core/core.dart';
 import '../models/models.dart';
 import 'actions/actions.dart';
 
-const _channel = NotificationChannel.appUpdateCheck;
-
 class NewUpdateNotification extends Notification {
   const NewUpdateNotification(this.release, this.downloadAssets);
 
@@ -23,17 +21,11 @@ class NewUpdateNotification extends Notification {
 
   @override
   NotificationDetails? get notificationDetails {
-    return NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channel.id,
-        _channel.name,
-        channelDescription: _channel.description,
-        actions: [
-          const AndroidNotificationAction(
-              AppUpdateDownloadAction.id, 'Download'),
-          const AndroidNotificationAction(VoidAction.id, 'Cancel'),
-        ],
-      ),
+    return NotificationChannels.updatesApp.simple(
+      actions: [
+        NotificationAction.simple(AppUpdateDownloadAction.id, 'Download'),
+        NotificationAction.simple(VoidAction.id, 'Cancel'),
+      ],
     );
   }
 

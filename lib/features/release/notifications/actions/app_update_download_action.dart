@@ -6,7 +6,9 @@ import 'package:workmanager/workmanager.dart';
 
 import '../../background_tasks/background_tasks.dart';
 
-class AppUpdateDownloadAction with LoggerMixin implements NotificationAction {
+class AppUpdateDownloadAction
+    with LoggerMixin
+    implements NotificationActionTask {
   static const String id = 'AppUpdate.Download';
 
   @override
@@ -24,7 +26,7 @@ class AppUpdateDownloadAction with LoggerMixin implements NotificationAction {
     Workmanager().registerOneOffTask(
       'update-download',
       AppUpdateDownloadTask.name,
-      tag: BackgroundTaskTag.appUpdate,
+      tag: BackgroundTaskTags.appUpdate,
       inputData: {'release': response.payload!},
     );
   }

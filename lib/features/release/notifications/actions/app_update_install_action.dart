@@ -17,7 +17,9 @@ class InstallApk {
   }
 }
 
-class AppUpdateInstallAction with LoggerMixin implements NotificationAction {
+class AppUpdateInstallAction
+    with LoggerMixin
+    implements NotificationActionTask {
   static const String id = 'AppUpdate.Install';
 
   @override

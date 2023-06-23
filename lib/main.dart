@@ -10,6 +10,7 @@ import 'package:nacht/features/splash/provider/application_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<void> main() async {
   // Disable http font downloads in release mode.
@@ -44,11 +45,10 @@ class NachtApp extends HookConsumerWidget {
       ref.read(applicationProvider).init();
 
       initializeLocalNotificationsPlugin();
-      FlutterLocalNotificationsPlugin()
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
-          ?.requestPermission();
+      Permission.notification.request();
 
+      NotificationGroups.createAll();
+      NotificationChannels.createAll();
       return null;
     }, []);
 

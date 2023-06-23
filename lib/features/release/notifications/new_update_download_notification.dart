@@ -6,10 +6,9 @@ import 'package:nacht/core/core.dart';
 import '../models/models.dart';
 import 'actions/actions.dart';
 
-const _channel = NotificationChannel.appUpdateCheck;
-const _downloadingTitle = 'Downloading update...';
-const _cancelAction =
-    AndroidNotificationAction(AppUpdateCancelAction.id, 'Cancel');
+const _downloadingTitle = 'New version available';
+final _cancelAction =
+    NotificationAction.simple(AppUpdateCancelAction.id, 'Cancel');
 
 abstract class NewUpdateDownloadNotification extends Notification {
   const NewUpdateDownloadNotification();
@@ -41,24 +40,9 @@ class _DownloadInitializing extends NewUpdateDownloadNotification {
 
   @override
   NotificationDetails? get notificationDetails {
-    return NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channel.id,
-        _channel.name,
-        channelDescription: _channel.description,
-        importance: Importance.low,
-        priority: Priority.low,
-        playSound: false,
-        enableVibration: false,
-        ongoing: true,
-        autoCancel: false,
-        showProgress: true,
-        indeterminate: true,
-        category: AndroidNotificationCategory.progress,
-        actions: [
-          _cancelAction,
-        ],
-      ),
+    return NotificationChannels.downloaderProgress.progress(
+      indeterminate: true,
+      actions: [_cancelAction],
     );
   }
 }
@@ -77,25 +61,10 @@ class _DownloadProgress extends NewUpdateDownloadNotification {
 
   @override
   NotificationDetails? get notificationDetails {
-    return NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channel.id,
-        _channel.name,
-        channelDescription: _channel.description,
-        importance: Importance.low,
-        priority: Priority.low,
-        playSound: false,
-        enableVibration: false,
-        autoCancel: false,
-        ongoing: true,
-        showProgress: true,
-        maxProgress: total,
-        progress: value,
-        category: AndroidNotificationCategory.progress,
-        actions: [
-          _cancelAction,
-        ],
-      ),
+    return NotificationChannels.downloaderProgress.progress(
+      maxProgress: total,
+      progress: value,
+      actions: [_cancelAction],
     );
   }
 
@@ -118,24 +87,10 @@ class _DownloadFinalizing extends NewUpdateDownloadNotification {
 
   @override
   NotificationDetails? get notificationDetails {
-    return NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channel.id,
-        _channel.name,
-        channelDescription: _channel.description,
-        importance: Importance.low,
-        priority: Priority.low,
-        playSound: false,
-        enableVibration: false,
-        autoCancel: false,
-        showProgress: true,
-        progress: 1,
-        maxProgress: 1,
-        category: AndroidNotificationCategory.progress,
-        actions: [
-          _cancelAction,
-        ],
-      ),
+    return NotificationChannels.downloaderProgress.progress(
+      maxProgress: 1,
+      progress: 1,
+      actions: [_cancelAction],
     );
   }
 }
@@ -153,17 +108,11 @@ class _DownloadComplete extends NewUpdateDownloadNotification {
 
   @override
   NotificationDetails? get notificationDetails {
-    return NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channel.id,
-        _channel.name,
-        channelDescription: _channel.description,
-        autoCancel: false,
-        actions: [
-          const AndroidNotificationAction(AppUpdateInstallAction.id, 'Install'),
-          const AndroidNotificationAction(VoidAction.id, 'Cancel'),
-        ],
-      ),
+    return NotificationChannels.updatesApp.simple(
+      actions: [
+        NotificationAction.simple(AppUpdateInstallAction.id, 'Install'),
+        NotificationAction.simple(VoidAction.id, 'Cancel'),
+      ],
     );
   }
 
@@ -185,18 +134,11 @@ class _DownloadError extends NewUpdateDownloadNotification {
 
   @override
   NotificationDetails? get notificationDetails {
-    return NotificationDetails(
-      android: AndroidNotificationDetails(
-        _channel.id,
-        _channel.name,
-        channelDescription: _channel.description,
-        autoCancel: false,
-        category: AndroidNotificationCategory.error,
-        actions: [
-          const AndroidNotificationAction(AppUpdateDownloadAction.id, 'Retry'),
-          const AndroidNotificationAction(VoidAction.id, 'Cancel'),
-        ],
-      ),
+    return NotificationChannels.updatesApp.simple(
+      actions: [
+        NotificationAction.simple(AppUpdateDownloadAction.id, 'Retry'),
+        NotificationAction.simple(VoidAction.id, 'Cancel'),
+      ],
     );
   }
 

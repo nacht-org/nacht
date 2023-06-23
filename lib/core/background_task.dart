@@ -37,6 +37,6 @@ void onBackgroundTask() {
   });
 }
 
-abstract class BackgroundTaskTag {
+abstract class BackgroundTaskTags {
   static const String appUpdate = 'appUpdate';
 }

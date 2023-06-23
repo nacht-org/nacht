@@ -86,7 +86,7 @@ class NewReleasePage extends ConsumerWidget {
                         Workmanager().registerOneOffTask(
                           'update-download',
                           AppUpdateDownloadTask.name,
-                          tag: BackgroundTaskTag.appUpdate,
+                          tag: BackgroundTaskTags.appUpdate,
                           inputData: {
                             'release': jsonEncode(ReleaseWithDownloadAssets(
                               release: release,

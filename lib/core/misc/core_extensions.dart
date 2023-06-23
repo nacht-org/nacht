@@ -1,4 +1,4 @@
-extension TextTransform on String {
+extension StringExtension on String {
   String capitalize() {
     if (isEmpty) {
       return this;
@@ -6,9 +6,7 @@ extension TextTransform on String {
 
     return substring(0, 1).toUpperCase() + substring(1);
   }
-}
 
-extension Plural on String {
   String pluralize({
     String suffix = 's',
     bool Function(String string)? test,
@@ -19,5 +17,13 @@ extension Plural on String {
     }
 
     return this;
+  }
+
+  String stripFirst(String pattern) {
+    if (isEmpty) {
+      return this;
+    }
+
+    return startsWith(pattern) ? substring(pattern.length) : this;
   }
 }

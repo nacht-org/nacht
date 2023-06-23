@@ -25,17 +25,19 @@ class AboutPage extends StatelessWidget {
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: Consumer(builder: (context, ref, child) {
-          final packageInfo = ref.watch(packageInfoProvider);
+        child: Consumer(
+          builder: (context, ref, child) {
+            final packageInfo = ref.watch(packageInfoProvider);
 
-          return packageInfo.when(
-            loading: () => const SizedBox.shrink(),
-            error: (error, stack) => const LoadingError(
-              message: Text('Unable to load package information'),
-            ),
-            data: (data) => buildView(context, data),
-          );
-        }),
+            return packageInfo.when(
+              loading: () => const SizedBox.shrink(),
+              error: (error, stack) => const LoadingError(
+                message: Text('Unable to load package information'),
+              ),
+              data: (data) => buildView(context, data),
+            );
+          },
+        ),
       ),
     );
   }
@@ -57,8 +59,7 @@ class AboutPage extends StatelessWidget {
         ),
         ListTile(
           title: const Text('Background update check'),
-          onTap: () => Workmanager()
-              .registerOneOffTask('uniqueName', AppUpdateCheckTask.name),
+          onTap: () => AppUpdateCheckTask.id.registerOnce(),
         ),
         ListTile(
           title: const Text("What's new"),

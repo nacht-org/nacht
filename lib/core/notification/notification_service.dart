@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
@@ -13,12 +14,10 @@ class NotificationService {
     required this.plugin,
   });
 
-  int counter = 0;
   FlutterLocalNotificationsPlugin plugin;
 
-  /// FIXME: need to make it work across threads
   NotificationHandle getHandle({int? id}) {
-    return NotificationHandle(plugin, id ?? counter++);
+    return NotificationHandle(plugin, UniqueKey().hashCode);
   }
 
   Future<void> show(Notification notification) async {

@@ -15,9 +15,17 @@ class NotificationAction {
 
   final AndroidNotificationAction android;
 
-  static NotificationAction simple(String id, String title) {
+  static NotificationAction simple(
+    String id,
+    String title, {
+    bool cancelNotification = true,
+  }) {
     return NotificationAction(
-      android: AndroidNotificationAction(id, title),
+      android: AndroidNotificationAction(
+        id,
+        title,
+        cancelNotification: cancelNotification,
+      ),
     );
   }
 }

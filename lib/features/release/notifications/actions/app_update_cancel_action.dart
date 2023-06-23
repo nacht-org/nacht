@@ -11,6 +11,15 @@ class AppUpdateCancelAction with LoggerMixin implements NotificationActionTask {
     ProviderContainer container,
     NotificationResponse response,
   ) async {
-    Workmanager().cancelByTag(BackgroundTaskTags.appUpdate);
+    await Workmanager().cancelByTag(BackgroundTaskTag.updateApp.name);
+
+    final flutterLocalNotificationsPlugin =
+        container.read(flutterLocalNotificationsPluginProvider);
+    if (response.id != null) {
+      await flutterLocalNotificationsPlugin.cancel(response.id!);
+    }
+
+    // Workaround to makre sure that update is cancelled
+    await Workmanager().cancelByTag(BackgroundTaskTag.updateApp.name);
   }
 }

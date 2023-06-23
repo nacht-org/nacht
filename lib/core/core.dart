@@ -16,7 +16,7 @@ export 'preferences/chapter_list/chapter_list.dart';
 // Misc.
 export 'misc/error_handler.dart';
 export 'misc/lang_utils.dart';
-export 'misc/string_utils.dart';
+export 'misc/core_extensions.dart';
 export 'misc/uri_utils.dart';
 export 'misc/diff_utils.dart';
 export 'misc/dartz_utils.dart';

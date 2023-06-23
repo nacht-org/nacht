@@ -4,6 +4,8 @@ import 'package:workmanager/workmanager.dart';
 import 'package:riverpod/riverpod.dart';
 
 abstract class BackgroundTask<T> {
+  const BackgroundTask();
+
   Future<bool> call(
     ProviderContainer container,
     Map<String, dynamic>? inputData,
@@ -13,6 +15,33 @@ abstract class BackgroundTask<T> {
 
   T parseInput(Map<String, dynamic>? inputData);
   Future<bool> execute(ProviderContainer container, T data);
+}
+
+class BackgroundTaskId {
+  const BackgroundTaskId(this.id, this.name, [this.tag]);
+
+  final String id;
+  final String name;
+  final BackgroundTaskTag? tag;
+
+  /// Register this task to be run in the background right now
+  Future<void> registerOnce({
+    final String? tag,
+    final ExistingWorkPolicy? existingWorkPolicy,
+    final Duration initialDelay = Duration.zero,
+    final BackoffPolicy? backoffPolicy,
+    final Map<String, dynamic>? inputData,
+  }) {
+    return Workmanager().registerOneOffTask(
+      id,
+      name,
+      tag: tag ?? this.tag?.name,
+      existingWorkPolicy: existingWorkPolicy,
+      initialDelay: initialDelay,
+      backoffPolicy: backoffPolicy,
+      inputData: inputData,
+    );
+  }
 }
 
 @pragma('vm:entry-point')
@@ -25,9 +54,9 @@ void onBackgroundTask() {
     try {
       switch (taskName) {
         case AppUpdateCheckTask.name:
-          return AppUpdateCheckTask().call(container, inputData);
+          return const AppUpdateCheckTask().call(container, inputData);
         case AppUpdateDownloadTask.name:
-          return AppUpdateDownloadTask().call(container, inputData);
+          return const AppUpdateDownloadTask().call(container, inputData);
         default:
           return Future.value(true);
       }
@@ -37,6 +66,6 @@ void onBackgroundTask() {
   });
 }
 
-abstract class BackgroundTaskTags {
-  static const String appUpdate = 'appUpdate';
+enum BackgroundTaskTag {
+  updateApp,
 }

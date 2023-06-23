@@ -14,7 +14,11 @@ import '../notifications/notifications.dart';
 
 class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
     with LoggerMixin {
-  static const String name = 'AppUpdateDownload';
+  const AppUpdateDownloadTask();
+
+  static const name = 'AppUpdateDownload';
+  static const id = BackgroundTaskId(
+      'update.app.download', name, BackgroundTaskTag.updateApp);
 
   @override
   Future<bool> execute(
@@ -47,13 +51,14 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
 
     handle.show(const NewUpdateDownloadNotification.initializing());
 
-    // final appFile = await _downloadAsset(
-    //   dio: dio,
-    //   asset: data.downloadAssets.appAsset,
-    //   cancelToken: cancelToken,
-    //   onReceiveProgress: (value, total) =>
-    //       handle.show(NewUpdateDownloadNotification.progress(value, total)),
-    // );
+    final appFile = await _downloadAsset(
+      dio: dio,
+      asset: data.downloadAssets.appAsset,
+      cancelToken: cancelToken,
+      onReceiveProgress: (value, total) {
+        handle.show(NewUpdateDownloadNotification.progress(value, total));
+      },
+    );
 
     handle.show(const NewUpdateDownloadNotification.finalizing(
         'Checking file integrity'));
@@ -64,11 +69,11 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
       cancelToken: cancelToken,
     );
 
-    // if (!await _checkDownloadIntegrity(appFile, hashFile)) {
-    //   throw Exception("File integrity check failed");
-    // }
+    if (!await _checkDownloadIntegrity(appFile, hashFile)) {
+      throw Exception("File integrity check failed");
+    }
 
-    return File('');
+    return appFile;
   }
 
   Future<File> _downloadAsset({

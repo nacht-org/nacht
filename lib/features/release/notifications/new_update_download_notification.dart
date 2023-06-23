@@ -7,8 +7,11 @@ import '../models/models.dart';
 import 'actions/actions.dart';
 
 const _downloadingTitle = 'New version available';
-final _cancelAction =
-    NotificationAction.simple(AppUpdateCancelAction.id, 'Cancel');
+final _cancelAction = NotificationAction.simple(
+  AppUpdateCancelAction.id,
+  'Cancel',
+  cancelNotification: true,
+);
 
 abstract class NewUpdateDownloadNotification extends Notification {
   const NewUpdateDownloadNotification();

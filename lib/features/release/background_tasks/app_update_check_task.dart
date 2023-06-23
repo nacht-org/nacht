@@ -6,7 +6,11 @@ import '../notifications/notifications.dart';
 import '../services/services.dart';
 
 class AppUpdateCheckTask extends BackgroundTask<void> with LoggerMixin {
-  static const String name = 'AppUpdateCheck';
+  const AppUpdateCheckTask();
+
+  static const name = 'AppUpdateCheck';
+  static const id =
+      BackgroundTaskId('update.app.check', name, BackgroundTaskTag.updateApp);
 
   @override
   Future<bool> execute(ProviderContainer container, void data) async {

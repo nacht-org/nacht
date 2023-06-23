@@ -28,7 +28,7 @@ class NotificationGroups {
 
   static const downloader = NotificationGroup(
     key: 'org.nacht.DOWNLOADER',
-    android: AndroidNotificationChannelGroup('downloader', 'Donloader'),
+    android: AndroidNotificationChannelGroup('downloader', 'Downloader'),
   );
 
   static const List<NotificationGroup> all = [updates, downloader];

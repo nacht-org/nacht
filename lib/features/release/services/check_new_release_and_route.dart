@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:nacht/core/core.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -21,16 +20,31 @@ class CheckNewReleaseAndRoute {
   final Ref _ref;
   final CheckNewRelease _checkNewRelease;
 
-  Future<Either<Failure, void>> call() async {
+  Future<bool> call({bool silent = false}) async {
+    final messageService = _ref.read(messageServiceProvider);
+
+    if (!silent) {
+      messageService.showToast("Searching for updates...");
+    }
     final result = await _checkNewRelease.call();
-    return result.fold(
-      (failure) => Left(failure),
+
+    result.fold(
+      (failure) {
+        if (!silent) {
+          messageService.showToast(failure.message);
+        }
+      },
       (release) {
         if (release != null) {
           _ref.read(routerProvider).push(NewReleaseRoute(release: release));
+        } else {
+          if (!silent) {
+            messageService.showToast("No new updates available");
+          }
         }
-        return const Right(null);
       },
     );
+
+    return result.isRight();
   }
 }

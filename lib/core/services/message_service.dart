@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nacht/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +14,16 @@ class MessageService {
   }) : _ref = ref;
 
   final Ref _ref;
+
+  BuildContext _getContext() {
+    final context = _ref.read(routerProvider).navigatorKey.currentContext;
+    assert(context != null);
+    return context!;
+  }
+
+  void showToast(String message, {Toast? toastLength}) {
+    Fluttertoast.showToast(msg: message, toastLength: toastLength);
+  }
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showText(
     String text,
@@ -45,10 +56,9 @@ class MessageService {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
     SnackBar snackBar,
   ) {
-    final context = _ref.read(routerProvider).navigatorKey.currentContext;
-    assert(context != null);
+    final context = _getContext();
 
-    final messenger = ScaffoldMessenger.maybeOf(context!);
+    final messenger = ScaffoldMessenger.maybeOf(context);
     assert(messenger != null);
 
     return messenger!.showSnackBar(snackBar);

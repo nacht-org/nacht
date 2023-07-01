@@ -71,6 +71,7 @@ dependencies:
   flutter_local_notifications: ^14.0.0-dev.2
   riverpod: ^2.3.4
   version: ^3.0.2
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

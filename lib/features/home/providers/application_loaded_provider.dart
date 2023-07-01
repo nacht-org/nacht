@@ -13,6 +13,6 @@ class ApplicationLoaded {
   final Ref _ref;
 
   Future<void> init() async {
-    _ref.read(checkNewReleaseAndRouteProvider).call();
+    _ref.read(checkNewReleaseAndRouteProvider).call(silent: true);
   }
 }

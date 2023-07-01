@@ -113,7 +113,8 @@ class _DownloadComplete extends NewUpdateDownloadNotification {
   NotificationDetails? get notificationDetails {
     return NotificationChannels.updatesApp.simple(
       actions: [
-        NotificationAction.simple(AppUpdateInstallAction.id, 'Install'),
+        NotificationAction.simple(AppUpdateInstallAction.id, 'Install',
+            showsUserInterface: true),
         NotificationAction.simple(VoidAction.id, 'Cancel'),
       ],
     );

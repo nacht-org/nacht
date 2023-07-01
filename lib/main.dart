@@ -43,7 +43,7 @@ class NachtApp extends HookConsumerWidget {
     useEffect(() {
       ref.read(applicationProvider).init();
 
-      initializeLocalNotificationsPlugin();
+      initializeLocalNotificationsPlugin(ref.read);
       Permission.notification.request();
 
       NotificationGroups.createAll();

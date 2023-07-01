@@ -8,7 +8,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:nacht/widgets/loading_error.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:nacht/core/constants.dart' as constants;
-import 'package:workmanager/workmanager.dart';
 
 import '../providers/providers.dart';
 

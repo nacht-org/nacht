@@ -30,9 +30,6 @@ class CheckNewRelease with LoggerMixin {
     return release.fold(
       (failure) => Left(failure),
       (data) {
-        // FIXME: remove testing code
-        // return Right(data);
-
         if (data.tagName == null) {
           return const Right(null);
         }

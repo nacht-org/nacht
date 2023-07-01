@@ -1,9 +1,11 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'notification.dart';
+
 abstract class NotificationActionTask {
   Future<void> execute(
-    ProviderContainer container,
+    RefRead read,
     NotificationResponse response,
   );
 }
@@ -19,12 +21,14 @@ class NotificationAction {
     String id,
     String title, {
     bool cancelNotification = true,
+    bool showsUserInterface = false,
   }) {
     return NotificationAction(
       android: AndroidNotificationAction(
         id,
         title,
         cancelNotification: cancelNotification,
+        showsUserInterface: showsUserInterface,
       ),
     );
   }

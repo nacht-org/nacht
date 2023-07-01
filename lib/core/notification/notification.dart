@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,11 +13,13 @@ export 'notification_handle.dart';
 export 'notification_service.dart';
 export 'notification_action.dart';
 
+typedef RefRead = T Function<T>(ProviderListenable<T>);
+
 final flutterLocalNotificationsPluginProvider =
     Provider<FlutterLocalNotificationsPlugin>(
         (ref) => FlutterLocalNotificationsPlugin());
 
-Future<void> initializeLocalNotificationsPlugin() async {
+Future<void> initializeLocalNotificationsPlugin(RefRead read) async {
   final plugin = FlutterLocalNotificationsPlugin();
   const initializationSettings = InitializationSettings(
     android: AndroidInitializationSettings('@mipmap/ic_launcher'),
@@ -24,7 +29,8 @@ Future<void> initializeLocalNotificationsPlugin() async {
     initializationSettings,
     onDidReceiveBackgroundNotificationResponse:
         onDidReceiveBackgroundNotificationResponse,
-    onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+    onDidReceiveNotificationResponse: (response) =>
+        onDidReceiveNotificationResponse(read, response),
   );
 }
 
@@ -32,8 +38,11 @@ Future<void> initializeLocalNotificationsPlugin() async {
 void onDidReceiveBackgroundNotificationResponse(
   NotificationResponse response,
 ) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
+
   final container = ProviderContainer();
-  await initializeLocalNotificationsPlugin();
+  await initializeLocalNotificationsPlugin(container.read);
   initializeLogger();
 
   switch (response.notificationResponseType) {
@@ -42,25 +51,37 @@ void onDidReceiveBackgroundNotificationResponse(
     case NotificationResponseType.selectedNotificationAction:
       switch (response.actionId) {
         case AppUpdateDownloadAction.id:
-          AppUpdateDownloadAction().execute(container, response);
+          AppUpdateDownloadAction().execute(container.read, response);
           break;
         case AppUpdateCancelAction.id:
-          AppUpdateCancelAction().execute(container, response);
-          break;
-        case AppUpdateInstallAction.id:
-          AppUpdateInstallAction().execute(container, response);
+          AppUpdateCancelAction().execute(container.read, response);
           break;
         default:
-          break;
+          throw Exception(
+              'Action not registered in background: ${response.actionId}');
       }
       break;
   }
 }
 
 void onDidReceiveNotificationResponse(
+  RefRead read,
   NotificationResponse response,
 ) {
-  print(response.input);
+  switch (response.notificationResponseType) {
+    case NotificationResponseType.selectedNotification:
+      break;
+    case NotificationResponseType.selectedNotificationAction:
+      switch (response.actionId) {
+        case AppUpdateInstallAction.id:
+          AppUpdateInstallAction().execute(read, response);
+          break;
+        default:
+          throw Exception(
+              'Action not registered in foreground: ${response.actionId}');
+      }
+      break;
+  }
 }
 
 abstract class Notification {

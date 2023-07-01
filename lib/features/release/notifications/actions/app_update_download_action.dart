@@ -12,11 +12,11 @@ class AppUpdateDownloadAction
 
   @override
   Future<void> execute(
-    ProviderContainer container,
+    RefRead read,
     NotificationResponse response,
   ) async {
     final isConnectionAvailable =
-        await container.read(getIsConnectionAvailableProvider).execute();
+        await read(getIsConnectionAvailableProvider).execute();
     if (!isConnectionAvailable) {
       log.info('update download cancelled: no internet connection');
       return;

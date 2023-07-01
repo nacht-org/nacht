@@ -17,6 +17,15 @@ abstract class Failure extends Equatable {
   }
 }
 
+class ExceptionFailure extends Failure {
+  ExceptionFailure(this.error) : super(error.toString());
+
+  final Object error;
+
+  @override
+  List<Object?> get props => [...super.props, error];
+}
+
 class CrawlerNotFound extends Failure {
   const CrawlerNotFound(super.message);
 }

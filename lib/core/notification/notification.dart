@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/release/notifications/notifications.dart';
 
 import '../logger/logger.dart';
+import 'notification_action.dart';
 
 export 'notification_channel.dart';
 export 'notification_handle.dart';
@@ -56,6 +57,8 @@ void onDidReceiveBackgroundNotificationResponse(
         case AppUpdateCancelAction.id:
           AppUpdateCancelAction().execute(container.read, response);
           break;
+        case VoidAction.id:
+          break;
         default:
           throw Exception(
               'Action not registered in background: ${response.actionId}');
@@ -75,6 +78,8 @@ void onDidReceiveNotificationResponse(
       switch (response.actionId) {
         case AppUpdateInstallAction.id:
           AppUpdateInstallAction().execute(read, response);
+          break;
+        case VoidAction.id:
           break;
         default:
           throw Exception(

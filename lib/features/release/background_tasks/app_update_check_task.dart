@@ -1,8 +1,6 @@
 import 'package:nacht/core/core.dart';
 import 'package:nacht/shared/shared.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod/riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../notifications/notifications.dart';
 import '../services/services.dart';

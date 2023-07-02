@@ -20,10 +20,8 @@ final flutterLocalNotificationsPluginProvider =
     Provider<FlutterLocalNotificationsPlugin>(
         (ref) => FlutterLocalNotificationsPlugin());
 
-Future<void> initializeLocalNotificationsPlugin(
-  RefRead read, {
-  bool background = false,
-}) async {
+Future<FlutterLocalNotificationsPlugin> initializeLocalNotificationsPlugin(
+    RefRead read) async {
   final plugin = FlutterLocalNotificationsPlugin();
   const initializationSettings = InitializationSettings(
     android: AndroidInitializationSettings('@mipmap/ic_launcher'),
@@ -37,15 +35,20 @@ Future<void> initializeLocalNotificationsPlugin(
         onDidReceiveNotificationResponse(read, response),
   );
 
-  if (!background) {
-    final notificationAppLaunchDetails =
-        await plugin.getNotificationAppLaunchDetails();
-    if (notificationAppLaunchDetails != null &&
-        notificationAppLaunchDetails.didNotificationLaunchApp &&
-        notificationAppLaunchDetails.notificationResponse != null) {
-      onDidReceiveNotificationResponse(
-          read, notificationAppLaunchDetails.notificationResponse!);
-    }
+  return plugin;
+}
+
+Future<void> handleAppLaunchNotification(
+  FlutterLocalNotificationsPlugin plugin,
+  RefRead read,
+) async {
+  final notificationAppLaunchDetails =
+      await plugin.getNotificationAppLaunchDetails();
+  if (notificationAppLaunchDetails != null &&
+      notificationAppLaunchDetails.didNotificationLaunchApp &&
+      notificationAppLaunchDetails.notificationResponse != null) {
+    onDidReceiveNotificationResponse(
+        read, notificationAppLaunchDetails.notificationResponse!);
   }
 }
 
@@ -57,7 +60,7 @@ void onDidReceiveBackgroundNotificationResponse(
   DartPluginRegistrant.ensureInitialized();
 
   final container = ProviderContainer();
-  await initializeLocalNotificationsPlugin(container.read, background: true);
+  await initializeLocalNotificationsPlugin(container.read);
   initializeLogger();
 
   switch (response.notificationResponseType) {

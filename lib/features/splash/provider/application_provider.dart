@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/features.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 final applicationProvider = Provider<Application>(
   (ref) => Application(ref: ref),
@@ -41,6 +43,23 @@ class Application with LoggerMixin {
     _ref.read(downloadRunnerProvider);
 
     await _ref.read(routerProvider).replace(const HomeRoute());
+
+    // TODO: handle if app was opened from notification
+  }
+
+  Future<FlutterLocalNotificationsPlugin> initializeNotification() async {
+    final granted = await Permission.notification.request().isGranted;
+
+    final plugin = await initializeLocalNotificationsPlugin(_ref.read);
+    if (granted) {
+      NotificationGroups.createAll();
+      NotificationChannels.createAll();
+
+      // These handle non-routing things
+      await handleAppLaunchNotification(plugin, _ref.read);
+    }
+
+    return plugin;
   }
 
   void _addLicenses() {

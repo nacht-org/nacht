@@ -48,7 +48,7 @@ class BackgroundTaskId {
 void onBackgroundTask() {
   Workmanager().executeTask((taskName, inputData) async {
     final container = ProviderContainer();
-    await initializeLocalNotificationsPlugin(container.read, background: true);
+    await initializeLocalNotificationsPlugin(container.read);
     initializeLogger();
 
     try {

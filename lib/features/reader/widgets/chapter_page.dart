@@ -1,11 +1,13 @@
+import 'package:fwfh_cached_network_image/fwfh_cached_network_image.dart';
+import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 import '../models/models.dart';
 import '../providers/providers.dart';
@@ -59,46 +61,51 @@ class ChapterPage extends HookConsumerWidget {
         },
         child: ReaderTheme(
           child: ReaderScrollbar(
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    top: 16.0,
-                    right: 8.0,
-                    bottom: 8.0,
-                  ),
-                  child: Builder(
-                    builder: (context) {
-                      final theme = Theme.of(context);
-
-                      return Text(
-                        data.title,
-                        style: theme.textTheme.displaySmall?.copyWith(
-                          color: theme.textTheme.labelLarge?.color,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Consumer(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0).copyWith(top: 0),
+                child: Consumer(
                   builder: (context, ref, child) {
+                    final theme = Theme.of(context);
                     final preferences = ref.watch(readerPreferencesProvider);
 
-                    return Html(
-                      data: content,
-                      style: {
-                        "*": Style(
-                          lineHeight: LineHeight(preferences.lineHeight),
-                        ),
-                        "p": Style(
-                          fontSize: FontSize(preferences.fontSize),
-                        ),
+                    return HtmlWidget(
+                      "<chapter-title></chapter-title>$content",
+                      customWidgetBuilder: (element) {
+                        if (element.localName == 'chapter-title') {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Builder(
+                              builder: (context) {
+                                final theme = Theme.of(context);
+
+                                return Text(
+                                  data.title,
+                                  style: theme.textTheme.displaySmall?.copyWith(
+                                    color: theme.textTheme.labelLarge?.color,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+
+                        return null;
                       },
+                      factoryBuilder: () => ReaderWidgetFactory(),
+                      textStyle: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: preferences.fontSize,
+                        height: preferences.lineHeight,
+                      ),
+                      renderMode: RenderMode.column,
+                      // renderMode: const ListViewMode(
+                      //   padding:
+                      //       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                      // ),
                     );
                   },
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -127,3 +134,6 @@ class ReaderScrollbar extends ConsumerWidget {
     );
   }
 }
+
+class ReaderWidgetFactory extends WidgetFactory
+    with UrlLauncherFactory, CachedNetworkImageFactory {}

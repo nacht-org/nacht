@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -56,7 +57,7 @@ class ReaderView extends HookConsumerWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        // Make sure status bar is visible when exiting reader
+        // Reset ui when exiting reader
         ref.read(toolbarProvider.notifier).setSystemUiMode(true);
         return true;
       },
@@ -100,7 +101,7 @@ class ReaderView extends HookConsumerWidget {
   }
 }
 
-class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
+class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const ReaderAppBar({
     Key? key,
     required this.reader,
@@ -111,7 +112,17 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
   static const double _bottomSize = 48.0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final isToolbarVisible =
+        ref.watch(toolbarProvider.select((toolbar) => toolbar.visible));
+
+    final colorMode =
+        ref.watch(readerPreferencesProvider.select((value) => value.colorMode));
+    final brightness = isToolbarVisible
+        ? theme.brightness
+        : colorMode.value?.brightness ?? theme.brightness;
+
     return AppBar(
       leading: const BackButton(),
       title: Text(
@@ -119,6 +130,9 @@ class ReaderAppBar extends StatelessWidget implements PreferredSizeWidget {
         maxLines: 1,
       ),
       elevation: 8.0,
+      systemOverlayStyle: brightness == Brightness.dark
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(_bottomSize),
         child: Column(

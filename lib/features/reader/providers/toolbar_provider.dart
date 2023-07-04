@@ -5,12 +5,13 @@ import '../models/models.dart';
 final toolbarProvider =
     StateNotifierProvider.autoDispose<ToolbarNotifier, ToolbarInfo>(
   (ref) => ToolbarNotifier(
-    state: ToolbarInfo(visible: false),
+    state: ToolbarInfo(
+      visible: false,
+    ),
   ),
   name: 'ToolbarProvider',
 );
 
-// FIXME: this is no longer used. remove it?
 class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
   ToolbarNotifier({
     required ToolbarInfo state,
@@ -33,14 +34,5 @@ class ToolbarNotifier extends StateNotifier<ToolbarInfo> {
     setSystemUiMode(state.visible);
   }
 
-  void setSystemUiMode(bool visible) {
-    // if (visible) {
-    //   SystemChrome.setEnabledSystemUIMode(
-    //     SystemUiMode.manual,
-    //     overlays: SystemUiOverlay.values,
-    //   );
-    // } else {
-    //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    // }
-  }
+  void setSystemUiMode(bool visible) {}
 }

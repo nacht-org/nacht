@@ -1,63 +1,52 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:diffutil_dart/diffutil.dart';
 
-part 'diff_utils.freezed.dart';
+class IdentityList<T, I> {
+  const IdentityList({
+    required this.items,
+    required this.identity,
+  });
 
-@freezed
-class ChangeElement<P, N> with _$ChangeElement<P, N> {
-  /// New data that does not exist in previous.
-  const factory ChangeElement.insert(N data) = _InsertChange;
-
-  /// Old data that does not exist in new list.
-  const factory ChangeElement.remove(P data) = _RemoveChange;
-
-  /// Data that exists in both but the values are different.
-  const factory ChangeElement.replace(P prev, N next) = _ReplaceChange;
-
-  /// Data that exists in both and has the same value.
-  const factory ChangeElement.keep(P prev, N next) = _KeepChange;
+  final List<T> items;
+  final I Function(T item) identity;
 }
 
-typedef ChangeHistory<P, N> = Iterable<ChangeElement<P, N>>;
+class IdentityDiff<OLD, NEW, ID> implements DiffDelegate {
+  const IdentityDiff({
+    required this.oldList,
+    required this.newList,
+    required this.equality,
+  });
 
-@freezed
-class IdentityList<T, I> with _$IdentityList<T, I> {
-  const factory IdentityList({
-    required List<T> items,
-    required I Function(T item) identity,
-  }) = _IdentityList;
+  final IdentityList<OLD, ID> oldList;
+  final IdentityList<NEW, ID> newList;
+  final bool Function(OLD oldItem, NEW newItem) equality;
 
-  const IdentityList._();
-
-  Map<I, T> toMap() {
-    return {for (final item in items) identity(item): item};
-  }
-}
-
-/// Calculate the difference between two lists and changes
-/// required to convert [prev] to [next]
-ChangeHistory<P, N> calculateDiff<P, N>({
-  required IdentityList<N, dynamic> next,
-  required IdentityList<P, dynamic> prev,
-  bool Function(P a, N b)? equality,
-}) sync* {
-  equality ??= (a, b) => a == b;
-
-  final prevMap = prev.toMap();
-  for (final nextItem in next.items) {
-    final prevItem = prevMap.remove(next.identity(nextItem));
-    if (prevItem == null) {
-      yield ChangeElement.insert(nextItem);
-      continue;
-    }
-
-    if (equality(prevItem, nextItem)) {
-      yield ChangeElement.keep(prevItem, nextItem);
-    } else {
-      yield ChangeElement.replace(prevItem, nextItem);
-    }
+  @override
+  bool areContentsTheSame(int oldItemPosition, int newItemPosition) {
+    final oldItem = oldList.items[oldItemPosition];
+    final newItem = newList.items[newItemPosition];
+    return equality(oldItem, newItem);
   }
 
-  for (final item in prevMap.values) {
-    yield ChangeElement.remove(item);
+  @override
+  bool areItemsTheSame(int oldItemPosition, int newItemPosition) {
+    final oldItem = oldList.items[oldItemPosition];
+    final newItem = newList.items[newItemPosition];
+    return oldList.identity(oldItem) == newList.identity(newItem);
+  }
+
+  @override
+  NEW getChangePayload(int oldItemPosition, int newItemPosition) {
+    return newList.items[newItemPosition];
+  }
+
+  @override
+  int getNewListSize() {
+    return newList.items.length;
+  }
+
+  @override
+  int getOldListSize() {
+    return oldList.items.length;
   }
 }

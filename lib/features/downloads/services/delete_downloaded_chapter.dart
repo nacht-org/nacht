@@ -33,7 +33,7 @@ class DeleteDownloadedChapter {
         if (asset.path != null) {
           final file = File(asset.path!);
           if (await file.exists()) {
-            await File(asset.path!).delete();
+            await file.delete();
           }
         }
       },

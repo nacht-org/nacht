@@ -58,32 +58,35 @@ class DownloadView extends ConsumerWidget {
       );
     }
 
-    return ListView.builder(
-      itemCount: downloads.order.length,
-      itemBuilder: (context, index) {
-        final download = downloads.data[downloads.order[index]];
+    return Scrollbar(
+      interactive: true,
+      child: ListView.builder(
+        itemCount: downloads.order.length,
+        itemBuilder: (context, index) {
+          final download = downloads.data[downloads.order[index]];
 
-        if (download == null) {
-          return const SizedBox.shrink();
-        }
+          if (download == null) {
+            return const SizedBox.shrink();
+          }
 
-        return ListTile(
-          title: Text(
-            download.related.novelTitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          subtitle: Text(
-            download.related.chapterTitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: DownloadButton(
-            related: download.related,
-            assetId: null,
-          ),
-        );
-      },
+          return ListTile(
+            title: Text(
+              download.related.novelTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              download.related.chapterTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: DownloadButton(
+              related: download.related,
+              assetId: null,
+            ),
+          );
+        },
+      ),
     );
   }
 }

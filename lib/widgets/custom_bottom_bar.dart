@@ -15,7 +15,7 @@ class CustomBottomBar extends StatelessWidget {
     return Material(
       color: theme.colorScheme.surface,
       surfaceTintColor: theme.colorScheme.surfaceTint,
-      elevation: 4.0,
+      elevation: 3.0,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(16.0),

@@ -19,6 +19,7 @@ class SelectionAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: const CloseButton(),
       title: title,
+      elevation: 3,
       actions: [
         if (onSelectAllPressed != null)
           IconButton(

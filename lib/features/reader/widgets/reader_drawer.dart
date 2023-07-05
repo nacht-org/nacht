@@ -78,6 +78,7 @@ class DrawerBody extends HookConsumerWidget {
               Navigator.of(context).pop();
             },
             selected: index == reader.index,
+            dense: true,
           );
         },
         itemCount: chapterList.chapters.length,

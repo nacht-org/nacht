@@ -15,7 +15,7 @@ class ChapterListShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(chapterListFamily(id));
+    ref.watch(chapterListFamily(id).notifier);
     return child;
   }
 }

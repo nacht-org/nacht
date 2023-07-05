@@ -24,7 +24,13 @@ class NewUpdateNotification extends Notification {
     return NotificationChannels.updatesApp.simple(
       actions: [
         NotificationAction.simple(AppUpdateDownloadAction.id, 'Download'),
-        NotificationAction.simple(VoidAction.id, 'Cancel'),
+        if (release.tagName != null)
+          NotificationAction.simple(
+            AppUpdateWhatsNewAction.id,
+            "What's new",
+            cancelNotification: false,
+            showsUserInterface: true,
+          ),
       ],
     );
   }

@@ -40,8 +40,9 @@ class NachtApp extends HookConsumerWidget {
     final brightness = ref.watch(brightnessProvider);
 
     useEffect(() {
-      ref.read(applicationProvider).init();
-      ref.read(applicationProvider).initializeNotification();
+      final application = ref.read(applicationProvider);
+      application.init();
+      application.initializeNotification();
       return null;
     }, []);
 

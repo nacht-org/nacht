@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:github/github.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../background_tasks/background_tasks.dart';
 import '../models/models.dart';
@@ -95,8 +95,8 @@ class NewReleasePage extends ConsumerWidget {
                     )
                   else if (release.htmlUrl != null)
                     FilledButton(
-                      onPressed: () => launchUrlString(
-                        release.htmlUrl!,
+                      onPressed: () => launchUrl(
+                        Uri.parse(release.htmlUrl!),
                         mode: LaunchMode.externalNonBrowserApplication,
                       ),
                       child: const Text('GitHub'),

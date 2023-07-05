@@ -21,8 +21,12 @@ class MessageService {
     return context!;
   }
 
-  void showToast(String message, {Toast? toastLength}) {
-    Fluttertoast.showToast(msg: message, toastLength: toastLength);
+  Future<void> showToast(String message, {Toast? toastLength}) {
+    return Fluttertoast.showToast(msg: message, toastLength: toastLength);
+  }
+
+  Future<void> hideToast() {
+    return Fluttertoast.cancel();
   }
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showText(

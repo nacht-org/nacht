@@ -96,6 +96,9 @@ void onDidReceiveNotificationResponse(
         case AppUpdateInstallAction.id:
           AppUpdateInstallAction().execute(read, response);
           break;
+        case AppUpdateWhatsNewAction.id:
+          AppUpdateWhatsNewAction().execute(read, response);
+          break;
         case VoidAction.id:
           break;
         default:

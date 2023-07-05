@@ -15,18 +15,15 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = useState(0);
-
     usePostFrameCallback((timeStamp) {
       ref.read(applicationLoadedProvider).init();
     });
 
-    return LazyIndexedStack(
-      initialIndex: 0,
-      currentIndex: currentIndex.value,
-      destinations: destinations.map((item) => item.builder).toList(),
+    return AutoTabsRouter(
+      homeIndex: 0,
+      routes: destinations.map((item) => item.route).toList(),
       duration: kShortAnimationDuration,
-      builder: (context, child, animation) {
+      transitionBuilder: (context, child, animation) {
         return Scaffold(
           body: FadeTransition(
             opacity: animation,
@@ -35,6 +32,9 @@ class HomePage extends HookConsumerWidget {
           extendBody: true,
           bottomNavigationBar: HookConsumer(
             builder: (context, ref, child) {
+              final tabsRouter = AutoTabsRouter.of(context);
+              print('build bottom nav');
+
               final controller = useAnimationController(
                 initialValue: 1,
                 duration: kShortAnimationDuration,
@@ -55,8 +55,8 @@ class HomePage extends HookConsumerWidget {
               return AnimatedBottomBar(
                 controller: controller,
                 child: NavigationBar(
-                  selectedIndex: currentIndex.value,
-                  onDestinationSelected: (index) => currentIndex.value = index,
+                  selectedIndex: tabsRouter.activeIndex,
+                  onDestinationSelected: tabsRouter.setActiveIndex,
                   destinations: List.generate(destinations.length, (index) {
                     final destination = destinations[index];
                     return NavigationDestination(

@@ -22,7 +22,6 @@ export 'custom_bottom_bar.dart';
 export 'animated_app_bar.dart';
 export 'animated_bottom_bar.dart';
 export 'close_back_button.dart';
-export 'show_expandable_bottom_sheet.dart';
 export 'empty_indicator.dart';
 export 'search_bar.dart';
 

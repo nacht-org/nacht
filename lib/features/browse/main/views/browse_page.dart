@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -5,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/widgets/widgets.dart';
 
+@RoutePage()
 class BrowsePage extends HookConsumerWidget {
   const BrowsePage({Key? key}) : super(key: key);
 

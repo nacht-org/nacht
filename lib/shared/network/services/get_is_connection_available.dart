@@ -21,7 +21,6 @@ class GetIsConnectionAvailable {
     final connectivity = await _getConnectionStatus.execute();
 
     switch (connectivity) {
-      case ConnectivityResult.bluetooth:
       case ConnectivityResult.wifi:
       case ConnectivityResult.ethernet:
       case ConnectivityResult.mobile:
@@ -29,6 +28,7 @@ class GetIsConnectionAvailable {
         return true;
       case ConnectivityResult.none:
       case ConnectivityResult.other:
+      case ConnectivityResult.bluetooth:
         return false;
     }
   }

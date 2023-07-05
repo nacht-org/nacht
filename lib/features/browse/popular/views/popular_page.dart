@@ -62,7 +62,7 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
 
           return NotificationListener<ScrollNotification>(
             onNotification: (notification) {
-              if (notification.isAtEnd) {
+              if (notification.isAtEnd && view.hasData) {
                 log.info('scroll to end notification recieved in popular page');
                 onScrollEnd(ref, isSearching, crawler);
               }

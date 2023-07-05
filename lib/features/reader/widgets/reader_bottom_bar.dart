@@ -56,13 +56,11 @@ class ReaderBottomBar extends StatelessWidget {
           ),
           IconButton(
             tooltip: 'Settings',
-            onPressed: () => showExpandableBottomSheet(
+            onPressed: () => showModalBottomSheet(
               context: context,
-              builder: (context, scrollController) {
-                return SettingsSheet(
-                  controller: scrollController,
-                );
-              },
+              isScrollControlled: true,
+              useSafeArea: true,
+              builder: (context) => const SettingsSheet(),
             ),
             icon: const Icon(Icons.settings),
           ),

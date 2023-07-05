@@ -11,6 +11,7 @@ final historyProvider =
     watchHistory: ref.watch(watchHistoryProvider),
     deleteHistory: ref.watch(deleteHistoryProvider),
     deleteNovelHistory: ref.watch(deleteNovelHistoryProvider),
+    deleteAllHistory: ref.watch(deleteAllHistoryProvider),
   ),
 );
 
@@ -20,16 +21,19 @@ class HistoryNotifier extends StateNotifier<List<HistoryData>> {
     required WatchHistory watchHistory,
     required DeleteHistory deleteHistory,
     required DeleteNovelHistory deleteNovelHistory,
+    required DeleteAllHistory deleteAllHistory
   })  : _ref = ref,
         _watchHistory = watchHistory,
         _deleteHistory = deleteHistory,
         _deleteNovelHistory = deleteNovelHistory,
+        _deleteAllHistory = deleteAllHistory,
         super(const []);
 
   final Ref _ref;
   final WatchHistory _watchHistory;
   final DeleteHistory _deleteHistory;
   final DeleteNovelHistory _deleteNovelHistory;
+  final DeleteAllHistory _deleteAllHistory;
 
   Future<void> init() async {
     final stream = _watchHistory.execute();
@@ -48,5 +52,9 @@ class HistoryNotifier extends StateNotifier<List<HistoryData>> {
         .map((history) => history.novel.id);
 
     await _deleteNovelHistory.execute(novelIds);
+  }
+
+  Future<void> deleteAllHistory() async {
+     await _deleteAllHistory.call();
   }
 }

@@ -43,6 +43,27 @@ class HistoryPage extends HookConsumerWidget {
             )
           : AppBar(
               title: const Text("History"),
+              actions: [
+                IconButton(
+                  onPressed: () async {
+                    bool confirmed = await showDialog(
+                          context: context,
+                          builder: (context) => const ConfirmDialog(
+                            title: Text("Remove everything"),
+                            message:
+                                Text('Are you sure? All history will be lost.'),
+                          ),
+                        ) ??
+                        false;
+
+                    if (confirmed) {
+                      historyNotifier.deleteAllHistory();
+                    }
+                  },
+                  icon: const Icon(Icons.delete_sweep),
+                  tooltip: "Clear history",
+                ),
+              ],
             ),
       body: const HistoryBody(),
       bottomNavigationBar: ImplicitAnimatedBottomBar(

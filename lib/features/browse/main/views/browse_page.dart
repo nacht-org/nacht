@@ -32,12 +32,13 @@ class BrowsePage extends HookConsumerWidget {
                 const BrowseSearchButton(),
                 IconButton(
                   onPressed: () {
-                    showExpandableBottomSheet(
+                    showModalBottomSheet(
                       context: context,
-                      builder: (context, scrollController) {
-                        return BrowseFilterSheet(
-                          scrollController: scrollController,
-                        );
+                      isScrollControlled: true,
+                      showDragHandle: true,
+                      useSafeArea: true,
+                      builder: (context) {
+                        return const BrowseFilterSheet();
                       },
                     );
                   },

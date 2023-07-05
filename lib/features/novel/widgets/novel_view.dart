@@ -65,10 +65,11 @@ class NovelView extends HookConsumerWidget {
               actions: [
                 DownloadAction(novel: novel),
                 IconButton(
-                  onPressed: () => showExpandableBottomSheet(
+                  onPressed: () => showModalBottomSheet(
                     context: context,
-                    builder: (context, controller) =>
-                        ChapterListBottomSheet(controller: controller),
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    builder: (context) => const ChapterListBottomSheet(),
                   ),
                   icon: const Icon(Icons.filter_list),
                 ),
@@ -116,10 +117,11 @@ class NovelView extends HookConsumerWidget {
                   ),
                   trailing: const Icon(Icons.filter_list),
                   onTap: () {
-                    showExpandableBottomSheet(
+                    showModalBottomSheet(
                       context: context,
-                      builder: (context, controller) =>
-                          ChapterListBottomSheet(controller: controller),
+                      isScrollControlled: true,
+                      useSafeArea: true,
+                      builder: (context) => const ChapterListBottomSheet(),
                     );
                   },
                   dense: true,

@@ -86,6 +86,9 @@ class NachtApp extends HookConsumerWidget {
       listTileTheme: theme.listTileTheme.copyWith(
         selectedTileColor: theme.colorScheme.surfaceVariant,
       ),
+      bottomSheetTheme: theme.bottomSheetTheme.copyWith(
+        showDragHandle: true,
+      ),
     );
   }
 }

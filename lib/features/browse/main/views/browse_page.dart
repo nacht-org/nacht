@@ -35,7 +35,6 @@ class BrowsePage extends HookConsumerWidget {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
-                      showDragHandle: true,
                       useSafeArea: true,
                       builder: (context) {
                         return const BrowseFilterSheet();

@@ -48,6 +48,13 @@ class ReaderView extends HookConsumerWidget {
 
     useEffect(() {
       isToolbarVisible ? controller.forward() : controller.reverse();
+
+      final readerBrightness =
+          ref.read(readerPreferencesProvider).colorMode.value?.brightness;
+      if (readerBrightness != null) {
+        SystemChrome.setSystemUIOverlayStyle(
+            readerBrightness.getSystemUiOverlayStyle());
+      }
       return null;
     }, [isToolbarVisible]);
 
@@ -130,9 +137,7 @@ class ReaderAppBar extends ConsumerWidget implements PreferredSizeWidget {
         maxLines: 1,
       ),
       elevation: 8.0,
-      systemOverlayStyle: brightness == Brightness.dark
-          ? SystemUiOverlayStyle.light
-          : SystemUiOverlayStyle.dark,
+      systemOverlayStyle: brightness.getSystemUiOverlayStyle(),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(_bottomSize),
         child: Column(

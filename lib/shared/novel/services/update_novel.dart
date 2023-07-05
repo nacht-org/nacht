@@ -24,6 +24,8 @@ final updateNovelProvider = Provider<UpdateNovel>(
   name: 'UpdateNovelRoutineProvider',
 );
 
+typedef UpdateChapterListResult = (List<ChaptersCompanion>, List<Chapter>);
+
 class UpdateNovel with LoggerMixin {
   UpdateNovel({
     required AppDatabase database,
@@ -39,7 +41,22 @@ class UpdateNovel with LoggerMixin {
       result = await _updateNovel(novel);
 
       final volumes = await _updateVolumes(novel.volumes, result.novelId);
-      final inserts = await _updateChapters(volumes, result.novelId);
+      final (inserts, deletes) = await _updateChapters(volumes, result.novelId);
+
+      for (final chapter in deletes) {
+        await (_database.delete(_database.updates)
+              ..where((tbl) => tbl.chapterId.equals(chapter.id)))
+            .go();
+        await (_database.delete(_database.readingHistories)
+              ..where((tbl) => tbl.chapterId.equals(chapter.id)))
+            .go();
+        await (_database.delete(_database.downloads)
+              ..where((tbl) => tbl.chapterId.equals(chapter.id)))
+            .go();
+        await (_database.delete(_database.chapters)
+              ..where((tbl) => tbl.id.equals(chapter.id)))
+            .go();
+      }
 
       // Insert chapters.
       log.fine('inserting chapters');
@@ -109,11 +126,12 @@ class UpdateNovel with LoggerMixin {
     return volumeModels;
   }
 
-  Future<List<ChaptersCompanion>> _updateChapters(
+  Future<UpdateChapterListResult> _updateChapters(
     Map<Volume, List<sources.Chapter>> volumes,
     int novelId,
   ) async {
     final insertCompanions = <ChaptersCompanion>[];
+    final deleteCompanions = <Chapter>[];
 
     final newChapters = <_ChapterWrapper>[];
     for (final entry in volumes.entries) {
@@ -163,8 +181,8 @@ class UpdateNovel with LoggerMixin {
           },
           remove: (pos, data) {
             final prev = currentChapters[pos];
-            batch.delete(_database.chapters, prev);
             log.finer('remove chapter ${prev.chapterIndex} ${prev.title}');
+            deleteCompanions.add(prev);
           },
           change: (index, payload) {
             final prev = currentChapters[index];
@@ -186,7 +204,7 @@ class UpdateNovel with LoggerMixin {
       }
     });
 
-    return insertCompanions;
+    return (insertCompanions, deleteCompanions);
   }
 
   _updateMetaData(int novelId, List<sources.MetaData> metaData) async {

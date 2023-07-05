@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
@@ -33,6 +34,9 @@ class Application with LoggerMixin {
 
     _addLicenses();
 
+    final readerPreferences = _ref.read(readerPreferencesProvider);
+    GoogleFonts.pendingFonts([readerPreferences.fontFamily]);
+
     await Future.wait([
       _ref.read(updatesProvider.notifier).initialize(),
       _ref.read(categoriesProvider.notifier).initialize(),
@@ -43,8 +47,6 @@ class Application with LoggerMixin {
     _ref.read(downloadRunnerProvider);
 
     await _ref.read(routerProvider).replace(const HomeRoute());
-
-    // TODO: handle if app was opened from notification
   }
 
   Future<FlutterLocalNotificationsPlugin> initializeNotification() async {

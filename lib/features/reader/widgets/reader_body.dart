@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/features/reader/providers/history_session_provider.dart';
 import 'package:nacht/shared/shared.dart';
 
 import '../models/models.dart';
@@ -25,8 +24,6 @@ class ReaderBody extends HookConsumerWidget {
     final toolbarNotifier = ref.watch(toolbarProvider.notifier);
 
     final chapterList = ref.watch(chapterListFamily(reader.novel.id));
-    final historySessionNotifier =
-        ref.watch(historySessionProvider(reader.novel.id).notifier);
 
     if (crawlerFactory == null) {
       return const Center(
@@ -48,7 +45,6 @@ class ReaderBody extends HookConsumerWidget {
         },
         onPageChanged: (index) {
           readerNotifier.setCurrentIndex(index);
-          historySessionNotifier.update(chapterList.chapters[index]);
         },
       ),
     );

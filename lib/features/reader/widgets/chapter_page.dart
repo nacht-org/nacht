@@ -1,3 +1,4 @@
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fwfh_cached_network_image/fwfh_cached_network_image.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:nacht/shared/shared.dart';
@@ -52,60 +53,93 @@ class ChapterPage extends HookConsumerWidget {
           onRetry: () => notifier.reload(crawler),
         ),
       ),
-      data: (content) => NotificationListener<ScrollNotification>(
-        onNotification: (notification) {
-          if (notification.isAtEnd) {
-            ref.read(chapterListFamily(novel.id).notifier).markAsRead(index);
-          }
-          return false;
-        },
-        child: ReaderTheme(
-          child: ReaderScrollbar(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0).copyWith(top: 0),
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    final theme = Theme.of(context);
-                    final preferences = ref.watch(readerPreferencesProvider);
+      data: (content) => ChapterLoaded(
+        novel: novel,
+        index: index,
+        chapter: data,
+        content: content,
+      ),
+    );
+  }
+}
 
-                    return HtmlWidget(
-                      "<chapter-title></chapter-title>$content",
-                      customWidgetBuilder: (element) {
-                        if (element.localName == 'chapter-title') {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Builder(
-                              builder: (context) {
-                                final theme = Theme.of(context);
+class ChapterLoaded extends HookConsumerWidget {
+  const ChapterLoaded({
+    super.key,
+    required this.novel,
+    required this.index,
+    required this.chapter,
+    required this.content,
+  });
 
-                                return Text(
-                                  data.title,
-                                  style: theme.textTheme.displaySmall?.copyWith(
-                                    color: theme.textTheme.labelLarge?.color,
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        }
+  final NovelData novel;
+  final int index;
+  final ChapterData chapter;
+  final String content;
 
-                        return null;
-                      },
-                      factoryBuilder: () => ReaderWidgetFactory(),
-                      textStyle: theme.textTheme.bodyMedium?.copyWith(
-                        fontSize: preferences.fontSize,
-                        height: preferences.lineHeight,
-                      ),
-                      renderMode: RenderMode.column,
-                      // renderMode: const ListViewMode(
-                      //   padding:
-                      //       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                      // ),
-                    );
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      ref
+          .read(historySessionProvider(novel.id).notifier)
+          .record(novel, chapter);
+      return null;
+    }, []);
+
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification.isAtEnd) {
+          ref.read(chapterListFamily(novel.id).notifier).markAsRead(index);
+        }
+        return false;
+      },
+      child: ReaderTheme(
+        child: ReaderScrollbar(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0).copyWith(top: 0),
+            child: Consumer(
+              builder: (context, ref, child) {
+                final theme = Theme.of(context);
+                final preferences = ref.watch(readerPreferencesProvider);
+
+                return HtmlWidget(
+                  "<chapter-title></chapter-title>$content",
+                  buildAsync: false,
+                  enableCaching: true,
+                  rebuildTriggers: [preferences],
+                  customWidgetBuilder: (element) {
+                    if (element.localName == 'chapter-title') {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Builder(
+                          builder: (context) {
+                            final theme = Theme.of(context);
+
+                            return Text(
+                              chapter.title,
+                              style: theme.textTheme.displaySmall?.copyWith(
+                                color: theme.textTheme.labelLarge?.color,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }
+
+                    return null;
                   },
-                ),
-              ),
+                  factoryBuilder: () => ReaderWidgetFactory(),
+                  textStyle: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: preferences.fontSize,
+                    height: preferences.lineHeight,
+                  ),
+                  renderMode: RenderMode.column,
+                  // renderMode: const ListViewMode(
+                  //   padding:
+                  //       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  // ),
+                );
+              },
             ),
           ),
         ),

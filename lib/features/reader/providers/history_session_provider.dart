@@ -26,6 +26,14 @@ class HistorySessionNotifier extends StateNotifier<HistorySessionInfo> {
   final CreateAndReturnHistory _createAndReturnHistory;
   final UpdateHistory _updateHistory;
 
+  Future<void> record(NovelData novel, ChapterData chapter) async {
+    if (state.isLoaded) {
+      update(chapter);
+    } else {
+      init(novel, chapter);
+    }
+  }
+
   Future<void> init(NovelData novel, ChapterData chapter) async {
     final model = await _createAndReturnHistory.execute(novel.id, chapter.id);
     final history = HistoryData.fromModel(model, novel, chapter);
@@ -37,10 +45,6 @@ class HistorySessionNotifier extends StateNotifier<HistorySessionInfo> {
   }
 
   Future<void> update(ChapterData chapter) async {
-    if (!state.isLoaded) {
-      return;
-    }
-
     state = state.copyWith(
       historyOrNull: state.history.copyWith(
         updatedAt: DateTime.now(),

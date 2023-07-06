@@ -1,5 +1,4 @@
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/features.dart';
 import 'package:nacht/features/release/services/services.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:riverpod/riverpod.dart';
@@ -48,14 +47,6 @@ class CheckNewReleaseAndRoute {
       (release) {
         if (release != null) {
           _ref.read(routerProvider).push(NewReleaseRoute(release: release));
-          final downloadAssets =
-              _ref.read(getPlatformDownloadAssetsProvider).call(release);
-          if (downloadAssets != null) {
-            _ref
-                .read(notificationServiceProvider)
-                .show(NewUpdateNotification(release, downloadAssets));
-          }
-
           if (!silent) {
             messageService.hideToast();
           }

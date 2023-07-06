@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:nacht/core/core.dart';
 import 'package:nacht/features/release/services/services.dart';
+import 'package:nacht/shared/shared.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../models/models.dart';
@@ -23,6 +24,14 @@ class AppUpdateDownloadTask extends BackgroundTask<ReleaseWithDownloadAssets>
     log.info('started downloading in the background...');
 
     final handle = container.read(notificationServiceProvider).getHandle();
+
+    final isConnectionAvailable =
+        await container.read(getIsConnectionAvailableProvider).execute();
+    if (!isConnectionAvailable) {
+      handle.show(NewUpdateDownloadNotification.error(
+          data, const NoNetworkConnection().message));
+    }
+
     final result =
         await container.read(downloadReleaseProvider).call(data, handle);
 

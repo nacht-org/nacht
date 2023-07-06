@@ -80,6 +80,10 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
   }
 
   Future<void> toggleLibrary() async {
+    return state.favourite ? removeFromLibrary() : editCategories();
+  }
+
+  Future<void> editCategories() async {
     Map<CategoryData, bool>? categories =
         await _getNovelCategoryMap.execute(state.id);
 
@@ -103,6 +107,21 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
     if (categories == null) {
       return;
     }
+
+    final result = await _changeNovelCategories.execute(state, categories);
+    result.fold((failure) {
+      log.warning(failure);
+    }, (data) {
+      state = state.copyWith(favourite: data);
+    });
+  }
+
+  /// Remove novel from all categories
+  Future<void> removeFromLibrary() async {
+    Map<CategoryData, bool> categories =
+        await _getNovelCategoryMap.execute(state.id);
+
+    categories = {for (final entry in categories.entries) entry.key: false};
 
     final result = await _changeNovelCategories.execute(state, categories);
     result.fold((failure) {

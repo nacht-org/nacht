@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/shared/shared.dart';
 
+/// This is always available through the whole app lifecycle
 final categoriesProvider =
     StateNotifierProvider<CategoriesNotifier, List<CategoryData>>(
   (ref) => CategoriesNotifier(

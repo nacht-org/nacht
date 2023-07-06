@@ -31,7 +31,8 @@ class ActionBar extends StatelessWidget {
                 return ActionItem(
                   icon: icon,
                   label: label,
-                  onTap: ref.read(novelFamily(input).notifier).toggleLibrary,
+                  onTap: () =>
+                      ref.read(novelFamily(input).notifier).toggleLibrary(),
                   active: favourite,
                 );
               },

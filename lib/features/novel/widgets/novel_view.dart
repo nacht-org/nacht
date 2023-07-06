@@ -26,6 +26,8 @@ class NovelView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final refreshKey = useMemoized(() => GlobalKey<RefreshIndicatorState>());
+
     final input = NovelInput(data);
     final novel = ref.watch(novelFamily(input));
     final notifier = ref.watch(novelFamily(input).notifier);
@@ -73,14 +75,34 @@ class NovelView extends HookConsumerWidget {
                   ),
                   icon: const Icon(Icons.filter_list),
                 ),
-                IconButton(
-                  tooltip: 'Share',
-                  onPressed: () => Share.share(novel.url),
-                  icon: const Icon(Icons.share),
+                Consumer(
+                  builder: (context, ref, child) {
+                    final categoryCount = ref.watch(
+                        categoriesProvider.select((value) => value.length));
+
+                    return PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: const Text('Refresh'),
+                          onTap: () => refreshKey.currentState!.show(),
+                        ),
+                        if (categoryCount > 1)
+                          PopupMenuItem(
+                            child: const Text('Edit categories'),
+                            onTap: () => notifier.editCategories(),
+                          ),
+                        PopupMenuItem(
+                          child: const Text('Share'),
+                          onTap: () => Share.share(novel.url),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
       body: RefreshIndicator(
+        key: refreshKey,
         onRefresh: () async => notifier.fetch(crawler),
         child: Scrollbar(
           interactive: true,

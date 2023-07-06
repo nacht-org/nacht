@@ -52,11 +52,7 @@ class ChangeNovelCategories {
 
       batch.deleteWhere(
         _database.novelCategoriesJunction,
-        (tbl) {
-          final table = tbl as NovelCategoriesJunction;
-          return table.novelId.equals(novel.id) &
-              table.categoryId.isIn(toDelete);
-        },
+        (tbl) => tbl.novelId.equals(novel.id) & tbl.categoryId.isIn(toDelete),
       );
 
       for (final entry in categories.entries) {

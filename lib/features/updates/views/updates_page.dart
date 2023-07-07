@@ -165,10 +165,16 @@ class UpdatesView extends HookConsumerWidget {
     final controller = useScrollController();
     final refreshNotifier = ref.watch(refreshProvider.notifier);
 
+    final selectionActive = ref.watch(
+      updatesSelectionProvider.select((selection) => selection.active),
+    );
+
     return SafeArea(
       child: RefreshIndicator(
         key: refreshKey,
         onRefresh: refreshNotifier.refreshAll,
+        notificationPredicate:
+            selectionActive ? (_) => false : defaultScrollNotificationPredicate,
         child: Scrollbar(
           interactive: true,
           controller: controller,

@@ -73,7 +73,6 @@ dependencies:
   riverpod: ^2.3.4
   version: ^3.0.2
   fluttertoast: ^8.2.2
-  diffutil_dart: ^3.0.0
 
 dev_dependencies:
   flutter_test:

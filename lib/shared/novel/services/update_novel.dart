@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:diffutil_dart/diffutil.dart';
 import 'package:drift/drift.dart' show Value, DoUpdate;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/core/misc/diff_utils.dart';
 import 'package:nacht/database/database.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -146,13 +144,12 @@ class UpdateNovel with LoggerMixin {
 
     log.fine('updating and removing chapters');
     await _database.batch((batch) async {
-      final diffResult =
-          calculateDiff(IdentityDiff<Chapter, _ChapterWrapper, String>(
-        oldList: IdentityList<Chapter, String>(
+      final diff = calculateDiff<Chapter, _ChapterWrapper>(
+        prev: IdentityList<Chapter, String>(
           items: currentChapters,
           identity: (item) => item.url,
         ),
-        newList: IdentityList<_ChapterWrapper, String>(
+        next: IdentityList<_ChapterWrapper, String>(
           items: newChapters,
           identity: (item) => item.chapter.url,
         ),
@@ -162,13 +159,11 @@ class UpdateNovel with LoggerMixin {
               prev.chapterIndex == next.chapter.index &&
               prev.volumeId == next.volumeId;
         },
-      ));
+      );
 
-      for (final change in diffResult.getUpdates(batch: false)) {
+      for (final change in diff) {
         change.when(
-          insert: (pos, data) async {
-            final next = newChapters[pos];
-
+          insert: (next) async {
             final chapterCompanion =
                 sourceChapterIntoCompanion(next.chapter).copyWith(
               volumeId: Value(next.volumeId),
@@ -179,15 +174,12 @@ class UpdateNovel with LoggerMixin {
             log.finer(
                 'insert chapter ${next.chapter.index} ${next.chapter.title}');
           },
-          remove: (pos, data) {
-            final prev = currentChapters[pos];
+          remove: (prev) {
+            batch.delete(_database.chapters, prev);
             log.finer('remove chapter ${prev.chapterIndex} ${prev.title}');
             deleteCompanions.add(prev);
           },
-          change: (index, payload) {
-            final prev = currentChapters[index];
-            final next = payload as _ChapterWrapper;
-
+          replace: (prev, next) {
             final chapterCompanion =
                 sourceChapterIntoCompanion(next.chapter).copyWith(
               id: Value(prev.id),
@@ -199,7 +191,10 @@ class UpdateNovel with LoggerMixin {
             log.finer(
                 'replace chapter ${next.chapter.index} ${next.chapter.title}');
           },
-          move: (from, to) {},
+          keep: (prev, next) {
+            log.finer(
+                'keep chapter ${next.chapter.index} ${next.chapter.title}');
+          },
         );
       }
     });
@@ -214,53 +209,52 @@ class UpdateNovel with LoggerMixin {
           ..where((tbl) => tbl.novelId.equals(novelId)))
         .get();
 
-    final diffResult = calculateDiff(
-      IdentityDiff<MetaEntry, sources.MetaData, (String, String)>(
-        oldList: IdentityList(
-          items: currentMetaData,
-          identity: (item) => (item.name, item.value),
-        ),
-        newList: IdentityList(
-          items: metaData,
-          identity: (item) => (item.name, item.value),
-        ),
-        equality: (prev, next) =>
-            (prev.others == null
-                ? null
-                : Map<String, Object>.from(json.decode(prev.others!))) ==
-            next.others,
+    final diff = calculateDiff<MetaEntry, sources.MetaData>(
+      prev: IdentityList<MetaEntry, Tuple2>(
+        items: currentMetaData,
+        identity: (item) => Tuple2(item.name, item.value),
       ),
+      next: IdentityList<sources.MetaData, Tuple2>(
+        items: metaData,
+        identity: (item) => Tuple2(item.name, item.value),
+      ),
+      equality: (prev, next) =>
+          (prev.others == null
+              ? null
+              : Map<String, Object>.from(json.decode(prev.others!))) ==
+          next.others,
     );
 
     await _database.batch((batch) {
-      for (final change in diffResult.getUpdates(batch: false)) {
-        change.when(
-          insert: (pos, data) {
-            final next = metaData[pos];
-            final companion = sourceMetaDataIntoCompanion(next)
+      for (final change in diff) {
+        change.map(
+          insert: (state) {
+            final companion = sourceMetaDataIntoCompanion(state.data)
                 .copyWith(novelId: Value(novelId));
 
             batch.insert(_database.metaEntries, companion);
-            log.finer('insert meta entry ${next.name}: ${next.value}');
+            log.finer(
+                'insert meta entry ${state.data.name}: ${state.data.value}');
           },
-          remove: (pos, data) {
-            final prev = currentMetaData[pos];
-            batch.delete(_database.metaEntries, prev);
-            log.finer('remove meta entry ${prev.name}: ${prev.value}');
+          remove: (state) {
+            batch.delete(_database.metaEntries, state.data);
+            log.finer(
+                'remove meta entry ${state.data.name}: ${state.data.value}');
           },
-          change: (pos, payload) {
-            final prev = currentMetaData[pos];
-            final next = payload as sources.MetaData;
-
-            final companion = sourceMetaDataIntoCompanion(next).copyWith(
-              id: Value(prev.id),
+          replace: (state) {
+            final companion = sourceMetaDataIntoCompanion(state.next).copyWith(
+              id: Value(state.prev.id),
               novelId: Value(novelId),
             );
 
             batch.replace(_database.metaEntries, companion);
-            log.finer('replace meta entry ${next.name}: ${next.value}');
+            log.finer(
+                'replace meta entry ${state.next.name}: ${state.next.value}');
           },
-          move: (from, to) {},
+          keep: (state) {
+            log.finer(
+                'keep meta entry ${state.next.name}: ${state.next.value}');
+          },
         );
       }
     });

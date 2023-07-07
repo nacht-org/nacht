@@ -33,12 +33,7 @@ class Application with LoggerMixin {
     });
 
     _addLicenses();
-
-    final readerPreferences = _ref.read(readerPreferencesProvider);
-    GoogleFonts.pendingFonts([
-      readerPreferences.fontFamily.name
-    ]).then((value) => log.fine(
-        "Loaded initial reader font family '${readerPreferences.fontFamily.name}'"));
+    _preloadReaderFont();
 
     await Future.wait([
       _ref.read(updatesProvider.notifier).initialize(),
@@ -65,6 +60,19 @@ class Application with LoggerMixin {
     }
 
     return plugin;
+  }
+
+  Future<void> _preloadReaderFont() async {
+    final readerPreferences = _ref.read(readerPreferencesProvider);
+
+    final textTheme = readerPreferences.fontFamily.getTextTheme();
+    if (textTheme != null) {
+      await GoogleFonts.pendingFonts([textTheme]);
+      log.fine(
+          "Preloaded initial reader font family '${readerPreferences.fontFamily.name}'");
+    } else {
+      log.fine("No font preloaded, reader is using default font");
+    }
   }
 
   void _addLicenses() {

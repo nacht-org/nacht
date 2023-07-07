@@ -35,7 +35,7 @@ class ReaderTheme extends ConsumerWidget {
       ),
     ));
 
-    final textTheme = applyFont(theme.textTheme, data.fontFamily);
+    final textTheme = data.fontFamily.getTextTheme(theme.textTheme);
 
     return Theme(
       data: theme.copyWith(
@@ -46,7 +46,7 @@ class ReaderTheme extends ConsumerWidget {
               )
             : theme.scrollbarTheme,
         textTheme: data.colorMode.value != null
-            ? textTheme.apply(
+            ? textTheme?.apply(
                 displayColor: data.colorMode.value!.textColor,
                 bodyColor: data.colorMode.value!.textColor,
               )
@@ -54,18 +54,5 @@ class ReaderTheme extends ConsumerWidget {
       ),
       child: child,
     );
-  }
-
-  TextTheme applyFont(TextTheme textTheme, ReaderFontFamily fontFamily) {
-    switch (fontFamily) {
-      case ReaderFontFamily.basic:
-        break;
-      case ReaderFontFamily.lato:
-        return GoogleFonts.latoTextTheme(textTheme);
-      case ReaderFontFamily.openSans:
-        return GoogleFonts.openSansTextTheme(textTheme);
-    }
-
-    return textTheme;
   }
 }

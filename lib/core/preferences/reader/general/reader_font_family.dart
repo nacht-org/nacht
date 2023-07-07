@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nacht/nht/nht.dart';
 
 // TODO: test id value is unique
@@ -23,5 +25,18 @@ enum ReaderFontFamily implements EnumPreference {
     }
 
     throw Exception("error parsing reader.font-family");
+  }
+
+  TextTheme? getTextTheme([TextTheme? textTheme]) {
+    switch (this) {
+      case ReaderFontFamily.basic:
+        break;
+      case ReaderFontFamily.lato:
+        return GoogleFonts.latoTextTheme(textTheme);
+      case ReaderFontFamily.openSans:
+        return GoogleFonts.openSansTextTheme(textTheme);
+    }
+
+    return textTheme;
   }
 }

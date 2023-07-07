@@ -12,8 +12,7 @@ class SettingsSheet extends ConsumerWidget {
     final verticalNotifier =
         ref.watch(verticalReaderPreferencesProvider.notifier);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
+    return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

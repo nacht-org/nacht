@@ -27,11 +27,14 @@ class ReaderDrawer extends ConsumerWidget {
           automaticallyImplyLeading: false,
           title: const Text("Contents"),
         ),
-        body: DrawerBody(
-          reader: reader,
-          pageController: pageController,
-          itemScrollController: itemScrollController,
-          itemPositionsListener: itemPositionsListener,
+        body: SafeArea(
+          bottom: false,
+          child: DrawerBody(
+            reader: reader,
+            pageController: pageController,
+            itemScrollController: itemScrollController,
+            itemPositionsListener: itemPositionsListener,
+          ),
         ),
       ),
     );
@@ -60,6 +63,7 @@ class DrawerBody extends HookConsumerWidget {
 
     return Scrollbar(
       child: ScrollablePositionedList.builder(
+        padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(

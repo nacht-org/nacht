@@ -49,7 +49,13 @@ class HistoryPage extends HookConsumerWidget {
                 buildClearHistoryButton(context, historyNotifier),
               ],
             ),
-      body: const HistoryBody(),
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: const SafeArea(
+          child: HistoryBody(),
+        ),
+      ),
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
         child: CustomBottomBar(

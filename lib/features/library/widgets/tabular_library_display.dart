@@ -67,14 +67,19 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
               title: const Text('Library'),
               bottom: buildTabBar(),
             ),
-      body: TabBarView(
-        controller: tabController,
-        children: widget.categories
-            .map((category) => CategoryGrid(
+      body: SafeArea(
+        child: TabBarView(
+          controller: tabController,
+          children: widget.categories
+              .map(
+                (category) => CategoryGrid(
                   category: category,
-                ))
-            .toList(),
+                ),
+              )
+              .toList(),
+        ),
       ),
+      extendBody: true,
     );
   }
 

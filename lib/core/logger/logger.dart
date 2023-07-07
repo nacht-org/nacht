@@ -7,7 +7,7 @@ mixin LoggerMixin {
 
 void initializeLogger() {
   if (kDebugMode) {
-    Logger.root.level = Level.ALL; // defaults to Level.INFO
+    Logger.root.level = Level.FINE; // defaults to Level.INFO
     Logger.root.onRecord.listen((record) {
       // ignore: avoid_print
       print('${record.level.name}: ${record.time}: ${record.message}');

@@ -31,7 +31,11 @@ class DownloadPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: const DownloadView(),
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: const DownloadView(),
+      ),
       floatingActionButton: download.isRunning
           ? FloatingActionButton(
               onPressed: () => notifier.setRunning(false),

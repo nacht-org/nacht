@@ -36,9 +36,13 @@ class LibraryPage extends HookConsumerWidget {
     );
 
     return Scaffold(
-      body: view.map(
-        singular: (state) => SingularLibraryDisplay(category: state.category),
-        tabular: (state) => TabularLibraryDisplay(categories: state.categories),
+      body: MediaQuery.removePadding(
+        context: context,
+        child: view.map(
+          singular: (state) => SingularLibraryDisplay(category: state.category),
+          tabular: (state) =>
+              TabularLibraryDisplay(categories: state.categories),
+        ),
       ),
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,

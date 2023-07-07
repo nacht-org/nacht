@@ -70,8 +70,12 @@ class UpdatesPage extends HookConsumerWidget {
                 ),
               ],
             ),
-      body: UpdatesView(
-        refreshKey: refreshKey,
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: UpdatesView(
+          refreshKey: refreshKey,
+        ),
       ),
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
@@ -161,48 +165,51 @@ class UpdatesView extends HookConsumerWidget {
     final controller = useScrollController();
     final refreshNotifier = ref.watch(refreshProvider.notifier);
 
-    return RefreshIndicator(
-      onRefresh: refreshNotifier.refreshAll,
-      child: Scrollbar(
-        interactive: true,
-        controller: controller,
-        child: Consumer(
-          builder: (context, ref, child) {
-            final updatesEmpty =
-                ref.watch(updatesProvider.select((value) => value.isEmpty));
+    return SafeArea(
+      child: RefreshIndicator(
+        key: refreshKey,
+        onRefresh: refreshNotifier.refreshAll,
+        child: Scrollbar(
+          interactive: true,
+          controller: controller,
+          child: Consumer(
+            builder: (context, ref, child) {
+              final updatesEmpty =
+                  ref.watch(updatesProvider.select((value) => value.isEmpty));
 
-            return CustomScrollView(
-              controller: controller,
-              slivers: [
-                if (!updatesEmpty)
-                  Consumer(
-                    builder: (context, ref, child) {
-                      final updates = ref.watch(updatesProvider);
+              return CustomScrollView(
+                controller: controller,
+                slivers: [
+                  if (!updatesEmpty)
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final updates = ref.watch(updatesProvider);
 
-                      return SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => updates[index].when(
-                            date: (date) => RelativeDateTile(date: date),
-                            chapter: (novel, chapter) => ChapterUpdateTile(
-                              novel: novel,
-                              chapter: chapter,
+                        return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => updates[index].when(
+                              date: (date) => RelativeDateTile(date: date),
+                              chapter: (novel, chapter) => ChapterUpdateTile(
+                                novel: novel,
+                                chapter: chapter,
+                              ),
                             ),
+                            childCount: updates.length,
                           ),
-                          childCount: updates.length,
-                        ),
-                      );
-                    },
-                  ),
-                if (updatesEmpty)
-                  const SliverFillEmptyIndicator(
-                    child: Icon(Icons.update),
-                  ),
-                const SliverToBoxAdapter(
-                  child: NavigationOffset(),
-                )
-              ],
-            );
-          },
+                        );
+                      },
+                    ),
+                  if (updatesEmpty)
+                    const SliverFillEmptyIndicator(
+                      child: Icon(Icons.update),
+                    ),
+                  const SliverToBoxAdapter(
+                    child: NavigationOffset(),
+                  )
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

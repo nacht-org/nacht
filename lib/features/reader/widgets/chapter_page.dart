@@ -1,4 +1,3 @@
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fwfh_cached_network_image/fwfh_cached_network_image.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:nacht/shared/shared.dart';
@@ -79,12 +78,11 @@ class ChapterLoaded extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
+    usePostFrameCallback((timeStamp) {
       ref
           .read(historySessionProvider(novel.id).notifier)
           .record(novel, chapter);
-      return null;
-    }, []);
+    });
 
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
@@ -103,7 +101,9 @@ class ChapterLoaded extends HookConsumerWidget {
                 final preferences = ref.watch(readerPreferencesProvider);
 
                 return HtmlWidget(
-                  "<chapter-title></chapter-title>$content",
+                  "<chapter-title></chapter-title>"
+                  "$content"
+                  "<bottom-padding></bottom-padding>",
                   buildAsync: false,
                   enableCaching: true,
                   rebuildTriggers: [preferences],
@@ -123,6 +123,10 @@ class ChapterLoaded extends HookConsumerWidget {
                             );
                           },
                         ),
+                      );
+                    } else if (element.localName == 'bottom-padding') {
+                      return SizedBox(
+                        height: MediaQuery.paddingOf(context).bottom,
                       );
                     }
 

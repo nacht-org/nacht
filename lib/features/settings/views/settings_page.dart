@@ -17,19 +17,21 @@ class SettingsPage extends StatelessWidget {
       body: MediaQuery.removePadding(
         context: context,
         removeTop: true,
-        child: ListView(
-          children: const [
-            HeaderTile(
-              title: Text('Theme'),
-            ),
-            ThemeModeTile(),
-            Divider(),
-            HeaderTile(
-              title: Text("Timestamps"),
-            ),
-            RelativeTimestampsTile(),
-            DateFormatTile(),
-          ],
+        child: SafeArea(
+          child: ListView(
+            children: const [
+              HeaderTile(
+                title: Text('Theme'),
+              ),
+              ThemeModeTile(),
+              Divider(),
+              HeaderTile(
+                title: Text("Timestamps"),
+              ),
+              RelativeTimestampsTile(),
+              DateFormatTile(),
+            ],
+          ),
         ),
       ),
     );

@@ -41,7 +41,11 @@ class CategoryPage extends ConsumerWidget with LoggerMixin {
           : AppBar(
               title: const Text('Edit categories'),
             ),
-      body: const CategoryList(),
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: const CategoryList(),
+      ),
       floatingActionButton: !selection.active
           ? FloatingActionButton(
               onPressed: () => showDialog(

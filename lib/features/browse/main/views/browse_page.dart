@@ -47,15 +47,21 @@ class BrowsePage extends HookConsumerWidget {
                 ),
               ],
             ),
-      body: Scrollbar(
-        interactive: true,
-        controller: controller,
-        child: CustomScrollView(
-          controller: controller,
-          slivers: [
-            if (!search.active) const SliverCrawlerList(),
-            if (search.active) const SliverSearchResult(),
-          ],
+      body: MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: SafeArea(
+          child: Scrollbar(
+            interactive: true,
+            controller: controller,
+            child: CustomScrollView(
+              controller: controller,
+              slivers: [
+                if (!search.active) const SliverCrawlerList(),
+                if (search.active) const SliverSearchResult(),
+              ],
+            ),
+          ),
         ),
       ),
     );

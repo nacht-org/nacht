@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 extension StringExtension on String {
@@ -33,11 +34,13 @@ extension StringExtension on String {
 extension BrightnessExtension on Brightness {
   /// Returns the [SystemUiOverlayStyle] that would look best on [Brightness]
   SystemUiOverlayStyle getSystemUiOverlayStyle() {
-    switch (this) {
-      case Brightness.light:
-        return SystemUiOverlayStyle.dark;
-      case Brightness.dark:
-        return SystemUiOverlayStyle.light;
-    }
+    final brightness = switch (this) {
+      Brightness.light => SystemUiOverlayStyle.dark,
+      Brightness.dark => SystemUiOverlayStyle.light,
+    };
+
+    return brightness.copyWith(
+      systemNavigationBarColor: Colors.transparent,
+    );
   }
 }

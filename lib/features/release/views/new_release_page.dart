@@ -67,48 +67,50 @@ class NewReleasePage extends ConsumerWidget {
       ),
       bottomNavigationBar: Material(
         elevation: 4.0,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Divider(height: 0),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (downloadAssets != null)
-                    FilledButton(
-                      onPressed: () {
-                        AppUpdateDownloadTask.id.registerOnce(
-                          inputData: {
-                            'release': jsonEncode(ReleaseWithDownloadAssets(
-                              release: release,
-                              downloadAssets: downloadAssets,
-                            ).toJson()),
-                          },
-                        );
-                        context.router.pop();
-                      },
-                      child: const Text('Download'),
-                    )
-                  else if (release.htmlUrl != null)
-                    FilledButton(
-                      onPressed: () => launchUrl(
-                        Uri.parse(release.htmlUrl!),
-                        mode: LaunchMode.externalNonBrowserApplication,
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Divider(height: 0),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (downloadAssets != null)
+                      FilledButton(
+                        onPressed: () {
+                          AppUpdateDownloadTask.id.registerOnce(
+                            inputData: {
+                              'release': jsonEncode(ReleaseWithDownloadAssets(
+                                release: release,
+                                downloadAssets: downloadAssets,
+                              ).toJson()),
+                            },
+                          );
+                          context.router.pop();
+                        },
+                        child: const Text('Download'),
+                      )
+                    else if (release.htmlUrl != null)
+                      FilledButton(
+                        onPressed: () => launchUrl(
+                          Uri.parse(release.htmlUrl!),
+                          mode: LaunchMode.externalNonBrowserApplication,
+                        ),
+                        child: const Text('GitHub'),
                       ),
-                      child: const Text('GitHub'),
+                    OutlinedButton(
+                      onPressed: () => context.router.pop(),
+                      child: const Text('Not now'),
                     ),
-                  OutlinedButton(
-                    onPressed: () => context.router.pop(),
-                    child: const Text('Not now'),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

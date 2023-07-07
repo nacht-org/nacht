@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nacht/core/core.dart';
 
 class CustomBottomBar extends StatelessWidget {
   const CustomBottomBar({
@@ -21,9 +22,11 @@ class CustomBottomBar extends StatelessWidget {
           top: Radius.circular(16.0),
         ),
       ),
-      child: SizedBox(
-        height: 72.0,
-        child: child,
+      child: SafeArea(
+        child: SizedBox(
+          height: kBottomBarHeight,
+          child: child,
+        ),
       ),
     );
   }

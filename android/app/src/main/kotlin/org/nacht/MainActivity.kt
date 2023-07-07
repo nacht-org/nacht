@@ -15,6 +15,14 @@ class MainActivity: FlutterActivity() {
     private val CHANNEL = "org.nacht/install_apk"
     private val INSTALL_REQUEST_CODE = 100
     
+    override fun onPostResume() {
+        super.onPostResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setDecorFitsSystemWindows(false)
+            window.navigationBarColor = 0
+        }
+    }
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {

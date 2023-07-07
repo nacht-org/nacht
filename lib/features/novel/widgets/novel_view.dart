@@ -150,7 +150,12 @@ class NovelView extends HookConsumerWidget {
                 ),
               ),
               ChapterList(novel: novel),
-              const SliverFloatingActionPadding(),
+              SliverPadding(
+                padding: EdgeInsets.only(
+                  bottom:
+                      kBottomBarHeight + MediaQuery.paddingOf(context).bottom,
+                ),
+              )
             ],
           ),
         ),

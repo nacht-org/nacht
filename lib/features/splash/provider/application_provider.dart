@@ -36,9 +36,9 @@ class Application with LoggerMixin {
 
     final readerPreferences = _ref.read(readerPreferencesProvider);
     GoogleFonts.pendingFonts([
-      readerPreferences.fontFamily
+      readerPreferences.fontFamily.name
     ]).then((value) => log.fine(
-        "Loaded initial reader font family '${readerPreferences.fontFamily}'"));
+        "Loaded initial reader font family '${readerPreferences.fontFamily.name}'"));
 
     await Future.wait([
       _ref.read(updatesProvider.notifier).initialize(),

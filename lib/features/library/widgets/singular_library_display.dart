@@ -36,9 +36,12 @@ class SingularLibraryDisplay extends HookConsumerWidget {
           : AppBar(
               title: const Text('Library'),
             ),
-      body: CategoryGrid(
-        category: category,
+      body: SafeArea(
+        child: CategoryGrid(
+          category: category,
+        ),
       ),
+      extendBody: true,
     );
   }
 }

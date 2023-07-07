@@ -81,6 +81,7 @@ class ReaderView extends HookConsumerWidget {
           context: context,
           removeTop: true,
           child: SafeArea(
+            bottom: false,
             child: ReaderBody(
               reader: reader,
               readerNotifier: notifier,
@@ -94,7 +95,6 @@ class ReaderView extends HookConsumerWidget {
           itemScrollController: itemScrollController,
           itemPositionsListener: itemPositionsListener,
         ),
-        // FIXME: does not work as intended.
         extendBody: true,
         bottomNavigationBar: AnimatedBottomBar(
           controller: controller,

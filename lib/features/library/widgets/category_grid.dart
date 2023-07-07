@@ -34,7 +34,7 @@ class CategoryGrid extends ConsumerWidget {
       ],
       data: (data) => [
         SliverPadding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8.0),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {

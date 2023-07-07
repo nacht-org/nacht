@@ -27,7 +27,10 @@ class HomePage extends HookConsumerWidget {
         return Scaffold(
           body: FadeTransition(
             opacity: animation,
-            child: child,
+            child: MediaQuery(
+              data: MediaQuery.of(context),
+              child: child,
+            ),
           ),
           extendBody: true,
           bottomNavigationBar: HookConsumer(

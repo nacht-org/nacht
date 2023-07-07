@@ -97,6 +97,13 @@ class NovelNotifier extends StateNotifier<NovelData> with LoggerMixin {
         for (final entry in categories.entries) entry.key: !entry.value
       };
     } else {
+      // Don't show default in category list unless it is selected
+      categories = {
+        for (final entry in categories.entries)
+          if (entry.value == true || !entry.key.isDefault)
+            entry.key: entry.value
+      };
+
       categories =
           await _ref.read(dialogServiceProvider).show<CategorySelection?>(
                 child: SetCategoriesDialog(categories: categories),

@@ -54,6 +54,7 @@ class HistoryPage extends HookConsumerWidget {
           child: HistoryBody(),
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
         child: CustomBottomBar(

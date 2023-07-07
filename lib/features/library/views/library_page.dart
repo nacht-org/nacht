@@ -42,6 +42,7 @@ class LibraryPage extends HookConsumerWidget {
               TabularLibraryDisplay(categories: state.categories),
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
         child: CustomBottomBar(

@@ -15,6 +15,8 @@ class HistoryBody extends HookConsumerWidget {
     final controller = useScrollController();
     final isEmpty = ref.watch(historyProvider.select((value) => value.isEmpty));
 
+    print(MediaQuery.paddingOf(context));
+
     return Scrollbar(
       interactive: true,
       controller: controller,

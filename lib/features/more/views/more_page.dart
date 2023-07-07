@@ -43,6 +43,7 @@ class MorePage extends HookConsumerWidget {
           ),
         ),
       ),
+      extendBody: true,
     );
   }
 }

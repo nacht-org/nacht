@@ -25,6 +25,7 @@ class CategoryList extends HookConsumerWidget {
     return RefreshIndicator(
       onRefresh: categoriesNotifier.reload,
       child: ReorderableListView.builder(
+        padding: MediaQuery.paddingOf(context),
         itemBuilder: (context, index) {
           final category = categories[index];
 

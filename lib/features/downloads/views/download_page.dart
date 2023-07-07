@@ -65,6 +65,7 @@ class DownloadView extends ConsumerWidget {
     return Scrollbar(
       interactive: true,
       child: ListView.builder(
+        padding: MediaQuery.paddingOf(context),
         itemCount: downloads.order.length,
         itemBuilder: (context, index) {
           final download = downloads.data[downloads.order[index]];

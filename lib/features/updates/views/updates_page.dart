@@ -76,6 +76,7 @@ class UpdatesPage extends HookConsumerWidget {
           refreshKey: refreshKey,
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: ImplicitAnimatedBottomBar(
         visible: selectionActive,
         child: CustomBottomBar(

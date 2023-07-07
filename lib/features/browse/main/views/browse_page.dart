@@ -62,6 +62,7 @@ class BrowsePage extends HookConsumerWidget {
           ),
         ),
       ),
+      extendBody: true,
     );
   }
 }

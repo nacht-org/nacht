@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
@@ -8,7 +7,6 @@ import 'package:nacht/widgets/widgets.dart';
 import '../widgets/widgets.dart';
 import '../providers/providers.dart';
 
-@RoutePage()
 class HistoryPage extends HookConsumerWidget {
   const HistoryPage({Key? key}) : super(key: key);
 

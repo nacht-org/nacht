@@ -15,12 +15,6 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    BrowseRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const BrowsePage(),
-      );
-    },
     PopularRoute.name: (routeData) {
       final args = routeData.argsAs<PopularRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -31,12 +25,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    LibraryRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const LibraryPage(),
-      );
-    },
     NovelRoute.name: (routeData) {
       final args = routeData.argsAs<NovelRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -45,12 +33,6 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           type: args.type,
         ),
-      );
-    },
-    UpdatesRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const UpdatesPage(),
       );
     },
     ReaderRoute.name: (routeData) {
@@ -74,12 +56,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const HomePage(),
-      );
-    },
-    MoreRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MorePage(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -111,12 +87,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AboutPage(),
       );
     },
-    HistoryRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HistoryPage(),
-      );
-    },
     DownloadRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -134,20 +104,6 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
-}
-
-/// generated route for
-/// [BrowsePage]
-class BrowseRoute extends PageRouteInfo<void> {
-  const BrowseRoute({List<PageRouteInfo>? children})
-      : super(
-          BrowseRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'BrowseRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -189,20 +145,6 @@ class PopularRouteArgs {
 }
 
 /// generated route for
-/// [LibraryPage]
-class LibraryRoute extends PageRouteInfo<void> {
-  const LibraryRoute({List<PageRouteInfo>? children})
-      : super(
-          LibraryRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LibraryRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [NovelPage]
 class NovelRoute extends PageRouteInfo<NovelRouteArgs> {
   NovelRoute({
@@ -237,20 +179,6 @@ class NovelRouteArgs {
   String toString() {
     return 'NovelRouteArgs{key: $key, type: $type}';
   }
-}
-
-/// generated route for
-/// [UpdatesPage]
-class UpdatesRoute extends PageRouteInfo<void> {
-  const UpdatesRoute({List<PageRouteInfo>? children})
-      : super(
-          UpdatesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'UpdatesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -319,20 +247,6 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [MorePage]
-class MoreRoute extends PageRouteInfo<void> {
-  const MoreRoute({List<PageRouteInfo>? children})
-      : super(
-          MoreRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MoreRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -418,20 +332,6 @@ class AboutRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AboutRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [HistoryPage]
-class HistoryRoute extends PageRouteInfo<void> {
-  const HistoryRoute({List<PageRouteInfo>? children})
-      : super(
-          HistoryRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HistoryRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

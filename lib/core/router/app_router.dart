@@ -22,17 +22,7 @@ class AppRouter extends _$AppRouter {
   @override
   final List<AutoRoute> routes = [
     AutoRoute(path: '/', page: SplashRoute.page),
-    AutoRoute(
-      path: '/home',
-      page: HomeRoute.page,
-      children: [
-        AutoRoute(path: 'library', page: LibraryRoute.page),
-        AutoRoute(path: 'updates', page: UpdatesRoute.page),
-        AutoRoute(path: 'history', page: HistoryRoute.page),
-        AutoRoute(path: 'browse', page: BrowseRoute.page),
-        AutoRoute(path: 'more', page: MoreRoute.page),
-      ],
-    ),
+    AutoRoute(path: '/home', page: HomeRoute.page),
     AutoRoute(path: '/popular', page: PopularRoute.page),
     AutoRoute(path: '/novel', page: NovelRoute.page),
     AutoRoute(path: '/webview', page: WebViewRoute.page),

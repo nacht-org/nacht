@@ -1,15 +1,16 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:nacht/core/core.dart';
+
+import 'package:nacht/features/features.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 class Destination {
-  final PageRouteInfo<dynamic> route;
+  final DestinationBuilder builder;
   final String label;
   final Widget icon;
   final Widget selectedIcon;
 
   const Destination({
-    required this.route,
+    required this.builder,
     required this.label,
     required this.icon,
     required this.selectedIcon,
@@ -18,33 +19,39 @@ class Destination {
 
 const destinations = [
   Destination(
+    builder: libraryBuilder,
     label: 'Library',
     icon: Icon(Icons.library_books_outlined),
     selectedIcon: Icon(Icons.library_books),
-    route: LibraryRoute(),
   ),
   Destination(
+    builder: updatesBuilder,
     label: 'Updates',
     icon: Icon(Icons.update_outlined),
     selectedIcon: Icon(Icons.update),
-    route: UpdatesRoute(),
   ),
   Destination(
+    builder: historyBuilder,
     label: "History",
     icon: Icon(Icons.history_outlined),
     selectedIcon: Icon(Icons.history),
-    route: HistoryRoute(),
   ),
   Destination(
+    builder: browseBuilder,
     label: 'Browse',
     icon: Icon(Icons.explore_outlined),
     selectedIcon: Icon(Icons.explore),
-    route: BrowseRoute(),
   ),
   Destination(
+    builder: moreBuilder,
     label: 'More',
     icon: Icon(Icons.more_horiz_outlined),
     selectedIcon: Icon(Icons.more_horiz),
-    route: MoreRoute(),
   ),
 ];
+
+Widget libraryBuilder(BuildContext context) => const LibraryPage();
+Widget updatesBuilder(BuildContext context) => const UpdatesPage();
+Widget historyBuilder(BuildContext context) => const HistoryPage();
+Widget browseBuilder(BuildContext context) => const BrowsePage();
+Widget moreBuilder(BuildContext context) => const MorePage();

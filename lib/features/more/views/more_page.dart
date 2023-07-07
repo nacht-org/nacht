@@ -6,7 +6,6 @@ import 'package:nacht/features/features.dart';
 
 import '../widgets/widgets.dart';
 
-@RoutePage()
 class MorePage extends HookConsumerWidget {
   const MorePage({Key? key}) : super(key: key);
 

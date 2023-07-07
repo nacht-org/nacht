@@ -36,6 +36,7 @@ class HomePage extends HookConsumerWidget {
           bottomNavigationBar: HookConsumer(
             builder: (context, ref, child) {
               final tabsRouter = AutoTabsRouter.of(context);
+              print('build bottom nav');
 
               final controller = useAnimationController(
                 initialValue: 1,

@@ -68,9 +68,7 @@ class NachtApp extends HookConsumerWidget {
           title: 'nacht',
           theme: themeFromBrightness(brightness, colorScheme),
           debugShowCheckedModeBanner: false,
-          routeInformationParser: router.defaultRouteParser(),
-          routerDelegate: router.delegate(),
-          routeInformationProvider: router.routeInfoProvider(),
+          routerConfig: router.config(),
         );
       },
     );

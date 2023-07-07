@@ -23,16 +23,14 @@ class ActionBar extends StatelessWidget {
               builder: (context, ref, child) {
                 final favourite = ref.watch(
                     novelFamily(input).select((novel) => novel.favourite));
-
-                final icon =
-                    favourite ? Icons.favorite : Icons.favorite_outline;
-                final label = favourite ? 'In library' : 'Add to library';
+                final novelNotifier = ref.watch(novelFamily(input).notifier);
 
                 return ActionItem(
-                  icon: icon,
-                  label: label,
-                  onTap: () =>
-                      ref.read(novelFamily(input).notifier).toggleLibrary(),
+                  icon: favourite ? Icons.favorite : Icons.favorite_outline,
+                  label: favourite ? 'In library' : 'Add to library',
+                  onTap: () => novelNotifier.toggleLibrary(),
+                  onLongPress:
+                      favourite ? () => novelNotifier.editCategories() : null,
                   active: favourite,
                 );
               },
@@ -63,12 +61,14 @@ class ActionItem extends StatelessWidget {
     required this.onTap,
     required this.icon,
     required this.label,
+    this.onLongPress,
     this.active = false,
   }) : super(key: key);
 
   final IconData icon;
   final String label;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
   final bool active;
 
   @override
@@ -79,6 +79,7 @@ class ActionItem extends StatelessWidget {
 
     return TextButton(
       onPressed: onTap,
+      onLongPress: onLongPress,
       style: TextButton.styleFrom(
         foregroundColor: color,
       ),

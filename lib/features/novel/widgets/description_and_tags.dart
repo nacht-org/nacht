@@ -24,6 +24,7 @@ class DescriptionAndTags extends HookWidget {
 
     return GestureDetector(
       onTap: () => expanded.value = !expanded.value,
+      behavior: HitTestBehavior.translucent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

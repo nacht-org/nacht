@@ -3,7 +3,7 @@ description: Free and open source multi-platform novel reader.
 
 publish_to: "none"
 
-version: 0.2.2+11
+version: 0.2.3+12
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

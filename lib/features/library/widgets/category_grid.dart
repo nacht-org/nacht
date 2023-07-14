@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -38,13 +39,7 @@ class CategoryGrid extends ConsumerWidget {
       },
       data: (data) {
         if (data.isEmpty) {
-          return const CenterChildScrollView(
-            padding: EdgeInsets.only(bottom: 80.0),
-            child: EmptyIndicator(
-              icon: Icon(Icons.category),
-              label: Text('Category is empty'),
-            ),
-          );
+          return buildEmptyIndicator(ref);
         }
 
         return GridView.builder(
@@ -85,6 +80,30 @@ class CategoryGrid extends ConsumerWidget {
           itemCount: data.length,
         );
       },
+    );
+  }
+
+  CenterChildScrollView buildEmptyIndicator(WidgetRef ref) {
+    final actions = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton.icon(
+          onPressed: () => ref
+              .watch(homeIndexProvider.notifier)
+              .setDestination(Destinations.browse),
+          icon: const Icon(Icons.explore),
+          label: const Text('Browse'),
+        ),
+      ],
+    );
+
+    return CenterChildScrollView(
+      padding: const EdgeInsets.only(bottom: 80.0),
+      child: EmptyIndicator(
+        icon: const Icon(Icons.category),
+        label: const Text('Category is empty'),
+        child: category.isDefault ? actions : null,
+      ),
     );
   }
 }

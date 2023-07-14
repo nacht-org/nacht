@@ -16,7 +16,9 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const initialIndex = 0;
-    final currentIndex = useState(0);
+
+    final homeIndex = ref.watch(homeIndexProvider);
+    final homeIndexNotifier = ref.watch(homeIndexProvider.notifier);
 
     usePostFrameCallback((timeStamp) {
       ref.read(applicationLoadedProvider).init();
@@ -26,15 +28,15 @@ class HomePage extends HookConsumerWidget {
       onWillPop: () async {
         final hasModalRoute =
             ModalRoute.of(context)?.willHandlePopInternally ?? false;
-        if (!hasModalRoute && currentIndex.value != initialIndex) {
-          currentIndex.value = initialIndex;
+        if (!hasModalRoute && homeIndex != initialIndex) {
+          homeIndexNotifier.setIndex(initialIndex);
           return false;
         }
         return true;
       },
       child: LazyIndexedStack(
         initialIndex: initialIndex,
-        currentIndex: currentIndex.value,
+        currentIndex: homeIndex,
         destinations: destinations.map((item) => item.builder).toList(),
         duration: kShortAnimationDuration,
         builder: (context, child, animation) {
@@ -69,9 +71,8 @@ class HomePage extends HookConsumerWidget {
                 return AnimatedBottomBar(
                   controller: controller,
                   child: NavigationBar(
-                    selectedIndex: currentIndex.value,
-                    onDestinationSelected: (index) =>
-                        currentIndex.value = index,
+                    selectedIndex: homeIndex,
+                    onDestinationSelected: homeIndexNotifier.setIndex,
                     destinations: List.generate(destinations.length, (index) {
                       final destination = destinations[index];
                       return NavigationDestination(

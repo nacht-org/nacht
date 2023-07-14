@@ -17,37 +17,49 @@ class Destination {
   });
 }
 
-const destinations = [
-  Destination(
+abstract class Destinations {
+  static const library = Destination(
     builder: libraryBuilder,
     label: 'Library',
     icon: Icon(Icons.library_books_outlined),
     selectedIcon: Icon(Icons.library_books),
-  ),
-  Destination(
+  );
+
+  static const updates = Destination(
     builder: updatesBuilder,
     label: 'Updates',
     icon: Icon(Icons.update_outlined),
     selectedIcon: Icon(Icons.update),
-  ),
-  Destination(
+  );
+
+  static const history = Destination(
     builder: historyBuilder,
     label: "History",
     icon: Icon(Icons.history_outlined),
     selectedIcon: Icon(Icons.history),
-  ),
-  Destination(
+  );
+
+  static const browse = Destination(
     builder: browseBuilder,
     label: 'Browse',
     icon: Icon(Icons.explore_outlined),
     selectedIcon: Icon(Icons.explore),
-  ),
-  Destination(
+  );
+
+  static const more = Destination(
     builder: moreBuilder,
     label: 'More',
     icon: Icon(Icons.more_horiz_outlined),
     selectedIcon: Icon(Icons.more_horiz),
-  ),
+  );
+}
+
+const destinations = [
+  Destinations.library,
+  Destinations.updates,
+  Destinations.history,
+  Destinations.browse,
+  Destinations.more,
 ];
 
 Widget libraryBuilder(BuildContext context) => const LibraryPage();

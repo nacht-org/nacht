@@ -15,20 +15,25 @@ class HistoryBody extends HookConsumerWidget {
     final controller = useScrollController();
     final isEmpty = ref.watch(historyProvider.select((value) => value.isEmpty));
 
-    return Scrollbar(
-      interactive: true,
-      controller: controller,
-      child: CustomScrollView(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 80.0),
+      child: Scrollbar(
+        interactive: true,
         controller: controller,
-        slivers: [
-          if (!isEmpty)
-            Consumer(
-              builder: (context, ref, child) {
-                final entries = ref.watch(historyEntriesProvider);
+        child: isEmpty
+            ? const CenterChildScrollView(
+                child: EmptyIndicator(
+                  icon: Icon(Icons.history),
+                  label: Text('No history'),
+                ),
+              )
+            : Consumer(
+                builder: (context, ref, child) {
+                  final entries = ref.watch(historyEntriesProvider);
 
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
+                  return ListView.builder(
+                    itemCount: entries.length,
+                    itemBuilder: (context, index) {
                       final entry = entries[index];
 
                       return entry.when(
@@ -36,20 +41,9 @@ class HistoryBody extends HookConsumerWidget {
                         history: (history) => HistoryTile(history: history),
                       );
                     },
-                    childCount: entries.length,
-                  ),
-                );
-              },
-            ),
-          if (isEmpty)
-            const SliverFillEmptyIndicator(
-              icon: Icon(Icons.history),
-              label: Text('No history'),
-            ),
-          const SliverToBoxAdapter(
-            child: NavigationOffset(),
-          ),
-        ],
+                  );
+                },
+              ),
       ),
     );
   }

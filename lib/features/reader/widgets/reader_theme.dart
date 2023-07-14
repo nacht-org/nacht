@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +27,7 @@ class ReaderTheme extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final brightness = ref.watch(brightnessProvider);
     final data = ref.watch(readerPreferencesProvider.select(
       (value) => ReaderThemeData(
         colorMode: value.colorMode,
@@ -34,24 +35,44 @@ class ReaderTheme extends ConsumerWidget {
       ),
     ));
 
-    final textTheme = data.fontFamily.getTextTheme(theme.textTheme);
+    return DynamicColorBuilder(
+      builder: (lightDynamic, darkDynamic) {
+        ColorScheme? colorScheme;
+        switch (data.colorMode.value?.brightness ?? brightness) {
+          case Brightness.dark:
+            colorScheme = darkDynamic;
+            break;
+          case Brightness.light:
+            colorScheme = lightDynamic;
+            break;
+        }
 
-    return Theme(
-      data: theme.copyWith(
-        scrollbarTheme: data.colorMode.value != null
-            ? theme.scrollbarTheme.copyWith(
-                thumbColor:
-                    MaterialStateProperty.all(data.colorMode.value!.textColor),
-              )
-            : theme.scrollbarTheme,
-        textTheme: data.colorMode.value != null
-            ? textTheme?.apply(
-                displayColor: data.colorMode.value!.textColor,
-                bodyColor: data.colorMode.value!.textColor,
-              )
-            : textTheme,
-      ),
-      child: child,
+        final theme = ThemeData(
+          brightness: data.colorMode.value?.brightness ?? brightness,
+          colorScheme: colorScheme,
+          useMaterial3: true,
+        );
+
+        final textTheme = data.fontFamily.getTextTheme(theme.textTheme);
+
+        return Theme(
+          data: theme.copyWith(
+            scrollbarTheme: data.colorMode.value != null
+                ? theme.scrollbarTheme.copyWith(
+                    thumbColor: MaterialStateProperty.all(
+                        data.colorMode.value!.textColor),
+                  )
+                : theme.scrollbarTheme,
+            textTheme: data.colorMode.value != null
+                ? textTheme?.apply(
+                    displayColor: data.colorMode.value!.textColor,
+                    bodyColor: data.colorMode.value!.textColor,
+                  )
+                : textTheme,
+          ),
+          child: child,
+        );
+      },
     );
   }
 }

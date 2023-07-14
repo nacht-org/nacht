@@ -41,22 +41,24 @@ class ChapterPage extends HookConsumerWidget {
       notifier.reload(crawler);
     });
 
-    return page.content.when(
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      error: (message) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: LoadingError(
-          message: Text(message),
-          onRetry: () => notifier.reload(crawler),
+    return ReaderTheme(
+      child: page.content.when(
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
         ),
-      ),
-      data: (content) => ChapterLoaded(
-        novel: novel,
-        index: index,
-        chapter: data,
-        content: content,
+        error: (message) => Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: LoadingError(
+            message: Text(message),
+            onRetry: () => notifier.reload(crawler),
+          ),
+        ),
+        data: (content) => ChapterLoaded(
+          novel: novel,
+          index: index,
+          chapter: data,
+          content: content,
+        ),
       ),
     );
   }
@@ -91,60 +93,58 @@ class ChapterLoaded extends HookConsumerWidget {
         }
         return false;
       },
-      child: ReaderTheme(
-        child: ReaderScrollbar(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0).copyWith(top: 0),
-            child: Consumer(
-              builder: (context, ref, child) {
-                final theme = Theme.of(context);
-                final preferences = ref.watch(readerPreferencesProvider);
+      child: ReaderScrollbar(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0).copyWith(top: 0),
+          child: Consumer(
+            builder: (context, ref, child) {
+              final theme = Theme.of(context);
+              final preferences = ref.watch(readerPreferencesProvider);
 
-                return HtmlWidget(
-                  "<chapter-title></chapter-title>"
-                  "$content"
-                  "<bottom-padding></bottom-padding>",
-                  buildAsync: false,
-                  enableCaching: true,
-                  rebuildTriggers: [preferences],
-                  customWidgetBuilder: (element) {
-                    if (element.localName == 'chapter-title') {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Builder(
-                          builder: (context) {
-                            final theme = Theme.of(context);
+              return HtmlWidget(
+                "<chapter-title></chapter-title>"
+                "$content"
+                "<bottom-padding></bottom-padding>",
+                buildAsync: false,
+                enableCaching: true,
+                rebuildTriggers: [preferences],
+                customWidgetBuilder: (element) {
+                  if (element.localName == 'chapter-title') {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Builder(
+                        builder: (context) {
+                          final theme = Theme.of(context);
 
-                            return Text(
-                              chapter.title,
-                              style: theme.textTheme.displaySmall?.copyWith(
-                                color: theme.textTheme.labelLarge?.color,
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    } else if (element.localName == 'bottom-padding') {
-                      return SizedBox(
-                        height: MediaQuery.paddingOf(context).bottom,
-                      );
-                    }
+                          return Text(
+                            chapter.title,
+                            style: theme.textTheme.displaySmall?.copyWith(
+                              color: theme.textTheme.labelLarge?.color,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  } else if (element.localName == 'bottom-padding') {
+                    return SizedBox(
+                      height: MediaQuery.paddingOf(context).bottom,
+                    );
+                  }
 
-                    return null;
-                  },
-                  factoryBuilder: () => ReaderWidgetFactory(),
-                  textStyle: theme.textTheme.bodyMedium?.copyWith(
-                    fontSize: preferences.fontSize,
-                    height: preferences.lineHeight,
-                  ),
-                  renderMode: RenderMode.column,
-                  // renderMode: const ListViewMode(
-                  //   padding:
-                  //       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                  // ),
-                );
-              },
-            ),
+                  return null;
+                },
+                factoryBuilder: () => ReaderWidgetFactory(),
+                textStyle: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: preferences.fontSize,
+                  height: preferences.lineHeight,
+                ),
+                renderMode: RenderMode.column,
+                // renderMode: const ListViewMode(
+                //   padding:
+                //       EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                // ),
+              );
+            },
           ),
         ),
       ),

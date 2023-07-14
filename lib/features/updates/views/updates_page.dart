@@ -170,52 +170,50 @@ class UpdatesView extends HookConsumerWidget {
     );
 
     return SafeArea(
-      child: RefreshIndicator(
-        key: refreshKey,
-        onRefresh: refreshNotifier.refreshAll,
-        notificationPredicate:
-            selectionActive ? (_) => false : defaultScrollNotificationPredicate,
-        child: Scrollbar(
-          interactive: true,
-          controller: controller,
-          child: Consumer(
-            builder: (context, ref, child) {
-              final updatesEmpty =
-                  ref.watch(updatesProvider.select((value) => value.isEmpty));
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 80.0),
+        child: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: refreshNotifier.refreshAll,
+          notificationPredicate: selectionActive
+              ? (_) => false
+              : defaultScrollNotificationPredicate,
+          child: Scrollbar(
+            interactive: true,
+            controller: controller,
+            child: Consumer(
+              builder: (context, ref, child) {
+                final updatesEmpty =
+                    ref.watch(updatesProvider.select((value) => value.isEmpty));
 
-              return CustomScrollView(
-                controller: controller,
-                slivers: [
-                  if (!updatesEmpty)
-                    Consumer(
-                      builder: (context, ref, child) {
-                        final updates = ref.watch(updatesProvider);
-
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) => updates[index].when(
-                              date: (date) => RelativeDateTile(date: date),
-                              chapter: (novel, chapter) => ChapterUpdateTile(
-                                novel: novel,
-                                chapter: chapter,
-                              ),
-                            ),
-                            childCount: updates.length,
-                          ),
-                        );
-                      },
-                    ),
-                  if (updatesEmpty)
-                    const SliverFillEmptyIndicator(
+                if (updatesEmpty) {
+                  return const CenterChildScrollView(
+                    child: EmptyIndicator(
                       icon: Icon(Icons.update),
                       label: Text('No updates'),
                     ),
-                  const SliverToBoxAdapter(
-                    child: NavigationOffset(),
-                  )
-                ],
-              );
-            },
+                  );
+                }
+
+                return Consumer(
+                  builder: (context, ref, child) {
+                    final updates = ref.watch(updatesProvider);
+
+                    return ListView.builder(
+                      controller: controller,
+                      itemCount: updates.length,
+                      itemBuilder: (context, index) => updates[index].when(
+                        date: (date) => RelativeDateTile(date: date),
+                        chapter: (novel, chapter) => ChapterUpdateTile(
+                          novel: novel,
+                          chapter: chapter,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),

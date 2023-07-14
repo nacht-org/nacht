@@ -4,17 +4,20 @@ import 'package:nacht/widgets/widgets.dart';
 class SliverFillEmptyIndicator extends StatelessWidget {
   const SliverFillEmptyIndicator({
     Key? key,
-    required this.child,
+    required this.icon,
+    required this.label,
   }) : super(key: key);
 
-  final Widget child;
+  final Widget icon;
+  final Widget label;
 
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
       hasScrollBody: false,
       child: EmptyIndicator(
-        child: child,
+        icon: icon,
+        label: label,
       ),
     );
   }

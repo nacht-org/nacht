@@ -33,46 +33,52 @@ class CategoryGrid extends ConsumerWidget {
         )
       ],
       data: (data) => [
-        SliverPadding(
-          padding: const EdgeInsets.all(8.0),
-          sliver: SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final novel = data[index];
+        if (data.isEmpty)
+          const SliverFillEmptyIndicator(
+            icon: Icon(Icons.category),
+            label: Text('Category is empty'),
+          )
+        else
+          SliverPadding(
+            padding: const EdgeInsets.all(8.0),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final novel = data[index];
 
-                return Consumer(
-                  builder: (context, ref, child) {
-                    final selected = ref.watch(
-                      librarySelectionProvider.select(
-                          (selection) => selection.selected.contains(novel.id)),
-                    );
+                  return Consumer(
+                    builder: (context, ref, child) {
+                      final selected = ref.watch(
+                        librarySelectionProvider.select((selection) =>
+                            selection.selected.contains(novel.id)),
+                      );
 
-                    void select() => selectionNotifier.toggle(novel.id);
+                      void select() => selectionNotifier.toggle(novel.id);
 
-                    return NovelGridCard(
-                      title: novel.title,
-                      coverUrl: novel.coverUrl,
-                      onTap: selectionActive
-                          ? select
-                          : () => context.router.push(NovelRoute(
-                                type: NovelType.novel(novel),
-                              )),
-                      onLongPress: selectionActive ? null : select,
-                      selected: selected,
-                    );
-                  },
-                );
-              },
-              childCount: data.length,
+                      return NovelGridCard(
+                        title: novel.title,
+                        coverUrl: novel.coverUrl,
+                        onTap: selectionActive
+                            ? select
+                            : () => context.router.push(NovelRoute(
+                                  type: NovelType.novel(novel),
+                                )),
+                        onLongPress: selectionActive ? null : select,
+                        selected: selected,
+                      );
+                    },
+                  );
+                },
+                childCount: data.length,
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
+                childAspectRatio: 2 / 3,
+              ),
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-              childAspectRatio: 2 / 3,
-            ),
-          ),
-        )
+          )
       ],
     );
 

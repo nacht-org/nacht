@@ -58,7 +58,8 @@ class DownloadView extends ConsumerWidget {
 
     if (downloads.order.isEmpty) {
       return const EmptyIndicator(
-        child: Icon(Icons.download),
+        icon: Icon(Icons.download),
+        label: Text('No downloads'),
       );
     }
 

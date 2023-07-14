@@ -207,7 +207,8 @@ class UpdatesView extends HookConsumerWidget {
                     ),
                   if (updatesEmpty)
                     const SliverFillEmptyIndicator(
-                      child: Icon(Icons.update),
+                      icon: Icon(Icons.update),
+                      label: Text('No updates'),
                     ),
                   const SliverToBoxAdapter(
                     child: NavigationOffset(),

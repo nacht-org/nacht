@@ -15,8 +15,6 @@ class HistoryBody extends HookConsumerWidget {
     final controller = useScrollController();
     final isEmpty = ref.watch(historyProvider.select((value) => value.isEmpty));
 
-    print(MediaQuery.paddingOf(context));
-
     return Scrollbar(
       interactive: true,
       controller: controller,
@@ -45,7 +43,8 @@ class HistoryBody extends HookConsumerWidget {
             ),
           if (isEmpty)
             const SliverFillEmptyIndicator(
-              child: Icon(Icons.history),
+              icon: Icon(Icons.history),
+              label: Text('No history'),
             ),
           const SliverToBoxAdapter(
             child: NavigationOffset(),

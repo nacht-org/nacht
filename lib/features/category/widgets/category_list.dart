@@ -18,7 +18,8 @@ class CategoryList extends HookConsumerWidget {
 
     if (categories.isEmpty) {
       return const EmptyIndicator(
-        child: Icon(Icons.category),
+        icon: Icon(Icons.category),
+        label: Text('No categories found'),
       );
     }
 

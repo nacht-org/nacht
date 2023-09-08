@@ -14,3 +14,5 @@ export 'history/history.dart';
 export 'downloads/downloads.dart';
 export 'release/release.dart';
 export 'asset/asset.dart';
+export 'network/network.dart';
+export 'selection/selection.dart';

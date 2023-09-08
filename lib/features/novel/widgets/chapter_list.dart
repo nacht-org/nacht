@@ -70,6 +70,7 @@ class ChapterList extends ConsumerWidget {
                                 chapter: data,
                               ),
                             ),
+                    contentPadding: kTrailingListTilePadding,
                     onLongPress: selectionActive ? null : select,
                     selected: selected,
                   ),

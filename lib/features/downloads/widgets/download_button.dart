@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/core/nacht_theme/nacht_theme.dart';
 import 'package:nacht/features/features.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 class DownloadButton extends ConsumerWidget {
   const DownloadButton({
@@ -74,9 +72,6 @@ class _PendingDownload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final iconTheme = IconTheme.of(context);
-
     return PopupMenuButton(
       itemBuilder: (context) => [
         PopupMenuItem(
@@ -84,14 +79,8 @@ class _PendingDownload extends StatelessWidget {
           child: const Text('Cancel'),
         ),
       ],
-      icon: MirrorAnimationBuilder<Color?>(
-        tween: ColorTween(
-            begin: iconTheme.color, end: theme.colorScheme.onSurface),
-        duration: kLongAnimationDuration,
-        builder: (context, value, child) {
-          return _DownloadIndicator(color: value);
-        },
-        curve: Curves.easeInOutSine,
+      icon: const _DownloadIndicator(
+        progress: null,
       ),
     );
   }
@@ -106,8 +95,6 @@ class _ProgressDownload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return PopupMenuButton(
       itemBuilder: (context) => [
         PopupMenuItem(
@@ -115,9 +102,8 @@ class _ProgressDownload extends StatelessWidget {
           child: const Text('Cancel'),
         ),
       ],
-      icon: _DownloadIndicator(
-        color: theme.colorScheme.onSurface,
-        progress: null,
+      icon: const _DownloadIndicator(
+        progress: 0.5,
       ),
     );
   }
@@ -136,6 +122,7 @@ class _DownloadDone extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final delete = ref.watch(deleteDownloadedChapter);
+    final iconTheme = IconTheme.of(context);
 
     return PopupMenuButton(
       itemBuilder: (context) => [
@@ -149,7 +136,7 @@ class _DownloadDone extends ConsumerWidget {
         width: 24.0,
         height: 24.0,
         decoration: BoxDecoration(
-          color: theme.colorScheme.onSurface,
+          color: iconTheme.color ?? theme.colorScheme.onSurface,
           shape: BoxShape.circle,
         ),
         child: Center(

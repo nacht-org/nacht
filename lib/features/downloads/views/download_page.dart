@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../providers/providers.dart';
@@ -76,6 +77,7 @@ class DownloadView extends ConsumerWidget {
           }
 
           return ListTile(
+            key: Key('download.${download.id}'),
             title: Text(
               download.related.novelTitle,
               maxLines: 1,
@@ -90,6 +92,7 @@ class DownloadView extends ConsumerWidget {
               related: download.related,
               assetId: null,
             ),
+            contentPadding: kTrailingListTilePadding,
           );
         },
       ),

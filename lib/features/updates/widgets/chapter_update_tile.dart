@@ -56,6 +56,7 @@ class ChapterUpdateTile extends ConsumerWidget {
                   ),
                 );
               },
+        contentPadding: kTrailingListTilePadding,
         onLongPress: selectionActive ? null : select,
         selected: selected,
       ),

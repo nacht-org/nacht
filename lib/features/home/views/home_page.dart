@@ -72,7 +72,13 @@ class HomePage extends HookConsumerWidget {
                   controller: controller,
                   child: NavigationBar(
                     selectedIndex: homeIndex,
-                    onDestinationSelected: homeIndexNotifier.setIndex,
+                    onDestinationSelected: (index) {
+                      if (homeIndex == index) {
+                        destinations[index].onTap?.call(ref);
+                      } else {
+                        homeIndexNotifier.setIndex(index);
+                      }
+                    },
                     destinations: List.generate(destinations.length, (index) {
                       final destination = destinations[index];
                       return NavigationDestination(

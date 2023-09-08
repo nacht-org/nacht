@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/core/core.dart';
 
 import 'package:nacht/features/features.dart';
 import 'package:nacht/widgets/widgets.dart';
+
+typedef DestinationCallback = void Function(WidgetRef ref);
 
 class Destination {
   final DestinationBuilder builder;
   final String label;
   final Widget icon;
   final Widget selectedIcon;
+  final DestinationCallback? onTap;
 
   const Destination({
     required this.builder,
     required this.label,
     required this.icon,
     required this.selectedIcon,
+    this.onTap,
   });
 }
 
@@ -30,7 +36,11 @@ abstract class Destinations {
     label: 'Updates',
     icon: Icon(Icons.update_outlined),
     selectedIcon: Icon(Icons.update),
+    onTap: updatesTap,
   );
+
+  static void updatesTap(WidgetRef ref) =>
+      ref.read(routerProvider).push(const DownloadRoute());
 
   static const history = Destination(
     builder: historyBuilder,

@@ -17,7 +17,7 @@ class NotificationService {
   FlutterLocalNotificationsPlugin plugin;
 
   NotificationHandle getHandle({int? id}) {
-    return NotificationHandle(plugin, UniqueKey().hashCode);
+    return NotificationHandle(plugin, id ?? UniqueKey().hashCode);
   }
 
   Future<void> show(Notification notification) async {

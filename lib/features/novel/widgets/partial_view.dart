@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 

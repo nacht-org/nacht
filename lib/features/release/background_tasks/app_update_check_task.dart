@@ -1,8 +1,7 @@
 import 'package:nacht/core/core.dart';
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 import 'package:riverpod/riverpod.dart';
 
-import '../notifications/notifications.dart';
 import '../services/services.dart';
 
 class AppUpdateCheckTask extends BackgroundTask<void> with LoggerMixin {

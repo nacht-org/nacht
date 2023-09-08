@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;

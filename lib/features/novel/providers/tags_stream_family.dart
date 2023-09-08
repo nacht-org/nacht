@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/shared.dart';
 
+import '../models/models.dart';
 import '../services/services.dart';
 
 final tagsStreamFamily = StreamProvider.autoDispose

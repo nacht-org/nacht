@@ -1,1 +1,13 @@
 export 'views/novel_page.dart';
+export 'models/novel_data.dart';
+export 'models/chapter_data.dart';
+export 'models/volume_data.dart';
+export 'providers/refresh_provider.dart';
+export 'services/set_read_at.dart';
+export 'widgets/novel_avatar.dart';
+export 'providers/chapter_list_family.dart';
+export 'providers/chapter_list_entries_family.dart';
+export 'services/fetch_chapter_content.dart';
+export 'models/novel_type.dart';
+export 'models/partial_novel_data.dart';
+export 'models/meta_entry_data.dart';

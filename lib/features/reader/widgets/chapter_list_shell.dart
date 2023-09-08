@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/novel/providers/providers.dart';
+import 'package:nacht/features/features.dart';
 
 /// Ensure that chapter list is cached until this widget is dropped.
 class ChapterListShell extends ConsumerWidget {

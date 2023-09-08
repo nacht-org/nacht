@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/features/reader/models/models.dart';
-import 'package:nacht/shared/novel/providers/chapter_list_family.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ReaderDrawer extends ConsumerWidget {

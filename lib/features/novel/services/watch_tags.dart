@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/database/database.dart';
+
+import '../models/models.dart';
 
 final watchTagsProvider = Provider<WatchTags>(
   (ref) => WatchTags(

@@ -1,1 +1,16 @@
 export 'watch_tags.dart';
+export 'add_chapter_updates.dart';
+export 'change_novel_categories.dart';
+export 'fetch_chapter_content.dart';
+export 'fetch_novel.dart';
+export 'get_first_unread_chapter.dart';
+export 'get_novel_by_id.dart';
+export 'get_novel_by_url.dart';
+export 'get_novel_categories.dart';
+export 'get_novel_category_map.dart';
+export 'parse_novel_query.dart';
+export 'set_read_at.dart';
+export 'update_novel.dart';
+export 'refresh_novels_provider.dart';
+export 'watch_chapter_list.dart';
+export 'updatable_novels.dart';

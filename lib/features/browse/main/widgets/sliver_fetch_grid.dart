@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/browse/main/providers/fetch_local_provider.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/nht/nht.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:flutter/material.dart';

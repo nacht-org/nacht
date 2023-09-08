@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 
 part 'fetch_state.freezed.dart';
 

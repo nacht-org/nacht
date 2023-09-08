@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 
 import '../services/watch_category_novels.dart';
 

@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 final fetchSearchProvider = Provider<FetchSearch>(

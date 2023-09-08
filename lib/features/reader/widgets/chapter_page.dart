@@ -1,7 +1,6 @@
 import 'package:fwfh_cached_network_image/fwfh_cached_network_image.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';

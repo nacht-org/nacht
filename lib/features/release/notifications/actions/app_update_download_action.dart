@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 
 import '../../background_tasks/background_tasks.dart';
 

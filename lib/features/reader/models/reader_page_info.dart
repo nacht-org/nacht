@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/features/features.dart';
-import 'package:nacht/shared/shared.dart';
 
 part 'reader_page_info.freezed.dart';
 

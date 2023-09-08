@@ -1,6 +1,6 @@
 import 'package:nacht/core/core.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/features/release/services/services.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:riverpod/riverpod.dart';
 
 final checkNewReleaseAndRouteProvider = Provider.autoDispose(

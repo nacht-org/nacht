@@ -15,13 +15,37 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    PopularRoute.name: (routeData) {
-      final args = routeData.argsAs<PopularRouteArgs>();
+    AboutRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: PopularPage(
+        child: const AboutPage(),
+      );
+    },
+    CategoryRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CategoryPage(),
+      );
+    },
+    DownloadRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const DownloadPage(),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HomePage(),
+      );
+    },
+    NewReleaseRoute.name: (routeData) {
+      final args = routeData.argsAs<NewReleaseRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: NewReleasePage(
           key: args.key,
-          crawlerFactory: args.crawlerFactory,
+          release: args.release,
         ),
       );
     },
@@ -32,6 +56,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: NovelPage(
           key: args.key,
           type: args.type,
+        ),
+      );
+    },
+    PopularRoute.name: (routeData) {
+      final args = routeData.argsAs<PopularRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PopularPage(
+          key: args.key,
+          crawlerFactory: args.crawlerFactory,
         ),
       );
     },
@@ -46,16 +80,10 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    CategoryRoute.name: (routeData) {
+    SettingsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CategoryPage(),
-      );
-    },
-    HomeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HomePage(),
+        child: const SettingsPage(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -75,72 +103,100 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    SettingsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SettingsPage(),
-      );
-    },
-    AboutRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AboutPage(),
-      );
-    },
-    DownloadRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const DownloadPage(),
-      );
-    },
-    NewReleaseRoute.name: (routeData) {
-      final args = routeData.argsAs<NewReleaseRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: NewReleasePage(
-          key: args.key,
-          release: args.release,
-        ),
-      );
-    },
   };
 }
 
 /// generated route for
-/// [PopularPage]
-class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
-  PopularRoute({
+/// [AboutPage]
+class AboutRoute extends PageRouteInfo<void> {
+  const AboutRoute({List<PageRouteInfo>? children})
+      : super(
+          AboutRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AboutRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CategoryPage]
+class CategoryRoute extends PageRouteInfo<void> {
+  const CategoryRoute({List<PageRouteInfo>? children})
+      : super(
+          CategoryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CategoryRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DownloadPage]
+class DownloadRoute extends PageRouteInfo<void> {
+  const DownloadRoute({List<PageRouteInfo>? children})
+      : super(
+          DownloadRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DownloadRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NewReleasePage]
+class NewReleaseRoute extends PageRouteInfo<NewReleaseRouteArgs> {
+  NewReleaseRoute({
     Key? key,
-    required CrawlerFactory crawlerFactory,
+    required Release release,
     List<PageRouteInfo>? children,
   }) : super(
-          PopularRoute.name,
-          args: PopularRouteArgs(
+          NewReleaseRoute.name,
+          args: NewReleaseRouteArgs(
             key: key,
-            crawlerFactory: crawlerFactory,
+            release: release,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'PopularRoute';
+  static const String name = 'NewReleaseRoute';
 
-  static const PageInfo<PopularRouteArgs> page =
-      PageInfo<PopularRouteArgs>(name);
+  static const PageInfo<NewReleaseRouteArgs> page =
+      PageInfo<NewReleaseRouteArgs>(name);
 }
 
-class PopularRouteArgs {
-  const PopularRouteArgs({
+class NewReleaseRouteArgs {
+  const NewReleaseRouteArgs({
     this.key,
-    required this.crawlerFactory,
+    required this.release,
   });
 
   final Key? key;
 
-  final CrawlerFactory crawlerFactory;
+  final Release release;
 
   @override
   String toString() {
-    return 'PopularRouteArgs{key: $key, crawlerFactory: $crawlerFactory}';
+    return 'NewReleaseRouteArgs{key: $key, release: $release}';
   }
 }
 
@@ -178,6 +234,44 @@ class NovelRouteArgs {
   @override
   String toString() {
     return 'NovelRouteArgs{key: $key, type: $type}';
+  }
+}
+
+/// generated route for
+/// [PopularPage]
+class PopularRoute extends PageRouteInfo<PopularRouteArgs> {
+  PopularRoute({
+    Key? key,
+    required CrawlerFactory crawlerFactory,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PopularRoute.name,
+          args: PopularRouteArgs(
+            key: key,
+            crawlerFactory: crawlerFactory,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PopularRoute';
+
+  static const PageInfo<PopularRouteArgs> page =
+      PageInfo<PopularRouteArgs>(name);
+}
+
+class PopularRouteArgs {
+  const PopularRouteArgs({
+    this.key,
+    required this.crawlerFactory,
+  });
+
+  final Key? key;
+
+  final CrawlerFactory crawlerFactory;
+
+  @override
+  String toString() {
+    return 'PopularRouteArgs{key: $key, crawlerFactory: $crawlerFactory}';
   }
 }
 
@@ -224,29 +318,15 @@ class ReaderRouteArgs {
 }
 
 /// generated route for
-/// [CategoryPage]
-class CategoryRoute extends PageRouteInfo<void> {
-  const CategoryRoute({List<PageRouteInfo>? children})
+/// [SettingsPage]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
       : super(
-          CategoryRoute.name,
+          SettingsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'CategoryRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [HomePage]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeRoute';
+  static const String name = 'SettingsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -305,85 +385,5 @@ class WebViewRouteArgs {
   @override
   String toString() {
     return 'WebViewRouteArgs{key: $key, title: $title, initialUrl: $initialUrl}';
-  }
-}
-
-/// generated route for
-/// [SettingsPage]
-class SettingsRoute extends PageRouteInfo<void> {
-  const SettingsRoute({List<PageRouteInfo>? children})
-      : super(
-          SettingsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SettingsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [AboutPage]
-class AboutRoute extends PageRouteInfo<void> {
-  const AboutRoute({List<PageRouteInfo>? children})
-      : super(
-          AboutRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AboutRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [DownloadPage]
-class DownloadRoute extends PageRouteInfo<void> {
-  const DownloadRoute({List<PageRouteInfo>? children})
-      : super(
-          DownloadRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'DownloadRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [NewReleasePage]
-class NewReleaseRoute extends PageRouteInfo<NewReleaseRouteArgs> {
-  NewReleaseRoute({
-    Key? key,
-    required Release release,
-    List<PageRouteInfo>? children,
-  }) : super(
-          NewReleaseRoute.name,
-          args: NewReleaseRouteArgs(
-            key: key,
-            release: release,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'NewReleaseRoute';
-
-  static const PageInfo<NewReleaseRouteArgs> page =
-      PageInfo<NewReleaseRouteArgs>(name);
-}
-
-class NewReleaseRouteArgs {
-  const NewReleaseRouteArgs({
-    this.key,
-    required this.release,
-  });
-
-  final Key? key;
-
-  final Release release;
-
-  @override
-  String toString() {
-    return 'NewReleaseRouteArgs{key: $key, release: $release}';
   }
 }

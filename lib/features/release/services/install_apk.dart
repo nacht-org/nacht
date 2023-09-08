@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
@@ -13,8 +13,7 @@ class InstallApk {
 
   Future<Either<Failure, void>> call(String filePath) async {
     try {
-      await _channel
-          .invokeMethod('installApk', {'filePath': filePath});
+      await _channel.invokeMethod('installApk', {'filePath': filePath});
       return const Right(null);
     } on PlatformException catch (e) {
       return Left(FailedToInstallApk(filePath, e.toString()));

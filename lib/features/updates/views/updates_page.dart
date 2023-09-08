@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
+import 'package:nacht/features/updates/models/models.dart';
 import 'package:nacht/features/updates/providers/providers.dart';
 import 'package:nacht/shared/shared.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -108,14 +108,12 @@ class UpdatesPage extends HookConsumerWidget {
                   final selection = ref.read(updatesSelectionProvider);
                   final updates = ref.read(updatesProvider);
                   final chaptersToDownload = updates
-                      .map((entry) => entry.whenOrNull(
-                          chapter: (novel, chapter) => Tuple2(novel, chapter)))
-                      .whereType<Tuple2<NovelData, ChapterData>>()
-                      .where((tuple) =>
-                          tuple.value2.content == null &&
-                          selection.contains(tuple.value2.id))
-                      .map((tuple) =>
-                          DownloadRelatedData.from(tuple.value1, tuple.value2));
+                      .whereType<UpdateEntryChapter>()
+                      .where((entry) =>
+                          entry.pair.content == null &&
+                          selection.contains(entry.pair.id))
+                      .map((entry) =>
+                          DownloadRelatedData.from(entry.novel, entry.pair));
 
                   ref
                       .read(downloadListProvider.notifier)

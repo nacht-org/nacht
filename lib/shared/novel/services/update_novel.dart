@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:drift/drift.dart' show Value, DoUpdate;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
@@ -210,13 +210,13 @@ class UpdateNovel with LoggerMixin {
         .get();
 
     final diff = calculateDiff<MetaEntry, sources.MetaData>(
-      prev: IdentityList<MetaEntry, Tuple2>(
+      prev: IdentityList<MetaEntry, (String, String)>(
         items: currentMetaData,
-        identity: (item) => Tuple2(item.name, item.value),
+        identity: (item) => (item.name, item.value),
       ),
-      next: IdentityList<sources.MetaData, Tuple2>(
+      next: IdentityList<sources.MetaData, (String, String)>(
         items: metaData,
-        identity: (item) => Tuple2(item.name, item.value),
+        identity: (item) => (item.name, item.value),
       ),
       equality: (prev, next) =>
           (prev.others == null

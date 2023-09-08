@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';

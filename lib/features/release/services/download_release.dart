@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:dio/dio.dart';
 import 'package:github/github.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

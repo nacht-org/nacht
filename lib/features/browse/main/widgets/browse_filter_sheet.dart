@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/core/core.dart';
+
+import '../preferences/preferences.dart';
 
 class BrowseFilterSheet extends ConsumerWidget {
   const BrowseFilterSheet({Key? key}) : super(key: key);

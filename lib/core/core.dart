@@ -9,7 +9,6 @@ export 'notification/notification.dart';
 // Preferences.
 export 'preferences/date_format/date_format.dart';
 export 'preferences/theme/theme.dart';
-export 'preferences/browse/browse.dart';
 export 'preferences/chapter_list/chapter_list.dart';
 
 // Misc.

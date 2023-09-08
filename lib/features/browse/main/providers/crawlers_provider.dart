@@ -3,6 +3,7 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
 import '../main.dart';
+import '../preferences/preferences.dart';
 
 final crawlersProvider = Provider<List<CrawlerListItem>>(
   (ref) {

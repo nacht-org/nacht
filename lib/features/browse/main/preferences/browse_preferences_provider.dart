@@ -2,6 +2,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 
+import 'models/browse_filter.dart';
+import 'models/browse_preferences.dart';
+
 final browsePreferencesProvider =
     StateNotifierProvider<BrowsePreferencesNotifier, BrowsePreferences>(
   (ref) => BrowsePreferencesNotifier(

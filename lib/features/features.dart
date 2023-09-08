@@ -16,3 +16,4 @@ export 'release/release.dart';
 export 'asset/asset.dart';
 export 'network/network.dart';
 export 'selection/selection.dart';
+export 'crawler/crawler.dart';

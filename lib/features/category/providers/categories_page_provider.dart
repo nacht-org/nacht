@@ -1,14 +1,15 @@
 import 'dart:math' as math;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 
+import '../models/models.dart';
 import '../services/services.dart';
+import 'categories_provider.dart';
 
-final categoriesPageProvider =
-    StateNotifierProvider.autoDispose<CategoriesNotifier, List<CategoryData>>(
+final categoriesPageProvider = StateNotifierProvider.autoDispose<
+    CategoriesPageNotifier, List<CategoryData>>(
   (ref) {
-    final categoriesNotifier = CategoriesNotifier(
+    final categoriesNotifier = CategoriesPageNotifier(
       ref: ref,
       state: [],
       addCategory: ref.watch(addCategoryProvider),
@@ -24,9 +25,9 @@ final categoriesPageProvider =
   name: 'CategoriesProvider',
 );
 
-class CategoriesNotifier extends StateNotifier<List<CategoryData>>
+class CategoriesPageNotifier extends StateNotifier<List<CategoryData>>
     with LoggerMixin {
-  CategoriesNotifier({
+  CategoriesPageNotifier({
     required List<CategoryData> state,
     required Ref ref,
     required AddCategory addCategory,

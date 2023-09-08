@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nacht/shared/shared.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/database/database.dart';
+
+import '../models/models.dart';
 
 final updateCategoriesIndexProvider = Provider<UpdateCategoriesIndex>(
   (ref) => UpdateCategoriesIndex(

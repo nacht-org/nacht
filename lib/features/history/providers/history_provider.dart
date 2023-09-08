@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/features/history/providers/providers.dart';
-import 'package:nacht/shared/shared.dart';
 
 import '../services/services.dart';
 
@@ -16,13 +16,13 @@ final historyProvider =
 );
 
 class HistoryNotifier extends StateNotifier<List<HistoryData>> {
-  HistoryNotifier({
-    required Ref ref,
-    required WatchHistory watchHistory,
-    required DeleteHistory deleteHistory,
-    required DeleteNovelHistory deleteNovelHistory,
-    required DeleteAllHistory deleteAllHistory
-  })  : _ref = ref,
+  HistoryNotifier(
+      {required Ref ref,
+      required WatchHistory watchHistory,
+      required DeleteHistory deleteHistory,
+      required DeleteNovelHistory deleteNovelHistory,
+      required DeleteAllHistory deleteAllHistory})
+      : _ref = ref,
         _watchHistory = watchHistory,
         _deleteHistory = deleteHistory,
         _deleteNovelHistory = deleteNovelHistory,
@@ -55,6 +55,6 @@ class HistoryNotifier extends StateNotifier<List<HistoryData>> {
   }
 
   Future<void> deleteAllHistory() async {
-     await _deleteAllHistory.call();
+    await _deleteAllHistory.call();
   }
 }

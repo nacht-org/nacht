@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 
 import '../failures/failures.dart';
 

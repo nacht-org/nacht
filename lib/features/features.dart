@@ -13,3 +13,4 @@ export 'settings/settings.dart';
 export 'history/history.dart';
 export 'downloads/downloads.dart';
 export 'release/release.dart';
+export 'asset/asset.dart';

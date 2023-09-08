@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 
 class NovelGridCard extends StatelessWidget {
   const NovelGridCard({

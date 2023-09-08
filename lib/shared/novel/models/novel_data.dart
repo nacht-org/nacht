@@ -1,4 +1,4 @@
-import 'package:nacht/shared/shared.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/database/database.dart';

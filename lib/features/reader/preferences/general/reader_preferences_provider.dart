@@ -2,6 +2,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 
+import 'reader_color_mode.dart';
+import 'reader_font_family.dart';
+import 'reader_preferences.dart';
+
 final readerPreferencesProvider =
     StateNotifierProvider<ReaderPreferencesNotifier, ReaderPreferences>(
   (ref) => ReaderPreferencesNotifier(

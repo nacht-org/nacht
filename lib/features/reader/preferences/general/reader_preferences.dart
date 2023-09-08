@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nacht/nht/nht.dart';
 
-import '../reader.dart';
+import '../preferences.dart';
 
 part 'reader_preferences.freezed.dart';
 

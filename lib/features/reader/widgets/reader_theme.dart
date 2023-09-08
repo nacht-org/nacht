@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 
+import '../preferences/preferences.dart';
+
 class ReaderThemeData extends Equatable {
   const ReaderThemeData({
     required this.colorMode,

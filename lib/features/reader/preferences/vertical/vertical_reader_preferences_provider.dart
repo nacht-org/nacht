@@ -2,6 +2,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht/nht/nht.dart';
 
+import 'vertical_reader_preferences.dart';
+
 final verticalReaderPreferencesProvider = StateNotifierProvider<
     VerticalReaderPreferencesNotifier, VerticalReaderPreferences>(
   (ref) => VerticalReaderPreferencesNotifier(

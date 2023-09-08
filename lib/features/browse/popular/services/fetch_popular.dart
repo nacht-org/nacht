@@ -30,7 +30,7 @@ class FetchPopular {
     final List<sources.Novel> novels;
     try {
       novels = await isolate.fetchPopular(page);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return Left(NetworkFailure(e.message ?? "Unknown failure"));
     }
 

@@ -31,7 +31,7 @@ class FetchChapterContent {
     try {
       final content = await isolate.fetchChapterContent(url);
       return Right(content!);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return Left(NetworkFailure(e.message ?? "Unknown error"));
     }
   }

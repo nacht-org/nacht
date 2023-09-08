@@ -40,7 +40,7 @@ class FetchNovel {
     final sources.Novel novel;
     try {
       novel = await isolate.fetchNovel(url);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return Some(NetworkFailure(e.message ?? 'Unknown error'));
     }
 

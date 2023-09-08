@@ -31,7 +31,7 @@ class FetchSearch {
     final List<sources.Novel> novels;
     try {
       novels = await isolate.fetchSearch(query, page);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return Left(NetworkFailure(e.message ?? "Unknown failure"));
     }
 

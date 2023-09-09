@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/core/logger/logger.dart';
+import 'package:nacht/features/features.dart';
 
 import '../models/models.dart';
 import '../services/services.dart';
@@ -10,6 +11,7 @@ final chapterListFamily = StateNotifierProvider.autoDispose
     .family<ChapterListNotifier, ChapterListInfo, int>(
   (ref, novelId) {
     final notifier = ChapterListNotifier(
+      ref: ref,
       state: ChapterListInfo(chapters: [], isLoaded: false),
       novelId: novelId,
       watchChapterList: ref.watch(watchChapterListProvider),
@@ -28,15 +30,18 @@ final chapterListFamily = StateNotifierProvider.autoDispose
 class ChapterListNotifier extends StateNotifier<ChapterListInfo>
     with LoggerMixin {
   ChapterListNotifier({
+    required Ref ref,
     required ChapterListInfo state,
     required int novelId,
     required WatchChapterList watchChapterList,
     required SetReadAt setReadAt,
-  })  : _novelId = novelId,
+  })  : _ref = ref,
+        _novelId = novelId,
         _watchChapterList = watchChapterList,
         _setReadAt = setReadAt,
         super(state);
 
+  final Ref _ref;
   final int _novelId;
   final WatchChapterList _watchChapterList;
   final SetReadAt _setReadAt;
@@ -83,6 +88,9 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
         DateTime.now().difference(chapter.readAt!).inMinutes < 5) {
       return;
     }
+
+    final incognito = _ref.read(incognitoProvider);
+    if (incognito) return;
 
     log.fine('updating ${chapter.id} to read at to now');
 

@@ -5,7 +5,8 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/widgets/widgets.dart';
 
-typedef DestinationCallback = void Function(WidgetRef ref);
+typedef DestinationCallback = void Function(
+    BuildContext context, WidgetRef ref);
 
 class Destination {
   final DestinationBuilder builder;
@@ -29,7 +30,11 @@ abstract class Destinations {
     label: 'Library',
     icon: Icon(Icons.library_books_outlined),
     selectedIcon: Icon(Icons.library_books),
+    onTap: libraryTap,
   );
+
+  static void libraryTap(BuildContext context, WidgetRef ref) =>
+      LibrarySheet.show(context);
 
   static const updates = Destination(
     builder: updatesBuilder,
@@ -39,7 +44,7 @@ abstract class Destinations {
     onTap: updatesTap,
   );
 
-  static void updatesTap(WidgetRef ref) =>
+  static void updatesTap(BuildContext context, WidgetRef ref) =>
       ref.read(routerProvider).push(const DownloadRoute());
 
   static const history = Destination(

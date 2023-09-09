@@ -65,6 +65,13 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
             )
           : AppBar(
               title: const Text('Library'),
+              actions: [
+                IconButton(
+                  onPressed: () => LibrarySheet.show(context),
+                  icon: const Icon(Icons.filter_list),
+                ),
+                const SizedBox(width: 8.0), // Temporary padding
+              ],
               bottom: buildTabBar(),
             ),
       body: SafeArea(

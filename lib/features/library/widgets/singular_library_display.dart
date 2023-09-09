@@ -35,6 +35,13 @@ class SingularLibraryDisplay extends HookConsumerWidget {
             )
           : AppBar(
               title: const Text('Library'),
+              actions: [
+                IconButton(
+                  onPressed: () => LibrarySheet.show(context),
+                  icon: const Icon(Icons.filter_list),
+                ),
+                const SizedBox(width: 8.0), // Temporary padding
+              ],
             ),
       body: SafeArea(
         child: CategoryGrid(

@@ -74,7 +74,7 @@ class HomePage extends HookConsumerWidget {
                     selectedIndex: homeIndex,
                     onDestinationSelected: (index) {
                       if (homeIndex == index) {
-                        destinations[index].onTap?.call(ref);
+                        destinations[index].onTap?.call(context, ref);
                       } else {
                         homeIndexNotifier.setIndex(index);
                       }

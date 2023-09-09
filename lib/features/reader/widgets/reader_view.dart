@@ -9,7 +9,6 @@ import 'package:nacht/widgets/widgets.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../models/models.dart';
-import '../preferences/preferences.dart';
 import '../providers/providers.dart';
 import 'widgets.dart';
 

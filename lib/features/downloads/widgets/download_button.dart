@@ -153,17 +153,14 @@ class _DownloadDone extends ConsumerWidget {
 
 class _DownloadIndicator extends StatelessWidget {
   const _DownloadIndicator({
-    this.color,
     this.progress = 1,
   });
 
-  final Color? color;
   final double? progress;
 
   @override
   Widget build(BuildContext context) {
     final iconTheme = IconTheme.of(context);
-    final color = this.color ?? iconTheme.color;
 
     return SizedBox.square(
       dimension: 24.0,
@@ -174,13 +171,13 @@ class _DownloadIndicator extends StatelessWidget {
               child: Icon(
                 Icons.download,
                 size: 18,
-                color: color,
+                color: iconTheme.color,
               ),
             ),
           ),
           CircularProgressIndicator(
             value: progress,
-            color: color,
+            color: iconTheme.color,
             strokeWidth: 2,
           ),
         ],

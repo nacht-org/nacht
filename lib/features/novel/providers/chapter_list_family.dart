@@ -83,14 +83,18 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
   }
 
   Future<void> markAsRead(int index) async {
-    final chapter = state.chapters[index];
-    if (chapter.readAt != null &&
-        DateTime.now().difference(chapter.readAt!).inMinutes < 5) {
+    final incognito = _ref.read(incognitoProvider);
+    if (incognito) {
+      log.fine("Incognito mode: skipped chapter mark as read");
       return;
     }
 
-    final incognito = _ref.read(incognitoProvider);
-    if (incognito) return;
+    final chapter = state.chapters[index];
+    if (chapter.readAt != null &&
+        DateTime.now().difference(chapter.readAt!).inMinutes < 5) {
+      log.fine("Skipped mark as read: last read less than minutes ago");
+      return;
+    }
 
     log.fine('updating ${chapter.id} to read at to now');
 

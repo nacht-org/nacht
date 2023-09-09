@@ -44,7 +44,7 @@ class SingularLibraryDisplay extends HookConsumerWidget {
               ],
             ),
       body: SafeArea(
-        child: CategoryGrid(
+        child: CategoryDisplay(
           category: category,
         ),
       ),

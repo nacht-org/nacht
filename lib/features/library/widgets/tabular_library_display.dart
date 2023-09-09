@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/library/providers/providers.dart';
 import 'package:nacht/features/features.dart';
+import 'package:nacht/features/library/widgets/category_display.dart';
 import 'package:nacht/nht/nht.dart';
 import 'package:flutter/material.dart';
 
@@ -78,11 +79,7 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
         child: TabBarView(
           controller: tabController,
           children: widget.categories
-              .map(
-                (category) => CategoryGrid(
-                  category: category,
-                ),
-              )
+              .map((category) => CategoryDisplay(category: category))
               .toList(),
         ),
       ),

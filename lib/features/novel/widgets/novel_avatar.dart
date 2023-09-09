@@ -29,7 +29,7 @@ class NovelAvatar extends StatelessWidget {
           ? SizedBox.square(
               dimension: _size,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(12.0),
                 child: CachedNetworkImage(
                   imageUrl: novel.coverUrl!,
                   fit: BoxFit.cover,

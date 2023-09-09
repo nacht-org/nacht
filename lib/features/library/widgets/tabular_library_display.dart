@@ -71,7 +71,6 @@ class _TabularLibraryDisplayState extends ConsumerState<TabularLibraryDisplay>
                   onPressed: () => LibrarySheet.show(context),
                   icon: const Icon(Icons.filter_list),
                 ),
-                const SizedBox(width: 8.0), // Temporary padding
               ],
               bottom: buildTabBar(),
             ),

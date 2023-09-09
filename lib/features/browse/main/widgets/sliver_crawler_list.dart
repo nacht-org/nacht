@@ -28,12 +28,9 @@ class SliverCrawlerList extends ConsumerWidget {
               ),
             );
           }, crawler: (entry) {
-            final lang = langFromCode(entry.meta.lang)?['name'] ??
-                entry.meta.lang.capitalize();
-
             return ListTile(
               title: Text(entry.meta.name),
-              subtitle: Text('$lang ${entry.meta.version.version}'),
+              subtitle: Text(entry.meta.version.version),
               onTap: () => context.router.push(
                 PopularRoute(crawlerFactory: entry.factory),
               ),

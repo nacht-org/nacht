@@ -92,7 +92,7 @@ class ChapterListNotifier extends StateNotifier<ChapterListInfo>
     final chapter = state.chapters[index];
     if (chapter.readAt != null &&
         DateTime.now().difference(chapter.readAt!).inMinutes < 5) {
-      log.fine("Skipped mark as read: last read less than minutes ago");
+      log.fine("Skipped mark as read: last read less than 5 minutes ago");
       return;
     }
 

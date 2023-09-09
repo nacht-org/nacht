@@ -47,7 +47,7 @@ class CategoryLoader extends ConsumerWidget {
       children: [
         TextButton.icon(
           onPressed: () => ref
-              .watch(homeIndexProvider.notifier)
+              .read(homeIndexProvider.notifier)
               .setDestination(Destinations.browse),
           icon: const Icon(Icons.explore),
           label: const Text('Browse'),

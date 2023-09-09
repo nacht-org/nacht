@@ -38,6 +38,55 @@ class LibrarySheet extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 8.0),
+          const GridSizePicker(),
+        ],
+      ),
+    );
+  }
+}
+
+class GridSizePicker extends ConsumerWidget {
+  const GridSizePicker({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
+    final gridSize = ref.watch(
+        libraryDisplayPreferencesProvider.select((value) => value.gridSize));
+    final notifier = ref.watch(libraryDisplayPreferencesProvider.notifier);
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 80,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Grid size'),
+                Text(
+                  gridSize == null ? 'Default' : '$gridSize per row',
+                  style: theme.textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Slider(
+              value: gridSize?.toDouble() ?? 0,
+              onChanged: (value) => value.toInt() == 0
+                  ? notifier.setGridSize(null)
+                  : notifier.setGridSize(value.toInt()),
+              min: 0,
+              max: 10,
+              divisions: 11,
+            ),
+          )
         ],
       ),
     );

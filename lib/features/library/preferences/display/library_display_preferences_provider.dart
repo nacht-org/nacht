@@ -5,25 +5,29 @@ import 'package:nacht/features/library/preferences/display/library_display_prefe
 import 'package:nacht/nht/nht.dart';
 
 final libraryDisplayPreferencesProvider = StateNotifierProvider<
-    LibraryDisplayPreferencesNotifier, LibraryDisplayPreferencs>(
+    LibraryDisplayPreferencesNotifier, LibraryDisplayPreferences>(
   (ref) => LibraryDisplayPreferencesNotifier(
-    preferences: ref.watch(
-      preferencesProvider("library.display"),
-    ),
+    preferences: ref.watch(preferencesProvider("library.display")),
   ),
 );
 
 class LibraryDisplayPreferencesNotifier
-    extends StateNotifier<LibraryDisplayPreferencs> {
+    extends StateNotifier<LibraryDisplayPreferences> {
   LibraryDisplayPreferencesNotifier({
     required Preferences preferences,
   })  : _preferences = preferences,
-        super(LibraryDisplayPreferencs.read(preferences));
+        super(LibraryDisplayPreferences.read(preferences));
 
   final Preferences _preferences;
 
   void setDisplayMode(LibraryDisplayMode displayMode) async {
     state = state.copyWith(displayMode: displayMode);
-    LibraryDisplayPreferencs.displayModeKey.setValue(_preferences, displayMode);
+    LibraryDisplayPreferences.displayModeKey
+        .setValue(_preferences, displayMode);
+  }
+
+  void setGridSize(int? gridSize) {
+    state = state.copyWith(gridSize: gridSize);
+    LibraryDisplayPreferences.gridSizeKey.setValue(_preferences, gridSize);
   }
 }

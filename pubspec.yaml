@@ -78,6 +78,7 @@ dependencies:
   github: ^9.15.1
   system_info2: ^4.0.0
   version: ^3.0.2
+  material_symbols_icons: ^4.2668.0
 
 dev_dependencies:
   flutter_test:

@@ -5,4 +5,4 @@ const kLongAnimationDuration = Duration(milliseconds: 600);
 
 const kBottomBarHeight = 72.0;
 
-const kTrailingListTilePadding = EdgeInsets.only(left: 16.0, right: 8.0);
+const kTrailingListTilePadding = EdgeInsets.only(left: 16.0, right: 12.0);

@@ -23,4 +23,8 @@ class NotificationService {
   Future<void> show(Notification notification) async {
     await getHandle().show(notification);
   }
+
+  Future<void> cancel(int id) async {
+    return plugin.cancel(id);
+  }
 }

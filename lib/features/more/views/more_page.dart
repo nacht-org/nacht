@@ -21,6 +21,8 @@ class MorePage extends HookConsumerWidget {
         child: SafeArea(
           child: ListView(
             children: [
+              const IncognitoTile(),
+              const Divider(),
               const DownloadQueueTile(),
               ListTile(
                 leading: const Icon(Icons.category),

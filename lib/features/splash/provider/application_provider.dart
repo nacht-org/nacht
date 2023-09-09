@@ -34,6 +34,9 @@ class Application with LoggerMixin {
     _addLicenses();
     _preloadReaderFont();
 
+    // Hide any existing incognito mode notification
+    _ref.read(incognitoProvider.notifier).disable();
+
     await Future.wait([
       _ref.read(updatesProvider.notifier).initialize(),
       _ref.read(categoriesProvider.notifier).initialize(),

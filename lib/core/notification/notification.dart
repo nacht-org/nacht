@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/history/history.dart';
+import 'package:nacht/features/history/notifications/actions/actions.dart';
 
 import 'package:nacht/features/release/notifications/notifications.dart';
 
@@ -90,6 +92,13 @@ void onDidReceiveNotificationResponse(
 ) {
   switch (response.notificationResponseType) {
     case NotificationResponseType.selectedNotification:
+      switch (response.id) {
+        case IncognitoNotification.id:
+          DisableIncognitoModeAction().execute(read, response);
+        default:
+          throw Exception(
+              'Action not registered in foreground: ${response.actionId}');
+      }
       break;
     case NotificationResponseType.selectedNotificationAction:
       switch (response.actionId) {

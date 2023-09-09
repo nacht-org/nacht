@@ -82,9 +82,8 @@ class ChapterLoaded extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     usePostFrameCallback((timeStamp) {
-      ref
-          .read(historySessionProvider(novel.id).notifier)
-          .record(novel, chapter);
+      final notifier = ref.read(historySessionProvider(novel.id).notifier);
+      notifier.record(novel, chapter);
     });
 
     return NotificationListener<ScrollNotification>(

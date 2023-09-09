@@ -85,6 +85,17 @@ class NotificationChannel {
       ),
     );
   }
+
+  NotificationDetails persistant({
+    String? tag,
+  }) {
+    return NotificationDetails(
+      android: android.details(
+        tag: tag,
+        ongoing: true,
+      ),
+    );
+  }
 }
 
 extension ChannelIntoDetails on AndroidNotificationChannel {
@@ -97,6 +108,7 @@ extension ChannelIntoDetails on AndroidNotificationChannel {
     List<AndroidNotificationAction>? actions,
     AndroidNotificationCategory? category,
     String? groupKey,
+    String? tag,
   }) {
     return AndroidNotificationDetails(
       id,
@@ -116,6 +128,7 @@ extension ChannelIntoDetails on AndroidNotificationChannel {
       maxProgress: maxProgress,
       actions: actions,
       category: category,
+      tag: tag,
     );
   }
 }
@@ -150,10 +163,23 @@ abstract class NotificationChannels {
     );
   }
 
+  static NotificationChannel get incognitoMode {
+    return const NotificationChannel(
+      android: AndroidNotificationChannel(
+        "incognito",
+        "Incognito mode",
+        importance: Importance.low,
+        enableVibration: false,
+        playSound: false,
+      ),
+    );
+  }
+
   static List<NotificationChannel> get all {
     return [
       updatesApp,
       downloaderProgress,
+      incognitoMode,
     ];
   }
 

@@ -14,37 +14,29 @@ abstract class StatusSeed {
   static const int hiatus = 2;
   static const int completed = 3;
   static const int stub = 4;
+  static const int dropped = 6;
   static const int unknown = 5;
 
   static sources.NovelStatus intoStatus(int statusId) {
-    switch (statusId) {
-      case StatusSeed.ongoing:
-        return sources.NovelStatus.ongoing;
-      case StatusSeed.hiatus:
-        return sources.NovelStatus.hiatus;
-      case StatusSeed.completed:
-        return sources.NovelStatus.completed;
-      case StatusSeed.stub:
-        return sources.NovelStatus.stub;
-      case StatusSeed.unknown:
-        return sources.NovelStatus.unknown;
-      default:
-        throw SeedException();
-    }
+    return switch (statusId) {
+      StatusSeed.ongoing => sources.NovelStatus.ongoing,
+      StatusSeed.hiatus => sources.NovelStatus.hiatus,
+      StatusSeed.completed => sources.NovelStatus.completed,
+      StatusSeed.stub => sources.NovelStatus.stub,
+      StatusSeed.dropped => sources.NovelStatus.dropped,
+      StatusSeed.unknown => sources.NovelStatus.unknown,
+      _ => throw SeedException(),
+    };
   }
 
   static int fromStatus(sources.NovelStatus entity) {
-    switch (entity) {
-      case sources.NovelStatus.ongoing:
-        return StatusSeed.ongoing;
-      case sources.NovelStatus.hiatus:
-        return StatusSeed.hiatus;
-      case sources.NovelStatus.completed:
-        return StatusSeed.completed;
-      case sources.NovelStatus.stub:
-        return StatusSeed.stub;
-      case sources.NovelStatus.unknown:
-        return StatusSeed.unknown;
-    }
+    return switch (entity) {
+      sources.NovelStatus.ongoing => StatusSeed.ongoing,
+      sources.NovelStatus.hiatus => StatusSeed.hiatus,
+      sources.NovelStatus.completed => StatusSeed.completed,
+      sources.NovelStatus.stub => StatusSeed.stub,
+      sources.NovelStatus.dropped => StatusSeed.dropped,
+      sources.NovelStatus.unknown => StatusSeed.unknown,
+    };
   }
 }

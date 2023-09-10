@@ -41,7 +41,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.connect() : super.connect(_createDriftIsolateAndConnect());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration {
@@ -135,6 +135,10 @@ class AppDatabase extends _$AppDatabase {
 
         if (from < 2) {
           m.createTable(downloads);
+        }
+
+        if (from < 3) {
+          StatusesCompanion.insert(id: const Value(6), value: "Dropped");
         }
 
         // Assert that the schema is valid after migrations

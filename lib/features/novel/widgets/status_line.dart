@@ -1,3 +1,4 @@
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:nacht/core/core.dart';
 import 'package:nacht_sources/nacht_sources.dart';
 import 'package:flutter/material.dart';
@@ -28,24 +29,14 @@ class StatusLine extends StatelessWidget {
   }
 
   Widget buildIcon() {
-    final IconData iconData;
-    switch (status) {
-      case NovelStatus.ongoing:
-        iconData = Icons.timelapse;
-        break;
-      case NovelStatus.hiatus:
-        iconData = Icons.pause;
-        break;
-      case NovelStatus.completed:
-        iconData = Icons.check;
-        break;
-      case NovelStatus.stub:
-        iconData = Icons.cut;
-        break;
-      case NovelStatus.unknown:
-        iconData = Icons.question_mark;
-        break;
-    }
+    final iconData = switch (status) {
+      NovelStatus.ongoing => Symbols.timelapse,
+      NovelStatus.hiatus => Symbols.pause,
+      NovelStatus.completed => Symbols.check,
+      NovelStatus.stub => Symbols.cut,
+      NovelStatus.dropped => Symbols.cancel,
+      NovelStatus.unknown => Symbols.question_mark,
+    };
 
     return Icon(
       iconData,

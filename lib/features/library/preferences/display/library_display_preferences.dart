@@ -9,18 +9,15 @@ part 'library_display_preferences.freezed.dart';
 class LibraryDisplayPreferences with _$LibraryDisplayPreferences {
   const factory LibraryDisplayPreferences({
     required LibraryDisplayMode displayMode,
-    required int? gridSize,
   }) = _LibraryDisplayPreferences;
 
   static const displayModeKey =
       EnumPreferenceKey('display-mode', parse: LibraryDisplayMode.parse);
-  static const gridSizeKey = GridSizeKey('grid-size');
 
   factory LibraryDisplayPreferences.read(Preferences preferences) {
     return LibraryDisplayPreferences(
       displayMode:
           displayModeKey.getValue(preferences, LibraryDisplayMode.compactGrid),
-      gridSize: gridSizeKey.getValue(preferences, 0),
     );
   }
 

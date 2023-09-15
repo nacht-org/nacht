@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/core/core.dart';
-import 'package:nacht/features/library/preferences/display/library_display_preferences_provider.dart';
 import 'package:nacht/widgets/widgets.dart';
 
 import '../providers/providers.dart';
@@ -24,8 +23,8 @@ class CategoryGrid extends ConsumerWidget {
         librarySelectionProvider.select((selection) => selection.active));
     final selectionNotifier = ref.watch(librarySelectionProvider.notifier);
 
-    final gridSize = ref.watch(
-        libraryDisplayPreferencesProvider.select((value) => value.gridSize));
+    final gridSize = ref
+        .watch(novelGridPreferencesProvider.select((value) => value.gridSize));
 
     return CategoryLoader(
       category: category,

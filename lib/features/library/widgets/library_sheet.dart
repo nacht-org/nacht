@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/features/features.dart';
 import 'package:nacht/features/library/preferences/display/library_display_mode.dart';
 import 'package:nacht/features/library/preferences/display/library_display_preferences_provider.dart';
 import 'package:nacht/widgets/widgets.dart';
@@ -56,8 +57,8 @@ class GridSizePicker extends ConsumerWidget {
     final theme = Theme.of(context);
 
     final gridSize = ref.watch(
-        libraryDisplayPreferencesProvider.select((value) => value.gridSize));
-    final notifier = ref.watch(libraryDisplayPreferencesProvider.notifier);
+        novelGridPreferencesProvider.select((value) => value.gridSize));
+    final notifier = ref.watch(novelGridPreferencesProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),

@@ -25,9 +25,4 @@ class LibraryDisplayPreferencesNotifier
     LibraryDisplayPreferences.displayModeKey
         .setValue(_preferences, displayMode);
   }
-
-  void setGridSize(int? gridSize) {
-    state = state.copyWith(gridSize: gridSize);
-    LibraryDisplayPreferences.gridSizeKey.setValue(_preferences, gridSize);
-  }
 }

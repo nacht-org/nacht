@@ -7,7 +7,7 @@ import 'package:nacht/core/core.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class SliverFetchGrid extends StatelessWidget {
+class SliverFetchGrid extends ConsumerWidget {
   const SliverFetchGrid({
     Key? key,
     required this.novels,
@@ -18,7 +18,10 @@ class SliverFetchGrid extends StatelessWidget {
   final CrawlerInfo crawler;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final gridSize = ref
+        .watch(novelGridPreferencesProvider.select((value) => value.gridSize));
+
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverGrid(
@@ -51,8 +54,8 @@ class SliverFetchGrid extends StatelessWidget {
           },
           childCount: novels.length,
         ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: gridSize ?? 2,
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
           childAspectRatio: 2 / 3,

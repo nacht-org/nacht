@@ -11,3 +11,4 @@ export 'services/fetch_chapter_content.dart';
 export 'models/novel_type.dart';
 export 'models/partial_novel_data.dart';
 export 'models/meta_entry_data.dart';
+export 'preferences/grid/grid.dart';

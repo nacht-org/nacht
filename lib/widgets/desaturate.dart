@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Desaturate extends StatelessWidget {
   const Desaturate({
     super.key,
-    required this.enabled,
+    this.enabled = true,
     required this.child,
   });
 

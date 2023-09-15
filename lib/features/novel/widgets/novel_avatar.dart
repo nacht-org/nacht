@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nacht/core/core.dart';
+import 'package:nacht/widgets/widgets.dart';
 
 import '../models/models.dart';
 
@@ -11,28 +12,34 @@ class NovelAvatar extends StatelessWidget {
   const NovelAvatar({
     Key? key,
     required this.novel,
+    this.desaturate = false,
   }) : super(key: key);
 
-  final NovelData novel;
+  final NovelType novel;
+  final bool desaturate;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final title = novel.title;
+    final coverUrl = novel.coverUrl;
+
     return GestureDetector(
       onTap: () => context.router.push(
-        NovelRoute(
-          type: NovelType.novel(novel),
-        ),
+        NovelRoute(type: novel),
       ),
-      child: novel.coverUrl != null
+      child: coverUrl != null
           ? SizedBox.square(
               dimension: _size,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: CachedNetworkImage(
-                  imageUrl: novel.coverUrl!,
-                  fit: BoxFit.cover,
+                child: Desaturate(
+                  enabled: desaturate,
+                  child: CachedNetworkImage(
+                    imageUrl: coverUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             )
@@ -45,8 +52,8 @@ class NovelAvatar extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                novel.title.isEmpty ? "@" : novel.title[0],
-                style: theme.textTheme.headlineLarge?.copyWith(
+                title.isEmpty ? "@" : title[0],
+                style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),

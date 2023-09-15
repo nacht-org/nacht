@@ -25,6 +25,7 @@ export 'close_back_button.dart';
 export 'empty_indicator.dart';
 export 'search_bar.dart';
 export 'center_child_scroll_view.dart';
+export 'desaturate.dart';
 
 export 'mute_tile.dart';
 export 'menu_list_tile.dart';

@@ -26,7 +26,7 @@ class HistoryTile extends ConsumerWidget {
 
     return ListTile(
       leading: NovelAvatar(
-        novel: history.novel,
+        novel: NovelType.novel(history.novel),
       ),
       title: Text(
         history.novel.title,

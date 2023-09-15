@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide SearchBar;
 
 import 'package:auto_route/auto_route.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:nacht/features/browse/main/providers/fetch_local_provider.dart';
 import 'package:nacht/features/features.dart';
 import 'package:nacht/core/core.dart';
@@ -9,6 +10,7 @@ import 'package:nacht/nht/nht.dart';
 import 'package:nacht/widgets/widgets.dart';
 import 'package:nacht_sources/nacht_sources.dart' as sources;
 
+import '../../main/preferences/preferences.dart';
 
 @RoutePage()
 class PopularPage extends HookConsumerWidget with LoggerMixin {
@@ -42,12 +44,19 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
               title: Text(crawler.meta.name),
               actions: [
                 const SearchButton(),
-                IconButton(
-                  icon: const Icon(Icons.web),
-                  onPressed: () => context.router.push(WebViewRoute(
-                    title: crawler.meta.name,
-                    initialUrl: crawler.meta.baseUrl,
-                  )),
+                const BrowseDisplayModeMenu(),
+                PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      onTap: () => context.router.push(
+                        WebViewRoute(
+                          title: crawler.meta.name,
+                          initialUrl: crawler.meta.baseUrl,
+                        ),
+                      ),
+                      child: const Text('Open in browser'),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -68,37 +77,44 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
               return false;
             },
             child: CustomScrollView(
-              slivers: view.when(
-                loading: () => [
-                  const SliverFillLoadingIndicator(),
-                ],
-                unsupported: (message) => [
-                  SliverFillLoadingError(
-                    message: Text(message),
+              slivers: [
+                ...view.when(
+                  loading: () => [
+                    const SliverFillLoadingIndicator(),
+                  ],
+                  unsupported: (message) => [
+                    SliverFillLoadingError(
+                      message: Text(message),
+                    ),
+                  ],
+                  error: (message) => [
+                    SliverFillLoadingError(
+                      message: Text(message),
+                      onRetry: () {
+                        final isSearching = ref.read(isSearchingProvider);
+                        if (isSearching) {
+                          ref
+                              .read(searchFetchProvider(crawler).notifier)
+                              .restart(crawler);
+                        } else {
+                          ref
+                              .read(popularFetchFamily(crawler).notifier)
+                              .restart(crawler);
+                        }
+                      },
+                    ),
+                  ],
+                  empty: () => [],
+                  data: (novels) => [
+                    SliverFetchDisplay(novels: novels, crawler: crawler),
+                  ],
+                ),
+                SliverPadding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.paddingOf(context).bottom + 16.0,
                   ),
-                ],
-                error: (message) => [
-                  SliverFillLoadingError(
-                    message: Text(message),
-                    onRetry: () {
-                      final isSearching = ref.read(isSearchingProvider);
-                      if (isSearching) {
-                        ref
-                            .read(searchFetchProvider(crawler).notifier)
-                            .restart(crawler);
-                      } else {
-                        ref
-                            .read(popularFetchFamily(crawler).notifier)
-                            .restart(crawler);
-                      }
-                    },
-                  ),
-                ],
-                empty: () => [],
-                data: (novels) => [
-                  SliverFetchGrid(novels: novels, crawler: crawler),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -132,5 +148,50 @@ class PopularPage extends HookConsumerWidget with LoggerMixin {
         ref.read(popularFetchFamily(crawler).notifier).next(crawler);
       }
     }
+  }
+}
+
+class BrowseDisplayModeMenu extends ConsumerWidget {
+  const BrowseDisplayModeMenu({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
+    final selectedDisplayMode = ref.watch(
+        browseDisplayPreferencesProvider.select((value) => value.displayMode));
+    final notifier = ref.watch(browseDisplayPreferencesProvider.notifier);
+
+    return PopupMenuButton(
+      tooltip: "Display mode",
+      icon: switch (selectedDisplayMode) {
+        BrowseDisplayMode.compactGrid => const Icon(Icons.grid_view),
+        BrowseDisplayMode.list => const Icon(Icons.view_list)
+      },
+      itemBuilder: (context) => List.generate(
+        BrowseDisplayMode.values.length,
+        (index) {
+          final displayMode = BrowseDisplayMode.values[index];
+
+          return PopupMenuItem(
+            onTap: () => notifier.setDisplayMode(displayMode),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Text(displayMode.label),
+                ),
+                selectedDisplayMode == displayMode
+                    ? Icon(
+                        Symbols.radio_button_checked,
+                        color: theme.colorScheme.primary,
+                      )
+                    : const Icon(Symbols.radio_button_unchecked),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

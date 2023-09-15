@@ -1,9 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nacht/core/core.dart';
+import 'package:nacht/features/browse/main/preferences/preferences.dart';
 import 'package:nacht/nht/nht.dart';
 
-import 'browse_display_mode.dart';
-
 part 'browse_display_preferences.freezed.dart';
+
+final browseDisplayPreferencesProvider = StateNotifierProvider<
+    BrowseDisplayPreferencesNotifier, BrowseDisplayPreferences>(
+  (ref) => BrowseDisplayPreferencesNotifier(
+      preferences: ref.watch(preferencesProvider('browse.display'))),
+);
 
 @freezed
 class BrowseDisplayPreferences with _$BrowseDisplayPreferences {

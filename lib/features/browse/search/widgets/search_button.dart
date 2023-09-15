@@ -11,6 +11,7 @@ class SearchButton extends ConsumerWidget {
     final notifier = ref.watch(isSearchingProvider.notifier);
 
     return IconButton(
+      tooltip: "Search",
       onPressed: () {
         ModalRoute.of(context)!.addLocalHistoryEntry(
           LocalHistoryEntry(onRemove: () {

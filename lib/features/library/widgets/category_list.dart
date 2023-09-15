@@ -40,7 +40,7 @@ class CategoryList extends ConsumerWidget {
                 void select() => selectionNotifier.toggle(novel.id);
 
                 return ListTile(
-                  leading: NovelAvatar(novel: novel),
+                  leading: NovelAvatar(novel: NovelType.novel(novel)),
                   title: Text(
                     novel.title,
                     maxLines: 1,

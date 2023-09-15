@@ -30,7 +30,7 @@ class ChapterUpdateTile extends ConsumerWidget {
       muted: chapter.readAt != null,
       child: ListTile(
         leading: NovelAvatar(
-          novel: novel,
+          novel: NovelType.novel(novel),
         ),
         title: Text(
           novel.title,

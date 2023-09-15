@@ -18,5 +18,21 @@ class NovelType with _$NovelType {
     );
   }
 
+  String get title {
+    return when(
+      url: (_) => '',
+      partial: (novel) => novel.title,
+      novel: (novel) => novel.title,
+    );
+  }
+
+  String? get coverUrl {
+    return when(
+      url: (_) => null,
+      partial: (novel) => novel.coverUrl,
+      novel: (novel) => novel.coverUrl,
+    );
+  }
+
   NovelType._();
 }

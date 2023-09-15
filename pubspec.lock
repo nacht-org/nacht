@@ -748,11 +748,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v0.2.9"
-      resolved-ref: aa0bffabecb8424a67d4faa927fa759da88473e3
+      ref: "v0.2.11"
+      resolved-ref: "21edde1437d925e7aa2a0db13f45581695e82d80"
       url: "https://github.com/nacht-org/nacht_sources"
     source: git
-    version: "0.2.9"
+    version: "0.2.11"
   nm:
     dependency: transitive
     description:

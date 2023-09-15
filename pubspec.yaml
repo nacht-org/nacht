@@ -57,7 +57,7 @@ dependencies:
   nacht_sources:
     git:
       url: https://github.com/nacht-org/nacht_sources
-      ref: v0.2.9
+      ref: v0.2.11
 
   # Rendering
   google_fonts: ^5.1.0
